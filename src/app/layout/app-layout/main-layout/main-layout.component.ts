@@ -69,7 +69,7 @@ export class MainLayoutComponent implements OnInit {
   //     icon: "info",
   //     title: 'Habilitación de Retiros de Saldo disponible a su billetera',
   //     html: `
-  //           <p>Querida familia de Ecosystem,</p>
+  //           <p>Querida familia de recycoin,</p>
   //           <p>Nos complace anunciar que el próximo martes, 23 de abril, estaremos habilitando los retiros de saldo. Esta es una oportunidad para que todos nuestros miembros puedan gestionar sus recursos de manera más efectiva dentro de nuestra plataforma.</p>
   //           <p>¡Agradecemos su paciencia y confianza en nosotros! Prepárense para realizar sus retiros.</p>
   //       `,

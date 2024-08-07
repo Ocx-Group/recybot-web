@@ -171,7 +171,7 @@ const routes: Routes = [
     canActivate: [AuthGuard, MaintenanceGuard],
   },
   {
-    path: 'savings-plans',
+    path: 'recycoin',
     component: SavingsPlansComponent,
     canActivate: [AuthGuard, MaintenanceGuard],
   },

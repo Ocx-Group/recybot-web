@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "ecosystem": {
+    "recycoin": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -101,18 +101,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "ecosystem:build"
+            "browserTarget": "recycoin:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "ecosystem:build:production"
+              "browserTarget": "recycoin:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "ecosystem:build"
+            "browserTarget": "recycoin:build"
           }
         },
         "test": {
@@ -132,7 +132,7 @@
         }
       }
     },
-    "ecosystem-e2e": {
+    "recycoin-e2e": {
       "root": "e2e/",
       "projectType": "application",
       "prefix": "",
@@ -141,11 +141,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "ecosystem:serve"
+            "devServerTarget": "recycoin:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "ecosystem:serve:production"
+              "devServerTarget": "recycoin:serve:production"
             }
           }
         }

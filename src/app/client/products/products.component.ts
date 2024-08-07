@@ -128,6 +128,17 @@ export class ProductsComponent implements OnInit {
     })
   }
 
+  loadAllRecyCoin() {
+    this.productService.getAllRecyCoin().subscribe((coin: Product) => {
+      this.productList = coin;
+      this.filterCategory = coin;
+      this.productList.forEach((item: any) => {
+        Object.assign(item, { quantity: 1, total: item.salePrice });
+      });
+    })
+  }
+
+
   handleProductLoading(tabActive: number) {
     switch (tabActive) {
       case 1:
@@ -151,8 +162,11 @@ export class ProductsComponent implements OnInit {
       case 7:
         this.loadAllAlternativeHealth();
         break;
-        case 8:
+      case 8:
         this.loadAllAlternativeHealthForEurope();
+        break;
+      case 9:
+        this.loadAllRecyCoin();
         break;
       default:
         this.showError('No se encontró productos');

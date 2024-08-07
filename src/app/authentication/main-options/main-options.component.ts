@@ -26,7 +26,7 @@ export class MainOptionsComponent implements OnInit {
   }
 
   goToTheStore() {
-    window.open('https://ecosystemfx.info/tienda-publica-LR16MiiKFNV9R9t_kbou_wRkSuJgdbIGuswK-Hk6BOA&1');
+    window.open('https://recycoinfx.info/tienda-publica-LR16MiiKFNV9R9t_kbou_wRkSuJgdbIGuswK-Hk6BOA&1');
   }
 
   goToRegister() {

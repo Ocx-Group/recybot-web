@@ -85,11 +85,11 @@ export class PrintService {
                 content:
                   'FACTURA: #' +
                   invoice.id +
-                  '\nRazón Social: Ecosystem Sharing Evolution S.A.' +
+                  '\nRazón Social: recycoin Sharing Evolution S.A.' +
                   '\nC.I.F: 3-101-844938' +
                   '\nDomicilio: San José-Santa Ana, Brasil, Centro Comercial Plaza del Rio, Local #3' +
                   '\nTel/Fax: 50663321239' +
-                  '\nCorreo: facturacion@ecosystemfx.com' +
+                  '\nCorreo: facturacion@recycoinfx.com' +
                   '\nFecha: ' +
                   today.getDate() +
                   '-' +

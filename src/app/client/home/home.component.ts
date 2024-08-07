@@ -43,6 +43,13 @@ export class HomeComponent {
   previousYear: number;
   @ViewChild('chart') chart1: ChartComponent;
   canSeePaymentModels: boolean = false;
+  recycoinInfo = {
+    usdValue: 1250000,
+    tokenAmount: 5000000,
+    marketCap: 10000000,
+    change24h: 5.75,
+    contractAddress: "0xBEFF1E6526aaee005C8CA1d6A5F8bb4577Df9CF4"
+  };
 
   private chart: am4maps.MapChart;
   public pieChartOptions: any;
@@ -130,7 +137,7 @@ export class HomeComponent {
   }
 
   get registerUrl() {
-    return `https://www.ecosystemfx.net/main-options/${this.user.user_name.toString()}`;
+    return `https://www.recycoinfx.net/main-options/${this.user.user_name.toString()}`;
   }
 
   showSuccess(message) {

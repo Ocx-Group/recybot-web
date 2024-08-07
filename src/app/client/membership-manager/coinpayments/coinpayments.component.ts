@@ -63,7 +63,7 @@ export class CoinpaymentsComponent {
     request.buyer_email = this.user.email;
     request.buyer_name = this.user.name + ' ' + this.user.last_name;
     request.item_number = this.user.id.toString();
-    request.ipn_url = 'https://wallet.ecosystemfx.net/api/v1/ConPayments/coinPaymentsIPN';
+    request.ipn_url = 'https://wallet.recycoinfx.net/api/v1/ConPayments/coinPaymentsIPN';
     request.currency1 = 'USDT.TRC20';
     request.currency2 = 'USDT.TRC20';
     request.item_name = this.user.user_name;

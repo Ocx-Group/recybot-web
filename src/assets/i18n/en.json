@@ -577,6 +577,14 @@
     },
     "PUBLIC-STORE": {
       "TEXT": "Public Store"
+    },
+    "RECYCOIN-DASHBOARD": {
+      "TITLE": "RecyCoin Information",
+      "USD-VALUE": "USD Value",
+      "TOKEN-AMOUNT": "Token Amount",
+      "MARKET-CAP": "Market Cap",
+      "CHANGE-24H": "24h Change",
+      "TOKEN-CONTRACT": "Contract"
     }
   },
   "BILLING-PURCHASES-PAGE": {

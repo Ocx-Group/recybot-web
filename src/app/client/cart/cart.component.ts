@@ -175,7 +175,7 @@ export class CartComponent implements OnInit, OnDestroy {
       showCancelButton: true,
       confirmButtonText: 'Sí, quiero realizar el pago',
       cancelButtonText: 'No',
-      html: `Por favor, asegúrese de haber leído y aceptado los <a href="https://ecosystemfx.com/wp-content/uploads/2024/01/ECOSYSTEM-V3.pdf" target="_blank">términos y condiciones</a>.`,
+      html: `Por favor, asegúrese de haber leído y aceptado los <a href="https://recycoinfx.com/wp-content/uploads/2024/01/recycoin-V3.pdf" target="_blank">términos y condiciones</a>.`,
       preConfirm: () => {
 
       }
@@ -327,7 +327,7 @@ export class CartComponent implements OnInit, OnDestroy {
     request.buyer_email = this.user.email;
     request.buyer_name = this.user.name + ' ' + this.user.last_name;
     request.item_number = this.user.id.toString();
-    request.ipn_url = 'https://wallet.ecosystemfx.net/api/v1/ConPayments/coinPaymentsIPN';
+    request.ipn_url = 'https://wallet.recycoinfx.net/api/v1/ConPayments/coinPaymentsIPN';
     request.currency1 = 'USDT.TRC20';
     request.currency2 = 'USDT.TRC20';
     request.item_name = this.user.user_name;
