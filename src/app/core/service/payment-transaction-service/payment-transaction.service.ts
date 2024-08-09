@@ -10,7 +10,11 @@ import { Response } from '@app/core/models/response-model/response.model';
 import { ConfirmPaymentTransaction } from '@app/core/models/payment-transaction-model/confirm-payment-transaction';
 const httpOptions = {
 
-  headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': environment.tokens.walletService.toString() }),
+  headers: new HttpHeaders({
+    'Content-Type': 'application/json',
+    'Authorization': environment.tokens.walletService.toString(),
+    'X-Secret-key': environment.tokens.secretKey.toString()
+  }),
 };
 @Injectable({
   providedIn: 'root'

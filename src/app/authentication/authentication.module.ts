@@ -29,6 +29,7 @@ import { MainOptionsComponent } from './main-options/main-options.component';
 import { ConpaymentConfirmationComponent } from './conpayment-confirmation/conpayment-confirmation.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { MaintenancePageComponent } from './maintenance-page/maintenance-page.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 const icons = {
   Facebook,
@@ -63,7 +64,8 @@ const icons = {
     TranslateModule,
     FeatherModule.pick(icons),
     MatSelectCountryModule.forRoot('en'),
-    MatSelectModule
+    MatSelectModule,
+    FontAwesomeModule,
   ]
 
 })

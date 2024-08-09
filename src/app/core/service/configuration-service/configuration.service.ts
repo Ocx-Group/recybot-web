@@ -15,7 +15,11 @@ import { GeneralConfiguration } from '@app/core/models/general-configuration/gen
 
 const httpOptions = {
 
-  headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': environment.tokens.systemConfigurationService.toString() }),
+  headers: new HttpHeaders({
+    'Content-Type': 'application/json',
+    'Authorization': environment.tokens.systemConfigurationService.toString(),
+    'X-Secret-key': environment.tokens.secretKey.toString()
+  }),
 };
 
 @Injectable({

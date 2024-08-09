@@ -10,7 +10,11 @@ import { ProductAttribute } from '@app/core/models/product-attribute-model/produ
 
 const httpOptions = {
 
-  headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': environment.tokens.inventoryService.toString() }),
+  headers: new HttpHeaders({
+    'Content-Type': 'application/json',
+    'Authorization': environment.tokens.inventoryService.toString(),
+    'X-Secret-key': environment.tokens.secretKey.toString()
+  }),
 };
 @Injectable({
   providedIn: 'root',

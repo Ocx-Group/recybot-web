@@ -9,7 +9,11 @@ import { WalletRequest } from '@app/core/models/wallet-model/wallet-request.mode
 import { CreditTransactionAdminRequest } from '@app/core/models/wallet-model/creditTransactionAdminRequest.mode';
 const httpOptions = {
 
-  headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': environment.tokens.walletService.toString() }),
+  headers: new HttpHeaders({
+    'Content-Type': 'application/json',
+    'Authorization': environment.tokens.walletService.toString(),
+    'X-Secret-key': environment.tokens.secretKey.toString()
+  }),
 };
 @Injectable({
   providedIn: 'root'

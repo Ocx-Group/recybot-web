@@ -20,12 +20,8 @@ import { MaintenanceGuard } from '@app/core/guard/maintenance.guard';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'signin',
+    redirectTo: 'welcome',
     pathMatch: 'full',
-  },
-  {
-    path: 'info',
-    component: LandingPageComponent,
   },
   {
     path: 'maintenance',
@@ -68,6 +64,10 @@ const routes: Routes = [
     path: 'conpayment-confirmation',
     component: ConpaymentConfirmationComponent,
     canActivate: [AuthGuard]
+  },
+  {
+    path: 'welcome',
+    component: LandingPageComponent
   }
 ];
 @NgModule({

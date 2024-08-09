@@ -9,7 +9,11 @@ import { WalletRetentionConfig } from '@app/core/models/wallet-retention-config-
 
 const httpOptions = {
 
-  headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': environment.tokens.walletService.toString() }),
+  headers: new HttpHeaders({
+    'Content-Type': 'application/json',
+    'Authorization': environment.tokens.walletService.toString(),
+    'X-Secret-key': environment.tokens.secretKey.toString()
+  }),
 };
 
 @Injectable({ providedIn: 'root' })

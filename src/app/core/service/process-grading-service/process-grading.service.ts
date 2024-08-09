@@ -11,7 +11,11 @@ import { BehaviorSubject, Subject, interval } from 'rxjs';
 
 const httpOptions = {
 
-  headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': environment.tokens.walletService.toString() }),
+  headers: new HttpHeaders({
+    'Content-Type': 'application/json',
+    'Authorization': environment.tokens.walletService.toString(),
+    'X-Secret-key': environment.tokens.secretKey.toString()
+  }),
 };
 
 @Injectable({ providedIn: 'root' })

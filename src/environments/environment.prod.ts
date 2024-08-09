@@ -20,6 +20,7 @@ export const environment = {
     systemConfigurationService: 'eco-key8ZgMhRytu-Jrv1FU1rZSw2jM-FaBP!ou!sJNBITT3tA63GBrrQiVe3zvS',
     inventoryService: 'eco-keyLd5DU5faBWLfLrE1ATUK0c1qpvSci1x5TvFkDVw3FEM7JO30Jm!zXyB4w',
     walletService: 'eco-keypFvQnUOko=r4/G!chia5Fe2-6OU?2YNYqAPWlaiN!uYrZIdwoUNv9P4d7',
+    secretKey:'eco-keyhFvQoUOk=r6/F!chia2Fe1-8OU?4YNWqAVWlaiN!tYrWIdvoUMv8Q6d6'
   },
   coinPaymentConfiguration: {
     publicApiKey: '2a4ae9a2a58b59f4cf3cecf76e89f04155ccdcca4dc0c76b8665cf852cc127c2',

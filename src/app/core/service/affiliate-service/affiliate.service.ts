@@ -15,8 +15,11 @@ import { CreateAffiliate } from '@app/core/models/user-affiliate-model/create-af
 import { RequestResetPassword } from '@app/core/models/user-affiliate-model/request-reset-password-model';
 
 const httpOptions = {
-
-  headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': environment.tokens.accountService.toString() }),
+  headers: new HttpHeaders({
+    'Content-Type': 'application/json',
+    Authorization: environment.tokens.accountService.toString(),
+    'X-Secret-key': environment.tokens.secretKey.toString()
+  }),
 };
 @Injectable({
   providedIn: 'root',

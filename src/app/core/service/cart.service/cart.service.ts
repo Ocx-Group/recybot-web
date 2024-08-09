@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Product } from '@app/core/models/product-model/product.model';
 import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
 import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject, map } from 'rxjs';
