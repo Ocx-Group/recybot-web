@@ -19,6 +19,6 @@ export class LogoService {
   }
 
   getLogoSrc(): string {
-    return this.isDarkTheme.value ? 'assets/images/logo2.png' : 'assets/images/Logo-AI.png';
+    return this.isDarkTheme.value ? 'assets/images/logo-recy.png' : 'assets/images/logo-recy.png';
   }
 }

@@ -1,5 +1,6 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -23,6 +24,12 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class LandingPageComponent implements OnInit {
   isLoginOpen = false;
+
+  constructor(private router: Router) { }
+
+  navigateToLogin() {
+    this.router.navigate(['/signin']);
+  }
 
   ngOnInit() {
   }

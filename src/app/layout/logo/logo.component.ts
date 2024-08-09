@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-logo',
   templateUrl: './logo.component.html',
-  styleUrls: ['./logo.component.sass'],
+  styleUrls: ['./logo.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class LogoComponent implements OnInit, OnDestroy {
