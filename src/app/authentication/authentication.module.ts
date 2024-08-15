@@ -1,4 +1,3 @@
-
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -30,6 +29,8 @@ import { ConpaymentConfirmationComponent } from './conpayment-confirmation/conpa
 import { TranslateModule } from '@ngx-translate/core';
 import { MaintenancePageComponent } from './maintenance-page/maintenance-page.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { WhitePaperComponent } from './white-paper/white-paper.component';
+import { NgbCollapse } from '@ng-bootstrap/ng-bootstrap';
 
 const icons = {
   Facebook,
@@ -54,7 +55,8 @@ const icons = {
     EmailConfirmationComponent,
     MainOptionsComponent,
     MaintenancePageComponent,
-    ConpaymentConfirmationComponent],
+    ConpaymentConfirmationComponent,
+    WhitePaperComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -66,6 +68,7 @@ const icons = {
     MatSelectCountryModule.forRoot('en'),
     MatSelectModule,
     FontAwesomeModule,
+    NgbCollapse
   ]
 
 })

@@ -1,0 +1,96 @@
+.main-container {
+  background-image: url('/assets/images/background-info.png');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  min-height: 100vh;
+  padding: 20px;
+  position: relative;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+}
+
+.main-content, .feature-section, .cta-section {
+  position: relative;
+  z-index: 2;
+}
+
+.neon-text {
+  color: #ffffff;
+  text-shadow: 0 0 5px #88d498, 0 0 10px #88d498, 0 0 15px #88d498;
+}
+
+.title {
+  font-size: 2.5em;
+  margin-bottom: 2px; /* Reducido aún más el margen inferior del título */
+}
+
+.subtitle {
+  font-size: 1.2em;
+  margin-bottom: 2px; /* Reducido aún más el margen inferior del subtítulo */
+}
+
+.feature-section {
+  margin-top: 5px; /* Reducido el margen superior de las secciones */
+}
+
+.feature-section .card {
+  background: rgba(17, 75, 95, 0.7);
+  border: 1px solid #88d498;
+  border-radius: 10px;
+  transition: transform 0.3s ease;
+  margin-top: 2px; /* Reducido el margen superior de cada tarjeta */
+}
+
+.feature-item:hover {
+  transform: translateY(-5px);
+}
+
+.cta-section .neon-button {
+  border: 1px solid #88d498;
+  color: #ffffff;
+  background: rgba(26, 147, 111, 0.3);
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 5px;
+  font-size: 1em;
+}
+
+.cta-section .neon-button:hover {
+  background-color: #88d498;
+  color: #114b5f;
+  box-shadow: 0 0 10px #88d498, 0 0 20px #88d498;
+}
+
+/* Efecto de escritura */
+.typing-effect {
+  overflow: hidden; /* Asegura que el contenido no se revele hasta que esté completamente escrito */
+  border-right: .15em solid #88d498; /* Efecto de cursor */
+  white-space: nowrap; /* Mantiene el contenido en una sola línea */
+  margin: 0 auto; /* Da ese efecto de desplazamiento mientras se escribe */
+  letter-spacing: .15em; /* Espaciado entre letras */
+  animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;
+}
+
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+
+@keyframes blink-caret {
+  from, to { border-color: transparent }
+  50% { border-color: #88d498; }
+}

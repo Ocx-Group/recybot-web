@@ -20,7 +20,7 @@ import { LogoService } from '@app/core/service/logo-service/logo.service';
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
-  styleUrls: ['./signup.component.sass'],
+  styleUrls: ['./signup.component.scss'],
 })
 export class SignupComponent implements OnInit {
   registerForm: FormGroup;

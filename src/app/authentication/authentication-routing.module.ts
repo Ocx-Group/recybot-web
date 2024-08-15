@@ -16,6 +16,7 @@ import { MaintenancePageComponent } from './maintenance-page/maintenance-page.co
 import { environment } from '@environments/environment';
 import { AuthGuardAdmin } from '@app/core/guard/auth.guard.admin';
 import { MaintenanceGuard } from '@app/core/guard/maintenance.guard';
+import { WhitePaperComponent } from './white-paper/white-paper.component';
 
 const routes: Routes = [
   {
@@ -68,6 +69,10 @@ const routes: Routes = [
   {
     path: 'welcome',
     component: LandingPageComponent
+  },
+  {
+    path: 'white-papper',
+    component: WhitePaperComponent
   }
 ];
 @NgModule({

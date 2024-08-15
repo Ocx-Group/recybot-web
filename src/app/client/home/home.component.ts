@@ -48,7 +48,7 @@ export class HomeComponent {
     tokenAmount: 5000000,
     marketCap: 10000000,
     change24h: 5.75,
-    contractAddress: "0xBEFF1E6526aaee005C8CA1d6A5F8bb4577Df9CF4"
+    contractAddress: "0x7c482FF834dfb546A8E48C14f3C34652E9826723"
   };
 
   private chart: am4maps.MapChart;

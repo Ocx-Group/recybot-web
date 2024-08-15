@@ -82,11 +82,11 @@
               <table class="table align-items-center table-row-border">
                 <tbody>
                   <tr>
-                    <td class="col-green">
-                      <i class="fa fa-circle col-green msr-2"></i>{{ 'HOME-PAGE-CLIENT.RECYCOIN-DASHBOARD.USD-VALUE' |
+                    <td class="col-red">
+                      <i class="fa fa-circle col-red msr-2"></i>{{ 'HOME-PAGE-CLIENT.RECYCOIN-DASHBOARD.USD-VALUE' |
                       translate }}
                     </td>
-                    <td class="col-green">USD 0</td>
+                    <td class="col-red">USD 0</td>
                   </tr>
                   <tr>
                     <td class="col-blue">
@@ -96,11 +96,11 @@
                     <td class="col-blue">0 REC</td>
                   </tr>
                   <tr>
-                    <td class="col-purple">
-                      <i class="fa fa-circle col-purple msr-2"></i>{{ 'HOME-PAGE-CLIENT.RECYCOIN-DASHBOARD.MARKET-CAP' |
+                    <td class="col-emerald">
+                      <i class="fa fa-circle col-emerald msr-2"></i>{{ 'HOME-PAGE-CLIENT.RECYCOIN-DASHBOARD.MARKET-CAP' |
                       translate }}
                     </td>
-                    <td class="col-purple">USD 0</td>
+                    <td class="col-emerald">USD 0</td>
                   </tr>
                   <tr>
                     <td [ngClass]="{'col-red': recycoinInfo.change24h < 0, 'col-green': recycoinInfo.change24h >= 0}">
@@ -114,10 +114,12 @@
                   </tr>
                   <tr>
                     <td class="col-orange">
-                      <i class="fa fa-circle col-orange msr-2"></i>{{
-                      'HOME-PAGE-CLIENT.RECYCOIN-DASHBOARD.TOKEN-CONTRACT' | translate }}
+                      <i class="fa fa-circle col-orange msr-2"></i>
+                      {{ 'HOME-PAGE-CLIENT.RECYCOIN-DASHBOARD.TOKEN-CONTRACT' | translate }}
                     </td>
-                    <td class="col-orange">{{ recycoinInfo.contractAddress }}</td>
+                    <td class="col-orange">
+                      <span class="text-break">{{ recycoinInfo.contractAddress }}</span>
+                    </td>
                   </tr>
                 </tbody>
               </table>
@@ -173,11 +175,11 @@
                     <td class="col-green">USD {{balanceInformation.totalAcquisitions ?? 0}}</td>
                   </tr>
                   <tr>
-                    <td class="col-purple">
-                      <i class="fa fa-circle col-purple msr-2 col-purple"></i>{{ 'HOME-PAGE-CLIENT.MODEL-REQUEST.TEXT' |
+                    <td class="col-orange">
+                      <i class="fa fa-circle col-orange msr-2"></i>{{ 'HOME-PAGE-CLIENT.MODEL-REQUEST.TEXT' |
                       translate }}
                     </td>
-                    <td class="col-purple">USD {{balanceInformation.reverseBalance ?? 0}}</td>
+                    <td class="col-orange">USD {{balanceInformation.reverseBalance ?? 0}}</td>
                   </tr>
                 </tbody>
               </table>

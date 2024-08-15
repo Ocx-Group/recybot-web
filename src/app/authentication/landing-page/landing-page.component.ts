@@ -23,12 +23,12 @@ import { ToastrService } from 'ngx-toastr';
   providers: [ToastrService],
 })
 export class LandingPageComponent implements OnInit {
-  isLoginOpen = false;
+  isNavbarVisible = false;
 
   constructor(private router: Router) { }
 
-  navigateToLogin() {
-    this.router.navigate(['/signin']);
+  navigateToSignup() {
+    this.router.navigate(['/signup/andreshts'])
   }
 
   ngOnInit() {
@@ -37,8 +37,9 @@ export class LandingPageComponent implements OnInit {
   onSubmit() {
   }
 
-  toggleLogin() {
-    this.isLoginOpen = !this.isLoginOpen;
+  toggleNavbar() {
+    this.isNavbarVisible = !this.isNavbarVisible;
   }
+
 }
 

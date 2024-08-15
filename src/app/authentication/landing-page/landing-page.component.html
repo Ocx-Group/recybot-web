@@ -1,13 +1,16 @@
 <main class="main-container">
   <nav class="navbar">
     <a class="navbar-brand neon-text" href="#">RecyCoin</a>
-    <div class="navbar-nav">
+    <button class="navbar-toggle" (click)="toggleNavbar()">
+      <span class="navbar-toggle-icon"></span>
+    </button>
+    <div class="navbar-nav" [class.show]="isNavbarVisible">
       <a class="nav-link hover-glow" href="#">Producto</a>
       <a class="nav-link hover-glow" href="#">Historia</a>
       <a class="nav-link hover-glow" href="#">Precios</a>
       <a class="nav-link hover-glow" href="#">Docs</a>
-      <a class="nav-link hover-glow" href="#">Wallpaper</a>
-      <button class="btn neon-button" (click)="navigateToLogin()">Conectar</button>
+      <a class="nav-link hover-glow" href="#">White Papper</a>
+      <button class="btn neon-button" routerLink="/signin">Conectar</button>
     </div>
   </nav>
 
