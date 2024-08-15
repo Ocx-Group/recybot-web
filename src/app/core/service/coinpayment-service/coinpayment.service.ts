@@ -11,7 +11,7 @@ import { CreatePayment } from '../../models/coinpayment-model/create-payment.mod
 
 const httpOptions = {
 
-  headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': environment.tokens.walletService.toString(), 'X-Secret-key': environment.tokens.secretKey.toString() }),
+  headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': environment.tokens.walletService.toString(), 'X-Client-ID': environment.tokens.clientID.toString() }),
 };
 
 

@@ -11,7 +11,7 @@ const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type': 'application/json',
     'Authorization': environment.tokens.systemConfigurationService.toString(),
-    'X-Secret-key': environment.tokens.secretKey.toString()
+    'X-Client-ID': environment.tokens.clientID.toString()
   }),
 };
 
