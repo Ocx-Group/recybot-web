@@ -1,0 +1,23 @@
+<div class="recycoin-preview-wrapper">
+  <div class="recycoin-preview">
+    <h2 class="neon-text title">Explore los diferentes paquetes de Recycoin</h2>
+    <div class="package-grid">
+      <div class="package-card" *ngFor="let item of productList">
+        <div class="card-content">
+          <div class="card-front">
+            <div class="image-container">
+              <img [src]="item.image" alt="RecyCoin Package" class="package-image">
+              <div class="glow-effect"></div>
+            </div>
+            <h3 class="package-name neon-text">{{ item.name }}</h3>
+            <p class="package-price neon-text">{{ item.salePrice | currency }}</p>
+          </div>
+          <div class="card-back">
+            <p class="package-description">{{ item.description }}</p>
+            <button class="buy-button neon-text" routerLink="/signin">Comprar ahora</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

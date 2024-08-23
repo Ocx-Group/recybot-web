@@ -13,7 +13,7 @@
               </div>
               <div>
                 <h6>FORMULARIO DE REGISTRO</h6>
-                <strong>El nombre de su patrocinador es: </strong>
+                <strong *ngIf="sponsor != ''">El nombre de su patrocinador es: </strong>
                 <label [innerText]="sponsor"></label>
               </div>
             </div>
@@ -80,14 +80,14 @@
                             The repit password is required
                           </div>
                         </div>
-                        <div *ngIf="submitted && registerForm.hasError('passwordMismatch')" class="invalid-feedback">
-                          <div *ngIf="registerForm.get('repitpassword').touched">
+                        <div *ngIf="submitted && registerForm?.hasError('passwordMismatch')" class="invalid-feedback">
+                          <div *ngIf="registerForm?.get('repitpassword').touched">
                             Passwords do not match
                           </div>
                         </div>
-                        <div *ngIf="submitted && registerForm.get('password').hasError('pattern')"
+                        <div *ngIf="submitted && registerForm?.get('password').hasError('pattern')"
                           class="invalid-feedback">
-                          <div *ngIf="registerForm.get('repitpassword').touched">
+                          <div *ngIf="registerForm?.get('repitpassword').touched">
                             Password must contain at least one digit, one lowercase letter, one uppercase letter, one
                             special character and at least 8 characters.
                           </div>

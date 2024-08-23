@@ -31,6 +31,7 @@ import { MaintenancePageComponent } from './maintenance-page/maintenance-page.co
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { WhitePaperComponent } from './white-paper/white-paper.component';
 import { NgbCollapse } from '@ng-bootstrap/ng-bootstrap';
+import { ProductsPreviewComponent } from './products-preview/products-preview.component';
 
 const icons = {
   Facebook,
@@ -56,7 +57,8 @@ const icons = {
     MainOptionsComponent,
     MaintenancePageComponent,
     ConpaymentConfirmationComponent,
-    WhitePaperComponent],
+    WhitePaperComponent,
+    ProductsPreviewComponent],
   imports: [
     CommonModule,
     FormsModule,

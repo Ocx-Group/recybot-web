@@ -15,7 +15,7 @@ export class ConfigService {
     this.configData = {
       layout: {
         variant: 'light', // options:  light & dark
-        theme_color: 'white', // options:  white, cyan, black, purple, orange, green, red
+        theme_color: 'green', // Aquí defines el tema verde
         sidebar: {
           collapsed: false, // options:  true & false
           backgroundColor: 'light', // options:  light & dark
@@ -23,4 +23,5 @@ export class ConfigService {
       },
     };
   }
+
 }
