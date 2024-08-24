@@ -1,332 +1,332 @@
-.brand-wrapper {
-  margin-bottom: 19px;
+// .brand-wrapper {
+//   margin-bottom: 19px;
 
-  .logo {
-    height: 110px;
-  }
-}
+//   .logo {
+//     height: 110px;
+//   }
+// }
 
-main {
-  background-color: #0d111d;
-}
+// main {
+//   background-color: #0d111d;
+// }
 
-.form-card-container {
-  position: absolute;
-  top: 60%;
-  left: 50%;
-  width: 300px;
-  background: rgba(255, 255, 255, 0.19);
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: background 0.2s ease-in-out;
-  transform: translate(-50%, -50%);
-}
-
-
-.background-image {
-  background-image: url('../../../assets/images/molino5.jpg');
-  background-size: cover;
-  height: 70vh;
-  justify-content: center;
-}
-
-.auth-card {
-  left: 50%;
-  top: 50%;
-  width: 380px;
-  position: absolute;
-  transform: translate3d(-50%, -50%, 0);
-}
-
-.login-card {
-  border: 0;
-  border-radius: 27.5px;
-  box-shadow: 0 10px 30px 0 rgba(172, 168, 168, 0.43);
-  overflow: hidden;
-  margin-bottom: 0px;
-
-  .login-card-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-  }
+// .form-card-container {
+//   position: absolute;
+//   top: 60%;
+//   left: 50%;
+//   width: 300px;
+//   background: rgba(255, 255, 255, 0.19);
+//   padding: 20px;
+//   border-radius: 8px;
+//   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+//   transition: background 0.2s ease-in-out;
+//   transform: translate(-50%, -50%);
+// }
 
 
-  &-img {
-    border-radius: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
+// .background-image {
+//   background-image: url('../../../assets/images/molino5.jpg');
+//   background-size: cover;
+//   height: 70vh;
+//   justify-content: center;
+// }
 
-  .login-body {
-    padding: 100px;
-    position: relative;
-    z-index: 2;
+// .auth-card {
+//   left: 50%;
+//   top: 50%;
+//   width: 380px;
+//   position: absolute;
+//   transform: translate3d(-50%, -50%, 0);
+// }
 
-    @media (max-width: 1180px) {
-      padding: 30px 0px 30px 0px;
-    }
+// .login-card {
+//   border: 0;
+//   border-radius: 27.5px;
+//   box-shadow: 0 10px 30px 0 rgba(172, 168, 168, 0.43);
+//   overflow: hidden;
+//   margin-bottom: 0px;
 
-    @media (max-width: 820px) {
-      padding: 30px 0px 30px 0px;
-    }
+//   .login-card-img {
+//     width: 100%;
+//     height: 100%;
+//     object-fit: cover;
+//     object-position: center;
+//   }
 
-    @media (max-width: 422px) {
-      padding: 60px 0px 60px 0px;
-    }
 
-    .logo-name {
-      vertical-align: middle;
-      font-size: 38px;
-      font-weight: 700;
-      margin: 0px 10px;
-    }
-  }
+//   &-img {
+//     border-radius: 0;
+//     width: 100%;
+//     height: 100%;
+//     object-fit: cover;
+//   }
 
-  .forgot-body {
-    padding: 60px;
-    min-height: 600px;
+//   .login-body {
+//     padding: 100px;
+//     position: relative;
+//     z-index: 2;
 
-    @media (max-width: 422px) {
-      padding: 35px 24px;
-    }
+//     @media (max-width: 1180px) {
+//       padding: 30px 0px 30px 0px;
+//     }
 
-    .logo-name {
-      vertical-align: middle;
-      font-size: 38px;
-      font-weight: 700;
-      margin: 0px 10px;
-    }
-  }
+//     @media (max-width: 820px) {
+//       padding: 30px 0px 30px 0px;
+//     }
 
-  &-description {
-    font-size: 25px;
-    color: #000;
-    font-weight: normal;
-    margin-bottom: 23px;
-  }
+//     @media (max-width: 422px) {
+//       padding: 60px 0px 60px 0px;
+//     }
 
-  form {
-    margin: 0px 60px;
-  }
+//     .logo-name {
+//       vertical-align: middle;
+//       font-size: 38px;
+//       font-weight: 700;
+//       margin: 0px 10px;
+//     }
+//   }
 
-  .login-icons {
-    position: absolute;
-    top: 50%;
-    left: 10px;
-    transform: translateY(-50%);
-    color: #161c2d;
-    z-index: 10;
-  }
+//   .forgot-body {
+//     padding: 60px;
+//     min-height: 600px;
 
-  .form-control {
-    border: 1px solid #d5dae2;
-    padding: 15px 20px 15px 35px;
-    margin-bottom: 20px;
-    font-size: 13px;
-    font-weight: normal;
+//     @media (max-width: 422px) {
+//       padding: 35px 24px;
+//     }
 
-    &::placeholder {
-      color: #919aa3;
-    }
-  }
+//     .logo-name {
+//       vertical-align: middle;
+//       font-size: 38px;
+//       font-weight: 700;
+//       margin: 0px 10px;
+//     }
+//   }
 
-  .auth-labels {
-    color: #ffffff;
-  }
+//   &-description {
+//     font-size: 25px;
+//     color: #000;
+//     font-weight: normal;
+//     margin-bottom: 23px;
+//   }
 
-  .particles-container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 0;
-  }
+//   form {
+//     margin: 0px 60px;
+//   }
 
-  .btn-primary {
-    background-color: #00acac;
-  }
+//   .login-icons {
+//     position: absolute;
+//     top: 50%;
+//     left: 10px;
+//     transform: translateY(-50%);
+//     color: #161c2d;
+//     z-index: 10;
+//   }
 
-  .login-btn {
-    padding: 13px 20px 12px;
-    background-color: #000;
-    border-radius: 4px;
-    font-size: 17px;
-    font-weight: bold;
-    line-height: 20px;
-    color: #fff;
-    margin-bottom: 24px;
+//   .form-control {
+//     border: 1px solid #d5dae2;
+//     padding: 15px 20px 15px 35px;
+//     margin-bottom: 20px;
+//     font-size: 13px;
+//     font-weight: normal;
 
-    &:hover {
-      border: 1px solid #000;
-      background-color: #00acac;
-      color: #000;
-    }
-  }
+//     &::placeholder {
+//       color: #919aa3;
+//     }
+//   }
 
-  .forgot-password-link {
-    font-size: 14px;
-    color: #919aa3;
-    margin-bottom: 12px;
-  }
+//   .auth-labels {
+//     color: #ffffff;
+//   }
 
-  &-footer-text {
-    font-size: 16px;
-    color: #0d2366;
+//   .particles-container {
+//     position: absolute;
+//     top: 0;
+//     left: 0;
+//     width: 100%;
+//     height: 100%;
+//     z-index: 0;
+//   }
 
-    @media (max-width: 767px) {
-      margin-bottom: 24px;
-    }
-  }
+//   .btn-primary {
+//     background-color: #00acac;
+//   }
 
-  &-footer-nav {
-    a {
-      font-size: 14px;
-      color: #919aa3;
-    }
-  }
+//   .login-btn {
+//     padding: 13px 20px 12px;
+//     background-color: #000;
+//     border-radius: 4px;
+//     font-size: 17px;
+//     font-weight: bold;
+//     line-height: 20px;
+//     color: #fff;
+//     margin-bottom: 24px;
 
-  .login-card-img {
-    border-right: 1px solid #f3f3f3;
-  }
-}
+//     &:hover {
+//       border: 1px solid #000;
+//       background-color: #00acac;
+//       color: #000;
+//     }
+//   }
 
-.register-card {
-  border: 0;
-  border-radius: 27.5px;
-  box-shadow: 0 10px 30px 0 rgba(172, 168, 168, 0.43);
-  overflow: hidden;
-  margin-bottom: 0px !important;
+//   .forgot-password-link {
+//     font-size: 14px;
+//     color: #919aa3;
+//     margin-bottom: 12px;
+//   }
 
-  &-img {
-    border-radius: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
+//   &-footer-text {
+//     font-size: 16px;
+//     color: #0d2366;
 
-  .register-body {
-    padding: 60px;
+//     @media (max-width: 767px) {
+//       margin-bottom: 24px;
+//     }
+//   }
 
-    @media (max-width: 422px) {
-      padding: 35px 24px;
-    }
+//   &-footer-nav {
+//     a {
+//       font-size: 14px;
+//       color: #919aa3;
+//     }
+//   }
 
-    .logo-name {
-      vertical-align: middle;
-      font-size: 38px;
-      font-weight: 700;
-      margin: 0px 10px;
-    }
-  }
+//   .login-card-img {
+//     border-right: 1px solid #f3f3f3;
+//   }
+// }
 
-  &-description {
-    font-size: 25px;
-    color: #000;
-    font-weight: normal;
-    margin-bottom: 23px;
-  }
+// .register-card {
+//   border: 0;
+//   border-radius: 27.5px;
+//   box-shadow: 0 10px 30px 0 rgba(172, 168, 168, 0.43);
+//   overflow: hidden;
+//   margin-bottom: 0px !important;
 
-  form {
-    margin: 0px 20px;
-  }
+//   &-img {
+//     border-radius: 0;
+//     width: 100%;
+//     height: 100%;
+//     object-fit: cover;
+//   }
 
-  .form-control {
-    border: 1px solid #d5dae2;
-    padding: 15px 25px;
-    font-size: 13px;
-    font-weight: normal;
+//   .register-body {
+//     padding: 60px;
 
-    &::placeholder {
-      color: #919aa3;
-    }
-  }
+//     @media (max-width: 422px) {
+//       padding: 35px 24px;
+//     }
 
-  .register-btn {
-    padding: 13px 20px 12px;
-    background-color: #000;
-    border-radius: 4px;
-    font-size: 17px;
-    font-weight: bold;
-    line-height: 20px;
-    color: #fff;
-    margin-bottom: 24px;
+//     .logo-name {
+//       vertical-align: middle;
+//       font-size: 38px;
+//       font-weight: 700;
+//       margin: 0px 10px;
+//     }
+//   }
 
-    &:hover {
-      border: 1px solid #000;
-      background-color: transparent;
-      color: #000;
-    }
-  }
+//   &-description {
+//     font-size: 25px;
+//     color: #000;
+//     font-weight: normal;
+//     margin-bottom: 23px;
+//   }
 
-  &-footer-text {
-    font-size: 16px;
-    color: #0d2366;
+//   form {
+//     margin: 0px 20px;
+//   }
 
-    @media (max-width: 767px) {
-      margin-bottom: 24px;
-    }
-  }
+//   .form-control {
+//     border: 1px solid #d5dae2;
+//     padding: 15px 25px;
+//     font-size: 13px;
+//     font-weight: normal;
 
-  &-footer-nav {
-    a {
-      font-size: 14px;
-      color: #919aa3;
-    }
-  }
+//     &::placeholder {
+//       color: #919aa3;
+//     }
+//   }
 
-  .register-card-img {
-    border-right: 1px solid #f3f3f3;
-  }
-}
+//   .register-btn {
+//     padding: 13px 20px 12px;
+//     background-color: #000;
+//     border-radius: 4px;
+//     font-size: 17px;
+//     font-weight: bold;
+//     line-height: 20px;
+//     color: #fff;
+//     margin-bottom: 24px;
 
-.login-icons {
-  position: absolute;
-  top: 37px;
-  left: 18px;
-  height: 16px !important;
-  width: 16px !important;
-  color: #161c2d;
-}
+//     &:hover {
+//       border: 1px solid #000;
+//       background-color: transparent;
+//       color: #000;
+//     }
+//   }
 
-.social-icon li a {
-  color: #3c4858;
-  border: 1px solid #3c4858;
-  display: inline-block;
-  height: 32px;
-  width: 32px;
-  line-height: 28px;
-  text-align: center;
-  -webkit-transition: all 0.4s ease;
-  transition: all 0.4s ease;
-  overflow: hidden;
-  position: relative;
-}
+//   &-footer-text {
+//     font-size: 16px;
+//     color: #0d2366;
 
-.social-icon li a:hover {
-  background-color: #2f55d4;
-  border-color: #2f55d4 !important;
-  color: #ffffff !important;
-}
+//     @media (max-width: 767px) {
+//       margin-bottom: 24px;
+//     }
+//   }
 
-.sm-icon {
-  height: 16px !important;
-  width: 16px !important;
-}
+//   &-footer-nav {
+//     a {
+//       font-size: 14px;
+//       color: #919aa3;
+//     }
+//   }
 
-.auth-form-btn {
-  width: 100%;
-  height: 50px;
-  background-color: #00acac;
-  color: #fff;
-  text-transform: uppercase;
-  transition: all 0.4s;
-}
+//   .register-card-img {
+//     border-right: 1px solid #f3f3f3;
+//   }
+// }
 
-.register-container {
-  max-width: 1140px;
-}
+// .login-icons {
+//   position: absolute;
+//   top: 37px;
+//   left: 18px;
+//   height: 16px !important;
+//   width: 16px !important;
+//   color: #161c2d;
+// }
+
+// .social-icon li a {
+//   color: #3c4858;
+//   border: 1px solid #3c4858;
+//   display: inline-block;
+//   height: 32px;
+//   width: 32px;
+//   line-height: 28px;
+//   text-align: center;
+//   -webkit-transition: all 0.4s ease;
+//   transition: all 0.4s ease;
+//   overflow: hidden;
+//   position: relative;
+// }
+
+// .social-icon li a:hover {
+//   background-color: #2f55d4;
+//   border-color: #2f55d4 !important;
+//   color: #ffffff !important;
+// }
+
+// .sm-icon {
+//   height: 16px !important;
+//   width: 16px !important;
+// }
+
+// .auth-form-btn {
+//   width: 100%;
+//   height: 50px;
+//   background-color: #00acac;
+//   color: #fff;
+//   text-transform: uppercase;
+//   transition: all 0.4s;
+// }
+
+// .register-container {
+//   max-width: 1140px;
+// }

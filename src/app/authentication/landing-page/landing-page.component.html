@@ -5,9 +5,8 @@
       <span class="navbar-toggle-icon"></span>
     </button>
     <div class="navbar-nav" [class.show]="isNavbarVisible">
-      <a class="nav-link hover-glow" href="#">Producto</a>
+      <a class="nav-link hover-glow" href="#" routerLink="/products-preview">Producto</a>
       <a class="nav-link hover-glow" href="#">Historia</a>
-      <a class="nav-link hover-glow" href="#">Precios</a>
       <a class="nav-link hover-glow" href="#">Docs</a>
       <a class="nav-link hover-glow" href="#">White Papper</a>
       <button class="btn neon-button" routerLink="/signin">Conectar</button>
@@ -42,7 +41,7 @@
   <div class="cta-section">
     <button class="btn neon-button">Saber Más</button>
     <button class="btn neon-button">Contáctanos</button>
-    <button class="btn neon-button">Crear Cuenta</button>
+    <button class="btn neon-button" routerLink="/signup">Crear Cuenta</button>
     <button class="btn neon-button">Aprende Más</button>
   </div>
 </main>

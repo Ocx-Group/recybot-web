@@ -17,6 +17,7 @@ import { environment } from '@environments/environment';
 import { AuthGuardAdmin } from '@app/core/guard/auth.guard.admin';
 import { MaintenanceGuard } from '@app/core/guard/maintenance.guard';
 import { WhitePaperComponent } from './white-paper/white-paper.component';
+import { ProductsPreviewComponent } from './products-preview/products-preview.component';
 
 const routes: Routes = [
   {
@@ -38,6 +39,10 @@ const routes: Routes = [
     canActivate: [MaintenanceGuard]
   },
   {
+    path: 'signup',
+    component: SignupComponent
+  },
+  {
     path: 'signup/:key',
     component: SignupComponent
   },
@@ -46,7 +51,7 @@ const routes: Routes = [
     component: ForgotComponent,
   },
   {
-    path: 'reset/:verificationCode',
+    path: 'reset',
     component: ResetComponent,
   },
   {
@@ -73,6 +78,10 @@ const routes: Routes = [
   {
     path: 'white-papper',
     component: WhitePaperComponent
+  },
+  {
+    path: 'products-preview',
+    component: ProductsPreviewComponent
   }
 ];
 @NgModule({

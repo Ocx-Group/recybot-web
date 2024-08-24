@@ -45,19 +45,14 @@ export class SignupComponent implements OnInit {
     private toastr: ToastrService,
     private logoService: LogoService
   ) {
-    this.key = this.activatedRoute.snapshot.params.key;
-    this.side = this.user.side.toString();
-    if (this.side === null) {
-      this.router.navigate(['/signin']);
+    this.key = this.activatedRoute.snapshot.params.key || '';
+    this.side = this.user.side?.toString() || '';
+
+    if (this.key) {
+      this.loadValidations();
+      this.getUserByUsername(this.key);
     }
-    if (this.key === null) {
-      this.router.navigate(['/signin']);
-    }
-    if (this.side !== '0' && this.side !== '1') {
-      this.router.navigate(['/signin']);
-    }
-    this.loadValidations();
-    this.getUserByUsername(this.key);
+
     this.fetchCountry();
   }
 
@@ -69,6 +64,7 @@ export class SignupComponent implements OnInit {
 
   ngOnInit(): void {
     this.getLogoUrl();
+    this.loadValidations();
   }
 
   onCountrySelected(countryIso: any) {
@@ -107,6 +103,9 @@ export class SignupComponent implements OnInit {
   }
 
   getUserByUsername(key: string) {
+    if (!key)
+      return;
+
     this.affiliateService.getAffiliateByUserName(key).subscribe(
       (user: UserAffiliate) => {
         if (user !== null) {
@@ -139,8 +138,6 @@ export class SignupComponent implements OnInit {
       this.showError("Los terminos y condiciones son requeridos.");
       return;
     }
-
-
 
     let user = new CreateAffiliate();
 

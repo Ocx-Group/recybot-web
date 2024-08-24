@@ -543,7 +543,7 @@
       "TEXT": "Información Modelo 1"
     },
     "INFORMATION-2": {
-      "TEXT": "Información Modelo 2"
+      "TEXT": "Balances Recycoin"
     },
     "SERVICE-BALANCE": {
       "TEXT": "Saldo de servicios"
@@ -555,10 +555,10 @@
       "TEXT": "Total Pagado"
     },
     "TOTAL-ACQUISITIONS": {
-      "TEXT": "Total Adquisiciones"
+      "TEXT": "Mis Recycoins"
     },
     "MODEL-REQUEST": {
-      "TEXT": "Solicitud de modelo"
+      "TEXT": "Ofertar Recycoins"
     },
     "TITTLE-FIRST-CHART": {
       "TEXT": "Afiliados registrados"
@@ -585,8 +585,8 @@
       "TITLE": "Información de RecyCoin",
       "USD-VALUE": "Valor en USD",
       "TOKEN-AMOUNT": "Cantidad de tokens",
-      "MARKET-CAP": "Capitalización de mercado",
-      "CHANGE-24H": "Cambio en 24 horas",
+      "MARKET-CAP": "Venta pública",
+      "CHANGE-24H": "Total tokens en preventa",
       "TOKEN-CONTRACT": "Contrato"
     }
   },

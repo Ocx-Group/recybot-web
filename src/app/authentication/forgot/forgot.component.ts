@@ -17,8 +17,7 @@ export class ForgotComponent implements OnInit {
 
   ngOnInit(): void {
     this.initForgotPassword();
-    particlesJS.load('particles-js', 'assets/particles/particles.json', function () {
-    });
+
   }
 
   get create_forgot_controls(): { [key: string]: AbstractControl } {

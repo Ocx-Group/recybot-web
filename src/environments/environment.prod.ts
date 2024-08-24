@@ -3,7 +3,7 @@ import { FirebaseOptions } from '@firebase/app-types';
 export const environment = {
   production: true,
   apis: {
-    apiUrl: 'https://ecosystemfx.net/',
+    apiUrl: 'https://recycoin.net/',
     accountService: 'https://account.ecosystemfx.net/api/v1',
     accountServiceSignalR: 'https://account.ecosystemfx.net/ticketHub',
     systemConfigurationService: 'https://configuration.ecosystemfx.net/api/v1',
