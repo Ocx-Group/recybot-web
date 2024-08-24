@@ -58,7 +58,7 @@ export const ROUTES: RouteInfo[] = [
   // },
   {
     path: '/app/recycoin',
-    title: 'Recycoin',
+    title: 'Comprar Recycoin',
     iconType: 'feather',
     icon: 'shopping-cart',
     class: '',

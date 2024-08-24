@@ -540,7 +540,7 @@
       "TEXT": "Information Model 1"
     },
     "INFORMATION-2": {
-      "TEXT": "Recycoin Rewards"
+      "TEXT": "Balance Recycoin"
     },
     "SERVICE-BALANCE": {
       "TEXT": "Service Balance"
@@ -552,10 +552,10 @@
       "TEXT": "Total Paid"
     },
     "TOTAL-ACQUISITIONS": {
-      "TEXT": "Total Acquisitions"
+      "TEXT": "My Recycoins"
     },
     "MODEL-REQUEST": {
-      "TEXT": "Refund"
+      "TEXT": "Offer Recycoins"
     },
     "TITTLE-FIRST-CHART": {
       "TEXT": "Affiliates Registered"
@@ -582,8 +582,8 @@
       "TITLE": "RecyCoin Information",
       "USD-VALUE": "USD Value",
       "TOKEN-AMOUNT": "Token Amount",
-      "MARKET-CAP": "Market Cap",
-      "CHANGE-24H": "24h Change",
+      "MARKET-CAP": "Public sale",
+      "CHANGE-24H": "Total tokens and presales",
       "TOKEN-CONTRACT": "Contract"
     }
   },

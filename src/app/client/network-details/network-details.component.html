@@ -8,42 +8,42 @@
     </li>
   </ul>
   <div class="row">
-    <div class="col-xl-3 col-lg-6">
+    <!-- <div class="col-xl-3 col-lg-6">
       <div class="card">
         <div class="card-bg">
           <div class="p-3 d-flex justify-content-between">
             <div class="col">
               <h5 class="mb-0">Cantidad Modelo 1A</h5>
               <span
-                class="fw-bold mb-0 font-15 text-success">{{ (information.amountPoolModel1A ?? 0) + ' Pools' }}</span>
+                class="fw-bold mb-0 font-15 text-success">{{ (information.amountPoolModel1A ?? 0) + ' Tokens' }}</span>
             </div>
             <i class="fas fa-coins card-icon col-blue font-30 col-auto"></i>
           </div>
         </div>
       </div>
-    </div>
-    <div class="col-xl-3 col-lg-6">
+    </div> -->
+    <!-- <div class="col-xl-3 col-lg-6">
       <div class="card">
         <div class="card-bg">
           <div class="p-3 d-flex justify-content-between">
             <div class="col">
               <h5 class="mb-0">Cantidad Modelo 1B</h5>
               <span
-                class="fw-bold mb-0 font-15 text-success">{{ (information.amountPoolModel1B ?? 0) + ' Pools' }}</span>
+                class="fw-bold mb-0 font-15 text-success">{{ (information.amountPoolModel1B ?? 0) + ' Tokens' }}</span>
             </div>
             <i class="fas fa-coins card-icon col-purple font-30 col-auto"></i>
           </div>
         </div>
       </div>
-    </div>
-    <div class="col-xl-3 col-lg-6">
+    </div> -->
+    <div class="col-xl-6 col-lg-6">
       <div class="card">
         <div class="card-bg">
           <div class="p-3 d-flex justify-content-between">
             <div class="col">
-              <h5 class="mb-0">Cantidad Modelo 2</h5>
+              <h5 class="mb-0">Cantidad Recycoins</h5>
               <span class="fw-bold mb-0 font-15 text-success">
-                {{ (information.amountPoolModel2 ?? 0) + ' Pools' }}
+                {{ (information.amountPoolModel2 ?? 0) + ' Tokens' }}
               </span>
             </div>
             <i class="fas fa-coins card-icon col-red font-30 col-auto"></i>
@@ -51,14 +51,14 @@
         </div>
       </div>
     </div>
-    <div class="col-xl-3 col-lg-6">
+    <div class="col-xl-6 col-lg-6">
       <div class="card">
         <div class="card-bg">
           <div class="p-3 d-flex justify-content-between">
             <div class="col">
-              <h5 class="mb-0">Cantidad Modelo 3</h5>
+              <h5 class="mb-0">Información de red Recycoins</h5>
               <span class="fw-bold mb-0 font-15 text-success">
-                {{ (information.amountPoolModel3 ?? 0) + ' Pools' }}
+                {{ (information.amountPoolModel3 ?? 0) + ' Tokens' }}
               </span>
             </div>
             <i class="fas fa-coins card-icon col-green font-30 col-auto"></i>
@@ -68,7 +68,7 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-lg-3 col-sm-6">
+    <!-- <div class="col-lg-3 col-sm-6">
       <div class="card">
         <div class="card-body">
           <div class="row">
@@ -95,8 +95,8 @@
           </div>
         </div>
       </div>
-    </div>
-    <div class="col-lg-3 col-sm-6">
+    </div> -->
+    <!-- <div class="col-lg-3 col-sm-6">
       <div class="card">
         <div class="card-body">
           <div class="row">
@@ -123,13 +123,13 @@
           </div>
         </div>
       </div>
-    </div>
-    <div class="col-lg-3 col-sm-6">
+    </div> -->
+    <div class="col-lg-6 col-sm-6">
       <div class="card">
         <div class="card-body">
           <div class="row">
             <div class="col">
-              <h5 class="m-b-0">Comisión Modelo 2</h5>
+              <h5 class="m-b-0">Comisión Mensual</h5>
             </div>
             <div class="col-auto">
               <div class="bg-red text-white icon-box-style">
@@ -152,12 +152,12 @@
         </div>
       </div>
     </div>
-    <div class="col-lg-3 col-sm-6">
+    <div class="col-lg-6 col-sm-6">
       <div class="card">
         <div class="card-body">
           <div class="row">
             <div class="col">
-              <h5 class="m-b-0">Comisión Mes Modelo 3</h5>
+              <h5 class="m-b-0">Comisiones por Referidos</h5>
             </div>
             <div class="col-auto">
               <div class="bg-green text-white icon-box-style">
@@ -182,26 +182,26 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-lg-3 col-sm-6">
+    <div class="col-lg-12 col-sm-6">
       <div class="info-box7 l-bg-blue order-info-box7">
         <div class="info-box7-block">
-          <h5 class="m-b-20">Modelo 1, 2, 3</h5>
+          <h5 class="m-b-20">Referidos de la red.</h5>
           <h6 class="m-b-10">Clientes directos</h6>
           <h6 class="text-end"><i class="fas fa-user float-start"></i>
             <span>
-                    {{ (information.amountUsersDirectModel123 ?? 0) + ' Usuarios' }}
-                  </span>
+              {{ (information.amountUsersDirectModel123 ?? 0) + ' Usuarios' }}
+            </span>
           </h6>
           <h6 class="m-b-10 m">Clientes red</h6>
           <h6 class="text-end"><i class="fas fa-users float-start"></i>
             <span>
-                    {{ (information.amountUsersNetworkModel123 ?? 0) + ' Usuarios' }}
-                  </span>
+              {{ (information.amountUsersNetworkModel123 ?? 0) + ' Usuarios' }}
+            </span>
           </h6>
         </div>
       </div>
     </div>
-    <div class="col-lg-3 col-sm-6">
+    <!-- <div class="col-lg-3 col-sm-6">
       <div class="info-box7 l-bg-purple order-info-box7">
         <div class="info-box7-block">
           <h5 class="m-b-20">Modelo 4 con Acumulado</h5>
@@ -229,8 +229,8 @@
           </div>
         </div>
       </div>
-    </div>
-    <div class="col-lg-3 col-sm-6">
+    </div> -->
+    <!-- <div class="col-lg-3 col-sm-6">
       <div class="info-box7 l-bg-red order-info-box7">
         <div class="info-box7-block">
           <h5 class="m-b-20">Modelo 5</h5>
@@ -248,8 +248,8 @@
           </h6>
         </div>
       </div>
-    </div>
-    <div class="col-lg-3 col-sm-6">
+    </div> -->
+    <!-- <div class="col-lg-3 col-sm-6">
       <div class="info-box7 l-bg-green order-info-box7">
         <div class="info-box7-block">
           <h5 class="m-b-20">Modelo 6</h5>
@@ -267,6 +267,6 @@
           </h6>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </section>
