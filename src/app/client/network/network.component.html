@@ -11,6 +11,27 @@
   </ul>
   <div class="section-body">
     <div class="row">
+      <div class="col-lg-12 col-sm-6">
+        <div class="info-box7 l-bg-blue order-info-box7">
+          <div class="info-box7-block">
+            <h5 class="m-b-20">Referidos de la red.</h5>
+            <h6 class="m-b-10">Clientes directos</h6>
+            <h6 class="text-end"><i class="fas fa-user float-start"></i>
+              <span>
+                {{ (information.amountUsersDirectModel123 ?? 0) + ' Usuarios' }}
+              </span>
+            </h6>
+            <h6 class="m-b-10 m">Clientes indirectos</h6>
+            <h6 class="text-end"><i class="fas fa-users float-start"></i>
+              <span>
+                {{ (information.amountUsersNetworkModel123 ?? 0) + ' Usuarios' }}
+              </span>
+            </h6>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
       <div class="col-12 col-md-12 col-lg-12">
         <div class="card">
           <div class="card-header">
@@ -87,16 +108,19 @@
                           <a ngbDropdownItem id="btn-deleteGlobal" *ngIf="isNewUser"
                             (click)="showConfirmationTransferBalanceForMembership(row)">
                             <i class="bi bi-person-badge"></i>
-                            <span style="margin-left: 10px">{{ 'NETWORK-PAGE.ACTIVATE-MEMBERSHIP.BALANCE.TEXT' | translate }}</span>
+                            <span style="margin-left: 10px">{{ 'NETWORK-PAGE.ACTIVATE-MEMBERSHIP.BALANCE.TEXT' |
+                              translate }}</span>
                           </a>
                           <a ngbDropdownItem *ngIf="isNewUser" (click)="createPagaditoTransaction(row)">
                             <i class="bi bi-credit-card"></i>
-                            <span style="margin-left: 10px">{{ 'NETWORK-PAGE.ACTIVATE-MEMBERSHIP.CARD.TEXT' | translate }}</span>
+                            <span style="margin-left: 10px">{{ 'NETWORK-PAGE.ACTIVATE-MEMBERSHIP.CARD.TEXT' | translate
+                              }}</span>
                           </a>
                           <a ngbDropdownItem id="btn-detailGlobal" *ngIf="row.activation_date != null"
                             (click)="showConfirmationTransferBalance(row)">
                             <i class="bi bi-currency-exchange"></i>
-                            <span style="margin-left: 10px">{{ 'NETWORK-PAGE.TRANSFER-BALANCE.TEXT' | translate }}</span>
+                            <span style="margin-left: 10px">{{ 'NETWORK-PAGE.TRANSFER-BALANCE.TEXT' | translate
+                              }}</span>
                           </a>
                         </div>
                       </div>
@@ -201,17 +225,20 @@
                           <a ngbDropdownItem id="btn-detail" *ngIf="row.activationDate != null"
                             (click)="showConfirmationTransferBalance(row)">
                             <i class="bi bi-currency-exchange"></i>
-                            <span style="margin-left: 10px">{{ 'NETWORK-PAGE.TRANSFER-BALANCE.TEXT' | translate }}</span>
+                            <span style="margin-left: 10px">{{ 'NETWORK-PAGE.TRANSFER-BALANCE.TEXT' | translate
+                              }}</span>
                           </a>
                           <a ngbDropdownItem id="btn-deleteGlobal" *ngIf="row.activationDate == null"
                             (click)="showConfirmationTransferBalanceForMembership(row)">
                             <i class="bi bi-person-badge"></i>
-                            <span style="margin-left: 10px">{{ 'NETWORK-PAGE.ACTIVATE-MEMBERSHIP.BALANCE.TEXT' | translate }}</span>
+                            <span style="margin-left: 10px">{{ 'NETWORK-PAGE.ACTIVATE-MEMBERSHIP.BALANCE.TEXT' |
+                              translate }}</span>
                           </a>
                           <a ngbDropdownItem *ngIf="row.activationDate == null"
                             (click)="createPagaditoTransaction(row)">
                             <i class="bi bi-credit-card"></i>
-                            <span style="margin-left: 10px">{{ 'NETWORK-PAGE.ACTIVATE-MEMBERSHIP.CARD.TEXT' | translate }}</span>
+                            <span style="margin-left: 10px">{{ 'NETWORK-PAGE.ACTIVATE-MEMBERSHIP.CARD.TEXT' | translate
+                              }}</span>
                           </a>
                         </div>
                       </div>

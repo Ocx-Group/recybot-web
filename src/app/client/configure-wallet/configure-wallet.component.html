@@ -18,15 +18,33 @@
       <div class="row">
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
           <label for="trc_address">
-            Dirección (TRC20) USDT
-            <span class="text-danger">*</span></label>
-          <input type="text" class="form-control" id="trc_address" formControlName="trc_address" placeholder="dirección"
-            required="required" [ngClass]="{
+            Dirección TRC20 (USDT)
+            <span class="text-danger">*</span>
+          </label>
+          <input type="text" class="form-control" id="trc_address" formControlName="trc_address"
+            placeholder="Dirección TRC20" required="required" [ngClass]="{
             'is-invalid': submitted && wallet_address_controls.trc_address.errors
           }" />
           <div *ngIf="submitted && wallet_address_controls.trc_address.errors" class="invalid-feedback">
             <div *ngIf="wallet_address_controls.trc_address.errors.required">
-              La dirección trc20 es requerida.
+              La dirección TRC20 es requerida.
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+          <label for="bnb_address">
+            Dirección RecyCoin (BNB)
+            <span class="text-danger">*</span>
+          </label>
+          <input type="text" class="form-control" id="bnb_address" formControlName="bnb_address"
+            placeholder="Dirección BNB Smart Chain" required="required" [ngClass]="{
+            'is-invalid': submitted && wallet_address_controls.bnb_address.errors
+          }" />
+          <div *ngIf="submitted && wallet_address_controls.bnb_address.errors" class="invalid-feedback">
+            <div *ngIf="wallet_address_controls.bnb_address.errors.required">
+              La dirección BNB Smart Chain es requerida.
             </div>
           </div>
         </div>

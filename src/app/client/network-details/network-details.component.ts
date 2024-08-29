@@ -58,5 +58,4 @@ export class NetworkDetailsComponent implements OnInit, OnDestroy {
     this.renderer.removeClass(this.document.body, 'side-closed');
     this.renderer.removeClass(this.document.body, 'submenu-closed');
   }
-
 }

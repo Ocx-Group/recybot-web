@@ -1,24 +1,40 @@
-<div id="particles-js"></div>
-<section id="hero" class="d-flex align-items-center justify-content-center">
-  <div class="container" data-aos="fade-up">
-    <div class="row justify-content-center" data-aos="fade-up" data-aos-delay="150">
-      <div class="auth-card col-12 col-md-6">
-        <div class="card">
-          <div class="card-body text-center">
-            <div class="brand-wrapper mb-4">
-              <img [src]="logoUrl" alt="logo" class="logo img-fluid" style="margin-left: 40px;" />
+<div class="recycoin-preview-wrapper">
+  <div id="particles-js"></div>
+  <div class="recycoin-preview">
+    <h2 class="title neon-text">Vista Previa de RecyCoin</h2>
+    <div class="package-grid">
+      <div class="package-card">
+        <div class="card-content">
+          <div class="card-front">
+            <div class="image-container">
+              <img src="assets/images/logo-recy.png" alt="Logo de RecyCoin" class="package-image">
+              <div class="glow-effect"></div>
             </div>
-            <h4 class="mb-4">Entrar y continuar</h4>
-            <hr>
-            <button class="btn btn-primary mb-2" (click)="backToTop()"><i class="bi bi-house-check-fill"></i>Volver al
-              inicio</button>
-            <button class="btn btn-primary mb-2" (click)="goToRegister()"><i
-                class="bi bi-pencil-square"></i>Regístrate</button>
-            <button class="btn btn-primary mb-2" (click)="goToTheStore()"><i class="bi bi-cart3"></i>Ir a la
-              tienda</button>
+            <h3 class="package-name neon-text">RecyCoin</h3>
+            <p class="package-price neon-text">Cripto Ecológica</p>
+          </div>
+          <div class="card-back">
+            <p class="package-description">Únete a la revolución verde con RecyCoin. Criptomoneda sostenible, eficiente y ecológica.</p>
+            <button class="buy-button neon-text" (click)="backToTop()">Volver al inicio</button>
+          </div>
+        </div>
+      </div>
+      <div class="package-card">
+        <div class="card-content">
+          <div class="card-front">
+            <div class="image-container">
+              <img src="assets/images/logo-recy.png" alt="Icono de Registro" class="package-image">
+              <div class="glow-effect"></div>
+            </div>
+            <h3 class="package-name neon-text">Regístrate</h3>
+            <p class="package-price neon-text">Únete a nosotros</p>
+          </div>
+          <div class="card-back">
+            <p class="package-description">Crea tu cuenta y sé parte de la comunidad RecyCoin. ¡Comienza tu viaje eco-friendly hoy!</p>
+            <button class="buy-button neon-text" (click)="goToRegister()">Regístrate</button>
           </div>
         </div>
       </div>
     </div>
   </div>
-</section>
+</div>

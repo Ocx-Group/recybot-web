@@ -63,7 +63,8 @@ export class ConfigureWalletComponent implements OnInit, AfterViewInit, OnDestro
 
   initConfiguration() {
     this.walletAddress = new FormGroup({
-      trc_address: new FormControl('')
+      trc_address: new FormControl(''),
+      bnb_address: new FormControl('')
     })
   }
 
@@ -89,9 +90,9 @@ export class ConfigureWalletComponent implements OnInit, AfterViewInit, OnDestro
     if (this.walletAddress.invalid)
       return;
 
-    this.affiliateBtc.affiliate_id = this.user.id;
-    this.affiliateBtc.address = this.walletAddress.value.trc_address;
-    this.affiliateBtc.Status = 1;
+    this.affiliateBtc.affiliateId = this.user.id;
+    this.affiliateBtc.trc20Address = this.walletAddress.value.trc_address;
+    this.affiliateBtc.bscAddress = this.walletAddress.value.bnb_address;
 
     this.affiliateBtcService.createAffiliateBtc(this.affiliateBtc).subscribe({
       next: (value) => {
@@ -158,7 +159,7 @@ export class ConfigureWalletComponent implements OnInit, AfterViewInit, OnDestro
         }
 
         this.affiliateBtc.password = password;
-        this.affiliateBtc.verification_code = code;
+        this.affiliateBtc.verificationCode = code;
       }
     }).then((result) => {
       if (result.isConfirmed) {

@@ -25,10 +25,6 @@ export class MainOptionsComponent implements OnInit {
     this.router.navigate(['/signin']);
   }
 
-  goToTheStore() {
-    window.open('https://recycoinfx.info/tienda-publica-LR16MiiKFNV9R9t_kbou_wRkSuJgdbIGuswK-Hk6BOA&1');
-  }
-
   goToRegister() {
     this.router.navigate([`/signup/${this.userName}`])
   }

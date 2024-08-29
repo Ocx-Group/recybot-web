@@ -1,8 +1,8 @@
 import { CreateChannelResponse } from './../../core/models/coinpay-model/create-channel-response.model';
 import { CreatePagaditoTransactionRequest } from '@app/core/models/pagadito-model/create-pagadito-transaction-request.model';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { CartService } from 'src/app/core/service/cart.service/cart.service';
-import { Router } from '@angular/router';
+import { NavigationStart, Router } from '@angular/router';
 import QRCode from 'qrcode';
 import Swal from 'sweetalert2';
 import { ToastrService } from 'ngx-toastr';
@@ -58,6 +58,8 @@ export class CartComponent implements OnInit, OnDestroy {
   referenceTransaction: string = '';
   private pollingSubscription: Subscription;
   private pollingInterval = 5000;
+  private routerSubscription: Subscription;
+  private swalInstance: any;
 
   constructor(
     private cartService: CartService,
@@ -89,11 +91,32 @@ export class CartComponent implements OnInit, OnDestroy {
     this.verificateUrl();
     this.checkExistenceOfAffiliateForReversePayment();
     this.loadWithdrawalConfiguration();
+    this.routerSubscription = this.router.events.subscribe((event) => {
+      if (event instanceof NavigationStart) {
+        this.cleanupOnNavigation();
+      }
+    })
+  }
+
+  @HostListener('window:beforeunload', ['$event'])
+  unloadNotification($event: any) {
+    this.cleanupOnNavigation();
+  }
+
+  cleanupOnNavigation() {
+    if (this.swalInstance) {
+      this.swalInstance.close();
+    }
+    this.stopTransactionStatusPolling();
+    Swal.close();
   }
 
   ngOnDestroy() {
     this.cartService.clearPurchaseFromThirdParty();
     this.stopTransactionStatusPolling();
+    if (this.routerSubscription) {
+      this.routerSubscription.unsubscribe();
+    }
   }
 
   showSuccess(message) {
@@ -140,6 +163,8 @@ export class CartComponent implements OnInit, OnDestroy {
         case 8:
           this.model = '1B';
           break;
+        case 11:
+          this.model = 'recycoin'
         default:
           break;
       }
@@ -345,7 +370,7 @@ export class CartComponent implements OnInit, OnDestroy {
     await QRCode.toCanvas(qrCanvas, coinPayTransaction.data.address);
     this.referenceTransaction = coinPayTransaction.data.idExternalIdentification.toString();
 
-    Swal.fire({
+    this.swalInstance = Swal.fire({
       title: 'Realiza tu pago, escanea el código QR o ingresa la dirección de billetera',
       html: `
         <div>
@@ -361,12 +386,14 @@ export class CartComponent implements OnInit, OnDestroy {
       imageHeight: 200,
       imageAlt: 'Código QR',
       showConfirmButton: false,
-      allowOutsideClick: false
+      allowOutsideClick: false,
+      willClose: () => {
+        this.stopTransactionStatusPolling();
+      }
     });
 
     this.startTransactionStatusPolling(this.referenceTransaction);
   }
-
 
   createCoinPayTransaction() {
     let request = new RequestPayment();
@@ -429,7 +456,6 @@ export class CartComponent implements OnInit, OnDestroy {
       },
     })
   }
-
 
   paymentByBankTransfer() {
     Swal.fire({
@@ -532,6 +558,9 @@ export class CartComponent implements OnInit, OnDestroy {
         break;
       case '1B':
         this.router.navigate(['app/savings-plans-one-b']);
+        break;
+      case 'recycoin':
+        this.router.navigate(['app/recycoin']);
         break;
       default:
         this.router.navigate(['app/educational-courses']);
@@ -642,13 +671,13 @@ export class CartComponent implements OnInit, OnDestroy {
   }
 
   startTransactionStatusPolling(reference: string) {
+    this.stopTransactionStatusPolling();
     this.pollingSubscription = timer(0, this.pollingInterval).pipe(
       switchMap(() => this.coinpayService.getTransactionByReference(reference))
     ).subscribe({
       next: (response) => {
         if (response.data == true) {
-
-          Swal.update({
+          this.swalInstance.update({
             title: "Pago confirmado",
             html: "Tu pago ha sido procesado exitosamente.",
             icon: "success",
@@ -661,7 +690,7 @@ export class CartComponent implements OnInit, OnDestroy {
       },
       error: (error) => {
         console.error('Error al obtener el estado de la transacción:', error);
-        Swal.update({
+        this.swalInstance.update({
           title: "Error",
           html: "Hubo un problema al procesar tu pago.",
           icon: "error",
@@ -671,7 +700,6 @@ export class CartComponent implements OnInit, OnDestroy {
       }
     });
   }
-
 
   stopTransactionStatusPolling() {
     if (this.pollingSubscription) {

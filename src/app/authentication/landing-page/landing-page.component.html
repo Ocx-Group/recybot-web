@@ -8,8 +8,8 @@
       <a class="nav-link hover-glow" href="#" routerLink="/products-preview">Producto</a>
       <a class="nav-link hover-glow" href="#">Historia</a>
       <a class="nav-link hover-glow" href="#">Docs</a>
-      <a class="nav-link hover-glow" href="#">White Papper</a>
-      <button class="btn neon-button" routerLink="/signin">Conectar</button>
+      <a class="nav-link hover-glow" href="#" (click)="openNewTab(urlPDF)">White Papper</a>
+      <button class="btn neon-button" (click)="openNewTab('/signin')">Conectar</button>
     </div>
   </nav>
 

@@ -19,6 +19,7 @@ import { WalletModel1BService } from '@app/core/service/wallet-model-1b-service/
 import { ModelsVisibilityService } from '@app/core/service/models-visibility-service/models-visibility.service';
 import { BalanceInformationModel1A } from '@app/core/models/wallet-model-1a/balance-information-1a.model';
 import { BalanceInformationModel1B } from '@app/core/models/wallet-model-1b/balance-information-1b.model';
+import { StatisticsInformation } from '@app/core/models/wallet-model/statisticsInformation';
 am4core.useTheme(am5themes_Animated);
 
 @Component({
@@ -51,6 +52,7 @@ export class HomeComponent {
     contractAddress: "0x7c482FF834dfb546A8E48C14f3C34652E9826723"
   };
 
+  information: StatisticsInformation = new StatisticsInformation();
   private chart: am4maps.MapChart;
   public pieChartOptions: any;
   public avgLecChartOptions: any;
@@ -95,7 +97,8 @@ export class HomeComponent {
     });
 
     this.loadLocations();
-    this.getPurchasesInMyNetwork()
+    this.getPurchasesInMyNetwork();
+    this.loadInformation();
   }
 
   loadUserData(userId: number) {
@@ -137,7 +140,7 @@ export class HomeComponent {
   }
 
   get registerUrl() {
-    return `https://www.recycoinfx.net/main-options/${this.user.user_name.toString()}`;
+    return `https://www.recycoin.net/main-options/${this.user.user_name.toString()}`;
   }
 
   showSuccess(message) {
@@ -586,5 +589,16 @@ export class HomeComponent {
     this.pieChartOptions = { series: [], chart: {}, labels: [], responsive: [], dataLabels: {}, legend: {} };
     this.pieChartOptionsModel1A = { series: [], chart: {}, labels: [], responsive: [], dataLabels: {}, legend: {} };
     this.pieChartOptionsModel1B = { series: [], chart: {}, labels: [], responsive: [], dataLabels: {}, legend: {} };
+  }
+
+  loadInformation() {
+    this.walletService.getStatisticsInformationByAffiliateId(this.user.id).subscribe({
+      next: (value) => {
+        this.information = value;
+      },
+      error: (err) => {
+        this.showError('Error');
+      },
+    })
   }
 }

@@ -26,6 +26,7 @@ import { CreatePagaditoTransactionRequest } from '@app/core/models/pagadito-mode
 import { PagaditoService } from '@app/core/service/pagadito-service/pagadito.service';
 import { Product } from '@app/core/models/product-model/product.model';
 import { ProductService } from '@app/core/service/product-service/product.service';
+import { StatisticsInformation } from '@app/core/models/wallet-model/statisticsInformation';
 
 @Component({
   selector: 'app-network',
@@ -51,6 +52,7 @@ export class NetworkComponent implements OnInit {
   isNewUser: boolean = false;
   pagaditoRequest = new CreatePagaditoTransactionRequest();
   currentMembership: Product = new Product();
+  information: StatisticsInformation = new StatisticsInformation();
 
   @ViewChild('table') table: DatatableComponent;
 
@@ -92,6 +94,7 @@ export class NetworkComponent implements OnInit {
 
     this.loadBalanceAvailable();
     this.loadWithdrawalConfiguration();
+    this.loadInformation();
   }
 
   showSuccess(message) {
@@ -483,5 +486,16 @@ export class NetworkComponent implements OnInit {
       confirmButtonColor: '#3085d6',
       confirmButtonText: 'Entendido'
     });
+  }
+
+  loadInformation() {
+    this.walletService.getStatisticsInformationByAffiliateId(this.user.id).subscribe({
+      next: (value) => {
+        this.information = value;
+      },
+      error: (err) => {
+        this.showError('Error');
+      },
+    })
   }
 }

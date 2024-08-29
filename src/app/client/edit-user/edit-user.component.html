@@ -26,7 +26,7 @@
                           <div class="card-body">
                             <form class="register-form" [formGroup]="updateUserForm" (ngSubmit)="onSaveUser()">
                               <div class="row mt-2">
-                                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+                                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
                                   <div class="form-group">
                                     <h6>Datos Principales</h6>
                                   </div>
@@ -72,23 +72,19 @@
                                     <input id="created_at" placeholder="Fecha de Registro" class="form-control"
                                       name="created_at" type="text" formControlName="created_at" />
                                   </div>
-                                  <!-- <div class="form-group">
-                                    <label for="side">
-                                      Lado Binario
-                                    </label>
+                                  <div class="form-group">
+                                    <label for="birthday">Fecha de Nacimiento:</label>
                                     <br />
-                                    <div class="form-check form-check-inline">
-                                      <span class="me-md-2">P.Izq</span>
-                                      <input id="side" formControlName="side" class="form-check-input" class="me-md-2"
-                                        value="1" name="side" type="radio" />
-                                      <span class="me-md-2">P.Der</span>
-                                      <input id="side" formControlName="side" class="form-check-input" class="me-md-2"
-                                        value="2" name="side" type="radio" />
+                                    <div class="form-group" *ngIf="!displayBirthday">
+                                      <input type="date" id="birthday" formControlName="birthday" class="form-control">
                                     </div>
-                                  </div> -->
-
+                                    <div *ngIf="displayBirthday">
+                                      <input title="country" type="text" class="form-control" [value]="displayBirthday"
+                                        readonly>
+                                    </div>
+                                  </div>
                                 </div>
-                                <div class="col-xl-4 col-lg-4 col-md-4  mb-2">
+                                <div class="col-xl-6 col-lg-6 col-md-12  mb-2">
                                   <div class="form-group">
                                     <h6>Datos Secundarios</h6>
                                   </div>
@@ -147,54 +143,6 @@
                                     </select>
                                   </div>
                                 </div>
-                                <div class="col-xl-4 col-lg-4 col-md-4  mb-2">
-                                  <div class="form-group">
-                                    <h6>Campos Adicionales</h6>
-                                  </div>
-                                  <hr />
-                                  <div class="form-group">
-                                    <label for="birthday">Fecha de Nacimiento:</label>
-                                    <br />
-                                    <div class="form-group" *ngIf="!displayBirthday">
-                                      <input type="date" id="birthday" formControlName="birthday" class="form-control">
-                                    </div>
-                                    <div *ngIf="displayBirthday">
-                                      <input title="country" type="text" class="form-control" [value]="displayBirthday" readonly>
-                                    </div>
-                                  </div>
-                                  <div class="form-group">
-                                    <label for="tax_id">
-                                      No. de Identificación Fiscal
-                                    </label>
-                                    <br />
-                                    <input id="tax_id" placeholder="No. de Identificación Fiscal" class="form-control"
-                                      formControlName="tax_id" type="text" />
-                                  </div>
-                                  <div class="form-group">
-                                    <label for="beneficiary_name">
-                                      Nombre de Beneficiario
-                                    </label>
-                                    <br />
-                                    <input id="beneficiary_name" placeholder="Nombre de Beneficiario"
-                                      class="form-control" type="text" formControlName="beneficiary_name" />
-                                  </div>
-                                  <div class="form-group">
-                                    <label for="legal_authorized_first">
-                                      Representante Legal No. 1
-                                    </label>
-                                    <br />
-                                    <input id="legal_authorized_first" placeholder="Representante Legal No. 1"
-                                      class="form-control" type="text" formControlName="legal_authorized_first" />
-                                  </div>
-                                  <div class="form-group">
-                                    <label for="legal_authorized_second">
-                                      Representante Legal No. 2:
-                                    </label>
-                                    <br />
-                                    <input id="legal_authorized_second" placeholder="Representante Legal No. 2"
-                                      class="form-control" type="text" formControlName="legal_authorized_second" />
-                                  </div>
-                                </div>
                               </div>
                               <div class="row mt-2">
                                 <div class="col-xl-2 col-lg-2 col-md-2  mb-2">
@@ -229,13 +177,6 @@
                 </div>
                 </ngb-alert>
               </div>
-              <!-- <div class="row" *ngIf="!user.card_id_authorization">
-                <div class="d-flex justify-content-center">
-                  <button type="button" class="btn btn-danger mx-2" (click)="deleteImage()">
-                    Eliminar
-                  </button>
-                </div>
-              </div> -->
               <div class="row d-flex justify-content-center align-items-center" *ngIf="!user.card_id_authorization">
                 <div class="col-sm-6">
                   <label for="imageProfile">
@@ -251,16 +192,6 @@
                   </ngx-dropzone>
                 </div>
               </div>
-
-              <!-- <div class="row mt-4">
-                <div class="col-12 d-flex justify-content-center">
-                  <div class="image-container d-flex justify-content-center align-items-center" style="width: 600px;"
-                    *ngIf="!user.card_id_authorization">
-                    <img [src]="user.image_id_path" alt="img_affiliate" style="max-width: 100%; max-height: 100%;">
-                  </div>
-                </div>
-              </div> -->
-
             </div>
             <div class="row" *ngIf="isCheckedAttribute == true">
               <div class="fw-bold p-t-10 font-17 text-center">

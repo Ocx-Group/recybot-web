@@ -24,12 +24,9 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class LandingPageComponent implements OnInit {
   isNavbarVisible = false;
+  urlPDF: string = 'https://drive.google.com/file/d/1e3YMl7EKjNipvIWr5P1mQgBy55bSGk6w/view?usp=sharing';
 
   constructor(private router: Router) { }
-
-  navigateToSignup() {
-    this.router.navigate(['/signup/andreshts'])
-  }
 
   ngOnInit() {
   }
@@ -41,5 +38,8 @@ export class LandingPageComponent implements OnInit {
     this.isNavbarVisible = !this.isNavbarVisible;
   }
 
+  openNewTab(url: string) {
+    window.open(url, '_blank')
+  }
 }
 

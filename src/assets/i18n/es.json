@@ -117,8 +117,11 @@
     "BILLING-PURCHASE": {
       "TEXT": "Tienda medio ambiente"
     },
+    "BUY-RECYCOIN": {
+      "TEXT": "Comprar RecyCoin"
+    },
     "BILLING-MY-PURCHASES": {
-      "TEXT": "Facturación Mis Compras"
+      "TEXT": "Recibos Mis Compras"
     },
     "BILLING-MY-ORDERS": {
       "TEXT": "Mis Ordenes"
@@ -586,13 +589,13 @@
       "USD-VALUE": "Valor en USD",
       "TOKEN-AMOUNT": "Cantidad de tokens",
       "MARKET-CAP": "Venta pública",
-      "CHANGE-24H": "Total tokens en preventa",
+      "CHANGE-24H": "BNB Smart Chain",
       "TOKEN-CONTRACT": "Contrato"
     }
   },
   "BILLING-PURCHASES-PAGE": {
     "BILLING-PURCHASES-TITLE": {
-      "TEXT": "Facturación"
+      "TEXT": "Recibos"
     },
     "SEARCH": {
       "TEXT": "Buscar"
