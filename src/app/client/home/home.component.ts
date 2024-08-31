@@ -1,3 +1,4 @@
+import { AffiliateBtcService } from '@app/core/service/affiliate-btc-service/affiliate-btc.service';
 import { ChangeDetectorRef, Component, NgZone, OnInit, ViewChild } from '@angular/core';
 import * as am4core from '@amcharts/amcharts4/core';
 import * as am4maps from '@amcharts/amcharts4/maps';
@@ -20,6 +21,7 @@ import { ModelsVisibilityService } from '@app/core/service/models-visibility-ser
 import { BalanceInformationModel1A } from '@app/core/models/wallet-model-1a/balance-information-1a.model';
 import { BalanceInformationModel1B } from '@app/core/models/wallet-model-1b/balance-information-1b.model';
 import { StatisticsInformation } from '@app/core/models/wallet-model/statisticsInformation';
+import { AddressBtc } from '@app/core/models/affiliate-btc-model/address-btc.model';
 am4core.useTheme(am5themes_Animated);
 
 @Component({
@@ -49,7 +51,8 @@ export class HomeComponent {
     tokenAmount: 5000000,
     marketCap: 10000000,
     change24h: 5.75,
-    contractAddress: "0x7c482FF834dfb546A8E48C14f3C34652E9826723"
+    contractAddress: "0x7c482FF834dfb546A8E48C14f3C34652E9826723",
+    bnbAddress: ''
   };
 
   information: StatisticsInformation = new StatisticsInformation();
@@ -67,7 +70,8 @@ export class HomeComponent {
     private walletModel1BService: WalletModel1BService,
     private modelsVisibilityService: ModelsVisibilityService,
     private ngZone: NgZone,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private affiliateBtService: AffiliateBtcService
   ) {
     this.pieChartOptions = { series: [], chart: {}, labels: [], responsive: [], dataLabels: {}, legend: {} };
     this.pieChartOptionsModel1A = { series: [], chart: {}, labels: [], responsive: [], dataLabels: {}, legend: {} };
@@ -99,6 +103,7 @@ export class HomeComponent {
     this.loadLocations();
     this.getPurchasesInMyNetwork();
     this.loadInformation();
+    this.loadBnbAddress();
   }
 
   loadUserData(userId: number) {
@@ -135,7 +140,7 @@ export class HomeComponent {
         console.error('Error initializing Model 1B Chart:', error);
       }
     } else {
-      console.log('User cannot see payment models, skipping Model 1B Chart');
+      console.error('User cannot see payment models, skipping Model 1B Chart');
     }
   }
 
@@ -462,7 +467,6 @@ export class HomeComponent {
     this.affiliateService.getTotalAffiliatesByCountries().subscribe({
       next: (value) => {
         this.maps = value.data;
-        console.log(value.data);
         this.setMapInfo();
       },
       error: (err) => {
@@ -480,7 +484,6 @@ export class HomeComponent {
       if (data) {
         this.currentYearPurchases = data.currentYearPurchases;
         this.previousYearPurchases = data.previousYearPurchases;
-        console.log(data);
         this.initializeAreaLineChart();
       }
     });
@@ -598,6 +601,27 @@ export class HomeComponent {
       },
       error: (err) => {
         this.showError('Error');
+      },
+    })
+  }
+
+  loadBnbAddress() {
+    this.affiliateBtService.getAffiliateBtcByAffiliateId(this.user.id).subscribe({
+      next: (value: AddressBtc[]) => {
+        if (value.length > 0) {
+
+          const address = value.reduce((acc, item) => {
+            if (item.networkId == 2) {
+              acc.bnb_address = item.address;
+            }
+
+            return acc;
+          }, { bnb_address: '' })
+
+          this.recycoinInfo.bnbAddress = address.bnb_address;
+        }
+      }, error: (err) => {
+        this.showError('No se pudo cargar la billetera Bnb Smart Chain.')
       },
     })
   }

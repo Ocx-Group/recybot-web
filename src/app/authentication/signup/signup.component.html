@@ -93,20 +93,6 @@
               <div *ngIf="f.email.errors.required">The email is required</div>
             </div>
           </div>
-
-          <div class="form-group">
-            <label for="affiliate_type" class="neon-text">Affiliate's Type</label>
-            <select class="form-select form-control" name="affiliate_type" id="affiliate_type"
-              formControlName="affiliate_type" required="required"
-              [ngClass]="{ 'is-invalid': submitted && f.affiliate_type.errors }">
-              <option value="" disabled selected>Select an option</option>
-              <option value="01_Membresia_10">01_Membresia_10</option>
-            </select>
-            <div *ngIf="submitted && f.affiliate_type.errors" class="invalid-feedback">
-              <div *ngIf="f.affiliate_type.errors.required">The affiliate type is required</div>
-            </div>
-          </div>
-
           <div class="form-group">
             <a class="neon-text mb-3" (click)="openModal(termscondition)" style="cursor: pointer;">Terms and conditions</a>
             <div class="form-check mt-3">

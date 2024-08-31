@@ -3,8 +3,7 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { environment } from '@environments/environment';
-import { map, catchError } from 'rxjs/operators';
-import { throwError } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Response } from '@app/core/models/response-model/response.model';
 
 const httpOptions = {

@@ -89,7 +89,6 @@ export class SignupComponent implements OnInit {
       last_name: ['', [Validators.required]],
       phone: ['', Validators.required],
       country: ['', Validators.required],
-      affiliate_type: ['', Validators.required],
       email: ['', Validators.required],
       terms_conditions: [false, Validators.required]
     },

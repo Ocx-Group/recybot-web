@@ -1,3 +1,4 @@
+import { AddressBtc } from './../../core/models/affiliate-btc-model/address-btc.model';
 import { AffiliateBtc } from '@app/core/models/affiliate-btc-model/affiliate-btc.model';
 import { AfterViewInit, Component, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
@@ -79,10 +80,18 @@ export class ConfigureWalletComponent implements OnInit, AfterViewInit, OnDestro
     })
   }
 
-  setConfiguration(value) {
-    this.walletAddress.patchValue({
-      trc_address: value.Address
-    });
+  setConfiguration(value: AddressBtc[]) {
+
+    const updateWalletAddress = value.reduce((acc, item) => {
+      if (item.networkId == 1) {
+        acc.trc_address = item.address;
+      } else {
+        acc.bnb_address = item.address;
+      }
+      return acc;
+    }, { trc_address: '', bnb_address: '' });
+
+    this.walletAddress.patchValue(updateWalletAddress);
   }
 
   onSaveConfiguration() {
@@ -110,6 +119,9 @@ export class ConfigureWalletComponent implements OnInit, AfterViewInit, OnDestro
   }
 
   showConfirmation() {
+    if (!this.walletAddress.dirty)
+      return;
+
     this.generateVerificationCode();
 
     Swal.fire({
@@ -167,8 +179,6 @@ export class ConfigureWalletComponent implements OnInit, AfterViewInit, OnDestro
       }
     });
   }
-
-
 
   generateVerificationCode() {
     this.affiliateService.generateVerificationCode(this.user.id, false).subscribe({

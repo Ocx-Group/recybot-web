@@ -119,10 +119,11 @@
                 <tbody>
                   <tr>
                     <td class="col-blue">
-                      <i class="fa fa-circle col-blue msr-2"></i>{{ 'HOME-PAGE-CLIENT.RECYCOIN-DASHBOARD.TOKEN-AMOUNT' |
+                      <i class="fa fa-circle col-blue msr-2"></i>{{ 'HOME-PAGE-CLIENT.RECYCOIN-DASHBOARD.TOKEN-CONTRACT'
+                      |
                       translate }}
                     </td>
-                    <td class="col-blue">0 REC</td>
+                    <td class="col-blue"> <span class="text-break">{{ recycoinInfo.contractAddress }}</span></td>
                   </tr>
                   <tr>
                     <td class="col-emerald">
@@ -138,16 +139,7 @@
                       {{ 'HOME-PAGE-CLIENT.RECYCOIN-DASHBOARD.CHANGE-24H' | translate }}
                     </td>
                     <td class="col-green">
-                      <span class="text-break"></span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="col-orange">
-                      <i class="fa fa-circle col-orange msr-2"></i>
-                      {{ 'HOME-PAGE-CLIENT.RECYCOIN-DASHBOARD.TOKEN-CONTRACT' | translate }}
-                    </td>
-                    <td class="col-orange">
-                      <span class="text-break">{{ recycoinInfo.contractAddress }}</span>
+                      <span class="text-break">{{recycoinInfo.bnbAddress}}</span>
                     </td>
                   </tr>
                 </tbody>
@@ -196,13 +188,13 @@
                     </td>
                     <td class="col-green">USD {{balanceInformation.totalAcquisitions ?? 0}}</td>
                   </tr>
-                  <tr>
+                  <!-- <tr>
                     <td class="col-orange">
                       <i class="fa fa-circle col-orange msr-2"></i>{{ 'HOME-PAGE-CLIENT.MODEL-REQUEST.TEXT' |
                       translate }}
                     </td>
                     <td class="col-orange">USD {{balanceInformation.reverseBalance ?? 0}}</td>
-                  </tr>
+                  </tr> -->
                 </tbody>
               </table>
             </div>

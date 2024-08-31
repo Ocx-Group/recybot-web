@@ -6,6 +6,7 @@ export class AffiliateBtc {
   verificationCode: string;
   trc20Address: string;
   bscAddress: string;
+  networkId: number;
 
   constructor() {
     this.id = 0;
@@ -14,5 +15,6 @@ export class AffiliateBtc {
     this.trc20Address = '';
     this.bscAddress = '';
     this.verificationCode = '';
+    this.networkId = 0;
   }
 }
