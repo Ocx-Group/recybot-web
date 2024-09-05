@@ -85,7 +85,7 @@
   transition: color 0.3s ease;
 }
 
-.login-input-group input:focus + i-feather {
+.login-input-group input:focus+i-feather {
   color: #ffffff;
 }
 
@@ -141,7 +141,9 @@
 }
 
 @keyframes spinner-border {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .form-text {
@@ -175,6 +177,12 @@
 .register-option a:hover {
   color: #ffffff;
   text-decoration: underline;
+}
+
+.signin-logo {
+  max-width: 100%;
+  max-height: 120px;
+  object-fit: contain;
 }
 
 @media (max-width: 480px) {

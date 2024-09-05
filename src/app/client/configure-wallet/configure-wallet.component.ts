@@ -1,7 +1,7 @@
-import { AddressBtc } from './../../core/models/affiliate-btc-model/address-btc.model';
+import { AddressBtc } from '@app/core/models/affiliate-btc-model/address-btc.model';
 import { AffiliateBtc } from '@app/core/models/affiliate-btc-model/affiliate-btc.model';
 import { AfterViewInit, Component, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
 import { AffiliateBtcService } from '@app/core/service/affiliate-btc-service/affiliate-btc.service';
 import { AffiliateService } from '@app/core/service/affiliate-service/affiliate.service';
@@ -9,21 +9,22 @@ import { AuthService } from '@app/core/service/authentication-service/auth.servi
 import { ConfigureWalletService } from '@app/core/service/configure-wallet-service/configure-wallet.service';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
-import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-configure-wallet',
-  templateUrl: './configure-wallet.component.html'
+  templateUrl: './configure-wallet.component.html',
+  styleUrls: ['./configure-wallet.component.scss']
 })
 export class ConfigureWalletComponent implements OnInit, AfterViewInit, OnDestroy {
-  submitted: boolean = false;
-  walletAddress: FormGroup;
+  currentStep: number = 1;
+  walletForm: FormGroup;
   user: UserAffiliate = new UserAffiliate();
   affiliateBtc: AffiliateBtc = new AffiliateBtc();
   private subscriptionOpenedModal = new Subscription();
   @ViewChild('configureWalletModal') configureWalletModal: TemplateRef<any>;
 
   constructor(
+    private formBuilder: FormBuilder,
     private configureWalletService: ConfigureWalletService,
     private authService: AuthService,
     private affiliateBtcService: AffiliateBtcService,
@@ -32,11 +33,12 @@ export class ConfigureWalletComponent implements OnInit, AfterViewInit, OnDestro
   ) { }
 
   ngOnInit(): void {
-    this.initConfiguration();
+    this.initForm();
     this.user = this.authService.currentUserAffiliateValue;
 
     this.subscriptionOpenedModal.add(
       this.configureWalletService.modalOpened$.subscribe(() => {
+        this.resetForm();
         this.loadConfiguration();
       })
     );
@@ -50,38 +52,32 @@ export class ConfigureWalletComponent implements OnInit, AfterViewInit, OnDestro
     this.subscriptionOpenedModal.unsubscribe();
   }
 
-  get wallet_address_controls(): { [key: string]: AbstractControl } {
-    return this.walletAddress.controls;
+  get formControls(): { [key: string]: AbstractControl } {
+    return this.walletForm.controls;
   }
 
-  showSuccess(message) {
-    this.toastr.success(message);
-  }
-
-  showError(message) {
-    this.toastr.error(message);
-  }
-
-  initConfiguration() {
-    this.walletAddress = new FormGroup({
-      trc_address: new FormControl(''),
-      bnb_address: new FormControl('')
-    })
+  initForm() {
+    this.walletForm = this.formBuilder.group({
+      trc_address: ['', Validators.required],
+      bnb_address: ['', Validators.required],
+      security_code: ['', Validators.required],
+      password: ['', Validators.required]
+    });
   }
 
   loadConfiguration() {
     this.affiliateBtcService.getAffiliateBtcByAffiliateId(this.user.id).subscribe({
       next: (value) => {
         this.setConfiguration(value);
+        this.walletForm.markAsPristine();
       },
       error: () => {
-        this.showError('Error');
+        this.toastr.error('Error al cargar la configuración');
       },
-    })
+    });
   }
 
   setConfiguration(value: AddressBtc[]) {
-
     const updateWalletAddress = value.reduce((acc, item) => {
       if (item.networkId == 1) {
         acc.trc_address = item.address;
@@ -91,103 +87,78 @@ export class ConfigureWalletComponent implements OnInit, AfterViewInit, OnDestro
       return acc;
     }, { trc_address: '', bnb_address: '' });
 
-    this.walletAddress.patchValue(updateWalletAddress);
+    this.walletForm.patchValue(updateWalletAddress);
   }
 
-  onSaveConfiguration() {
-    this.submitted = true;
-    if (this.walletAddress.invalid)
-      return;
+  nextStep() {
+    if (this.currentStep < 3) {
+      this.currentStep++;
+      if (this.currentStep === 2) {
+        this.generateVerificationCode();
+      }
+    }
+  }
 
+  previousStep() {
+    if (this.currentStep > 1) {
+      this.currentStep--;
+    }
+  }
+
+  canProceed(): boolean {
+    switch (this.currentStep) {
+      case 1:
+        return this.walletForm.get('trc_address').valid && this.walletForm.get('bnb_address').valid;
+      case 2:
+        return this.walletForm.get('security_code').valid;
+      default:
+        return false;
+    }
+  }
+
+  onSubmit() {
+    if (this.walletForm.valid) {
+      this.saveConfiguration();
+    }
+  }
+
+  saveConfiguration() {
     this.affiliateBtc.affiliateId = this.user.id;
-    this.affiliateBtc.trc20Address = this.walletAddress.value.trc_address;
-    this.affiliateBtc.bscAddress = this.walletAddress.value.bnb_address;
+    this.affiliateBtc.trc20Address = this.walletForm.value.trc_address;
+    this.affiliateBtc.bscAddress = this.walletForm.value.bnb_address;
+    this.affiliateBtc.verificationCode = this.walletForm.value.security_code;
+    this.affiliateBtc.password = this.walletForm.value.password;
 
     this.affiliateBtcService.createAffiliateBtc(this.affiliateBtc).subscribe({
       next: (value) => {
         if (value.success) {
-          this.showSuccess('Configuracion de la billetera creada correctamente.');
+          this.toastr.success('Configuración de la billetera creada correctamente.');
           this.configureWalletService.closeConfigureWalletModal();
         } else {
-          this.showError('Billetera no valida.');
+          this.toastr.error('Uno de los datos ingresados no corresponde o es incorrecto, revise e inténtelo nuevamente.');
         }
       },
       error: (error) => {
-        this.showError('Error');
+        this.toastr.error('Error al guardar la configuración');
       },
-    })
-  }
-
-  showConfirmation() {
-    if (!this.walletAddress.dirty)
-      return;
-
-    this.generateVerificationCode();
-
-    Swal.fire({
-      title: 'Ingrese el código de verificación que ha sido enviado a su correo electrónico.',
-      html: `
-            <input id="swal-input-code" type="text" placeholder="Código de verificación" class="swal2-input">
-            <input id="swal-input-password" type="password" placeholder="Contraseña" class="swal2-input">
-        `,
-      showCancelButton: true,
-      confirmButtonText: 'Guardar',
-      cancelButtonText: 'Cancelar',
-      didRender: () => {
-        const codeElement = document.getElementById('swal-input-code') as HTMLInputElement;
-        const passwordElement = document.getElementById('swal-input-password') as HTMLInputElement;
-
-        if (codeElement) {
-          codeElement.setAttribute('autocomplete', 'off');
-          codeElement.value = '';
-        }
-        if (passwordElement) {
-          passwordElement.setAttribute('autocomplete', 'off');
-          passwordElement.value = '';
-        }
-      },
-      preConfirm: () => {
-        const codeElement = Swal.getPopup().querySelector('#swal-input-code') as HTMLInputElement;
-        const passwordElement = Swal.getPopup().querySelector('#swal-input-password') as HTMLInputElement;
-
-        if (!codeElement || !passwordElement) return;
-
-        const code = codeElement.value.trim();
-        const password = passwordElement.value.trim();
-
-        if (!code && !password) {
-          Swal.showValidationMessage('Por favor ingrese el código de verificación y la contraseña');
-          return;
-        }
-
-        if (!code) {
-          Swal.showValidationMessage('Por favor ingrese el código de verificación');
-          return;
-        }
-
-        if (!password) {
-          Swal.showValidationMessage('Por favor ingrese su contraseña');
-          return;
-        }
-
-        this.affiliateBtc.password = password;
-        this.affiliateBtc.verificationCode = code;
-      }
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.onSaveConfiguration();
-      }
     });
   }
 
   generateVerificationCode() {
     this.affiliateService.generateVerificationCode(this.user.id, false).subscribe({
       next: (value) => {
-        this.showSuccess('Se ha generado un código de seguridad, por favor revisa el correo electronico.');
+        if (value.success) {
+          this.toastr.success('Se ha generado un código de seguridad, por favor revisa tu correo electrónico.');
+        }
       },
       error: () => {
-        this.showError('Error');
+        this.toastr.error('Error al generar el código de verificación');
       }
-    })
+    });
+  }
+
+  resetForm() {
+    this.walletForm.reset();
+    this.currentStep = 1;
   }
 }

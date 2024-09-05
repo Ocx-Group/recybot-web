@@ -24,7 +24,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class LandingPageComponent implements OnInit {
   isNavbarVisible = false;
-  urlPDF: string = 'https://drive.google.com/file/d/1e3YMl7EKjNipvIWr5P1mQgBy55bSGk6w/view?usp=sharing';
+  urlPDF: string = 'https://drive.google.com/file/d/1F1ldtl0hxUi2Hvs8DsGwiNMO4u9vaoWp/view?usp=sharing';
 
   constructor(private router: Router) { }
 

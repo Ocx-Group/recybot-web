@@ -112,8 +112,8 @@ export class InvoiceService {
       responseType: 'blob' as 'json',
       params: new HttpParams().set('invoiceId', invoiceId.toString()),
       headers: new HttpHeaders({
-        'Authorization': environment.tokens.walletService.toString()
-
+        'Authorization': environment.tokens.walletService.toString(),
+        'X-Client-ID': environment.tokens.clientID.toString()
       })
     };
 
@@ -125,8 +125,8 @@ export class InvoiceService {
       responseType: 'blob' as 'json',
       params: new HttpParams().set('reference', reference.toString()),
       headers: new HttpHeaders({
-        'Authorization': environment.tokens.walletService.toString()
-
+        'Authorization': environment.tokens.walletService.toString(),
+        'X-Client-ID': environment.tokens.clientID.toString()
       })
     };
 
