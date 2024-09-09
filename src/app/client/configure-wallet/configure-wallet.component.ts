@@ -59,7 +59,7 @@ export class ConfigureWalletComponent implements OnInit, AfterViewInit, OnDestro
   initForm() {
     this.walletForm = this.formBuilder.group({
       trc_address: ['', Validators.required],
-      bnb_address: ['', Validators.required],
+      bnb_address: [''],
       security_code: ['', Validators.required],
       password: ['', Validators.required]
     });
@@ -68,8 +68,10 @@ export class ConfigureWalletComponent implements OnInit, AfterViewInit, OnDestro
   loadConfiguration() {
     this.affiliateBtcService.getAffiliateBtcByAffiliateId(this.user.id).subscribe({
       next: (value) => {
-        this.setConfiguration(value);
-        this.walletForm.markAsPristine();
+        if (value.success) {
+          this.setConfiguration(value.data);
+          this.walletForm.markAsPristine();
+        }
       },
       error: () => {
         this.toastr.error('Error al cargar la configuración');
@@ -78,16 +80,21 @@ export class ConfigureWalletComponent implements OnInit, AfterViewInit, OnDestro
   }
 
   setConfiguration(value: AddressBtc[]) {
-    const updateWalletAddress = value.reduce((acc, item) => {
-      if (item.networkId == 1) {
-        acc.trc_address = item.address;
-      } else {
-        acc.bnb_address = item.address;
-      }
-      return acc;
-    }, { trc_address: '', bnb_address: '' });
+    const updateWalletAddress: { trc_address?: string; bnb_address?: string } = {};
 
-    this.walletForm.patchValue(updateWalletAddress);
+    value.forEach(item => {
+      if (item && typeof item === 'object') {
+        if (item.networkId === 1) {
+          updateWalletAddress.trc_address = item.address;
+        } else if (item.networkId === 2) {
+          updateWalletAddress.bnb_address = item.address;
+        }
+      }
+    });
+
+    if (Object.keys(updateWalletAddress).length > 0) {
+      this.walletForm.patchValue(updateWalletAddress);
+    }
   }
 
   nextStep() {
@@ -108,9 +115,11 @@ export class ConfigureWalletComponent implements OnInit, AfterViewInit, OnDestro
   canProceed(): boolean {
     switch (this.currentStep) {
       case 1:
-        return this.walletForm.get('trc_address').valid && this.walletForm.get('bnb_address').valid;
+        const trcValid = this.walletForm.get('trc_address')?.valid ?? false;
+        const bnbValid = this.walletForm.get('bnb_address')?.valid ?? false;
+        return trcValid || bnbValid;
       case 2:
-        return this.walletForm.get('security_code').valid;
+        return this.walletForm.get('security_code')?.valid ?? false;
       default:
         return false;
     }

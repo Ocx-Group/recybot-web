@@ -51,7 +51,7 @@ const routes: Routes = [
     component: ForgotComponent,
   },
   {
-    path: 'reset',
+    path: 'reset/:verificationCode',
     component: ResetComponent,
   },
   {

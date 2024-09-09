@@ -4,11 +4,11 @@ export const environment = {
   production: true,
   apis: {
     apiUrl: 'https://recycoin.net/',
-    accountService: 'https://account.ecosystemfx.net/api/v1',
+    accountService: 'http://localhost:5200/api/v1',
     accountServiceSignalR: 'https://account.ecosystemfx.net/',
     systemConfigurationService: 'https://configuration.ecosystemfx.net/api/v1',
     inventoryService: 'https://inventory.ecosystemfx.net/api/v1',
-    walletService: 'http://localhost:5235/api/v1',
+    walletService: 'https://wallet.ecosystemfx.net/api/v1',
     coinPayment: 'https://www.coinpayments.net/index.php'
   },
   openAI: {

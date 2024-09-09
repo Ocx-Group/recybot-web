@@ -77,7 +77,6 @@ export class ResetComponent implements OnInit {
     return password.value === confirmPassword.value ? null : { 'mismatch': true };
   }
 
-
   changePassword() {
     this.submitted = true;
     let requestResetPassword = new RequestResetPassword();

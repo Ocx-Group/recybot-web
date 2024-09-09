@@ -4,6 +4,7 @@ import Swal from 'sweetalert2';
 declare var particlesJS: any;
 
 import { AffiliateService } from '@app/core/service/affiliate-service/affiliate.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-forgot',
@@ -13,7 +14,7 @@ import { AffiliateService } from '@app/core/service/affiliate-service/affiliate.
 export class ForgotComponent implements OnInit {
   forgotPassword: FormGroup;
   submitted = false;
-  constructor(private affiliateService: AffiliateService) { }
+  constructor(private affiliateService: AffiliateService, private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.initForgotPassword();
@@ -41,10 +42,15 @@ export class ForgotComponent implements OnInit {
 
     this.affiliateService.sendPasswordRecovery(email).subscribe({
       next: (value) => {
-        this.emailConfirmation();
+        if (value.success) {
+          this.emailConfirmation();
+        } else {
+          this.toastr.error('El usuario no se encuentra registrado en el sistema');
+        }
+
       },
       error: () => {
-
+        this.toastr.error('Error');
       },
     })
   }
@@ -68,6 +74,4 @@ export class ForgotComponent implements OnInit {
       confirmButtonText: 'Entendido',
     });
   }
-
-
 }

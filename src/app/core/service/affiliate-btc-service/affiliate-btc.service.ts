@@ -23,7 +23,6 @@ export class AffiliateBtcService {
     this.urlApi = environment.apis.accountService;
   }
 
-
   createAffiliateBtc(affiliateBtc: AffiliateBtc) {
     return this.http
       .post<Response>(
@@ -45,7 +44,7 @@ export class AffiliateBtcService {
       )
       .pipe(
         map((response) => {
-          if (response.success) return response.data;
+          if (response.success) return response;
           else {
             console.error('ERROR: ' + response);
             return null;
@@ -53,5 +52,4 @@ export class AffiliateBtcService {
         })
       );
   }
-
 }

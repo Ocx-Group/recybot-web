@@ -22,6 +22,8 @@ import { BalanceInformationModel1A } from '@app/core/models/wallet-model-1a/bala
 import { BalanceInformationModel1B } from '@app/core/models/wallet-model-1b/balance-information-1b.model';
 import { StatisticsInformation } from '@app/core/models/wallet-model/statisticsInformation';
 import { AddressBtc } from '@app/core/models/affiliate-btc-model/address-btc.model';
+import { AffiliateBtc } from '@app/core/models/affiliate-btc-model/affiliate-btc.model';
+import { Response } from '@app/core/models/response-model/response.model';
 am4core.useTheme(am5themes_Animated);
 
 @Component({
@@ -607,10 +609,10 @@ export class HomeComponent {
 
   loadBnbAddress() {
     this.affiliateBtService.getAffiliateBtcByAffiliateId(this.user.id).subscribe({
-      next: (value: AddressBtc[]) => {
-        if (value.length > 0) {
+      next: (value: Response & { data: AffiliateBtc[] }) => {
+        if (value.success) {
 
-          const address = value.reduce((acc, item) => {
+          const address = value.data.reduce((acc, item) => {
             if (item.networkId == 2) {
               acc.bnb_address = item.address;
             }

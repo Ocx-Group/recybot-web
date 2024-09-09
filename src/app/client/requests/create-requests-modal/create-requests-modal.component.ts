@@ -13,6 +13,7 @@ import { BalanceInformation } from '@app/core/models/wallet-model/balance-inform
 import { WalletWithdrawalsConfiguration } from '@app/core/models/wallet-withdrawals-configuration-model/wallet-withdrawals-configuration.model';
 import { AffiliateBtcService } from '@app/core/service/affiliate-btc-service/affiliate-btc.service';
 import { AffiliateBtc } from '@app/core/models/affiliate-btc-model/affiliate-btc.model';
+import { Response } from '@app/core/models/response-model/response.model';
 
 @Component({
   selector: 'app-create-requests-modal',
@@ -174,8 +175,17 @@ export class CreateRequestsModalComponent implements OnInit {
 
   hasCoinPaymentAddress() {
     this.affiliateBtcService.getAffiliateBtcByAffiliateId(this.user.id).subscribe({
-      next: (value) => {
-        this.affiliateBtc = value;
+      next: (value: Response & { data: AffiliateBtc[] }) => {
+
+        if (value.success) {
+          const address = value.data.reduce((acc: AffiliateBtc, item: AffiliateBtc) => {
+            acc.trc20Address = item.trc20Address;
+
+            return acc;
+          }, { trc20Address: '' })
+
+          this.affiliateBtc.trc20Address = address.trc20Address;
+        }
       },
       error: () => {
         this.showError('Error');
