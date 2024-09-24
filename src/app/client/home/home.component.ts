@@ -300,6 +300,23 @@ export class HomeComponent {
       balance.availableBalance !== undefined &&
       balance.totalCommissionsPaid !== undefined &&
       balance.totalAcquisitions !== undefined &&
+      balance.reverseBalance !== undefined &&
+      balance.bonusAmount !== undefined;
+  }
+
+  isBalanceInformation1AValid(balance: BalanceInformationModel1A): boolean {
+    return balance.serviceBalance !== undefined &&
+      balance.availableBalance !== undefined &&
+      balance.totalCommissionsPaid !== undefined &&
+      balance.totalAcquisitions !== undefined &&
+      balance.reverseBalance !== undefined;
+  }
+
+  isBalanceInformation1BValid(balance: BalanceInformationModel1B): boolean {
+    return balance.serviceBalance !== undefined &&
+      balance.availableBalance !== undefined &&
+      balance.totalCommissionsPaid !== undefined &&
+      balance.totalAcquisitions !== undefined &&
       balance.reverseBalance !== undefined;
   }
 
@@ -359,7 +376,7 @@ export class HomeComponent {
 
   private initChartModel1A() {
 
-    if (!this.balanceInformationModel1A || !this.isBalanceInformationValid(this.balanceInformationModel1A)) {
+    if (!this.balanceInformationModel1A || !this.isBalanceInformation1AValid(this.balanceInformationModel1A)) {
       console.error('Invalid balance information for Model 1A');
       return;
     }
@@ -413,7 +430,7 @@ export class HomeComponent {
 
   private initChartModel1B() {
 
-    if (!this.balanceInformationModel1B || !this.isBalanceInformationValid(this.balanceInformationModel1B)) {
+    if (!this.balanceInformationModel1B || !this.isBalanceInformation1BValid(this.balanceInformationModel1B)) {
       console.error('Invalid balance information for Model 1B');
       return;
     }
@@ -506,6 +523,7 @@ export class HomeComponent {
       this.walletService.getBalanceInformationByAffiliateId(id).subscribe({
         next: (value: BalanceInformation) => {
           this.balanceInformation = value;
+          this.balanceInformation.totalAcquisitions += this.balanceInformation.bonusAmount;
           resolve();
         },
         error: (err) => {

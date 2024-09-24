@@ -31,7 +31,7 @@
               <div class="col">
                 <h5 class="mb-0">Bonificación de tokens</h5>
                 <span class="fw-bold mb-0 font-15 text-success">
-                  {{ (information.amountPoolModel3 ?? 0) + ' Tokens' }}
+                  {{ (balanceInformation.bonusAmount | truncateDecimals) + ' Tokens' }}
                 </span>
               </div>
               <i class="fas fa-coins card-icon col-green font-30 col-auto"></i>

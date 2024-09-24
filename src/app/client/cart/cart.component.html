@@ -146,13 +146,12 @@
                 <button (click)="handleBuyMore()" class="btn btn-primary mb-2">{{ 'CART-PAGE.BUY-MORE.TEXT' | translate
                   }}</button>
               </div>
-
               <div class="btn-group-vertical mb-2 ms-2">
                 <button (click)="handleServiceBalancePayment()" *ngIf="!serviceBalanceNotAvailable"
                   class="btn btn-primary mb-2">{{ 'CART-PAGE.SERVICE-BALANCE-PAYMENT.TEXT' | translate }}
                   {{model}}</button>
-                <button *ngIf="!showReversePaymentOnly && !balancePaymentNotAvailable" (click)="payWithMyBalance()"
-                  class="btn btn-primary mb-2">{{ 'CART-PAGE.BALANCE-PAYMENT.TEXT' | translate }}</button>
+                <button (click)="payWithMyBalance()" class="btn btn-primary mb-2">{{ 'CART-PAGE.BALANCE-PAYMENT.TEXT' |
+                  translate }}</button>
                 <button (click)="handleBalancePayment()" *ngIf="reverseBalanceNotAvailable"
                   class="btn btn-primary mb-2">{{ 'CART-PAGE.MODEL-BALANCE-PAYMENT.TEXT' | translate }}
                   {{model}}</button>

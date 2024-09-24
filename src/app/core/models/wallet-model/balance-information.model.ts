@@ -4,6 +4,7 @@ export class BalanceInformation {
   availableBalance: number;
   totalCommissionsPaid: number;
   serviceBalance: number;
+  bonusAmount: number;
 
   constructor() {
     this.reverseBalance = 0;
@@ -11,5 +12,6 @@ export class BalanceInformation {
     this.availableBalance = 0;
     this.totalCommissionsPaid = 0;
     this.serviceBalance = 0;
+    this.bonusAmount = 0;
   }
 }

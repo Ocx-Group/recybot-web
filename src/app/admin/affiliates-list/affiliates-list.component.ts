@@ -166,8 +166,6 @@ export class AffiliatesListComponent implements OnInit {
         <br>
         <select id="swal-select-type" class="swal2-input">
           <option value="modelo2">Saldo Disponible Modelo2</option>
-          <option value="modelo1a">Saldo Servicios Modelo1A</option>
-          <option value="modelo1b">Saldo Servicios Modelo1B</option>
         </select>
       `,
       icon: 'info',
