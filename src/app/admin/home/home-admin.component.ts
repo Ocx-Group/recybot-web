@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 
 import {
   ApexAxisChartSeries,
@@ -22,10 +22,10 @@ import * as am4core from '@amcharts/amcharts4/core';
 import * as am4maps from '@amcharts/amcharts4/maps';
 import am4geodata_worldLow from "@amcharts/amcharts4-geodata/worldLow";
 import am5themes_Animated from "@amcharts/amcharts4/themes/animated";
-import { EChartsOption } from 'echarts';
-import { WalletService } from '@app/core/service/wallet-service/wallet.service';
-import { AffiliateService } from '@app/core/service/affiliate-service/affiliate.service';
-import { ToastrService } from 'ngx-toastr';
+import {EChartsOption} from 'echarts';
+import {WalletService} from '@app/core/service/wallet-service/wallet.service';
+import {AffiliateService} from '@app/core/service/affiliate-service/affiliate.service';
+import {ToastrService} from 'ngx-toastr';
 
 
 am4core.useTheme(am5themes_Animated);
@@ -47,6 +47,7 @@ export type ChartOptions = {
   plotOptions: ApexPlotOptions;
   responsive: ApexResponsive[];
 };
+
 @Component({
   selector: 'app-home-admin',
   templateUrl: './home-admin.component.html',
@@ -64,7 +65,7 @@ export class HomeAdminComponent implements OnInit {
   @ViewChild('chart') chart1: ChartComponent;
 
   constructor(private walletService: WalletService, private affiliateService: AffiliateService, private toastr: ToastrService,) {
-    this.pieChartOptions = { series: [], chart: {}, labels: [], responsive: [], dataLabels: {}, legend: {} };
+    this.pieChartOptions = {series: [], chart: {}, labels: [], responsive: [], dataLabels: {}, legend: {}};
     this.getBalanceInformationAdmin();
   }
 
@@ -73,11 +74,11 @@ export class HomeAdminComponent implements OnInit {
     this.loadLocations();
   }
 
-  showSuccess(message) {
+  showSuccess(message: string) {
     this.toastr.success(message);
   }
 
-  showError(message) {
+  showError(message: string) {
     this.toastr.error(message);
   }
 
@@ -115,7 +116,7 @@ export class HomeAdminComponent implements OnInit {
           options: {
             dataLabels: {
               enabled: true,
-              formatter: function (val) {
+              formatter: function (val: any) {
                 return val + "%"
               },
               plotOptions: {
@@ -212,6 +213,7 @@ export class HomeAdminComponent implements OnInit {
       },
     };
   }
+
   area_line_chart: EChartsOption = {
     tooltip: {
       trigger: 'axis',
@@ -363,7 +365,7 @@ export class HomeAdminComponent implements OnInit {
         this.maps = value.data;
         this.setMapInfo();
       },
-      error: (err) => {
+      error: () => {
         this.showError("Error");
       },
     })

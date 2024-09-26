@@ -1031,6 +1031,9 @@
     },
     "TOTAL-COMMISSIONABLE": {
       "TEXT": "Total commissionable"
+    },
+    "INFORMATION": {
+      "TEXT": "Information RecyCoin"
     }
   },
   "USERS-LIST-PAGE": {

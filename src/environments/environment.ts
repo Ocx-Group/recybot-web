@@ -4,7 +4,7 @@ export const environment = {
   production: true,
   apis: {
     apiUrl: 'https://recycoin.net/',
-    accountService: 'http://localhost:5200/api/v1',
+    accountService: 'https://account.ecosystemfx.net/api/v1',
     accountServiceSignalR: 'https://account.ecosystemfx.net/',
     systemConfigurationService: 'https://configuration.ecosystemfx.net/api/v1',
     inventoryService: 'https://inventory.ecosystemfx.net/api/v1',
