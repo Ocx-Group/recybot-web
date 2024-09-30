@@ -257,6 +257,9 @@
     "THIRD-MSJ-INFO": {
       "TEXT": "The maximum amount to withdraw is USD"
     },
+    "FOUR-MSJ-INFO": {
+      "TEXT": "Each withdrawal must pay an amount of 3 USD corresponding to the TRC20 network of the payment gateway."
+    },
     "TITTLE-MSJ-INFO": {
       "TEXT": "Information"
     },
@@ -582,6 +585,11 @@
       "TEXT": "Public Store"
     },
     "RECYCOIN-DASHBOARD": {
+      "RECYCOIN-AMOUNT": "RecyCoins Amount",
+      "TOKEN-BONUS": "Token bonus",
+      "MONTHLY-COMMISSION": "Monthly commission",
+      "COMMISSION-PAID": "Paid commission",
+      "REFERRAL-COMMISSION": "Referral Commissions",
       "TITLE": "RecyCoin Information",
       "USD-VALUE": "USD Value",
       "TOKEN-AMOUNT": "Token Amount",
@@ -744,6 +752,18 @@
     },
     "PDF": {
       "TEXT": "PDF"
+    },
+    "NETWORK-REFERRAL": {
+      "TEXT": "Network referrals"
+    },
+    "DIRECT-CUSTOMERS": {
+      "TEXT": "Direct customers"
+    },
+    "INDIRECT-CUSTOMERS": {
+      "TEXT": "Indirect customers"
+    },
+    "USERS": {
+      "TEXT": "Users"
     }
   },
   "MY-NETWORK-PAGE": {
@@ -889,10 +909,10 @@
   },
   "SAVINGS-PLANS-PAGE": {
     "TITLE": {
-      "TEXT": "Model 1"
+      "TEXT": "Cryptocurrency"
     },
     "SUBTITLE": {
-      "TEXT": "Model 1"
+      "TEXT": "Recycoin Packages"
     }
   },
   "SAVINGS-PLANS-ONEB-PAGE": {

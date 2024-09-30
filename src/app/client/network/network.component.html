@@ -14,17 +14,19 @@
       <div class="col-lg-12 col-sm-6">
         <div class="info-box7 l-bg-blue order-info-box7">
           <div class="info-box7-block">
-            <h5 class="m-b-20">Referidos de la red.</h5>
-            <h6 class="m-b-10">Clientes directos</h6>
+            <h5 class="m-b-20">{{'NETWORK-PAGE.NETWORK-REFERRAL.TEXT' | translate}}</h5>
+            <h6 class="m-b-10">{{'NETWORK-PAGE.DIRECT-CUSTOMERS.TEXT' | translate}}</h6>
             <h6 class="text-end"><i class="fas fa-user float-start"></i>
               <span>
-                {{ (information.amountUsersDirectModel123 ?? 0) + ' Usuarios' }}
+                {{ (information.amountUsersDirectModel123 ?? 0) + ' ' + ('NETWORK-PAGE.DIRECT-CUSTOMERS.TEXT' |
+                translate) }}
               </span>
             </h6>
-            <h6 class="m-b-10 m">Clientes indirectos</h6>
+            <h6 class="m-b-10 m">{{'NETWORK-PAGE.INDIRECT-CUSTOMERS.TEXT' | translate}}</h6>
             <h6 class="text-end"><i class="fas fa-users float-start"></i>
               <span>
-                {{ (information.amountUsersNetworkModel123 ?? 0) + ' Usuarios' }}
+                {{ (information.amountUsersNetworkModel123 ?? 0) + ' ' + ('NETWORK-PAGE.DIRECT-CUSTOMERS.TEXT' |
+                translate) }}
               </span>
             </h6>
           </div>

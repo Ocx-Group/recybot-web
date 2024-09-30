@@ -10,7 +10,6 @@ import { WalletService } from '@app/core/service/wallet-service/wallet.service';
 import { ConfigurationService } from '@app/core/service/configuration-service/configuration.service';
 import { WalletWithdrawalsConfiguration } from '@app/core/models/wallet-withdrawals-configuration-model/wallet-withdrawals-configuration.model';
 
-
 @Component({
   selector: 'app-requests',
   templateUrl: './requests.component.html',

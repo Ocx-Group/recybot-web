@@ -30,16 +30,22 @@
                     <div class="alert-title">
                       {{ 'REQUESTS-PAGE.TITTLE-MSJ-INFO.TEXT' | translate }}
                     </div>
-                    <li>
-                      {{ 'REQUESTS-PAGE.FIST-MSJ-INFO.TEXT' | translate }}
-                    </li>
-                    <li>
-                      {{ 'REQUESTS-PAGE.SECOND-MSJ-INFO.TEXT' | translate }} {{ walletWithdrawalsConfig.minimum_amount
-                      }}
-                    </li>
-                    <li *ngIf="walletWithdrawalsConfig.maximum_amount != 0">
-                      {{ 'REQUESTS-PAGE.THIRD-MSJ-INFO.TEXT' | translate }} {{ walletWithdrawalsConfig.maximum_amount }}
-                    </li>
+                    <ul>
+                      <li>
+                        {{ 'REQUESTS-PAGE.FIST-MSJ-INFO.TEXT' | translate }}
+                      </li>
+                      <li>
+                        {{ 'REQUESTS-PAGE.SECOND-MSJ-INFO.TEXT' | translate }} {{ walletWithdrawalsConfig.minimum_amount
+                        }}
+                      </li>
+                      <li *ngIf="walletWithdrawalsConfig.maximum_amount != 0">
+                        {{ 'REQUESTS-PAGE.THIRD-MSJ-INFO.TEXT' | translate }} {{ walletWithdrawalsConfig.maximum_amount
+                        }}
+                      </li>
+                      <li>
+                        {{ 'REQUESTS-PAGE.FOUR-MSJ-INFO.TEXT' | translate }}
+                      </li>
+                    </ul>
                   </div>
                 </ngb-alert>
               </div>

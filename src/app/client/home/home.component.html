@@ -14,7 +14,7 @@
           <div class="card-bg">
             <div class="p-3 d-flex justify-content-between">
               <div class="col">
-                <h5 class="mb-0">Cantidad Recycoins</h5>
+                <h5 class="mb-0">{{ 'HOME-PAGE-CLIENT.RECYCOIN-DASHBOARD.RECYCOIN-AMOUNT' | translate }}</h5>
                 <span class="fw-bold mb-0 font-15 text-success">
                   {{ (balanceInformation.totalAcquisitions ?? 0) + ' Tokens' }}
                 </span>
@@ -29,7 +29,7 @@
           <div class="card-bg">
             <div class="p-3 d-flex justify-content-between">
               <div class="col">
-                <h5 class="mb-0">Bonificación de tokens</h5>
+                <h5 class="mb-0">{{ 'HOME-PAGE-CLIENT.RECYCOIN-DASHBOARD.TOKEN-BONUS' | translate }}</h5>
                 <span class="fw-bold mb-0 font-15 text-success">
                   {{ (balanceInformation.bonusAmount | truncateDecimals) + ' Tokens' }}
                 </span>
@@ -46,7 +46,7 @@
           <div class="card-body">
             <div class="row">
               <div class="col">
-                <h5 class="m-b-0">Comisión Mensual</h5>
+                <h5 class="m-b-0">{{'HOME-PAGE-CLIENT.RECYCOIN-DASHBOARD.MONTHLY-COMMISSION' | translate}}</h5>
               </div>
               <div class="col-auto">
                 <div class="bg-red text-white icon-box-style">
@@ -58,11 +58,7 @@
               <div class="row text-center">
                 <div class="col-6 border-right">
                   <h6 class="m-b-0 text-success">${{ (information.amountPassiveModel2 ?? 0) | truncateDecimals:2 }}</h6>
-                  <span class="font-14">Pagado</span>
-                </div>
-                <div class="col-6">
-                  <h6 class="m-b-0 text-success">${{(information.amountResidualModel2 ?? 0) | truncateDecimals:2}}</h6>
-                  <span class="font-14">Pagado</span>
+                  <span class="font-14">{{'HOME-PAGE-CLIENT.RECYCOIN-DASHBOARD.COMMISSION-PAID' | translate}}</span>
                 </div>
               </div>
             </div>
@@ -74,7 +70,7 @@
           <div class="card-body">
             <div class="row">
               <div class="col">
-                <h5 class="m-b-0">Comisiones por Referidos</h5>
+                <h5 class="m-b-0">{{'HOME-PAGE-CLIENT.RECYCOIN-DASHBOARD.REFERRAL-COMMISSION' | translate}}</h5>
               </div>
               <div class="col-auto">
                 <div class="bg-green text-white icon-box-style">
@@ -87,11 +83,7 @@
                 <div class="col-6 border-right">
                   <h6 class="m-b-0 text-success">${{(information.amountPercentageModel3 ?? 0) | truncateDecimals:2}}
                   </h6>
-                  <span class="font-14">Pagado</span>
-                </div>
-                <div class="col-6">
-                  <h6 class="m-b-0 text-success">${{(information.amountResidualModel3 ?? 0) | truncateDecimals:2}}</h6>
-                  <span class="font-14">Pagado</span>
+                  <span class="font-14">{{'HOME-PAGE-CLIENT.RECYCOIN-DASHBOARD.COMMISSION-PAID' | translate}}</span>
                 </div>
               </div>
             </div>

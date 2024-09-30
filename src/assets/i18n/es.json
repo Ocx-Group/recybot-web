@@ -260,6 +260,9 @@
     "THIRD-MSJ-INFO": {
       "TEXT": "El monto máximo para retirar es de USD"
     },
+    "FOUR-MSJ-INFO": {
+      "TEXT": "Cada retiro debe pagar un monto de 3 USD correspondiente a la red TRC20 de la pasarela de pagos."
+    },
     "TITTLE-MSJ-INFO": {
       "TEXT": "Información"
     },
@@ -585,6 +588,11 @@
       "TEXT": "Tienda Pública"
     },
     "RECYCOIN-DASHBOARD": {
+      "RECYCOIN-AMOUNT": "Cantidad de RecyCoins",
+      "TOKEN-BONUS": "Bonificación de tokens",
+      "MONTHLY-COMMISSION": "Comisión mensual",
+      "COMMISSION-PAID": "Comisión pagada",
+      "REFERRAL-COMMISSION": "Comisiones por Referidos",
       "TITLE": "Información de RecyCoin",
       "USD-VALUE": "Valor en USD",
       "TOKEN-AMOUNT": "Cantidad de tokens",
@@ -747,6 +755,18 @@
     },
     "PDF": {
       "TEXT": "PDF"
+    },
+    "NETWORK-REFERRAL": {
+      "TEXT": "Referidos de la red"
+    },
+    "DIRECT-CUSTOMERS": {
+      "TEXT": "Clientes directos"
+    },
+    "INDIRECT-CUSTOMERS": {
+      "TEXT": "Clientes indirectos"
+    },
+    "USERS": {
+      "TEXT": "Usuarios"
     }
   },
   "MY-NETWORK-PAGE": {
@@ -892,10 +912,10 @@
   },
   "SAVINGS-PLANS-PAGE": {
     "TITLE": {
-      "TEXT": "Modelo 1"
+      "TEXT": "Criptomoneda"
     },
     "SUBTITLE": {
-      "TEXT": "Modelo 1"
+      "TEXT": "Paquetes Recycoin"
     }
   },
   "SAVINGS-PLANS-ONEB-PAGE": {

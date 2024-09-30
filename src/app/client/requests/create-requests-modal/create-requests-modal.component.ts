@@ -150,7 +150,7 @@ export class CreateRequestsModalComponent implements OnInit {
   }
 
   onGenerateVerificationCode() {
-    this.affiliateService.generateVerificationCode(this.user.id, true).subscribe({
+    this.affiliateService.generateVerificationCode(this.user.id, false).subscribe({
       next: (resp) => {
         if (resp.success) {
           this.showSuccess('Se ha generado correctamente el código de verificación. Por favor, revise su correo electrónico para obtener el código de verificación.');
