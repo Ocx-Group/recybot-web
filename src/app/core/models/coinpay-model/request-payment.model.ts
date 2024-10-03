@@ -8,11 +8,13 @@ export class RequestPayment {
   userName: string;
   amount: number;
   products: ProductRequest[];
+  networkId: number;
 
   constructor() {
     this.affiliateId = 0;
     this.userName = '';
     this.amount = 0;
     this.products = [];
+    this.networkId = 0;
   }
 }

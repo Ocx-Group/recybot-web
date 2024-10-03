@@ -25,7 +25,6 @@ const icons = {
   declarations: [RequestsComponent, CreateRequestsModalComponent],
     imports: [
         CommonModule,
-        NgbModule,
         FormsModule,
         ClipboardModule,
         ReactiveFormsModule,

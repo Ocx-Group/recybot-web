@@ -1,6 +1,8 @@
+import { CoinpayModalComponent } from './coinpay-modal/coinpay-modal.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CreateChannelResponse } from './../../core/models/coinpay-model/create-channel-response.model';
 import { CreatePagaditoTransactionRequest } from '@app/core/models/pagadito-model/create-pagadito-transaction-request.model';
-import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { CartService } from 'src/app/core/service/cart.service/cart.service';
 import { NavigationStart, Router } from '@angular/router';
 import QRCode from 'qrcode';
@@ -60,6 +62,7 @@ export class CartComponent implements OnInit, OnDestroy {
   private pollingInterval = 5000;
   private routerSubscription: Subscription;
   private swalInstance: any;
+  @ViewChild('coinpayPaymentModal') coinpayPaymentModal: TemplateRef<any>;
 
   constructor(
     private cartService: CartService,
@@ -74,7 +77,8 @@ export class CartComponent implements OnInit, OnDestroy {
     private walletModel1AService: WalletModel1AService,
     private walletModel1BService: WalletModel1BService,
     private affiliateService: AffiliateService,
-    private pagaditoService: PagaditoService
+    private pagaditoService: PagaditoService,
+    private modalService: NgbModal
   ) { }
 
   ngOnInit(): void {
@@ -705,5 +709,16 @@ export class CartComponent implements OnInit, OnDestroy {
     if (this.pollingSubscription) {
       this.pollingSubscription.unsubscribe();
     }
+  }
+
+  openCoinpayModal() {
+    this.modalService.open(this.coinpayPaymentModal, { ariaLabelledBy: 'modal-basic-title' }).result.then(
+      (result) => {
+        console.log('Modal cerrado con:', result);
+      },
+      (reason) => {
+        console.log('Modal descartado con:', reason);
+      }
+    );
   }
 }

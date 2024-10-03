@@ -1,0 +1,49 @@
+<ng-template #coinpayPaymentModal let-modal>
+  <form [formGroup]="paymentGroup" (ngSubmit)="onSubmit()">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">
+        Seleccione la red USDT
+      </h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <!-- Redes disponibles -->
+      <div class="network-selection" *ngIf="networks">
+        <div *ngFor="let network of networks" class="network-option"
+          [class.selected]="paymentGroup.get('network').value === network.idChain" (click)="selectNetwork(network)">
+          <img [src]="getNetworkIcon(network.shortName)" [alt]="network.name" class="network-icon" />
+          <div class="network-info">
+            <span class="network-name">{{ network.shortName }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Información de la red seleccionada -->
+      <div *ngIf="selectedNetwork">
+        <div *ngIf="isLoading" class="loading-container">
+          <div class="spinner"></div>
+          <p>Cargando información...</p>
+        </div>
+        <div *ngIf="!isLoading">
+          <div class="payment-info">
+            <h5 class="payment-title">Detalles de Pago</h5>
+            <p class="payment-detail"><strong>Total a pagar:</strong> ${{ total }}</p>
+            <p class="payment-detail"><strong>Dirección de billetera:</strong> {{ walletAddress }}</p>
+          </div>
+          <div class="qr-code-container">
+            <img [src]="qrCodeDataUrl" alt="Código QR" class="qr-code-image" />
+          </div>
+          <div class="payment-instructions">
+            <p>Por favor, envía el pago a la dirección de billetera mostrada. El sistema detectará automáticamente
+              cuando se haya recibido el pago.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="modal.close('Close click')">Cerrar</button>
+    </div>
+  </form>
+</ng-template>

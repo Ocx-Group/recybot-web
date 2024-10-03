@@ -1,4 +1,4 @@
-import { map, Observable } from 'rxjs';
+import { catchError, map, Observable, throwError } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
@@ -45,5 +45,26 @@ export class CoinpayService {
     const params = new HttpParams().set('reference', reference);
     return this.http.get<Response>(this.urlApi.concat('/coinpay/getTransactionByReference'), { params, ...httpOptions })
       .pipe(map(data => data));
+  }
+
+  getNetworks(idCurrency: number) {
+    return this.http
+      .get<Response>(
+        this.urlApi.concat(`/coinpay/getNetworksByIdCurrency?idCurrency=${idCurrency}`),
+        httpOptions
+      )
+      .pipe(
+        map((response) => {
+          console.log(response);
+          if (response) return response.data;
+          else {
+            console.error('ERROR: ' + response);
+            return null;
+          }
+        }),
+        catchError((error) => {
+          return throwError(error);
+        })
+      );
   }
 }
