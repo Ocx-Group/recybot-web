@@ -717,6 +717,9 @@
     "ROW-USER": {
       "TEXT": "Usuario"
     },
+    "ROW-FULL-NAME": {
+      "TEXT": "Nombre completo"
+    },
     "ROW-STATE": {
       "TEXT": "Estado"
     },
@@ -767,7 +770,38 @@
     },
     "USERS": {
       "TEXT": "Usuarios"
+    },
+    "THIRD-PURCHASE": {
+      "TEXT": "Compra a terceros"
     }
+  },
+  "THIRD_PARTY_PURCHASE": {
+    "SELECT_RECYCOINS": "Selecciona los Recycoins",
+    "REVIEW_SELECTION": "Revisa tu selección",
+    "SCAN_QR": "Escanea el código QR para pagar",
+    "PURCHASE_RECYCOINS": "Compra de Recycoins",
+    "PRICE": "Precio",
+    "SELECTED": "Seleccionado",
+    "SELECT": "Seleccionar",
+    "TOTAL": "Total",
+    "PAYMENT_DETAILS": "Detalles de pago",
+    "USER": "Usuario",
+    "AMOUNT_TO_PAY": "Monto a pagar",
+    "TRANSACTION_ID": "ID de Transacción",
+    "LOADING": "Cargando",
+    "GENERATING_QR": "Generando código QR...",
+    "PAYMENT_ADDRESS": "Dirección de pago",
+    "COPY": "Copiar",
+    "BACK": "Atrás",
+    "NEXT": "Siguiente",
+    "SELECT_PAYMENT_METHOD": "Seleccionar método de pago",
+    "COINPAY": "CoinPay",
+    "WALLET": "Billetera",
+    "AVAILABLE_BALANCE": "Saldo disponible",
+    "WALLET_PAYMENT": "Pago con billetera",
+    "SUFFICIENT_BALANCE": "Tienes saldo suficiente para esta compra",
+    "INSUFFICIENT_BALANCE": "Saldo insuficiente para esta compra",
+    "CONFIRM_PAYMENT": "Confirmar pago"
   },
   "MY-NETWORK-PAGE": {
     "TITLE": {
@@ -1017,6 +1051,16 @@
     "EMPTY-CART": {
       "TEXT": "Vaciar Carrito"
     }
+  },
+  "PAYMENT_MODAL": {
+    "TITLE": "Realizar pago",
+    "LOADING": "Cargando información...",
+    "PAYMENT_DETAILS": "Detalles de Pago",
+    "TOTAL_TO_PAY": "Total a pagar",
+    "WALLET_ADDRESS": "Dirección de billetera",
+    "QR_CODE": "Código QR",
+    "INSTRUCTIONS": "Por favor, envía el pago a la dirección de billetera mostrada. El sistema detectará automáticamente cuando se haya recibido el pago.",
+    "CLOSE": "Cerrar"
   },
   "HOME-ADMIN-PAGE": {
     "ACTIVE-AFFILIATES": {

@@ -14,19 +14,23 @@
       <div class="col-lg-12 col-sm-6">
         <div class="info-box7 l-bg-blue order-info-box7">
           <div class="info-box7-block">
-            <h5 class="m-b-20">{{'NETWORK-PAGE.NETWORK-REFERRAL.TEXT' | translate}}</h5>
-            <h6 class="m-b-10">{{'NETWORK-PAGE.DIRECT-CUSTOMERS.TEXT' | translate}}</h6>
+            <h5 class="m-b-20">{{ 'NETWORK-PAGE.NETWORK-REFERRAL.TEXT' | translate }}</h5>
+            <h6 class="m-b-10">{{ 'NETWORK-PAGE.DIRECT-CUSTOMERS.TEXT' | translate }}</h6>
             <h6 class="text-end"><i class="fas fa-user float-start"></i>
               <span>
-                {{ (information.amountUsersDirectModel123 ?? 0) + ' ' + ('NETWORK-PAGE.DIRECT-CUSTOMERS.TEXT' |
-                translate) }}
+                {{
+                (information.amountUsersDirectModel123 ?? 0) + ' ' + ('NETWORK-PAGE.DIRECT-CUSTOMERS.TEXT' |
+                translate)
+                }}
               </span>
             </h6>
-            <h6 class="m-b-10 m">{{'NETWORK-PAGE.INDIRECT-CUSTOMERS.TEXT' | translate}}</h6>
+            <h6 class="m-b-10 m">{{ 'NETWORK-PAGE.INDIRECT-CUSTOMERS.TEXT' | translate }}</h6>
             <h6 class="text-end"><i class="fas fa-users float-start"></i>
               <span>
-                {{ (information.amountUsersNetworkModel123 ?? 0) + ' ' + ('NETWORK-PAGE.DIRECT-CUSTOMERS.TEXT' |
-                translate) }}
+                {{
+                (information.amountUsersNetworkModel123 ?? 0) + ' ' + ('NETWORK-PAGE.DIRECT-CUSTOMERS.TEXT' |
+                translate)
+                }}
               </span>
             </h6>
           </div>
@@ -39,7 +43,7 @@
           <div class="card-header">
             <div class="row d-flex justify-content-end">
               <div class="col-xl-10">
-                <h4>{{'NETWORK-PAGE.NETWORK-ALL-CUSTOMERS.TEXT' | translate}}</h4>
+                <h4>{{ 'NETWORK-PAGE.NETWORK-ALL-CUSTOMERS.TEXT' | translate }}</h4>
               </div>
               <div class="col-xl-2 text-right">
                 <span class="btn btn-outline-primary btn-sm" (click)="isCollapsed = !isCollapsed"
@@ -64,7 +68,7 @@
                             </div>
                           </div>
                           <input style="background-color: white;" type="text" class="form-control"
-                            id="inlineFormInputGroup" (keyup)="setUserAffiliateByUserName($event)"
+                            id="inlineFormInputGroup2" (keyup)="setUserAffiliateByUserName($event)"
                             aria-label="Search box" placeholder="{{ 'NETWORK-PAGE.SEARCH.TEXT' | translate }}">
                         </div>
                       </div>
@@ -73,12 +77,17 @@
                 </div>
               </div>
               <div class="row" *ngIf="rowsGlobal && rowsGlobal.length > 0">
-                <ngx-datatable #table class="material" [rows]="rowsGlobal" [loadingIndicator]="loadingIndicatorGlobal"
-                  columnMode="force" [headerHeight]="50" [footerHeight]="50" rowHeight="auto" [limit]="10"
-                  [scrollbarH]="scrollBarHorizontal" [reorderable]="reorderable">
+                <ngx-datatable #tableRef class="material" [rows]="rowsGlobal"
+                  [loadingIndicator]="loadingIndicatorGlobal" columnMode="force" [headerHeight]="50" [footerHeight]="50"
+                  rowHeight="auto" [limit]="10" [scrollbarH]="scrollBarHorizontal" [reorderable]="reorderable">
                   <ngx-datatable-column name="{{ 'NETWORK-PAGE.ROW-USER.TEXT' | translate }}">
                     <ng-template let-row="row" ngx-datatable-cell-template>
                       {{ row.user_name }}
+                    </ng-template>
+                  </ngx-datatable-column>
+                  <ngx-datatable-column name="{{ 'NETWORK-PAGE.ROW-FULL-NAME.TEXT' | translate }}">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                      {{ row.name }} {{ row.last_name }}
                     </ng-template>
                   </ngx-datatable-column>
                   <ngx-datatable-column name="{{ 'NETWORK-PAGE.ROW-STATE.TEXT' | translate }}">
@@ -99,7 +108,7 @@
                     </ng-template>
                   </ngx-datatable-column>
                   <ngx-datatable-column name="{{ 'NETWORK-PAGE.ROW-DETAIL.TEXT' | translate }}" sortable="false">
-                    <ng-template let-value="value" let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+                    <ng-template let-row="row" ngx-datatable-cell-template>
                       <div ngbDropdown container="body">
                         <button type="button" class="btn btn-outline-primary btn-sm" ngbDropdownToggle>
                           {{
@@ -107,21 +116,25 @@
                           }}
                         </button>
                         <div ngbDropdownMenu>
-                          <a ngbDropdownItem id="btn-deleteGlobal" *ngIf="isNewUser"
+                          <a ngbDropdownItem id="btn-delete" *ngIf="isNewUser"
                             (click)="showConfirmationTransferBalanceForMembership(row)">
                             <i class="bi bi-person-badge"></i>
-                            <span style="margin-left: 10px">{{ 'NETWORK-PAGE.ACTIVATE-MEMBERSHIP.BALANCE.TEXT' |
-                              translate }}</span>
+                            <span style="margin-left: 10px">{{
+                              'NETWORK-PAGE.ACTIVATE-MEMBERSHIP.BALANCE.TEXT' |
+                              translate
+                              }}</span>
                           </a>
                           <a ngbDropdownItem *ngIf="isNewUser" (click)="createPagaditoTransaction(row)">
                             <i class="bi bi-credit-card"></i>
-                            <span style="margin-left: 10px">{{ 'NETWORK-PAGE.ACTIVATE-MEMBERSHIP.CARD.TEXT' | translate
+                            <span style="margin-left: 10px">{{
+                              'NETWORK-PAGE.ACTIVATE-MEMBERSHIP.CARD.TEXT' | translate
                               }}</span>
                           </a>
                           <a ngbDropdownItem id="btn-detailGlobal" *ngIf="row.activation_date != null"
                             (click)="showConfirmationTransferBalance(row)">
                             <i class="bi bi-currency-exchange"></i>
-                            <span style="margin-left: 10px">{{ 'NETWORK-PAGE.TRANSFER-BALANCE.TEXT' | translate
+                            <span style="margin-left: 10px">{{
+                              'NETWORK-PAGE.TRANSFER-BALANCE.TEXT' | translate
                               }}</span>
                           </a>
                         </div>
@@ -190,12 +203,17 @@
                     </ul>
                   </div>
                 </div>
-                <ngx-datatable id="htmlTable" #table class="material" [rows]="rows"
+                <ngx-datatable id="htmlTable" #tableRefGlobal class="material" [rows]="rows"
                   [loadingIndicator]="loadingIndicator" columnMode="force" [headerHeight]="50" [footerHeight]="50"
                   rowHeight="auto" [limit]="10" [scrollbarH]="scrollBarHorizontal" [reorderable]="reorderable">
                   <ngx-datatable-column name="{{ 'NETWORK-PAGE.ROW-USER.TEXT' | translate }}">
                     <ng-template let-row="row" ngx-datatable-cell-template>
                       {{ row.userName }}
+                    </ng-template>
+                  </ngx-datatable-column>
+                  <ngx-datatable-column name="{{ 'NETWORK-PAGE.ROW-FULL-NAME.TEXT' | translate }}">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                      {{ row.fullName }}
                     </ng-template>
                   </ngx-datatable-column>
                   <ngx-datatable-column name="{{ 'NETWORK-PAGE.ROW-STATE.TEXT' | translate }}">
@@ -216,7 +234,7 @@
                     </ng-template>
                   </ngx-datatable-column>
                   <ngx-datatable-column name="{{ 'NETWORK-PAGE.ROW-DETAIL.TEXT' | translate }}" sortable="false">
-                    <ng-template let-value="value" let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+                    <ng-template let-row="row" ngx-datatable-cell-template>
                       <div ngbDropdown container="body">
                         <button type="button" class="btn btn-outline-primary btn-sm" ngbDropdownToggle>
                           {{
@@ -226,20 +244,30 @@
                         <div ngbDropdownMenu>
                           <a ngbDropdownItem id="btn-detail" *ngIf="row.activationDate != null"
                             (click)="showConfirmationTransferBalance(row)">
-                            <i class="bi bi-currency-exchange"></i>
-                            <span style="margin-left: 10px">{{ 'NETWORK-PAGE.TRANSFER-BALANCE.TEXT' | translate
+                            <i class="bi bi-currency-exchange me-1"></i>
+                            <span>{{
+                              'NETWORK-PAGE.TRANSFER-BALANCE.TEXT' | translate
+                              }}</span>
+                          </a>
+                          <a ngbDropdownItem id="btn-purchase" (click)="purchaseModal.openModal(row)">
+                            <i class="bi bi-currency-exchange me-1"></i>
+                            <span>{{
+                              'NETWORK-PAGE.THIRD-PURCHASE.TEXT' | translate
                               }}</span>
                           </a>
                           <a ngbDropdownItem id="btn-deleteGlobal" *ngIf="row.activationDate == null"
                             (click)="showConfirmationTransferBalanceForMembership(row)">
-                            <i class="bi bi-person-badge"></i>
-                            <span style="margin-left: 10px">{{ 'NETWORK-PAGE.ACTIVATE-MEMBERSHIP.BALANCE.TEXT' |
-                              translate }}</span>
+                            <i class="bi bi-person-badge me-1"></i>
+                            <span>{{
+                              'NETWORK-PAGE.ACTIVATE-MEMBERSHIP.BALANCE.TEXT' |
+                              translate
+                              }}</span>
                           </a>
                           <a ngbDropdownItem *ngIf="row.activationDate == null"
                             (click)="createPagaditoTransaction(row)">
-                            <i class="bi bi-credit-card"></i>
-                            <span style="margin-left: 10px">{{ 'NETWORK-PAGE.ACTIVATE-MEMBERSHIP.CARD.TEXT' | translate
+                            <i class="bi bi-credit-card me-1"></i>
+                            <span>{{
+                              'NETWORK-PAGE.ACTIVATE-MEMBERSHIP.CARD.TEXT' | translate
                               }}</span>
                           </a>
                         </div>
@@ -255,3 +283,5 @@
     </div>
   </div>
 </section>
+<app-third-party-purchase #purchaseModal [recycoins]="recycoins$ | async">
+</app-third-party-purchase>

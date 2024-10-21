@@ -522,8 +522,8 @@ export class HomeComponent {
     return new Promise((resolve, reject) => {
       this.walletService.getBalanceInformationByAffiliateId(id).subscribe({
         next: (value: BalanceInformation) => {
+          console.log(value);
           this.balanceInformation = value;
-          this.balanceInformation.totalAcquisitions += this.balanceInformation.bonusAmount;
           resolve();
         },
         error: (err) => {

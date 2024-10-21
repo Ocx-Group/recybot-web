@@ -4,6 +4,7 @@
   justify-content: space-between;
   margin-bottom: 20px;
 }
+
 .stepper-item {
   position: relative;
   display: flex;
@@ -66,6 +67,7 @@
 .stepper-item:first-child::before {
   content: none;
 }
+
 .stepper-item:last-child::after {
   content: none;
 }
@@ -84,13 +86,21 @@
   .stepper-wrapper {
     margin-bottom: 30px;
   }
+
   .stepper-item::before {
     top: 30px;
   }
+
   .stepper-item::after {
     top: 30px;
   }
+
   .step-name {
     font-size: 12px;
   }
+}
+
+.small-icon {
+  width: 20px;
+  height: 20px;
 }

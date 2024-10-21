@@ -1,11 +1,11 @@
-import { ToastrService } from 'ngx-toastr';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Component, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { ProductRequest, RequestPayment } from '@app/core/models/coinpay-model/request-payment.model';
-import { CoinpayService } from '@app/core/service/coinpay-service/coinpay.service';
-import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
-import { Subscription, switchMap, timer } from 'rxjs';
+import {ToastrService} from 'ngx-toastr';
+import {FormGroup, FormBuilder, Validators} from '@angular/forms';
+import {ChangeDetectorRef, Component, Input, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
+import {ProductRequest, RequestPayment} from '@app/core/models/coinpay-model/request-payment.model';
+import {CoinpayService} from '@app/core/service/coinpay-service/coinpay.service';
+import {UserAffiliate} from '@app/core/models/user-affiliate-model/user.affiliate.model';
+import {Subscription, switchMap, timer} from 'rxjs';
 import QRCode from 'qrcode';
 
 @Component({
@@ -29,18 +29,24 @@ export class CoinpayModalComponent implements OnInit {
   private modalReference: NgbModalRef;
   @ViewChild('coinpayPaymentModal') coinpayPaymentModal: TemplateRef<any>;
 
-  constructor(private formBuilder: FormBuilder, private modalService: NgbModal, private coinpayService: CoinpayService, private toastr: ToastrService) { }
+  constructor(
+    private formBuilder: FormBuilder,
+    private modalService: NgbModal,
+    private coinpayService: CoinpayService,
+    private toastr: ToastrService,
+    private cdr: ChangeDetectorRef) {
+  }
 
   ngOnInit(): void {
     this.initControls();
     this.getNetworksByUSDT();
   }
 
-  showSuccess(message) {
+  showSuccess(message: string) {
     this.toastr.success(message);
   }
 
-  showError(message) {
+  showError(message: string) {
     this.toastr.error(message);
   }
 
@@ -71,6 +77,7 @@ export class CoinpayModalComponent implements OnInit {
       size: 'lg',
       centered: true,
     });
+    this.selectNetwork();
   }
 
   getNetworkIcon(shortName: string): string {
@@ -84,15 +91,15 @@ export class CoinpayModalComponent implements OnInit {
     return iconMap[shortName] || 'assets/images/crypto/default.png';
   }
 
-  selectNetwork(network: any) {
-    this.selectedNetwork = network;
-    this.paymentGroup.get('network').setValue(network.idChain);
+  selectNetwork() {
+    // this.selectedNetwork = network;
+    // this.paymentGroup.get('network').setValue(network.idChain);
 
     this.walletAddress = '';
     this.transactionId = '';
     this.qrCodeDataUrl = '';
 
-    this.createCoinPayTransaction();
+    this.createCoinPayTransaction(56);
   }
 
 
@@ -105,10 +112,10 @@ export class CoinpayModalComponent implements OnInit {
     });
   }
 
-  createCoinPayTransaction() {
+  createCoinPayTransaction(networkId: number) {
     this.isLoading = true;
 
-    const request = this.createTransactionRequest();
+    const request = this.createTransactionRequest(networkId);
 
     this.coinpayService.createChannel(request).subscribe({
       next: async (response) => {
@@ -117,10 +124,18 @@ export class CoinpayModalComponent implements OnInit {
           this.walletAddress = transactionData.address;
           this.transactionId = transactionData.idExternalIdentification.toString();
 
-          this.qrCodeDataUrl = await QRCode.toDataURL(this.walletAddress);
-          this.isLoading = false;
+          try {
+            this.qrCodeDataUrl = await QRCode.toDataURL(this.walletAddress);
+            this.isLoading = false;
 
-          this.startTransactionStatusPolling(this.transactionId);
+            this.cdr.detectChanges();
+
+            this.startTransactionStatusPolling(this.transactionId);
+          } catch (error) {
+            console.error('Error generating QR code:', error);
+            this.isLoading = false;
+            this.showError("Error al generar el código QR");
+          }
         } else {
           this.isLoading = false;
           this.showError("Error al crear la transacción");
@@ -134,13 +149,14 @@ export class CoinpayModalComponent implements OnInit {
     });
   }
 
-  createTransactionRequest(): RequestPayment {
+  createTransactionRequest(networkId: number): RequestPayment {
+    this.selectedNetwork = true;
     const request = new RequestPayment();
     request.affiliateId = this.user.id;
     request.userName = this.user.user_name;
     request.amount = this.total;
     request.products = this.constructProductDetails();
-    request.networkId = this.selectedNetwork.idChain;
+    request.networkId = networkId;
     return request;
   }
 
@@ -168,10 +184,6 @@ export class CoinpayModalComponent implements OnInit {
     if (this.pollingSubscription) {
       this.pollingSubscription.unsubscribe();
     }
-  }
-
-  ngOnDestroy() {
-    this.stopTransactionStatusPolling();
   }
 
   cleanAndCloseModal() {

@@ -12,6 +12,7 @@ import Swal from 'sweetalert2';
 })
 export class PurchaseConfirmationComponent {
   private invoiceDownloaded = false;
+  brandId: number;
 
   constructor(private activatedRoute: ActivatedRoute, private router: Router, private invoiceService: InvoiceService, private toastrService: ToastrService) { }
 
@@ -72,8 +73,10 @@ export class PurchaseConfirmationComponent {
         take(3)
       ))
     ).subscribe({
-      next: (blob: Blob) => {
-        const blobUrl = window.URL.createObjectURL(blob);
+      next: (result: { blob: Blob, brandId: number | null }) => {
+        this.brandId = result.brandId;
+
+        const blobUrl = window.URL.createObjectURL(result.blob);
 
         const a = document.createElement('a');
         a.href = blobUrl;

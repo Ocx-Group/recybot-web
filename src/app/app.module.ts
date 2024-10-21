@@ -1,5 +1,5 @@
 
-import { LocationStrategy, HashLocationStrategy, PathLocationStrategy } from '@angular/common';
+import {LocationStrategy, HashLocationStrategy, PathLocationStrategy, NgOptimizedImage} from '@angular/common';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
@@ -67,33 +67,34 @@ export function createTranslateLoader(http: HttpClient): any {
     ImgProfileComponent,
     TermsConditionsModalComponent
   ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    AppRoutingModule,
-    HttpClientModule,
-    ReactiveFormsModule,
-    PerfectScrollbarModule,
-    LoadingBarRouterModule,
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: createTranslateLoader,
-        deps: [HttpClient],
-      },
-    }),
-    // core & shared
-    CoreModule,
-    ToastrModule.forRoot(),
-    SharedModule,
-    NgbModule,
-    ClipboardModule,
-    MembershipManagerModule,
-    provideFirebaseApp(() => initializeApp(firebaseConfig)),
-    provideStorage(() => getStorage()),
-    ClientModule,
-    NgxDropzoneModule,
-  ],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        AppRoutingModule,
+        HttpClientModule,
+        ReactiveFormsModule,
+        PerfectScrollbarModule,
+        LoadingBarRouterModule,
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: createTranslateLoader,
+                deps: [HttpClient],
+            },
+        }),
+        // core & shared
+        CoreModule,
+        ToastrModule.forRoot(),
+        SharedModule,
+        NgbModule,
+        ClipboardModule,
+        MembershipManagerModule,
+        provideFirebaseApp(() => initializeApp(firebaseConfig)),
+        provideStorage(() => getStorage()),
+        ClientModule,
+        NgxDropzoneModule,
+        NgOptimizedImage,
+    ],
   providers: [
     { provide: LocationStrategy, useClass: PathLocationStrategy },
     {

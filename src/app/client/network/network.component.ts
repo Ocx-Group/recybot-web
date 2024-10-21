@@ -1,32 +1,38 @@
-import { TranslateService } from '@ngx-translate/core';
-import { CartService } from 'src/app/core/service/cart.service/cart.service';
+import {ThirdPartyPurchaseComponent} from './third-party-purchase/third-party-purchase.component';
+import {TranslateService} from '@ngx-translate/core';
 import Swal from 'sweetalert2';
-import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
-import { DatatableComponent } from '@swimlane/ngx-datatable';
-import { Subject, takeUntil } from 'rxjs';
-import { Router } from '@angular/router';
+import {Component, HostListener, OnInit, ViewChild} from '@angular/core';
+import {DatatableComponent} from '@swimlane/ngx-datatable';
+import {Observable, Subject, takeUntil} from 'rxjs';
+import {Router} from '@angular/router';
 import html2canvas from 'html2canvas';
-import jsPDF from 'jspdf';
+import JSPDF from 'jspdf';
 
-import { NetworkAffiliate } from '@app/core/models/network-affiliate/network.affiliate.model';
-import { AffiliateService } from '@app/core/service/affiliate-service/affiliate.service';
-import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
-import { Grading } from '@app/core/models/grading-model/grading.model';
-import { GradingService } from '@app/core/service/grading-service/grading.service';
-import { AuthService } from '@app/core/service/authentication-service/auth.service';
-import { WalletService } from '@app/core/service/wallet-service/wallet.service';
-import { ToastrService } from 'ngx-toastr';
-import { TransferBalance } from '@app/core/models/wallet-model/transfer-balance.model';
-import { EncryptService } from '@app/core/service/encrypt-service/encrypt.service';
-import { ConfigurationService } from '@app/core/service/configuration-service/configuration.service';
-import { WalletWithdrawalsConfiguration } from '@app/core/models/wallet-withdrawals-configuration-model/wallet-withdrawals-configuration.model';
-import { TruncateDecimalsPipe } from "@app/shared/truncate-decimals.pipe";
-import { PagaditoTransactionDetailRequest } from '@app/core/models/pagadito-model/pagadito-transaction-detail-request.model';
-import { CreatePagaditoTransactionRequest } from '@app/core/models/pagadito-model/create-pagadito-transaction-request.model';
-import { PagaditoService } from '@app/core/service/pagadito-service/pagadito.service';
-import { Product } from '@app/core/models/product-model/product.model';
-import { ProductService } from '@app/core/service/product-service/product.service';
-import { StatisticsInformation } from '@app/core/models/wallet-model/statisticsInformation';
+import {NetworkAffiliate} from '@app/core/models/network-affiliate/network.affiliate.model';
+import {AffiliateService} from '@app/core/service/affiliate-service/affiliate.service';
+import {UserAffiliate} from '@app/core/models/user-affiliate-model/user.affiliate.model';
+import {Grading} from '@app/core/models/grading-model/grading.model';
+import {GradingService} from '@app/core/service/grading-service/grading.service';
+import {AuthService} from '@app/core/service/authentication-service/auth.service';
+import {WalletService} from '@app/core/service/wallet-service/wallet.service';
+import {ToastrService} from 'ngx-toastr';
+import {TransferBalance} from '@app/core/models/wallet-model/transfer-balance.model';
+import {EncryptService} from '@app/core/service/encrypt-service/encrypt.service';
+import {ConfigurationService} from '@app/core/service/configuration-service/configuration.service';
+import {
+  WalletWithdrawalsConfiguration
+} from '@app/core/models/wallet-withdrawals-configuration-model/wallet-withdrawals-configuration.model';
+import {TruncateDecimalsPipe} from "@app/shared/truncate-decimals.pipe";
+import {
+  PagaditoTransactionDetailRequest
+} from '@app/core/models/pagadito-model/pagadito-transaction-detail-request.model';
+import {
+  CreatePagaditoTransactionRequest
+} from '@app/core/models/pagadito-model/create-pagadito-transaction-request.model';
+import {PagaditoService} from '@app/core/service/pagadito-service/pagadito.service';
+import {Product} from '@app/core/models/product-model/product.model';
+import {ProductService} from '@app/core/service/product-service/product.service';
+import {StatisticsInformation} from '@app/core/models/wallet-model/statisticsInformation';
 
 @Component({
   selector: 'app-network',
@@ -53,8 +59,10 @@ export class NetworkComponent implements OnInit {
   pagaditoRequest = new CreatePagaditoTransactionRequest();
   currentMembership: Product = new Product();
   information: StatisticsInformation = new StatisticsInformation();
-
-  @ViewChild('table') table: DatatableComponent;
+  @ViewChild('purchaseModal') purchaseModal: ThirdPartyPurchaseComponent;
+  @ViewChild('tableRef') table: DatatableComponent;
+  @ViewChild('tableRefGlobal') tableRefGlobal: DatatableComponent;
+  recycoins$: Observable<Product[]>;
 
   constructor(
     private affiliateService: AffiliateService,
@@ -64,7 +72,6 @@ export class NetworkComponent implements OnInit {
     private toastr: ToastrService,
     private encryptService: EncryptService,
     private route: Router,
-    private cartService: CartService,
     private translateService: TranslateService,
     private configurationService: ConfigurationService,
     private truncatedDecimals: TruncateDecimalsPipe,
@@ -95,17 +102,18 @@ export class NetworkComponent implements OnInit {
     this.loadBalanceAvailable();
     this.loadWithdrawalConfiguration();
     this.loadInformation();
+    this.loadRecycoins();
   }
 
-  showSuccess(message) {
+  showSuccess(message: string) {
     this.toastr.success(message);
   }
 
-  showError(message) {
+  showError(message: string) {
     this.toastr.error(message);
   }
 
-  getNameGrading(id) {
+  getNameGrading(id: number) {
     let grading = this.gradings.find(item => item.id === id);
     return grading !== undefined ? grading.name : 'N/A';
   }
@@ -126,15 +134,20 @@ export class NetworkComponent implements OnInit {
       next: (resp) => {
         this.currentMembership = resp[0];
       },
-      error: (err) => { },
+      error: () => {
+      },
     });
   }
 
   @HostListener('window:resize', ['$event'])
-  onResize(event) {
-    this.scrollBarHorizontal = event.target.innerWidth < 1200;
-    this.table.recalculate();
-    this.table.recalculateColumns();
+  onResize(event: UIEvent) {
+    const target = event.target as Window;
+    this.scrollBarHorizontal = target.innerWidth < 1200;
+
+    if (this.table && this.tableRefGlobal) {
+      this.table.recalculate();
+      this.table.recalculateColumns();
+    }
   }
 
   getRowHeight(row) {
@@ -293,7 +306,7 @@ export class NetworkComponent implements OnInit {
           this.showError(value.message);
         }
       },
-      error: (error) => {
+      error: () => {
         this.showError("Error");
       },
     })
@@ -308,11 +321,7 @@ export class NetworkComponent implements OnInit {
     this.affiliateService.getAffiliateByUserName(this.userName).subscribe({
       next: (value) => {
         if (value) {
-          if (value.activation_date == null) {
-            this.isNewUser = true;
-          } else {
-            this.isNewUser = false;
-          }
+          this.isNewUser = value.activation_date == null;
           this.rowsGlobal = [value];
           this.tempGlobal = value;
           this.loadingIndicatorGlobal = false;
@@ -327,21 +336,22 @@ export class NetworkComponent implements OnInit {
     })
   }
 
-  redirectToPurchases(row) {
-    this.cartService.setPurchaseFromThirdParty(row);
-    this.route.navigate(['app/billing-purchase']);
-  }
+  /*
+    redirectToPurchases(row) {
+      this.cartService.setPurchaseFromThirdParty(row);
+      this.route.navigate(['app/billing-purchase']);
+    }*/
 
   redirectToUnilevelTree() {
 
-    this.route.navigate(['app/trees'])
+    this.route.navigate(['app/trees']).then();
   }
 
   downloadPDF() {
     const DATA = document.getElementById('htmlTable');
 
     html2canvas(DATA).then(canvas => {
-      let pdf = new jsPDF('l', 'mm', 'a4');
+      let pdf = new JSPDF('l', 'mm', 'a4');
 
       const pageWidth = 297;
       const imgWidth = pageWidth - 40;
@@ -352,7 +362,7 @@ export class NetworkComponent implements OnInit {
       const posY = 30;
 
       pdf.setFontSize(18);
-      pdf.text('Mi red', pageWidth / 2, 20, { align: 'center' });
+      pdf.text('Mi red', pageWidth / 2, 20, {align: 'center'});
 
       const contentDataURL = canvas.toDataURL('image/png');
       pdf.addImage(contentDataURL, 'PNG', posX, posY, imgWidth, imgHeight);
@@ -407,7 +417,7 @@ export class NetworkComponent implements OnInit {
       next: (value) => {
         this.withdrawalConfiguration.activate_invoice_cancellation = value.activate_invoice_cancellation;
       },
-      error: (err) => {
+      error: () => {
         this.showError('Error');
       },
     })
@@ -416,11 +426,13 @@ export class NetworkComponent implements OnInit {
   generateVerificationCode() {
     this.affiliateService.generateVerificationCode(this.user.id, false).subscribe({
       next: (value) => {
-        const toastConfig = {
-          positionClass: 'toast-top-center'
-        };
+        if (value.success) {
+          const toastConfig = {
+            positionClass: 'toast-top-center'
+          };
 
-        this.toastr.success('Se ha generado un código de seguridad, por favor revisa el correo electronico.', null, toastConfig);
+          this.toastr.success('Se ha generado un código de seguridad, por favor revisa el correo electronico.', null, toastConfig);
+        }
       },
       error: () => {
         this.showError('Error');
@@ -493,9 +505,13 @@ export class NetworkComponent implements OnInit {
       next: (value) => {
         this.information = value;
       },
-      error: (err) => {
+      error: () => {
         this.showError('Error');
       },
     })
+  }
+
+  loadRecycoins() {
+    this.recycoins$ = this.productService.getAllRecyCoin();
   }
 }

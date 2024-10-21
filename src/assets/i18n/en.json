@@ -714,6 +714,9 @@
     "ROW-USER": {
       "TEXT": "User"
     },
+    "ROW-FULL-NAME": {
+      "TEXT": "Full name"
+    },
     "ROW-STATE": {
       "TEXT": "State"
     },
@@ -764,7 +767,38 @@
     },
     "USERS": {
       "TEXT": "Users"
+    },
+    "THIRD-PURCHASE": {
+      "TEXT": "Third party purchase"
     }
+  },
+  "THIRD_PARTY_PURCHASE": {
+    "SELECT_RECYCOINS": "Select Recycoins",
+    "REVIEW_SELECTION": "Review your selection",
+    "SCAN_QR": "Scan the QR code to pay",
+    "PURCHASE_RECYCOINS": "Purchase Recycoins",
+    "PRICE": "Price",
+    "SELECTED": "Selected",
+    "SELECT": "Select",
+    "TOTAL": "Total",
+    "PAYMENT_DETAILS": "Payment Details",
+    "USER": "User",
+    "AMOUNT_TO_PAY": "Amount to pay",
+    "TRANSACTION_ID": "Transaction ID",
+    "LOADING": "Loading",
+    "GENERATING_QR": "Generating QR code...",
+    "PAYMENT_ADDRESS": "Payment address",
+    "COPY": "Copy",
+    "BACK": "Back",
+    "NEXT": "Next",
+    "SELECT_PAYMENT_METHOD": "Select Payment Method",
+    "COINPAY": "CoinPay",
+    "WALLET": "Wallet",
+    "AVAILABLE_BALANCE": "Available Balance",
+    "WALLET_PAYMENT": "Wallet Payment",
+    "SUFFICIENT_BALANCE": "You have sufficient balance for this purchase",
+    "INSUFFICIENT_BALANCE": "Insufficient balance for this purchase",
+    "CONFIRM_PAYMENT": "Confirm Payment"
   },
   "MY-NETWORK-PAGE": {
     "TITLE": {
@@ -1014,6 +1048,16 @@
     "EMPTY-CART": {
       "TEXT": "Empty Cart"
     }
+  },
+  "PAYMENT_MODAL": {
+    "TITLE": "Make Payment",
+    "LOADING": "Loading information...",
+    "PAYMENT_DETAILS": "Payment Details",
+    "TOTAL_TO_PAY": "Total to pay",
+    "WALLET_ADDRESS": "Wallet address",
+    "QR_CODE": "QR Code",
+    "INSTRUCTIONS": "Please send the payment to the displayed wallet address. The system will automatically detect when the payment has been received.",
+    "CLOSE": "Close"
   },
   "HOME-ADMIN-PAGE": {
     "ACTIVE-AFFILIATES": {
