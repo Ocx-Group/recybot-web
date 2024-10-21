@@ -3,4 +3,5 @@ export class TicketSummary {
   title: string;
   unreadMessagesCount: number;
   lastUpdated: Date;
+  isRead: boolean;
 }

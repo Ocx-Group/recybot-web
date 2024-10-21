@@ -84,9 +84,9 @@ export class ConfigureWalletComponent implements OnInit, AfterViewInit, OnDestro
 
     value.forEach(item => {
       if (item && typeof item === 'object') {
-        if (item.networkId === 1) {
+        if (item.networkId === 56) {
           updateWalletAddress.trc_address = item.address;
-        } else if (item.networkId === 2) {
+        } else if (item.networkId === 202) {
           updateWalletAddress.bnb_address = item.address;
         }
       }

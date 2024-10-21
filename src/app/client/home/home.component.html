@@ -16,7 +16,7 @@
               <div class="col">
                 <h5 class="mb-0">{{ 'HOME-PAGE-CLIENT.RECYCOIN-DASHBOARD.RECYCOIN-AMOUNT' | translate }}</h5>
                 <span class="fw-bold mb-0 font-15 text-success">
-                  {{ (balanceInformation.totalAcquisitions ?? 0) + ' Tokens' }}
+                  {{ ((balanceInformation.totalAcquisitions + balanceInformation.bonusAmount) ?? 0) + ' Tokens' }}
                 </span>
               </div>
               <i class="fas fa-coins card-icon col-red font-30 col-auto"></i>

@@ -106,6 +106,16 @@ export class WalletService {
       );
   }
 
+  payWithMyBalanceForOthers(model: WalletRequest) {
+    return this.http
+      .post<Response>(this.urlApi.concat('/wallet/payWithMyBalanceForOthers'), model, httpOptions)
+      .pipe(
+        map((response) => {
+          return response;
+        })
+      );
+  }
+
   payWithMyBalanceModel2(model: WalletRequest) {
     return this.http
       .post<Response>(this.urlApi.concat('/wallet/payWithMyBalanceModel2'), model, httpOptions)

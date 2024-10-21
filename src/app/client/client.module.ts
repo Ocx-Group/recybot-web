@@ -5,7 +5,7 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
 import { QrcodeModule } from 'qrcode-angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {CommonModule, NgOptimizedImage} from '@angular/common';
 import { NgbModalModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { ClientRoutingModule } from './client-routing.module';
@@ -46,6 +46,7 @@ import { SavingsPlansComponent } from './savings-plans/savings-plans.component';
 import { SavingsPlansOneBComponent } from './savings-plans-one-b/savings-plans-one-b.component';
 import { PurchaseConfirmationComponent } from './purchase-confirmation/purchase-confirmation.component';
 import { CoinpayModalComponent } from './cart/coinpay-modal/coinpay-modal.component';
+import { ThirdPartyPurchaseComponent } from './network/third-party-purchase/third-party-purchase.component';
 
 const icons = {
   Search
@@ -78,7 +79,8 @@ const icons = {
     SavingsPlansComponent,
     SavingsPlansOneBComponent,
     PurchaseConfirmationComponent,
-    CoinpayModalComponent
+    CoinpayModalComponent,
+    ThirdPartyPurchaseComponent
   ],
   imports: [
     CommonModule,
@@ -104,7 +106,8 @@ const icons = {
     ClientUnilevelTreeModule,
     SharedModule,
     TicketsModule,
-    NgbModalModule
+    NgbModalModule,
+    NgOptimizedImage
   ],
   exports: [
     ConfigureWalletComponent
