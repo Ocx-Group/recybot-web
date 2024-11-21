@@ -1,34 +1,37 @@
-import { CoinpayModalComponent } from './coinpay-modal/coinpay-modal.component';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { CreateChannelResponse } from './../../core/models/coinpay-model/create-channel-response.model';
-import { CreatePagaditoTransactionRequest } from '@app/core/models/pagadito-model/create-pagadito-transaction-request.model';
-import { Component, HostListener, OnDestroy, OnInit, ViewChild, TemplateRef } from '@angular/core';
-import { CartService } from 'src/app/core/service/cart.service/cart.service';
-import { NavigationStart, Router } from '@angular/router';
+import {CreateChannelResponse} from '@app/core/models/coinpay-model/create-channel-response.model';
+import {
+  CreatePagaditoTransactionRequest
+} from '@app/core/models/pagadito-model/create-pagadito-transaction-request.model';
+import {Component, HostListener, OnDestroy, OnInit, ViewChild, TemplateRef} from '@angular/core';
+import {CartService} from 'src/app/core/service/cart.service/cart.service';
+import {NavigationStart, Router} from '@angular/router';
 import QRCode from 'qrcode';
 import Swal from 'sweetalert2';
-import { ToastrService } from 'ngx-toastr';
+import {ToastrService} from 'ngx-toastr';
 
-import { ProductsRequests, WalletRequest } from '@app/core/models/wallet-model/wallet-request.model';
-import { CoinpaymentService } from '@app/core/service/coinpayment-service/coinpayment.service';
-import { CreatePayment, ProductRequest } from '@app/core/models/coinpayment-model/create-payment.model';
-import { WalletService } from "@app/core/service/wallet-service/wallet.service";
-import { AuthService } from '@app/core/service/authentication-service/auth.service';
-import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
-import { CreateTransactionResponse } from '@app/core/models/coinpay-model/create-transaction-response.model';
-import { ConpaymentTransaction } from '@app/core/models/coinpayment-model/conpayment-transaction.model';
-import { RequestPayment } from '@app/core/models/coinpay-model/request-payment.model';
-import { CoinpayService } from '@app/core/service/coinpay-service/coinpay.service';
-import { ConfigurationService } from '@app/core/service/configuration-service/configuration.service';
-import { WalletWithdrawalsConfiguration } from '@app/core/models/wallet-withdrawals-configuration-model/wallet-withdrawals-configuration.model';
-import { PaymentTransaction } from '@app/core/models/payment-transaction-model/payment-transaction-request.model';
-import { PaymentTransactionService } from '@app/core/service/payment-transaction-service/payment-transaction.service';
-import { WalletModel1BService } from '@app/core/service/wallet-model-1b-service/wallet-model-1b.service';
-import { WalletModel1AService } from '@app/core/service/wallet-model-1a-service/wallet-model-1a.service';
-import { AffiliateService } from '@app/core/service/affiliate-service/affiliate.service';
-import { PagaditoService } from '@app/core/service/pagadito-service/pagadito.service';
-import { PagaditoTransactionDetailRequest } from '@app/core/models/pagadito-model/pagadito-transaction-detail-request.model';
-import { Subscription, switchMap, timer } from 'rxjs';
+import {ProductsRequests, WalletRequest} from '@app/core/models/wallet-model/wallet-request.model';
+import {CoinpaymentService} from '@app/core/service/coinpayment-service/coinpayment.service';
+import {CreatePayment, ProductRequest} from '@app/core/models/coinpayment-model/create-payment.model';
+import {WalletService} from "@app/core/service/wallet-service/wallet.service";
+import {AuthService} from '@app/core/service/authentication-service/auth.service';
+import {UserAffiliate} from '@app/core/models/user-affiliate-model/user.affiliate.model';
+import {CreateTransactionResponse} from '@app/core/models/coinpay-model/create-transaction-response.model';
+import {ConpaymentTransaction} from '@app/core/models/coinpayment-model/conpayment-transaction.model';
+import {RequestPayment} from '@app/core/models/coinpay-model/request-payment.model';
+import {CoinpayService} from '@app/core/service/coinpay-service/coinpay.service';
+import {ConfigurationService} from '@app/core/service/configuration-service/configuration.service';
+import {
+  WalletWithdrawalsConfiguration
+} from '@app/core/models/wallet-withdrawals-configuration-model/wallet-withdrawals-configuration.model';
+
+import {WalletModel1BService} from '@app/core/service/wallet-model-1b-service/wallet-model-1b.service';
+import {WalletModel1AService} from '@app/core/service/wallet-model-1a-service/wallet-model-1a.service';
+import {AffiliateService} from '@app/core/service/affiliate-service/affiliate.service';
+import {PagaditoService} from '@app/core/service/pagadito-service/pagadito.service';
+import {
+  PagaditoTransactionDetailRequest
+} from '@app/core/models/pagadito-model/pagadito-transaction-detail-request.model';
+import {Subscription, switchMap, timer} from 'rxjs';
 
 @Component({
   selector: 'app-cart',
@@ -73,13 +76,12 @@ export class CartComponent implements OnInit, OnDestroy {
     private walletService: WalletService,
     private coinpayService: CoinpayService,
     private configurationService: ConfigurationService,
-    private paymentTransactionService: PaymentTransactionService,
     private walletModel1AService: WalletModel1AService,
     private walletModel1BService: WalletModel1BService,
     private affiliateService: AffiliateService,
     private pagaditoService: PagaditoService,
-    private modalService: NgbModal
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     this.user = this.auth.currentUserAffiliateValue;
@@ -93,7 +95,7 @@ export class CartComponent implements OnInit, OnDestroy {
       })
 
     this.verificateUrl();
-    this.checkExistenceOfAffiliateForReversePayment();
+    this.checkExistenceOfAffiliateForReversePayment().then();
     this.loadWithdrawalConfiguration();
     this.routerSubscription = this.router.events.subscribe((event) => {
       if (event instanceof NavigationStart) {
@@ -123,17 +125,17 @@ export class CartComponent implements OnInit, OnDestroy {
     }
   }
 
-  showSuccess(message) {
+  showSuccess(message: string) {
     this.toastr.success(message);
   }
 
-  showError(message) {
+  showError(message: string) {
     this.toastr.error(message);
   }
 
   verificateUrl() {
     if (this.products.length === 0) {
-      this.router.navigate(['app/home']);
+      this.router.navigate(['app/home']).then();
     }
   }
 
@@ -196,29 +198,30 @@ export class CartComponent implements OnInit, OnDestroy {
     this.total = grandTotal;
   }
 
-  showBalanceConfirmation(): Promise<boolean> {
-    return Swal.fire({
-      title: '¿Al realizar la compra estás aceptando los términos y condiciones, está seguro que desea realizar el pago?',
-      text: 'Esta acción no se puede deshacer.',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Sí, quiero realizar el pago',
-      cancelButtonText: 'No',
-      html: `Por favor, asegúrese de haber leído y aceptado los <a href="https://recycoinfx.com/wp-content/uploads/2024/01/recycoin-V3.pdf" target="_blank">términos y condiciones</a>.`,
-      preConfirm: () => {
+  async showBalanceConfirmation(): Promise<boolean> {
+    try {
+      let result = await Swal.fire({
+        title: '¿Al realizar la compra estás aceptando los términos y condiciones, está seguro que desea realizar el pago?',
+        text: 'Esta acción no se puede deshacer.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Sí, quiero realizar el pago',
+        cancelButtonText: 'No',
+        html: `Por favor, asegúrese de haber leído y aceptado los <a href="https://recycoinfx.com/wp-content/uploads/2024/01/recycoin-V3.pdf" target="_blank">términos y condiciones</a>.`,
+        preConfirm: () => {
 
-      }
-    }).then((result) => {
+        }
+      });
       if (result.isConfirmed) {
         this.acceptTerms();
         return true;
       } else {
         return false;
       }
-    }).catch(error => {
+    } catch (error) {
       console.error("Error en showBalanceConfirmation:", error);
       return false;
-    });
+    }
   }
 
   showCoinPaymentConfirmation() {
@@ -250,13 +253,13 @@ export class CartComponent implements OnInit, OnDestroy {
   handleBalancePayment() {
     switch (this.model) {
       case '2':
-        this.payWithMyBalanceModel2();
+        this.payWithMyBalanceModel2().then();
         break;
       case '1A':
-        this.payWithMyBalanceModel1A();
+        this.payWithMyBalanceModel1A().then();
         break;
       case '1B':
-        this.payWithMyBalanceModel1B();
+        this.payWithMyBalanceModel1B().then();
         break;
       default:
         break;
@@ -266,10 +269,10 @@ export class CartComponent implements OnInit, OnDestroy {
   handleServiceBalancePayment() {
     switch (this.model) {
       case '1A':
-        this.payWithMyServiceBalanceModel1A();
+        this.payWithMyServiceBalanceModel1A().then();
         break;
       case '1B':
-        this.payWithMyServiceBalanceModel1B();
+        this.payWithMyServiceBalanceModel1B().then();
         break;
       default:
         break;
@@ -307,7 +310,7 @@ export class CartComponent implements OnInit, OnDestroy {
           this.showError('Error: No se pudo realizar el pago.');
         }
       },
-      error: (err) => {
+      error: () => {
         this.showError('Error: No se pudo realizar el pago.');
       },
     });
@@ -329,7 +332,7 @@ export class CartComponent implements OnInit, OnDestroy {
           this.showError('Error: No se pudo realizar el pago.');
         }
       },
-      error: (err) => {
+      error: () => {
         this.showError('Error: No se pudo realizar el pago.');
       },
     });
@@ -354,7 +357,7 @@ export class CartComponent implements OnInit, OnDestroy {
 
     request.amount = this.total;
     request.buyer_email = this.user.email;
-    request.buyer_name = this.user.name + ' ' + this.user.last_name;
+    request.buyer_name = `${this.user.name} ${this.user.last_name}`;
     request.item_number = this.user.id.toString();
     request.ipn_url = 'https://wallet.recycoinfx.net/api/v1/ConPayments/coinPaymentsIPN';
     request.currency1 = 'USDT.TRC20';
@@ -410,13 +413,13 @@ export class CartComponent implements OnInit, OnDestroy {
       next: (response) => {
 
         if (response.success) {
-          this.showCoinpayAlert(response.data);
+          this.showCoinpayAlert(response.data).then();
         } else {
           this.showError("Error");
         }
       },
       error: (err) => {
-        console.log(err);
+        console.error(err);
         this.showError("Error");
       },
     });
@@ -455,57 +458,10 @@ export class CartComponent implements OnInit, OnDestroy {
       next: (value) => {
         this.withdrawalConfiguration.activate_invoice_cancellation = value.activate_invoice_cancellation;
       },
-      error: (err) => {
+      error: () => {
         this.showError('Error');
       },
     })
-  }
-
-  paymentByBankTransfer() {
-    Swal.fire({
-      title: 'Confirmación para pagos de transferencia',
-      html:
-        '<div class="container">' +
-        '<div class="form-group">' +
-        '<label for="reference">Número de referencia bancaria</label>' +
-        '<input type="text" id="reference" class="form-control swal2-input" placeholder="Número de referencia bancaria">' +
-        '</div>' +
-        '<div class="form-group">' +
-        '<label for="date">Fecha del pago</label>' +
-        '<input type="date" id="date" class="form-control swal2-input">' +
-        '</div>' +
-        '</div>',
-      showCancelButton: true,
-      confirmButtonText: 'Enviar',
-      cancelButtonText: 'Cancelar',
-      preConfirm: () => {
-        const reference = (document.getElementById('reference') as HTMLInputElement).value;
-        const dateInput = (document.getElementById('date') as HTMLInputElement).value;
-        const date = new Date(dateInput);
-
-        if (reference.trim() === '' || dateInput.trim() === '') {
-          Swal.showValidationMessage('Por favor, complete todos los campos');
-        } else {
-          let transaction = new PaymentTransaction();
-          transaction.affiliateId = this.user.id;
-          transaction.amount = this.total;
-          transaction.products = JSON.stringify(this.constructProductDetails());
-          transaction.idTransaction = reference;
-          transaction.createdAt = date;
-
-          this.paymentTransactionService.createPaymentTransaction(transaction).subscribe({
-            next: (value) => {
-              this.showSuccess('Solicitud creada correctamente');
-              this.router.navigate(['app/home']);
-              this.emptycart();
-            },
-            error: (err) => {
-              this.showError('Error');
-            },
-          })
-        }
-      }
-    });
   }
 
   async payWithMyBalanceModel1A() {
@@ -524,7 +480,7 @@ export class CartComponent implements OnInit, OnDestroy {
           this.showError('Error: No se pudo realizar el pago.');
         }
       },
-      error: (err) => {
+      error: () => {
         this.showError('Error: No se pudo realizar el pago.');
       },
     });
@@ -546,7 +502,7 @@ export class CartComponent implements OnInit, OnDestroy {
           this.showError('Error: No se pudo realizar el pago.');
         }
       },
-      error: (err) => {
+      error: () => {
         this.showError('Error: No se pudo realizar el pago.');
       },
     });
@@ -555,19 +511,19 @@ export class CartComponent implements OnInit, OnDestroy {
   handleBuyMore() {
     switch (this.model) {
       case '2':
-        this.router.navigate(['app/billing-purchase']);
+        this.router.navigate(['app/billing-purchase']).then();
         break;
       case '1A':
-        this.router.navigate(['app/savings-plans']);
+        this.router.navigate(['app/savings-plans']).then();
         break;
       case '1B':
-        this.router.navigate(['app/savings-plans-one-b']);
+        this.router.navigate(['app/savings-plans-one-b']).then();
         break;
       case 'recycoin':
-        this.router.navigate(['app/recycoin']);
+        this.router.navigate(['app/recycoin']).then();
         break;
       default:
-        this.router.navigate(['app/educational-courses']);
+        this.router.navigate(['app/educational-courses']).then();
         break;
     }
   }
@@ -588,7 +544,7 @@ export class CartComponent implements OnInit, OnDestroy {
           this.showError('Error: No se pudo realizar el pago.');
         }
       },
-      error: (error) => {
+      error: () => {
         this.showError('Error: No se pudo realizar el pago.');
       }
     })
@@ -610,7 +566,7 @@ export class CartComponent implements OnInit, OnDestroy {
           this.showError('Error: No se pudo realizar el pago.');
         }
       },
-      error: (err) => {
+      error: () => {
         this.showError('Error: No se pudo realizar el pago.');
       },
     })
@@ -619,11 +575,11 @@ export class CartComponent implements OnInit, OnDestroy {
   acceptTerms() {
     if (this.user.termsConditions != true) {
       this.affiliateService.updateAffiliate(this.user).subscribe({
-        next: (value) => {
+        next: () => {
           this.showSuccess('Términos y condiciones actualizados correctamente');
           this.auth.setUserAffiliateValue(this.user);
         },
-        error: (err) => {
+        error: () => {
           this.showError('Error');
         },
       })
@@ -662,12 +618,12 @@ export class CartComponent implements OnInit, OnDestroy {
           next: (response) => {
             if (response.success) {
               window.open(response.data);
-              this.router.navigate(['app/home']);
+              this.router.navigate(['app/home']).then();
               this.emptycart();
             }
           },
           error: (err) => {
-            console.log(err)
+            console.error(err)
           },
         });
       }
@@ -688,7 +644,7 @@ export class CartComponent implements OnInit, OnDestroy {
             showConfirmButton: true
           });
           this.stopTransactionStatusPolling();
-          this.router.navigate(['app/home']);
+          this.router.navigate(['app/home']).then();
           this.emptycart();
         }
       },
@@ -709,16 +665,5 @@ export class CartComponent implements OnInit, OnDestroy {
     if (this.pollingSubscription) {
       this.pollingSubscription.unsubscribe();
     }
-  }
-
-  openCoinpayModal() {
-    this.modalService.open(this.coinpayPaymentModal, { ariaLabelledBy: 'modal-basic-title' }).result.then(
-      (result) => {
-        console.log('Modal cerrado con:', result);
-      },
-      (reason) => {
-        console.log('Modal descartado con:', reason);
-      }
-    );
   }
 }

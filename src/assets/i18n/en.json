@@ -1057,7 +1057,9 @@
     "WALLET_ADDRESS": "Wallet address",
     "QR_CODE": "QR Code",
     "INSTRUCTIONS": "Please send the payment to the displayed wallet address. The system will automatically detect when the payment has been received.",
-    "CLOSE": "Close"
+    "CLOSE": "Close",
+    "CHANGE_NETWORK": "Change network",
+    "SELECT_NETWORK": "Select the network to be paid"
   },
   "HOME-ADMIN-PAGE": {
     "ACTIVE-AFFILIATES": {

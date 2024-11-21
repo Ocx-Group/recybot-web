@@ -1,20 +1,40 @@
-<div class="recycoin-preview-wrapper">
-  <div class="recycoin-preview">
-    <h2 class="neon-text title">Explore los diferentes paquetes de Recycoin</h2>
-    <div class="package-grid">
-      <div class="package-card" *ngFor="let item of productList">
-        <div class="card-content">
-          <div class="card-front">
-            <div class="image-container">
-              <img [src]="item.image" alt="RecyCoin Package" class="package-image">
-              <div class="glow-effect"></div>
+<!-- HTML igual pero con overlays ajustados -->
+<div class="container-fluid vh-100">
+  <div class="dark-overlay-left"></div>
+  <div class="dark-overlay-right"></div>
+
+  <!-- Logo section - Fixed -->
+  <div class="logo-section">
+    <img src="assets/images/logo-yellow.png" alt="Logo" class="logo">
+  </div>
+
+  <!-- Main content -->
+  <div class="content-wrapper">
+    <!-- Left side - Explore text (Fixed) -->
+    <div class="explore-section">
+      <div class="explore-content">
+        <h1 class="text-white explore-text">
+          <span>Explore los</span><br>
+          <span>diferentes</span><br>
+          <span>paquetes</span><br>
+          <span class="text-recycoin">Recycoin</span>
+        </h1>
+      </div>
+    </div>
+
+    <!-- Right side - Product cards (Scrollable) -->
+    <div class="products-section">
+      <div class="row">
+        <div class="col-12 col-md-4" *ngFor="let item of productList;">
+          <div class="product-card">
+            <img src="{{item.image}}" class="card-img" alt="Semilla">
+            <div class="card-footer">
+              <img src="assets/images/yellow-logo.png" class="recycoin-icon" alt="icon">
+              <div class="text-container">
+                <span class="product-name">{{ item.name }}</span>
+                <span class="product-price">${{ item.baseAmount }}</span>
+              </div>
             </div>
-            <h3 class="package-name neon-text">{{ item.name }}</h3>
-            <p class="package-price neon-text">{{ item.salePrice | currency }}</p>
-          </div>
-          <div class="card-back">
-            <p class="package-description">{{ item.description }}</p>
-            <button class="buy-button neon-text" routerLink="/signin">Comprar ahora</button>
           </div>
         </div>
       </div>

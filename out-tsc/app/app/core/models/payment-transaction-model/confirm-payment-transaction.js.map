@@ -1,0 +1,1 @@
+{"version":3,"file":"confirm-payment-transaction.js","sourceRoot":"","sources":["../../../../../../src/app/core/models/payment-transaction-model/confirm-payment-transaction.ts"],"names":[],"mappings":"AAAA,MAAM,OAAO,yBAAyB;IAIpC;QACE,IAAI,CAAC,EAAE,GAAG,CAAC,CAAC;QACZ,IAAI,CAAC,QAAQ,GAAG,EAAE,CAAC;IACrB,CAAC;CACF"}

@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --prod --build-optimizer=false",
+    "build:prod": "node --max-old-space-size=4096 ./node_modules/@angular/cli/bin/ng build --configuration=production",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -72,12 +72,13 @@
     "luxon": "^3.4.3",
     "mat-progress-buttons": "^9.3.1",
     "moment": "^2.29.4",
-    "ng-apexcharts": "^1.7.4",
+    "ng-apexcharts": "^1.6.0",
     "ng-image-fullscreen-view": "^3.0.3",
     "ng-pick-datetime": "^7.0.0",
     "ng-qrcode": "^16.0.0",
     "ng2-charts": "^2.4.2",
     "ng2-dragula": "^2.1.1",
+    "ng2-pdf-viewer": "^9.1.5",
     "ngx-clipboard": "^15.1.0",
     "ngx-color-picker": "^11.0.0",
     "ngx-custom-validators": "8.0.0",
@@ -106,7 +107,6 @@
     "zone.js": "~0.12.0"
   },
   "devDependencies": {
-    "@angular-builders/custom-webpack": "^16.0.0",
     "@angular-devkit/build-angular": "^15.0.3",
     "@angular/cli": "^15.0.3",
     "@angular/compiler-cli": "^15.0.3",

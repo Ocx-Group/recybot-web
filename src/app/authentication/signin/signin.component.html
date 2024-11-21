@@ -1,40 +1,42 @@
 <main class="login-wrapper">
+  <div class="background-image"
+       [style.backgroundImage]="'url(' + backgroundImages[currentImageIndex] + ')'"
+       [@backgroundFade]="'visible'">
+  </div>
+
   <div class="login-card">
-    <img src="assets/images/landing-page2.png" alt="RecyCoin" class="signin-logo mb-3">
-    <h2 class="login-title">Iniciar sesión</h2>
+    <img src="assets/images/logo-yellow.png" alt="RecyCoin" class="signin-logo mb-3">
     <form class="validate-form" [formGroup]="authLogin" (ngSubmit)="loginSubmitted()">
       <div class="login-input-group">
-        <label for="email">{{username}} <span class="text-danger">*</span></label>
+
+        <input id="email" type="email" formControlName="email" placeholder="{{username}}" required="required"/>
         <i-feather name="user"></i-feather>
-        <input id="email" type="email" formControlName="email" placeholder="{{username}}" required="required" />
         <div class="form-text text-danger fw-bold" *ngIf="Email.errors?.['email'] && (Email.dirty || Email.touched)">
-          {{userNameErrorMessage}}
+          {{ userNameErrorMessage }}
         </div>
         <div class="form-text text-danger fw-bold" *ngIf="Email.errors?.['required'] && (Email.dirty || Email.touched)">
-          {{userNameIsRequerid}}
+          {{ userNameIsRequerid }}
         </div>
       </div>
       <div class="login-input-group">
-        <label for="pwd">{{password}} <span class="text-danger">*</span></label>
+
+        <input id="pwd" type="password" formControlName="pwd" placeholder="{{password}}" required="required"/>
         <i-feather name="key"></i-feather>
-        <input id="pwd" type="password" formControlName="pwd" placeholder="{{password}}" required="required" />
         <div class="form-text text-danger fw-bold"
-          *ngIf="Pwd.errors?.['minlength'] || Pwd.errors?.['maxlength'] && (Pwd.dirty || Pwd.touched)">
-          {{passwordErrorMessage}}
+             *ngIf="Pwd.errors?.['minlength'] || Pwd.errors?.['maxlength'] && (Pwd.dirty || Pwd.touched)">
+          {{ passwordErrorMessage }}
         </div>
         <div class="form-text text-danger fw-bold" *ngIf="Pwd.errors?.['required'] && (Pwd.dirty || Pwd.touched)">
-          {{passwordIsRequerid}}
+          {{ passwordIsRequerid }}
         </div>
       </div>
-      <div class="forgot-password">
-        <a routerLink="/forgot">{{forgot}}?</a>
-      </div>
-      <div class="text-center">
+
+      <div class="container-login-button">
         <button class="login-button" type="submit" [disabled]="loading">
           <div *ngIf="loading" class="spinner-border spinner-border-sm" role="status">
             <span class="sr-only">Loading...</span>
           </div>
-          {{signin}}
+          {{ signin }}
         </button>
       </div>
       <div *ngIf="error !== ''" class="alert alert-danger">
@@ -43,6 +45,9 @@
     </form>
     <div class="register-option">
       <p>¿No tienes una cuenta? <a routerLink="/signup">Regístrate</a></p>
+    </div>
+    <div class="forgot-password">
+      <p>Cambiar <a routerLink="/forgot">Contraseña</a></p>
     </div>
   </div>
 </main>

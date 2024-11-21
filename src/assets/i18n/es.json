@@ -1060,7 +1060,9 @@
     "WALLET_ADDRESS": "Dirección de billetera",
     "QR_CODE": "Código QR",
     "INSTRUCTIONS": "Por favor, envía el pago a la dirección de billetera mostrada. El sistema detectará automáticamente cuando se haya recibido el pago.",
-    "CLOSE": "Cerrar"
+    "CLOSE": "Cerrar",
+    "CHANGE_NETWORK": "Cambiar red",
+    "SELECT_NETWORK": "Seleccione la red a realizar el pago"
   },
   "HOME-ADMIN-PAGE": {
     "ACTIVE-AFFILIATES": {

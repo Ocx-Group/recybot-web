@@ -1,18 +1,19 @@
-import { UpdateImageProfile } from './../../models/user-affiliate-model/update-image-profile.model';
-import { UpdateImageIdPath } from './../../models/user-affiliate-model/update-image-id-path.model';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import {UpdateImageProfile} from './../../models/user-affiliate-model/update-image-profile.model';
+import {UpdateImageIdPath} from './../../models/user-affiliate-model/update-image-id-path.model';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import {Injectable} from '@angular/core';
 
-import { environment } from '@environments/environment';
-import { map, catchError } from 'rxjs/operators';
-import { BehaviorSubject, Observable, throwError } from 'rxjs';
-import { UpdatePassword } from '@app/core/models/user-model/update.password.model';
-import { SecretQuestion } from '@app/core/models/secret-question-model/secret.question.model';
+import {environment} from '@environments/environment';
+import {map, catchError} from 'rxjs/operators';
+import {BehaviorSubject, Observable, throwError} from 'rxjs';
+import {UpdatePassword} from '@app/core/models/user-model/update.password.model';
+import {SecretQuestion} from '@app/core/models/secret-question-model/secret.question.model';
 
-import { Response } from '@app/core/models/response-model/response.model';
-import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
-import { CreateAffiliate } from '@app/core/models/user-affiliate-model/create-affiliate.model';
-import { RequestResetPassword } from '@app/core/models/user-affiliate-model/request-reset-password-model';
+import {Response} from '@app/core/models/response-model/response.model';
+import {UserAffiliate} from '@app/core/models/user-affiliate-model/user.affiliate.model';
+import {CreateAffiliate} from '@app/core/models/user-affiliate-model/create-affiliate.model';
+import {RequestResetPassword} from '@app/core/models/user-affiliate-model/request-reset-password-model';
+import {ContactUsRequest} from "@app/core/models/user-affiliate-model/contactUsRequest.model";
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -21,6 +22,7 @@ const httpOptions = {
     'X-Client-ID': environment.tokens.clientID.toString()
   }),
 };
+
 @Injectable({
   providedIn: 'root',
 })
@@ -116,7 +118,7 @@ export class AffiliateService {
   }
 
   authorizationAffiliates(approvedArray: any[], disApprovedArray: any[]) {
-    let request = { approvedArray, disApprovedArray };
+    let request = {approvedArray, disApprovedArray};
 
     return this.http
       .post<Response>(
@@ -358,7 +360,10 @@ export class AffiliateService {
     const params = new HttpParams().set('checkDate', checkDate.toString());
 
     return this.http
-      .post<Response>(`${this.urlApi}/useraffiliateinfo/generateVerificationCode/${id.toString()}`, {}, { headers: httpOptions.headers, params: params })
+      .post<Response>(`${this.urlApi}/useraffiliateinfo/generateVerificationCode/${id.toString()}`, {}, {
+        headers: httpOptions.headers,
+        params: params
+      })
       .pipe(
         map((response) => {
           if (!response.success) {
@@ -368,7 +373,6 @@ export class AffiliateService {
         })
       );
   }
-
 
   getTotalActiveMembers() {
     return this.http
@@ -508,5 +512,16 @@ export class AffiliateService {
           }
         })
       );
+  }
+
+  contactUs(contact: ContactUsRequest) {
+    return this.http.post<Response>(
+      `${this.urlApi}/useraffiliateinfo/contact_us`,
+      contact,
+      httpOptions
+    )
+      .pipe(map((response) => {
+        return response;
+      }))
   }
 }

@@ -1,10 +1,10 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AuthenticationRoutingModule } from './authentication-routing.module';
-import { FeatherModule } from 'angular-feather';
-import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
-import { MatSelectCountryModule } from '@angular-material-extensions/select-country';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {AuthenticationRoutingModule} from './authentication-routing.module';
+import {FeatherModule} from 'angular-feather';
+import {PerfectScrollbarModule} from 'ngx-perfect-scrollbar';
+import {MatSelectCountryModule} from '@angular-material-extensions/select-country';
 import {
   Facebook,
   Twitter,
@@ -15,23 +15,26 @@ import {
   UserCheck,
   Mail,
 } from 'angular-feather/icons';
-import { MatSelectModule } from '@angular/material/select';
-import { ForgotComponent } from './forgot/forgot.component';
-import { Page500Component } from './page500/page500.component';
-import { Page404Component } from './page404/page404.component';
-import { ResetComponent } from './reset/reset.component';
-import { EmailConfirmationComponent } from './email-confirmation/email.confirmation.component';
-import { SignupComponent } from './signup/signup.component';
-import { SigninComponent } from './signin/signin.component';
-import { LandingPageComponent } from './landing-page/landing-page.component';
-import { MainOptionsComponent } from './main-options/main-options.component';
-import { ConpaymentConfirmationComponent } from './conpayment-confirmation/conpayment-confirmation.component';
-import { TranslateModule } from '@ngx-translate/core';
-import { MaintenancePageComponent } from './maintenance-page/maintenance-page.component';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { WhitePaperComponent } from './white-paper/white-paper.component';
-import { NgbCollapse } from '@ng-bootstrap/ng-bootstrap';
-import { ProductsPreviewComponent } from './products-preview/products-preview.component';
+import {MatSelectModule} from '@angular/material/select';
+import {ForgotComponent} from './forgot/forgot.component';
+import {Page500Component} from './page500/page500.component';
+import {Page404Component} from './page404/page404.component';
+import {ResetComponent} from './reset/reset.component';
+import {EmailConfirmationComponent} from './email-confirmation/email.confirmation.component';
+import {SignupComponent} from './signup/signup.component';
+import {SigninComponent} from './signin/signin.component';
+import {LandingPageComponent} from './landing-page/landing-page.component';
+import {MainOptionsComponent} from './main-options/main-options.component';
+import {ConpaymentConfirmationComponent} from './conpayment-confirmation/conpayment-confirmation.component';
+import {TranslateModule} from '@ngx-translate/core';
+import {MaintenancePageComponent} from './maintenance-page/maintenance-page.component';
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
+import {NgbCollapse} from '@ng-bootstrap/ng-bootstrap';
+import {ProductsPreviewComponent} from './products-preview/products-preview.component';
+import {TeamComponent} from './team/team.component';
+import {SharedModule} from "@app/shared/shared.module";
+import {ContactComponent} from './contact/contact.component';
+import {TestimonialsComponent} from './testimonials/testimonials.component';
 
 const icons = {
   Facebook,
@@ -57,8 +60,10 @@ const icons = {
     MainOptionsComponent,
     MaintenancePageComponent,
     ConpaymentConfirmationComponent,
-    WhitePaperComponent,
-    ProductsPreviewComponent],
+    ProductsPreviewComponent,
+    TeamComponent,
+    ContactComponent,
+    TestimonialsComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -70,8 +75,10 @@ const icons = {
     MatSelectCountryModule.forRoot('en'),
     MatSelectModule,
     FontAwesomeModule,
-    NgbCollapse
+    NgbCollapse,
+    SharedModule
   ]
 
 })
-export class AuthenticationModule { }
+export class AuthenticationModule {
+}

@@ -1,23 +1,4 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-
-import {
-  ApexAxisChartSeries,
-  ApexChart,
-  ApexXAxis,
-  ApexDataLabels,
-  ApexStroke,
-  ApexMarkers,
-  ApexYAxis,
-  ApexGrid,
-  ApexTitleSubtitle,
-  ApexTooltip,
-  ApexLegend,
-  ApexFill,
-  ApexPlotOptions,
-  ApexResponsive,
-  ChartComponent,
-} from 'ng-apexcharts';
-
 import * as am4core from '@amcharts/amcharts4/core';
 import * as am4maps from '@amcharts/amcharts4/maps';
 import am4geodata_worldLow from "@amcharts/amcharts4-geodata/worldLow";
@@ -26,27 +7,27 @@ import {EChartsOption} from 'echarts';
 import {WalletService} from '@app/core/service/wallet-service/wallet.service';
 import {AffiliateService} from '@app/core/service/affiliate-service/affiliate.service';
 import {ToastrService} from 'ngx-toastr';
+import {
+  ApexNonAxisChartSeries,
+  ApexChart,
+  ApexResponsive,
+  ApexDataLabels,
+  ApexLegend,
+  ApexPlotOptions, ChartComponent
+} from 'ng-apexcharts';
 
+export interface ChartOptions {
+  series?: ApexNonAxisChartSeries;
+  chart?: ApexChart;
+  responsive?: ApexResponsive[];
+  labels?: any;
+  colors?: string[];
+  dataLabels?: ApexDataLabels;
+  legend?: ApexLegend;
+  plotOptions?: ApexPlotOptions;
+}
 
 am4core.useTheme(am5themes_Animated);
-
-export type ChartOptions = {
-  series: ApexAxisChartSeries;
-  chart: ApexChart;
-  xaxis: ApexXAxis;
-  stroke: ApexStroke;
-  dataLabels: ApexDataLabels;
-  markers: ApexMarkers;
-  colors: string[];
-  yaxis: ApexYAxis;
-  grid: ApexGrid;
-  legend: ApexLegend;
-  tooltip: ApexTooltip;
-  fill: ApexFill;
-  title: ApexTitleSubtitle;
-  plotOptions: ApexPlotOptions;
-  responsive: ApexResponsive[];
-};
 
 @Component({
   selector: 'app-home-admin',
@@ -54,7 +35,7 @@ export type ChartOptions = {
 })
 export class HomeAdminComponent implements OnInit {
   private chart: am4maps.MapChart;
-  public pieChartOptions: any;
+  public pieChartOptions: Partial<ChartOptions>;
   public avgLecChartOptions: any;
   totalMembers: number;
   commissionsPaid: number;
@@ -64,8 +45,23 @@ export class HomeAdminComponent implements OnInit {
   maps: any[] = [];
   @ViewChild('chart') chart1: ChartComponent;
 
-  constructor(private walletService: WalletService, private affiliateService: AffiliateService, private toastr: ToastrService,) {
-    this.pieChartOptions = {series: [], chart: {}, labels: [], responsive: [], dataLabels: {}, legend: {}};
+  constructor(private walletService: WalletService, private affiliateService: AffiliateService, private toastr: ToastrService) {
+    this.pieChartOptions = {
+      series: [],
+      chart: {
+        type: "donut",
+        width: 200
+      },
+      labels: [],
+      colors: [],
+      dataLabels: {
+        enabled: false
+      },
+      legend: {
+        show: false
+      },
+      responsive: []
+    };
     this.getBalanceInformationAdmin();
   }
 
@@ -89,7 +85,6 @@ export class HomeAdminComponent implements OnInit {
         Number(this.totalMembers),
         Number(this.calculatedCommissions),
         Number(this.commissionsPaid),
-
         Number(this.totalReverseBalance),
       ],
       colors: ['#f44336', '#2196f3', '#96a2b4', '#4caf50', '#9c27b0'],
@@ -118,16 +113,16 @@ export class HomeAdminComponent implements OnInit {
               enabled: true,
               formatter: function (val: any) {
                 return val + "%"
-              },
-              plotOptions: {
-                pie: {
-                  expandOnClick: false
-                }
+              }
+            },
+            plotOptions: {
+              pie: {
+                expandOnClick: false
               }
             }
-          },
-        },
-      ],
+          }
+        }
+      ]
     };
   }
 

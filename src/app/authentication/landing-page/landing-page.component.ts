@@ -1,7 +1,9 @@
-import { animate, state, style, transition, trigger } from '@angular/animations';
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
+import {animate, state, style, transition, trigger} from '@angular/animations';
+import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import {ToastrService} from 'ngx-toastr';
+
+import {PdfViewerService} from "@app/core/service/pdf-viewer-service/pdf-viewer.service";
+import {PdfViewerComponent} from "@app/shared/components/pdf-viewer/pdf-viewer.component";
 
 @Component({
   selector: 'app-home',
@@ -24,14 +26,32 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class LandingPageComponent implements OnInit {
   isNavbarVisible = false;
-  urlPDF: string = 'https://drive.google.com/file/d/1F1ldtl0hxUi2Hvs8DsGwiNMO4u9vaoWp/view?usp=sharing';
+  documents = {
+    whitePaper: {
+      url: '/assets/pdf/WHITEPAPER.pdf',
+      title: 'White Paper - RecyCoin'
+    },
+    legalDoc: {
+      url: '/assets/pdf/LEGAL-DOCUMENTATION.pdf',
+      title: 'Documentos Legales - RecyCoin'
+    },
+    recycoinProject: {
+      url: '/assets/pdf/PROJECT.pdf',
+      title: 'Proyecto RecyCoin'
+    }
+  };
+  @ViewChild('whitePaperModal') whitePaperModal!: PdfViewerComponent;
+  @ViewChild('legalDocsModal') legalDocsModal!: PdfViewerComponent;
 
-  constructor(private router: Router) { }
+  constructor(private pdfViewerService: PdfViewerService) {
+  }
 
   ngOnInit() {
   }
 
-  onSubmit() {
+  showDocument(docType: 'whitePaper' | 'legalDoc' | 'recycoinProject'): void {
+    const document = this.documents[docType];
+    this.pdfViewerService.showPdf(document);
   }
 
   toggleNavbar() {

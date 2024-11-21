@@ -1,9 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
-import { Product } from '@app/core/models/product-model/product.model';
-import { ToastrService } from 'ngx-toastr';
-import { CartService } from 'src/app/core/service/cart.service/cart.service';
-import { ProductService } from 'src/app/core/service/product-service/product.service';
+import {Product} from '@app/core/models/product-model/product.model';
+import {ToastrService} from 'ngx-toastr';
+import {CartService} from 'src/app/core/service/cart.service/cart.service';
+import {ProductService} from 'src/app/core/service/product-service/product.service';
 
 @Component({
   selector: 'app-products',
@@ -21,7 +21,8 @@ export class ProductsComponent implements OnInit {
     private cartService: CartService,
     private productService: ProductService,
     private toatr: ToastrService
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     this.cartService.search.subscribe((val: any) => {
@@ -44,7 +45,7 @@ export class ProductsComponent implements OnInit {
     });
   }
 
-  showError(error) {
+  showError(error: string) {
     this.toatr.error(error);
   }
 
@@ -53,7 +54,7 @@ export class ProductsComponent implements OnInit {
       this.productList = ecopools;
       this.filterCategory = ecopools;
       this.productList.forEach((item: any) => {
-        Object.assign(item, { quantity: 1, total: item.salePrice });
+        Object.assign(item, {quantity: 1, total: item.salePrice});
       });
     });
   }
@@ -63,7 +64,7 @@ export class ProductsComponent implements OnInit {
       this.productList = services;
       this.filterCategory = services;
       this.productList.forEach((item: any) => {
-        Object.assign(item, { quantity: 1, total: item.salePrice });
+        Object.assign(item, {quantity: 1, total: item.salePrice});
       });
     })
   }
@@ -73,7 +74,7 @@ export class ProductsComponent implements OnInit {
       this.productList = suscriptions;
       this.filterCategory = suscriptions;
       this.productList.forEach((item: any) => {
-        Object.assign(item, { quantity: 1, total: item.salePrice });
+        Object.assign(item, {quantity: 1, total: item.salePrice});
       });
     })
   }
@@ -83,7 +84,7 @@ export class ProductsComponent implements OnInit {
       this.productList = fundingAccounts;
       this.filterCategory = fundingAccounts;
       this.productList.forEach((item: any) => {
-        Object.assign(item, { quantity: 1, total: item.salePrice });
+        Object.assign(item, {quantity: 1, total: item.salePrice});
       });
     })
   }
@@ -93,7 +94,7 @@ export class ProductsComponent implements OnInit {
       this.productList = savingsPlans;
       this.filterCategory = savingsPlans;
       this.productList.forEach((item: any) => {
-        Object.assign(item, { quantity: 1, total: item.salePrice });
+        Object.assign(item, {quantity: 1, total: item.salePrice});
       });
     })
   }
@@ -103,7 +104,7 @@ export class ProductsComponent implements OnInit {
       this.productList = savingsPlans;
       this.filterCategory = savingsPlans;
       this.productList.forEach((item: any) => {
-        Object.assign(item, { quantity: 1, total: item.salePrice });
+        Object.assign(item, {quantity: 1, total: item.salePrice});
       });
     })
   }
@@ -113,7 +114,7 @@ export class ProductsComponent implements OnInit {
       this.productList = alternativeHealth;
       this.filterCategory = alternativeHealth;
       this.productList.forEach((item: any) => {
-        Object.assign(item, { quantity: 1, total: item.salePrice });
+        Object.assign(item, {quantity: 1, total: item.salePrice});
       });
     })
   }
@@ -123,7 +124,7 @@ export class ProductsComponent implements OnInit {
       this.productList = alternativeHealth;
       this.filterCategory = alternativeHealth;
       this.productList.forEach((item: any) => {
-        Object.assign(item, { quantity: 1, total: item.salePrice });
+        Object.assign(item, {quantity: 1, total: item.salePrice});
       });
     })
   }
@@ -133,7 +134,7 @@ export class ProductsComponent implements OnInit {
       this.productList = coin;
       this.filterCategory = coin;
       this.productList.forEach((item: any) => {
-        Object.assign(item, { quantity: 1, total: item.salePrice });
+        Object.assign(item, {quantity: 1, total: item.salePrice});
       });
     })
   }

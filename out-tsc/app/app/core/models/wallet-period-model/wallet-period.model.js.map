@@ -1,0 +1,1 @@
+{"version":3,"file":"wallet-period.model.js","sourceRoot":"","sources":["../../../../../../src/app/core/models/wallet-period-model/wallet-period.model.ts"],"names":[],"mappings":"AAAA,MAAM,OAAO,YAAY;IAKvB;QACE,IAAI,CAAC,EAAE,GAAG,CAAC,CAAC;QACZ,IAAI,CAAC,IAAI,GAAG,IAAI,IAAI,EAAE,CAAC;QACvB,IAAI,CAAC,MAAM,GAAG,KAAK,CAAC;IACtB,CAAC;CACF"}
