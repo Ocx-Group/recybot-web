@@ -1,27 +1,25 @@
-import { WalletRequestRevertTransaction } from './../../core/models/wallet-request-request-model/wallet-request-revert-transaction.model';
-import { Subject, Subscription, takeUntil } from 'rxjs';
 import {
-  Component,
-  ViewChild,
-  HostListener,
-  OnInit,
-  OnDestroy,
-} from '@angular/core';
-import { DatatableComponent } from '@swimlane/ngx-datatable';
+  WalletRequestRevertTransaction
+} from '@app/core/models/wallet-request-request-model/wallet-request-revert-transaction.model';
+import {Subject, Subscription, takeUntil} from 'rxjs';
+import {Component, HostListener, OnDestroy, OnInit, ViewChild,} from '@angular/core';
+import {DatatableComponent} from '@swimlane/ngx-datatable';
 import Swal from 'sweetalert2';
 
-import { InvoiceService } from '@app/core/service/invoice-service/invoice.service';
-import { ToastrService } from 'ngx-toastr';
-import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
-import { AuthService } from '@app/core/service/authentication-service/auth.service';
-import { Invoice } from '@app/core/models/invoice-model/invoice.model';
-import { PrintService } from '@app/core/service/print-service/print.service';
-import { WalletRequestService } from '@app/core/service/wallet-request/wallet-request.service';
-import { ConfigurationService } from '@app/core/service/configuration-service/configuration.service';
-import { WalletWithdrawalsConfiguration } from '@app/core/models/wallet-withdrawals-configuration-model/wallet-withdrawals-configuration.model';
+import {InvoiceService} from '@app/core/service/invoice-service/invoice.service';
+import {ToastrService} from 'ngx-toastr';
+import {UserAffiliate} from '@app/core/models/user-affiliate-model/user.affiliate.model';
+import {AuthService} from '@app/core/service/authentication-service/auth.service';
+import {Invoice} from '@app/core/models/invoice-model/invoice.model';
+import {PrintService} from '@app/core/service/print-service/print.service';
+import {WalletRequestService} from '@app/core/service/wallet-request/wallet-request.service';
+import {ConfigurationService} from '@app/core/service/configuration-service/configuration.service';
+import {
+  WalletWithdrawalsConfiguration
+} from '@app/core/models/wallet-withdrawals-configuration-model/wallet-withdrawals-configuration.model';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
-import { TranslateService } from '@ngx-translate/core';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-filter',
@@ -49,7 +47,8 @@ export class BillingPurchasesComponent implements OnInit, OnDestroy {
     private walletRequestService: WalletRequestService,
     private configurationService: ConfigurationService,
     private translateService: TranslateService
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     this.suscription = this.auth.currentUserAffiliate
@@ -74,11 +73,11 @@ export class BillingPurchasesComponent implements OnInit, OnDestroy {
     this.table.recalculateColumns();
   }
 
-  showSuccess(message) {
+  showSuccess(message: string) {
     this.toastr.success(message);
   }
 
-  showError(message) {
+  showError(message: string) {
     this.toastr.error(message);
   }
 
@@ -113,12 +112,10 @@ export class BillingPurchasesComponent implements OnInit, OnDestroy {
   updateFilter(event) {
     const val = event.target.value.toLowerCase();
 
-    const temp = this.temp.filter(function (d) {
+    this.rows = this.temp.filter(function (d) {
       const invoiceNumberStr = d.id.toString();
       return invoiceNumberStr.toLowerCase().indexOf(val) !== -1 || !val;
     });
-
-    this.rows = temp;
     this.table.offset = 0;
   }
 
@@ -173,7 +170,7 @@ export class BillingPurchasesComponent implements OnInit, OnDestroy {
           icon: 'error',
           title: 'Error',
           text: error.message,
-        });
+        }).then();
       });
   }
 
@@ -233,7 +230,7 @@ export class BillingPurchasesComponent implements OnInit, OnDestroy {
       const posY = 30;
 
       pdf.setFontSize(18);
-      pdf.text('Lista de compras', pageWidth / 2, 20, { align: 'center' });
+      pdf.text('Lista de compras', pageWidth / 2, 20, {align: 'center'});
 
       const contentDataURL = canvas.toDataURL('image/png');
       pdf.addImage(contentDataURL, 'PNG', posX, posY, imgWidth, imgHeight);
@@ -280,9 +277,5 @@ export class BillingPurchasesComponent implements OnInit, OnDestroy {
     }
 
     document.body.removeChild(textArea);
-  }
-
-  isEligibleForCancellation(row): boolean {
-    return row.invoiceDetail.some(detail => detail.paymentGroupId === 2);
   }
 }
