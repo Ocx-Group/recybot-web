@@ -1,16 +1,12 @@
-<!-- HTML igual pero con overlays ajustados -->
 <div class="container-fluid vh-100">
   <div class="dark-overlay-left"></div>
   <div class="dark-overlay-right"></div>
 
-  <!-- Logo section - Fixed -->
   <div class="logo-section">
     <img src="assets/images/logo-yellow.png" alt="Logo" class="logo">
   </div>
 
-  <!-- Main content -->
   <div class="content-wrapper">
-    <!-- Left side - Explore text (Fixed) -->
     <div class="explore-section">
       <div class="explore-content">
         <h1 class="text-white explore-text">
@@ -22,12 +18,11 @@
       </div>
     </div>
 
-    <!-- Right side - Product cards (Scrollable) -->
     <div class="products-section">
       <div class="row">
         <div class="col-12 col-md-4" *ngFor="let item of productList;">
           <div class="product-card">
-            <img src="{{item.image}}" class="card-img" alt="Semilla">
+            <img routerLink="/signin" type="button" src="{{item.image}}" class="card-img" alt="Semilla">
             <div class="card-footer">
               <img src="assets/images/yellow-logo.png" class="recycoin-icon" alt="icon">
               <div class="text-container">
