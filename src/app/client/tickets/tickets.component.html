@@ -71,8 +71,8 @@
                 </ngx-datatable-column>
                 <ngx-datatable-column name="{{ 'TICKETS-PAGE.IMAGE-COLUMN.TEXT' | translate }}">
                   <ng-template let-row="row" ngx-datatable-cell-template>
-                    <div *ngIf="row.images.length > 0; else noImage">
-                      <img [src]="row.images[0].imagePath" alt="{{ 'TICKETS-PAGE.IMAGE-ALT.TEXT' | translate }}"
+                    <div *ngIf="row.ticketImages.length > 0; else noImage">
+                      <img [src]="row.ticketImages[0].imagePath" alt="{{ 'TICKETS-PAGE.IMAGE-ALT.TEXT' | translate }}"
                         class="thumbnail" (click)="openModal(content, row)" (click)="$event.stopPropagation()"
                         style="cursor: pointer; width: 100px; height: auto;">
                     </div>
