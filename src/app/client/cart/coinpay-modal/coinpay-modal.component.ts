@@ -1,11 +1,11 @@
-import {ToastrService} from 'ngx-toastr';
-import {FormGroup, FormBuilder, Validators} from '@angular/forms';
-import {ChangeDetectorRef, Component, Input, OnInit, TemplateRef, ViewChild} from '@angular/core';
-import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {ProductRequest, RequestPayment} from '@app/core/models/coinpay-model/request-payment.model';
-import {CoinpayService} from '@app/core/service/coinpay-service/coinpay.service';
-import {UserAffiliate} from '@app/core/models/user-affiliate-model/user.affiliate.model';
-import {Subscription, switchMap, timer} from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { ChangeDetectorRef, Component, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { ProductRequest, RequestPayment } from '@app/core/models/coinpay-model/request-payment.model';
+import { CoinpayService } from '@app/core/service/coinpay-service/coinpay.service';
+import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
+import { Subscription, switchMap, timer } from 'rxjs';
 import QRCode from 'qrcode';
 
 @Component({
@@ -115,7 +115,8 @@ export class CoinpayModalComponent implements OnInit {
   }
 
   selectNetwork(network: any) {
-    this.selectedNetwork = {...network};
+    console.log(network);
+    this.selectedNetwork = { ...network };
     this.paymentGroup.get('network').setValue(network.idChain);
     this.resetPaymentDetails();
     this.createCoinPayTransaction(network.idChain);
@@ -141,6 +142,8 @@ export class CoinpayModalComponent implements OnInit {
           const transactionData = response.data.data;
           this.walletAddress = transactionData.address;
           this.transactionId = transactionData.idExternalIdentification.toString();
+
+          console.log(response);
 
           try {
             this.qrCodeDataUrl = await QRCode.toDataURL(this.walletAddress);
