@@ -1,21 +1,21 @@
-import { Component, ViewChild, HostListener, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { ToastrService } from 'ngx-toastr';
-import { TranslateService } from '@ngx-translate/core';
+import {Component, HostListener, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Subscription} from 'rxjs';
+import {ToastrService} from 'ngx-toastr';
+import {TranslateService} from '@ngx-translate/core';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 
-import { BalanceInformation } from './../../core/models/wallet-model/balance-information.model';
-import { UserAffiliate } from './../../core/models/user-affiliate-model/user.affiliate.model';
-import { WalletService } from '@app/core/service/wallet-service/wallet.service';
-import { DatatableComponent } from '@swimlane/ngx-datatable';
-import { AuthService } from '@app/core/service/authentication-service/auth.service';
+import {BalanceInformation} from '@app/core/models/wallet-model/balance-information.model';
+import {UserAffiliate} from '@app/core/models/user-affiliate-model/user.affiliate.model';
+import {WalletService} from '@app/core/service/wallet-service/wallet.service';
+import {DatatableComponent} from '@swimlane/ngx-datatable';
+import {AuthService} from '@app/core/service/authentication-service/auth.service';
 
 @Component({
   selector: 'app-wallet',
   templateUrl: './wallet.component.html',
 })
-export class WalletComponent implements OnInit {
+export class WalletComponent implements OnInit, OnDestroy {
   private subscription: Subscription;
   balanceInformation: BalanceInformation = new BalanceInformation();
   public userCookie: UserAffiliate;
@@ -31,7 +31,8 @@ export class WalletComponent implements OnInit {
     private authService: AuthService,
     private toastr: ToastrService,
     private translateService: TranslateService
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     this.subscription = this.authService.currentUserAffiliate.subscribe(
@@ -49,12 +50,12 @@ export class WalletComponent implements OnInit {
     this.subscription.unsubscribe();
   }
 
-  showError(message) {
+  showError(message: string) {
     this.toastr.error(message, 'Error!');
   }
 
   @HostListener('window:resize', ['$event'])
-  onResize(event) {
+  onResize() {
     this.scrollBarHorizontal = window.innerWidth < 1200;
     this.table.recalculate();
     this.table.recalculateColumns();
@@ -63,13 +64,15 @@ export class WalletComponent implements OnInit {
   loadWalletList() {
     this.walletService.getWalletByAffiliateId(this.userCookie.id).subscribe({
       next: (resp) => {
-        this.temp = [...resp];
-        this.rows = resp;
+        if (resp != null && resp.length > 0) {
+          this.temp = [...resp];
+          this.rows = resp;
+        }
         this.loadingIndicator = false;
-
       },
       error: (err) => {
         this.showError('Error!');
+        console.error(err)
       },
     });
   }
@@ -84,22 +87,21 @@ export class WalletComponent implements OnInit {
         },
         error: (err) => {
           this.showError('Error!');
+          console.error(err)
         },
       });
   }
 
-  getRowHeight(row) {
+  getRowHeight(row: any) {
     return row.height;
   }
 
-  updateFilter(event) {
+  updateFilter(event: any) {
     const val = event.target.value.toLowerCase();
 
-    const temp = this.temp.filter(function (d) {
+    this.rows = this.temp.filter(function (d) {
       return d.name.toLowerCase().indexOf(val) !== -1 || !val;
     });
-
-    this.rows = temp;
     this.table.offset = 0;
   }
 
@@ -118,7 +120,7 @@ export class WalletComponent implements OnInit {
       const posY = 30;
 
       pdf.setFontSize(18);
-      pdf.text('Movimientos de mi billetera', pageWidth / 2, 20, { align: 'center' });
+      pdf.text('Movimientos de mi billetera', pageWidth / 2, 20, {align: 'center'});
 
       const contentDataURL = canvas.toDataURL('image/png');
       pdf.addImage(contentDataURL, 'PNG', posX, posY, imgWidth, imgHeight);
