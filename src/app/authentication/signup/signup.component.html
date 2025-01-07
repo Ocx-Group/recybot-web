@@ -3,50 +3,101 @@
     <div class="register-body">
       <div class="text-center">
         <div class="brand-wrapper">
-          <img src="../../../assets/images/logo-yellow.png" alt="logo" class="logo" />
+          <img
+            src="../../../assets/images/logo-yellow.png"
+            alt="logo"
+            class="logo"
+          />
         </div>
         <div>
           <h1 class="title neon-text">FORMULARIO DE REGISTRO</h1>
-          <strong *ngIf="sponsor != ''">El nombre de su patrocinador es: </strong>
+          <strong *ngIf="sponsor != ''"
+            >El nombre de su patrocinador es:
+          </strong>
           <label [innerText]="sponsor"></label>
         </div>
       </div>
-      <form class="register-form" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <form
+        class="register-form"
+        [formGroup]="registerForm"
+        (ngSubmit)="onSubmit()"
+      >
         <div class="input-grid">
           <div class="form-group">
             <label for="user_name" class="neon-text">User name</label>
-            <input type="text" class="form-control" placeholder="User name" id="user_name" formControlName="user_name"
-              [ngClass]="{'is-invalid': submitted && f.user_name.errors}" />
-            <div *ngIf="submitted && f.user_name.errors" class="invalid-feedback">
-              <div *ngIf="f.user_name.errors.required">The User name is required</div>
-              <div *ngIf="f.user_name.errors.whitespace">The User name cannot contain spaces</div>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="User name"
+              id="user_name"
+              formControlName="user_name"
+              [ngClass]="{ 'is-invalid': submitted && f.user_name.errors }"
+            />
+            <div
+              *ngIf="submitted && f.user_name.errors"
+              class="invalid-feedback"
+            >
+              <div *ngIf="f.user_name.errors.required">
+                The User name is required
+              </div>
+              <div *ngIf="f.user_name.errors.whitespace">
+                The User name cannot contain spaces
+              </div>
             </div>
           </div>
 
           <div class="form-group">
             <label for="password" class="neon-text">Password</label>
-            <input type="password" class="form-control" id="password" formControlName="password"
-              autocomplete="new-password" placeholder="Password"
-              [ngClass]="{'is-invalid': submitted && f.password.errors}" />
-            <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
-              <div *ngIf="f.password.errors.required">The password is required</div>
+            <input
+              type="password"
+              class="form-control"
+              id="password"
+              formControlName="password"
+              autocomplete="new-password"
+              placeholder="Password"
+              [ngClass]="{ 'is-invalid': submitted && f.password.errors }"
+            />
+            <div
+              *ngIf="submitted && f.password.errors"
+              class="invalid-feedback"
+            >
+              <div *ngIf="f.password.errors.required">
+                The password is required
+              </div>
             </div>
           </div>
 
           <div class="form-group">
             <label for="repitpassword" class="neon-text">Repeat Password</label>
-            <input type="password" class="form-control" placeholder="Repeat Password" autocomplete="new-password"
-              id="repitpassword" formControlName="repitpassword"
-              [ngClass]="{'is-invalid': submitted && f.repitpassword.errors}" />
-            <div *ngIf="submitted && f.repitpassword.errors" class="invalid-feedback">
-              <div *ngIf="f.repitpassword.errors.required">The repeat password is required</div>
+            <input
+              type="password"
+              class="form-control"
+              placeholder="Repeat Password"
+              autocomplete="new-password"
+              id="repitpassword"
+              formControlName="repitpassword"
+              [ngClass]="{ 'is-invalid': submitted && f.repitpassword.errors }"
+            />
+            <div
+              *ngIf="submitted && f.repitpassword.errors"
+              class="invalid-feedback"
+            >
+              <div *ngIf="f.repitpassword.errors.required">
+                The repeat password is required
+              </div>
             </div>
           </div>
 
           <div class="form-group">
             <label for="name" class="neon-text">Name</label>
-            <input type="text" class="form-control" placeholder="Name" id="name" formControlName="name"
-              [ngClass]="{'is-invalid': submitted && f.name.errors}" />
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Name"
+              id="name"
+              formControlName="name"
+              [ngClass]="{ 'is-invalid': submitted && f.name.errors }"
+            />
             <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
               <div *ngIf="f.name.errors.required">The name is required</div>
             </div>
@@ -54,32 +105,55 @@
 
           <div class="form-group">
             <label for="last_name" class="neon-text">Last Name</label>
-            <input type="text" class="form-control" placeholder="Last Name" formControlName="last_name"
-              id="last_name" [ngClass]="{'is-invalid': submitted && f.last_name.errors}" />
-            <div *ngIf="submitted && f.last_name.errors" class="invalid-feedback">
-              <div *ngIf="f.last_name.errors.required">The last name is required</div>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Last Name"
+              formControlName="last_name"
+              id="last_name"
+              [ngClass]="{ 'is-invalid': submitted && f.last_name.errors }"
+            />
+            <div
+              *ngIf="submitted && f.last_name.errors"
+              class="invalid-feedback"
+            >
+              <div *ngIf="f.last_name.errors.required">
+                The last name is required
+              </div>
             </div>
           </div>
 
           <div class="form-group">
             <label for="country" class="neon-text">Country</label>
-            <select class="form-select form-control" id="country" formControlName="country" required="required"
+            <select
+              class="form-select form-control"
+              id="country"
+              formControlName="country"
+              required="required"
               (ngModelChange)="onCountrySelected($event)"
-              [ngClass]="{'is-invalid': submitted && f.country.errors}">
+              [ngClass]="{ 'is-invalid': submitted && f.country.errors }"
+            >
               <option value="" disabled selected>Select an option</option>
               <option *ngFor="let country of listcountry" [value]="country.id">
                 {{ country.name }}
               </option>
             </select>
             <div *ngIf="submitted && f.country.errors" class="invalid-feedback">
-              <div *ngIf="f.country.errors.required">The country is required</div>
+              <div *ngIf="f.country.errors.required">
+                The country is required
+              </div>
             </div>
           </div>
 
           <div class="form-group">
             <label for="phone" class="neon-text">Phone Number</label>
-            <input type="text" class="form-control" placeholder="Phone Number" formControlName="phone"
-              [ngClass]="{'is-invalid': submitted && f.phone.errors}" />
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Phone Number"
+              formControlName="phone"
+              [ngClass]="{ 'is-invalid': submitted && f.phone.errors }"
+            />
             <div *ngIf="submitted && f.phone.errors" class="invalid-feedback">
               <div *ngIf="f.phone.errors.required">The phone is required</div>
             </div>
@@ -87,16 +161,32 @@
 
           <div class="form-group">
             <label for="email" class="neon-text">Email</label>
-            <input type="text" class="form-control" formControlName="email" id="email" placeholder="Email"
-              [ngClass]="{'is-invalid': submitted && f.email.errors}" />
+            <input
+              type="text"
+              class="form-control"
+              formControlName="email"
+              id="email"
+              placeholder="Email"
+              [ngClass]="{ 'is-invalid': submitted && f.email.errors }"
+            />
             <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
               <div *ngIf="f.email.errors.required">The email is required</div>
             </div>
           </div>
           <div class="form-group">
-            <a class="neon-text mb-3" (click)="openModal(termscondition)" style="cursor: pointer;">Terms and conditions</a>
+            <a
+              class="neon-text mb-3"
+              (click)="showTermsAndConditions()"
+              style="cursor: pointer"
+              >Terms and conditions</a
+            >
             <div class="form-check mt-3">
-              <input class="form-check-input" type="checkbox" id="checkTerms" formControlName="terms_conditions" />
+              <input
+                class="form-check-input"
+                type="checkbox"
+                id="checkTerms"
+                formControlName="terms_conditions"
+              />
               <label class="form-check-label ms-1 neon-text" for="checkTerms">
                 I agree to the terms and conditions.
               </label>
@@ -113,22 +203,6 @@
         </div>
 
         <div class="text-center mt-4">
-          <h6 class="neon-text">Or Sign up With</h6>
-          <ul class="list-unstyled social-icon mb-0 mt-3">
-            <li class="list-inline-item">
-              <a href="javascript:void(0)" class="rounded">
-                <i-feather name="facebook" class="fea-social sm-icon"></i-feather>
-              </a>
-            </li>
-            <li class="list-inline-item">
-              <a href="javascript:void(0)" class="rounded">
-                <i-feather name="twitter" class="fea-social sm-icon"></i-feather>
-              </a>
-            </li>
-          </ul>
-        </div>
-
-        <div class="text-center mt-4">
           <p class="mb-0 neon-text">
             <small>Already have an account?</small>
             <a routerLink="/signin" class="neon-text fw-bold">Sign in</a>
@@ -137,26 +211,5 @@
       </form>
     </div>
   </div>
-
-  <ng-template #termscondition let-modal>
-    <div class="modal-header">
-      <h4 class="modal-title neon-text">Terms and conditions</h4>
-      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-      <p style="text-align: justify;">
-        By registering and filling out your personal data on the website https://recycoinfx.net/,
-        users are understood to unconditionally accept the Terms and Conditions published on
-        https://recycoinfx.com/, and the treatment of their personal data included in the regulations for use,
-        handling and protection of personal data of each country.
-        recycoin SHARING EVOLUTION is not responsible for errors in the data provided by the
-        affiliates.
-      </p>
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
-    </div>
-  </ng-template>
+  <app-pdf-viewer></app-pdf-viewer>
 </main>

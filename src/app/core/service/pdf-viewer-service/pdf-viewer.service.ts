@@ -8,6 +8,7 @@ import {PdfDocument} from "../../interfaces/pdf-document.interface";
 export class PdfViewerService {
   private isVisibleSource = new BehaviorSubject<boolean>(false);
   private currentDocumentSource = new BehaviorSubject<PdfDocument | null>(null);
+  private savedDocumentsSource = new BehaviorSubject<PdfDocument[]>([]);
 
   isVisible$ = this.isVisibleSource.asObservable();
   currentDocument$ = this.currentDocumentSource.asObservable();
@@ -20,5 +21,11 @@ export class PdfViewerService {
   hidePdf() {
     this.isVisibleSource.next(false);
     this.currentDocumentSource.next(null);
+  }
+
+  savePdf(document: PdfDocument) {
+    const currentSavedDocs = this.savedDocumentsSource.getValue();
+    currentSavedDocs.push(document);
+    this.savedDocumentsSource.next(currentSavedDocs);
   }
 }

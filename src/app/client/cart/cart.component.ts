@@ -32,6 +32,7 @@ import {
   PagaditoTransactionDetailRequest
 } from '@app/core/models/pagadito-model/pagadito-transaction-detail-request.model';
 import {Subscription, switchMap, timer} from 'rxjs';
+import {PdfViewerService} from "@app/core/service/pdf-viewer-service/pdf-viewer.service";
 
 @Component({
   selector: 'app-cart',
@@ -80,10 +81,14 @@ export class CartComponent implements OnInit, OnDestroy {
     private walletModel1BService: WalletModel1BService,
     private affiliateService: AffiliateService,
     private pagaditoService: PagaditoService,
+    private pdfViewerService: PdfViewerService
   ) {
   }
 
   ngOnInit(): void {
+    setTimeout(() => {
+      this.showTermsAndConditions();
+    }, 100);
     this.user = this.auth.currentUserAffiliateValue;
 
     this.today = new Date();
@@ -381,7 +386,7 @@ export class CartComponent implements OnInit, OnDestroy {
       title: 'Realiza tu pago, escanea el código QR o ingresa la dirección de billetera',
       html: `
         <div>
-          <div>Dirección Billetera: <strong> ${coinPayTransaction.data.address} </strong></div>
+          <div>Dirección Billetera: <strong>${coinPayTransaction.data.address} </strong></div>
           <div>Id Transacción: <strong> ${coinPayTransaction.data.id} </strong> </div>
           <div>Monto: <strong> $${this.total} </strong> </div>
           <br>
@@ -665,5 +670,14 @@ export class CartComponent implements OnInit, OnDestroy {
     if (this.pollingSubscription) {
       this.pollingSubscription.unsubscribe();
     }
+  }
+
+  showTermsAndConditions() {
+    const doc = {
+      url: '/assets/pdf/T&C RecyCoin V1.2.pdf',
+      title: 'Términos y condiciones'
+    };
+
+    this.pdfViewerService.showPdf(doc);
   }
 }

@@ -82,10 +82,24 @@ export class PdfViewerComponent implements OnInit, OnDestroy {
     this.totalPages = pdf.numPages;
   }
 
-  downloadPdf() {
-    const link = document.createElement('a');
-    link.href = this.pdfSrc;
-    link.download = this.title.replace(/\s+/g, '_').toLowerCase() + '.pdf';
-    link.click();
+  savePdf() {
+    if (this.currentDocument) {
+      const link = document.createElement('a');
+      link.href = this.currentDocument.url;
+      link.download = this.currentDocument.title.replace(/\s+/g, '_').toLowerCase() + '.pdf';
+
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      this.pdfViewerService.savePdf(this.currentDocument);
+
+      const notification = document.createElement('div');
+      notification.className = 'save-notification';
+      notification.textContent = 'Documento descargado exitosamente';
+      document.body.appendChild(notification);
+
+      setTimeout(() => notification.remove(), 3000);
+    }
   }
 }

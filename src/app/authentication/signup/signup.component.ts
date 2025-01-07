@@ -1,21 +1,19 @@
-import { CreateAffiliate } from './../../core/models/user-affiliate-model/create-affiliate.model';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {
-  FormBuilder,
-  FormGroup,
-  Validators,
-  AbstractControl,
-  ValidationErrors
+  AbstractControl, FormBuilder,
+  FormGroup, ValidationErrors, Validators
 } from '@angular/forms';
-import { AffiliateService } from '@app/core/service/affiliate-service/affiliate.service';
-import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
+import { ActivatedRoute, Router } from '@angular/router';
+import { City } from '@app/core/models/cities-model/cities.model';
 import { Country } from '@app/core/models/country-model/country.model';
 import { State } from '@app/core/models/state-model/state.model';
-import { City } from '@app/core/models/cities-model/cities.model';
+import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
+import { AffiliateService } from '@app/core/service/affiliate-service/affiliate.service';
 import { LogoService } from '@app/core/service/logo-service/logo.service';
+import { PdfViewerService } from '@app/core/service/pdf-viewer-service/pdf-viewer.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ToastrService } from 'ngx-toastr';
+import { CreateAffiliate } from './../../core/models/user-affiliate-model/create-affiliate.model';
 
 @Component({
   selector: 'app-signup',
@@ -43,7 +41,8 @@ export class SignupComponent implements OnInit {
     private formBuilder: FormBuilder,
     private affiliateService: AffiliateService,
     private toastr: ToastrService,
-    private logoService: LogoService
+    private logoService: LogoService,
+    private pdfViewerService: PdfViewerService
   ) {
     this.key = this.activatedRoute.snapshot.params.key || '';
     this.side = this.user.side?.toString() || '';
@@ -185,6 +184,16 @@ export class SignupComponent implements OnInit {
 
   getLogoUrl() {
     this.logoUrl = this.logoService.getLogoSrc();
+  }
+
+
+  showTermsAndConditions() {
+    const doc = {
+      url: '/assets/pdf/T&C RecyCoin V1.2.pdf',
+      title: 'Términos y condiciones'
+    };
+
+    this.pdfViewerService.showPdf(doc);
   }
 }
 
