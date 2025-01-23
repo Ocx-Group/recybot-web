@@ -1,18 +1,17 @@
-import {AuthService} from 'src/app/core/service/authentication-service/auth.service';
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
-import {FormControl, FormGroup} from '@angular/forms';
-import {Validators} from '@angular/forms';
-import {Response} from '@app/core/models/response-model/response.model';
-import {ToastrService} from 'ngx-toastr';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { Response } from '@app/core/models/response-model/response.model';
+import { TranslateService } from '@ngx-translate/core';
+import { ToastrService } from 'ngx-toastr';
+import { AuthService } from 'src/app/core/service/authentication-service/auth.service';
 
 declare var particlesJS: any;
-import {TranslateService} from '@ngx-translate/core';
 
-import {Signin} from '@app/core/models/signin-model/signin.model';
-import {LogoService} from '@app/core/service/logo-service/logo.service';
-import {DeviceDetectorService} from 'ngx-device-detector';
-import {animate, state, style, transition, trigger} from "@angular/animations";
+import { animate, state, style, transition, trigger } from "@angular/animations";
+import { Signin } from '@app/core/models/signin-model/signin.model';
+import { LogoService } from '@app/core/service/logo-service/logo.service';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 @Component({
   selector: 'app-signin',
@@ -54,6 +53,7 @@ export class SigninComponent implements OnInit, OnDestroy {
   ];
   currentImageIndex = 0;
   private intervalId: any;
+  showPassword: boolean = false;
 
   constructor(
     private router: Router,
@@ -184,5 +184,9 @@ export class SigninComponent implements OnInit, OnDestroy {
     this.intervalId = setInterval(() => {
       this.currentImageIndex = (this.currentImageIndex + 1) % this.backgroundImages.length;
     }, 10000);
+  }
+
+  togglePasswordVisibility(): void {
+    this.showPassword = !this.showPassword;
   }
 }

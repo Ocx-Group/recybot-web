@@ -237,6 +237,35 @@
   object-fit: contain;
 }
 
+.login-input-group {
+  position: relative;
+  width: 100%;
+}
+
+.login-input-group input {
+  width: 100%;
+  height: 2.8125rem;
+  padding: 0 2.5rem 0 2.5rem;
+  border-radius: 25px;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 0.9375rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #00bd6b;
+  z-index: 2;
+  padding: 0;
+}
+
+.toggle-password i {
+  font-size: 1rem;
+}
+
+
 @media (max-width: 1024px) {
   .login-wrapper {
     justify-content: center;

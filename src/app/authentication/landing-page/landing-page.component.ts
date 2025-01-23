@@ -1,9 +1,9 @@
-import {animate, state, style, transition, trigger} from '@angular/animations';
-import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
-import {ToastrService} from 'ngx-toastr';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+import { Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 
-import {PdfViewerService} from "@app/core/service/pdf-viewer-service/pdf-viewer.service";
-import {PdfViewerComponent} from "@app/shared/components/pdf-viewer/pdf-viewer.component";
+import { PdfViewerService } from "@app/core/service/pdf-viewer-service/pdf-viewer.service";
+import { PdfViewerComponent } from "@app/shared/components/pdf-viewer/pdf-viewer.component";
 
 @Component({
   selector: 'app-home',
@@ -24,7 +24,7 @@ import {PdfViewerComponent} from "@app/shared/components/pdf-viewer/pdf-viewer.c
   encapsulation: ViewEncapsulation.ShadowDom,
   providers: [ToastrService],
 })
-export class LandingPageComponent implements OnInit {
+export class LandingPageComponent implements OnInit, OnDestroy {
   isNavbarVisible = false;
   documents = {
     whitePaper: {
@@ -42,11 +42,28 @@ export class LandingPageComponent implements OnInit {
   };
   @ViewChild('whitePaperModal') whitePaperModal!: PdfViewerComponent;
   @ViewChild('legalDocsModal') legalDocsModal!: PdfViewerComponent;
+  currentLanguage: string = 'es';
+  showVideoModal: boolean = false;
+  currentVideoUrl: string = '';
+  videos = {
+    es: {
+      url: 'comRPFXYv5M',
+      title: 'Ver Video Informativo'
+    },
+    en: {
+      url: 'pSgIQxTb9PQ',
+      title: 'Watch Information Video'
+    }
+  };
 
-  constructor(private pdfViewerService: PdfViewerService) {
-  }
+  constructor(private pdfViewerService: PdfViewerService) { }
 
   ngOnInit() {
+    this.currentLanguage = navigator.language.startsWith('es') ? 'es' : 'en';
+  }
+
+  ngOnDestroy() {
+    this.closeVideo();
   }
 
   showDocument(docType: 'whitePaper' | 'legalDoc' | 'recycoinProject'): void {
@@ -60,6 +77,21 @@ export class LandingPageComponent implements OnInit {
 
   openNewTab(url: string) {
     window.open(url, '_blank')
+  }
+
+  showVideo(): void {
+    const videoId = this.videos[this.currentLanguage].url;
+    this.currentVideoUrl = `https://www.youtube-nocookie.com/embed/${videoId}`;
+    this.showVideoModal = true;
+  }
+
+  closeVideo(): void {
+    this.showVideoModal = false;
+    document.body.style.overflow = 'auto';
+  }
+
+  toggleLanguage(): void {
+    this.currentLanguage = this.currentLanguage === 'es' ? 'en' : 'es';
   }
 }
 

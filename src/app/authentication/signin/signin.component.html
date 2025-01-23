@@ -19,11 +19,15 @@
         </div>
       </div>
       <div class="login-input-group">
-
-        <input id="pwd" type="password" formControlName="pwd" placeholder="{{password}}" required="required"/>
+        <input [type]="showPassword ? 'text' : 'password'" id="pwd" formControlName="pwd" placeholder="{{ password }}" required="required" />
         <i-feather name="key"></i-feather>
+
+        <button type="button" class="toggle-password" (click)="togglePasswordVisibility()">
+          <i [class]="showPassword ? 'bi bi-eye-slash' : 'bi bi-eye'"></i>
+        </button>
+
         <div class="form-text text-danger fw-bold"
-             *ngIf="Pwd.errors?.['minlength'] || Pwd.errors?.['maxlength'] && (Pwd.dirty || Pwd.touched)">
+          *ngIf="Pwd.errors?.['minlength'] || Pwd.errors?.['maxlength'] && (Pwd.dirty || Pwd.touched)">
           {{ passwordErrorMessage }}
         </div>
         <div class="form-text text-danger fw-bold" *ngIf="Pwd.errors?.['required'] && (Pwd.dirty || Pwd.touched)">
