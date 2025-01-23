@@ -26,9 +26,9 @@
 
   <div class="main-content">
     <div class="title-group">
-      <h5 class="title neon-text">Una plataforma que impulsa el cuidado</h5>
-      <h5 class="title neon-text m-0">del medio ambiente</h5>
-      <h5 class="title neon-text m-0">con un token ecológico</h5>
+      <h5 class="title neon-text">El token ecológico</h5>
+      <h5 class="title neon-text m-0">que valora tu patrimonio</h5>
+      <h5 class="title neon-text m-0">y el medioambiente</h5>
     </div>
 
     <div class="crypto-animation">
@@ -38,13 +38,30 @@
     </div>
   </div>
 
-  <button class="video-button" (click)="showVideo()">
-    {{ videos[currentLanguage].title }}
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="12" cy="12" r="11.5" stroke="currentColor" />
-      <path d="M15.5 12L10 15V9L15.5 12Z" fill="currentColor" />
-    </svg>
-  </button>
+  <div class="video-button-container">
+    <button class="video-button" [ngClass]="{'preview-active': isPreviewHovered}" (mouseenter)="showPreview()"
+      (mouseleave)="hidePreview()" (click)="toggleLanguageMenu()">
+      <i class="fas fa-play"></i>
+      {{ videos[currentLanguage].title }}
+
+      <div class="language-menu" *ngIf="isLanguageMenuOpen">
+        <div class="language-option" (click)="selectLanguage('es')">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="12" r="11.5" stroke="currentColor" />
+            <path d="M15.5 12L10 15V9L15.5 12Z" fill="currentColor" />
+          </svg>
+          Español
+        </div>
+        <div class="language-option" (click)="selectLanguage('en')">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="12" r="11.5" stroke="currentColor" />
+            <path d="M15.5 12L10 15V9L15.5 12Z" fill="currentColor" />
+          </svg>
+          English
+        </div>
+      </div>
+    </button>
+  </div>
 
   <div class="video-modal" [ngStyle]="{'display': showVideoModal ? 'flex' : 'none'}">
     <div class="modal-overlay" (click)="closeVideo()"></div>

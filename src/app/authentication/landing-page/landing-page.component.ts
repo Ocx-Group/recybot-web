@@ -55,6 +55,8 @@ export class LandingPageComponent implements OnInit, OnDestroy {
       title: 'Watch Information Video'
     }
   };
+  isPreviewHovered: boolean = false;
+  isLanguageMenuOpen: boolean = false;
 
   constructor(private pdfViewerService: PdfViewerService) { }
 
@@ -90,8 +92,22 @@ export class LandingPageComponent implements OnInit, OnDestroy {
     document.body.style.overflow = 'auto';
   }
 
-  toggleLanguage(): void {
-    this.currentLanguage = this.currentLanguage === 'es' ? 'en' : 'es';
+  toggleLanguageMenu(): void {
+    this.isLanguageMenuOpen = !this.isLanguageMenuOpen;
+  }
+
+  selectLanguage(lang: 'es' | 'en'): void {
+    this.currentLanguage = lang;
+    this.isLanguageMenuOpen = false;
+    this.showVideo();
+  }
+
+  showPreview(): void {
+    this.isPreviewHovered = true;
+  }
+
+  hidePreview(): void {
+    this.isPreviewHovered = false;
   }
 }
 
