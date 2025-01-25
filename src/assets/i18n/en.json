@@ -2565,5 +2565,43 @@
     "SUBTITLE": {
       "TEXT": "Parameter settings"
     }
+  },
+  "LANDING-PAGE": {
+    "NAVBAR": {
+      "COLLABORATORS": "Collaborators",
+      "RECYCOIN_PROJECT": "RecyCoin Project",
+      "WHITE_PAPER": "White Paper",
+      "BNB_SCANNER": "BNB Scanner",
+      "PRODUCT": "Product",
+      "LOGIN": "Login"
+    },
+    "MAIN_TITLE": {
+      "LINE1": "The ecological token",
+      "LINE2": "that values your assets",
+      "LINE3": "and the environment"
+    },
+    "FEATURES": {
+      "ECOLOGICAL_CRYPTO": "Ecological Crypto",
+      "SECURE_TRANSACTIONS": "Secure Transactions",
+      "REAL_TIME_ANALYSIS": "Real-time Analysis",
+      "BIOMETRIC_SECURITY": "Biometric Security"
+    },
+    "CTA": {
+      "LEGAL_DOCS": "Legal Documents",
+      "CREATE_ACCOUNT": "Create Account",
+      "CONTACT_FORM": "Contact Form",
+      "TESTIMONIALS": "Testimonials"
+    },
+    "VIDEO": {
+      "LANGUAGE": "English"
+    }
+  },
+  "PRODUCTS-PREVIEW": {
+    "EXPLORE": {
+      "LINE1": "Explore the",
+      "LINE2": "different",
+      "LINE3": "packages",
+      "LINE4": "Recycoin"
+    }
   }
 }

@@ -41,6 +41,7 @@ const icons = {
   Mail,
 };
 
+
 @NgModule({
   declarations: [
     LandingPageComponent,
@@ -72,7 +73,6 @@ const icons = {
     NgbCollapse,
     SharedModule
   ]
-
 })
 export class AuthenticationModule {
 }

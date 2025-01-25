@@ -1,5 +1,6 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 
 import { PdfViewerService } from "@app/core/service/pdf-viewer-service/pdf-viewer.service";
@@ -42,9 +43,11 @@ export class LandingPageComponent implements OnInit, OnDestroy {
   };
   @ViewChild('whitePaperModal') whitePaperModal!: PdfViewerComponent;
   @ViewChild('legalDocsModal') legalDocsModal!: PdfViewerComponent;
-  currentLanguage: string = 'es';
   showVideoModal: boolean = false;
   currentVideoUrl: string = '';
+  currentLang: string = 'en'
+  isLanguageDropdownOpen: boolean = false;
+
   videos = {
     es: {
       url: 'comRPFXYv5M',
@@ -56,16 +59,54 @@ export class LandingPageComponent implements OnInit, OnDestroy {
     }
   };
   isPreviewHovered: boolean = false;
-  isLanguageMenuOpen: boolean = false;
 
-  constructor(private pdfViewerService: PdfViewerService) { }
+  constructor(private pdfViewerService: PdfViewerService, private translate: TranslateService) {
+    translate.setDefaultLang('en');
+    this.currentLang = translate.currentLang || 'en';
+  }
 
   ngOnInit() {
-    this.currentLanguage = navigator.language.startsWith('es') ? 'es' : 'en';
+    const savedLang = localStorage.getItem('lang');
+    if (savedLang) {
+      this.changeLanguage(savedLang);
+    } else {
+      this.changeLanguage('en');
+    }
+
+    setTimeout(() => {
+      this.triggerAutomaticVideo();
+    }, 2000);
   }
 
   ngOnDestroy() {
     this.closeVideo();
+  }
+
+
+  triggerAutomaticVideo(): void {
+    this.showPreview();
+    this.showVideo();
+  }
+
+  changeLanguage(lang: string) {
+    this.currentLang = lang;
+    this.translate.use(lang);
+    localStorage.setItem('lang', lang);
+    this.isLanguageDropdownOpen = false;
+  }
+
+  toggleLanguageDropdown(event: Event) {
+    event.stopPropagation();
+    this.isLanguageDropdownOpen = !this.isLanguageDropdownOpen;
+  }
+
+  @HostListener('document:click', ['$event'])
+  clickOut(event: any) {
+    const clickedElement = event.target as HTMLElement;
+    const isLanguageSelector = clickedElement.closest('.language-selector');
+    if (!isLanguageSelector) {
+      this.isLanguageDropdownOpen = false;
+    }
   }
 
   showDocument(docType: 'whitePaper' | 'legalDoc' | 'recycoinProject'): void {
@@ -82,24 +123,17 @@ export class LandingPageComponent implements OnInit, OnDestroy {
   }
 
   showVideo(): void {
-    const videoId = this.videos[this.currentLanguage].url;
-    this.currentVideoUrl = `https://www.youtube-nocookie.com/embed/${videoId}`;
+    const videoId = this.videos[this.currentLang].url;
+
+    this.currentVideoUrl = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&mute=1&rel=0`;
     this.showVideoModal = true;
   }
 
   closeVideo(): void {
     this.showVideoModal = false;
+    this.currentVideoUrl = '';
     document.body.style.overflow = 'auto';
-  }
-
-  toggleLanguageMenu(): void {
-    this.isLanguageMenuOpen = !this.isLanguageMenuOpen;
-  }
-
-  selectLanguage(lang: 'es' | 'en'): void {
-    this.currentLanguage = lang;
-    this.isLanguageMenuOpen = false;
-    this.showVideo();
+    this.hidePreview();
   }
 
   showPreview(): void {

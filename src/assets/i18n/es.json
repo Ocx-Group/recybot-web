@@ -2562,5 +2562,43 @@
     "SUBTITLE": {
       "TEXT": "Configuración de parametros"
     }
+  },
+  "LANDING-PAGE": {
+    "NAVBAR": {
+      "COLLABORATORS": "Colaboradores",
+      "RECYCOIN_PROJECT": "Proyecto Recycoin",
+      "WHITE_PAPER": "White Paper",
+      "BNB_SCANNER": "BNB Escáner",
+      "PRODUCT": "Producto",
+      "LOGIN": "Ingresar"
+    },
+    "MAIN_TITLE": {
+      "LINE1": "El token ecológico",
+      "LINE2": "que valora tu patrimonio",
+      "LINE3": "y el medioambiente"
+    },
+    "FEATURES": {
+      "ECOLOGICAL_CRYPTO": "Cripto ecológica",
+      "SECURE_TRANSACTIONS": "Transacciones seguras",
+      "REAL_TIME_ANALYSIS": "Análisis en tiempo real",
+      "BIOMETRIC_SECURITY": "Seguridad biométrica"
+    },
+    "CTA": {
+      "LEGAL_DOCS": "Documentos Legales",
+      "CREATE_ACCOUNT": "Crear Cuenta",
+      "CONTACT_FORM": "Formulario Contacto",
+      "TESTIMONIALS": "Testimonios"
+    },
+    "VIDEO": {
+      "LANGUAGE": "Español"
+    }
+  },
+  "PRODUCTS-PREVIEW": {
+    "EXPLORE": {
+      "LINE1": "Explore los",
+      "LINE2": "diferentes",
+      "LINE3": "paquetes",
+      "LINE4": "Recycoin"
+    }
   }
 }

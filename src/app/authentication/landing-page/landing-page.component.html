@@ -1,34 +1,53 @@
 <main class="main-container">
   <nav class="navbar">
     <img src="../../../assets/images/logo-yellow.png" alt="RecyCoin" class="navbar-logo neon-effect" />
+
     <button class="navbar-toggle" (click)="toggleNavbar()">
       <label class="menu-label">Menú</label>
       <span class="navbar-toggle-icon"></span>
     </button>
+
     <div class="navbar-nav" [class.show]="isNavbarVisible">
-      <!-- <a class="nav-link hover-glow" href="#" (click)="openNewTab('/team'); $event.preventDefault()">Colaboradores</a> -->
+      <div class="language-selector">
+        <button title="Cambia el idioma" type="button" (click)="toggleLanguageDropdown($event)">
+          <img title="Bandera Spain" src="../../../assets/images/flags/spain.jpg" [alt]="currentLang" class="flag-icon"
+            *ngIf="currentLang === 'es'">
+          <img title="Bandera USA" src="../../../assets/images/flags/us.jpg" [alt]="currentLang" class="flag-icon"
+            *ngIf="currentLang === 'en'">
+        </button>
+        <div class="language-dropdown" [class.show]="isLanguageDropdownOpen">
+          <a (click)="changeLanguage('es'); $event.stopPropagation()">
+            <img src="../../../assets/images/flags/spain.jpg" alt="español" class="flag-icon">
+          </a>
+          <a (click)="changeLanguage('en'); $event.stopPropagation()">
+            <img src="../../../assets/images/flags/us.jpg" alt="english" class="flag-icon">
+          </a>
+        </div>
+      </div>
+      <a class="nav-link hover-glow" href="#" (click)="showDocument('recycoinProject'); $event.preventDefault()">
+        {{ 'LANDING-PAGE.NAVBAR.RECYCOIN_PROJECT' | translate }}
+      </a>
+      <a class="nav-link hover-glow" href="#" (click)="showDocument('whitePaper'); $event.preventDefault()">
+        {{ 'LANDING-PAGE.NAVBAR.WHITE_PAPER' | translate }}
+      </a>
       <a class="nav-link hover-glow" href="#"
-        (click)="showDocument('recycoinProject'); $event.preventDefault()">Proyecto Recycoin</a>
-      <a class="nav-link hover-glow" href="#" (click)="showDocument('whitePaper'); $event.preventDefault()">White
-        Papper</a>
-      <a class="nav-link hover-glow" href="#" (click)="
-          openNewTab(
-            'https://bscscan.com/address/0x7c482FF834dfb546A8E48C14f3C34652E9826723#code'
-          );
-          $event.preventDefault()
-        ">BNB Escáner</a>
-      <a class="nav-link hover-glow" href="#" routerLink="/products-preview">Producto</a>
+        (click)="openNewTab('https://bscscan.com/address/0x7c482FF834dfb546A8E48C14f3C34652E9826723#code'); $event.preventDefault()">
+        {{ 'LANDING-PAGE.NAVBAR.BNB_SCANNER' | translate }}
+      </a>
+      <a class="nav-link hover-glow" href="#" routerLink="/products-preview">
+        {{ 'LANDING-PAGE.NAVBAR.PRODUCT' | translate }}
+      </a>
       <button class="btn neon-button" (click)="openNewTab('/signin')">
-        Ingresar
+        {{ 'LANDING-PAGE.NAVBAR.LOGIN' | translate }}
       </button>
     </div>
   </nav>
 
   <div class="main-content">
     <div class="title-group">
-      <h5 class="title neon-text">El token ecológico</h5>
-      <h5 class="title neon-text m-0">que valora tu patrimonio</h5>
-      <h5 class="title neon-text m-0">y el medioambiente</h5>
+      <h5 class="title neon-text">{{ 'LANDING-PAGE.MAIN_TITLE.LINE1' | translate }}</h5>
+      <h5 class="title neon-text m-0">{{ 'LANDING-PAGE.MAIN_TITLE.LINE2' | translate }}</h5>
+      <h5 class="title neon-text m-0">{{ 'LANDING-PAGE.MAIN_TITLE.LINE3' | translate }}</h5>
     </div>
 
     <div class="crypto-animation">
@@ -36,31 +55,6 @@
       <i class="bi bi-currency-ethereum"></i>
       <i class="bi bi-currency-dollar"></i>
     </div>
-  </div>
-
-  <div class="video-button-container">
-    <button class="video-button" [ngClass]="{'preview-active': isPreviewHovered}" (mouseenter)="showPreview()"
-      (mouseleave)="hidePreview()" (click)="toggleLanguageMenu()">
-      <i class="fas fa-play"></i>
-      {{ videos[currentLanguage].title }}
-
-      <div class="language-menu" *ngIf="isLanguageMenuOpen">
-        <div class="language-option" (click)="selectLanguage('es')">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="12" cy="12" r="11.5" stroke="currentColor" />
-            <path d="M15.5 12L10 15V9L15.5 12Z" fill="currentColor" />
-          </svg>
-          Español
-        </div>
-        <div class="language-option" (click)="selectLanguage('en')">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="12" cy="12" r="11.5" stroke="currentColor" />
-            <path d="M15.5 12L10 15V9L15.5 12Z" fill="currentColor" />
-          </svg>
-          English
-        </div>
-      </div>
-    </button>
   </div>
 
   <div class="video-modal" [ngStyle]="{'display': showVideoModal ? 'flex' : 'none'}">
@@ -75,29 +69,31 @@
 
   <div class="feature-section">
     <div class="feature-item">
-      <p>Cripto ecológica</p>
+      <p>{{ 'LANDING-PAGE.FEATURES.ECOLOGICAL_CRYPTO' | translate }}</p>
     </div>
     <div class="feature-item">
-      <p>Transacciones seguras</p>
+      <p>{{ 'LANDING-PAGE.FEATURES.SECURE_TRANSACTIONS' | translate }}</p>
     </div>
     <div class="feature-item">
-      <p>Análisis en tiempo real</p>
+      <p>{{ 'LANDING-PAGE.FEATURES.REAL_TIME_ANALYSIS' | translate }}</p>
     </div>
     <div class="feature-item">
-      <p>Seguridad biométrica</p>
+      <p>{{ 'LANDING-PAGE.FEATURES.BIOMETRIC_SECURITY' | translate }}</p>
     </div>
   </div>
 
   <div class="cta-section">
     <button class="btn neon-button" (click)="showDocument('legalDoc')">
-      Documentos Legales
+      {{ 'LANDING-PAGE.CTA.LEGAL_DOCS' | translate }}
     </button>
-    <button class="btn neon-button" routerLink="/signup">Crear Cuenta</button>
+    <button class="btn neon-button" routerLink="/signup">
+      {{ 'LANDING-PAGE.CTA.CREATE_ACCOUNT' | translate }}
+    </button>
     <button class="btn neon-button" routerLink="/contact">
-      Formulario Contacto
+      {{ 'LANDING-PAGE.CTA.CONTACT_FORM' | translate }}
     </button>
     <button class="btn neon-button" routerLink="/testimonials">
-      Testimonios
+      {{ 'LANDING-PAGE.CTA.TESTIMONIALS' | translate }}
     </button>
   </div>
 </main>
