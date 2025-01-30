@@ -448,6 +448,13 @@
     display: none;
   }
 
+  ::ng-deep .brevo-conversations-widget {
+    bottom: 200px !important;
+    right: 20px !important;
+    z-index: 998 !important;
+    position: fixed !important;
+  }
+
   .cta-section {
     display: flex;
     justify-content: space-evenly;

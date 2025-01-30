@@ -1,8 +1,6 @@
-
 :host {
   display: block;
   text-align: center;
-  padding: 64px;
 }
 
 // ugly css for quick test, use your own!
@@ -18,6 +16,7 @@
 
 // style for my custom nodes for this example
 .chart-node {
+  -webkit-user-select: none;
   user-select: none;
   display: flex;
   flex-direction: row;
@@ -32,63 +31,80 @@
   padding: 8px;
 
   img {
-      user-select: none;
-      width: 3em;
-      height: 3em;
-      transition: width 250ms, height 250ms;
-      border-radius: 50%;
-  }
+    -webkit-user-select: none;
+    user-select: none;
+    width: 3em;
+    width: 3em;
+    height: 3em;
+    transition: width 250ms, height 250ms;
+    border-radius: 50%;
 
-  .name {
+    .name {
+      -webkit-user-select: none;
+      user-select: none;
+      font-weight: bold;
       user-select: none;
       font-weight: bold;
       text-align: center;
       width: 5.5em;
       margin: 0.25em;
       transition: width 250ms, height 250ms;
-      color: #FEF;
-  }
 
-  .description {
-      user-select: none;
-      font-size: 90%;
-      overflow: auto;
-      color: #CDC;
-  }
-
-  .tree-fold-btn {
-      position: absolute;
-      width: 16px;
-      height: 16px;
-      line-height: 16px;
-      top: 0;
-      right: 0;
-      background-color: wheat;
-      border-radius: 50%;
-      margin: 0;
-      padding: 0;
-      text-align: center;
-      font-weight: bold;
-  }
-}
-
-// just show the image when the chart is zoomed out
-.ng13-org-chart-zoom-out { // predefined in the library, applyed to show overview
-  .chart-node:not(:hover) {
-      min-height: 0em;
-      padding: 0;
-      img {
-          width: 32px;
-          height: 32px;
-      }
-      .tree-fold-btn {
-          visibility: hidden;
-      }
-      .name {
-          visibility: hidden;
-      }
       .description {
-          visibility: hidden;
+        -webkit-user-select: none;
+        user-select: none;
+        font-size: 90%;
+
+        .description {
+          -webkit-user-select: none;
+          user-select: none;
+          font-size: 90%;
+          overflow: auto;
+          color: #CDC;
+        }
+
+        .tree-fold-btn {
+          position: absolute;
+          width: 16px;
+          height: 16px;
+          line-height: 16px;
+          top: 0;
+          right: 0;
+          background-color: wheat;
+          border-radius: 50%;
+          margin: 0;
+          padding: 0;
+          text-align: center;
+          font-weight: bold;
+        }
       }
+
+      // just show the image when the chart is zoomed out
+      .ng13-org-chart-zoom-out {
+
+        // predefined in the library, applyed to show overview
+        .chart-node:not(:hover) {
+          min-height: 0em;
+          padding: 0;
+
+          img {
+            width: 32px;
+            height: 32px;
+          }
+
+          .tree-fold-btn {
+            visibility: hidden;
+          }
+
+          .name {
+            visibility: hidden;
+          }
+
+          .description {
+            visibility: hidden;
+          }
+        }
+      }
+    }
   }
 }
