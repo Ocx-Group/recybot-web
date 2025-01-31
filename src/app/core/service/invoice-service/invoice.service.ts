@@ -1,13 +1,13 @@
-import { ModelBalancesInvoices } from './../../models/invoice-model/model-balances-invoices';
+import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
-import { map } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
+import { ModelBalancesInvoices } from './../../models/invoice-model/model-balances-invoices';
 
+import { Invoice } from '@app/core/models/invoice-model/invoice.model';
 import { Response } from '@app/core/models/response-model/response.model';
 import { environment } from '@environments/environment';
-import { Invoice } from '@app/core/models/invoice-model/invoice.model';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 const httpOptions = {
 
@@ -45,20 +45,23 @@ export class InvoiceService {
     );
   }
 
-  getAllInvoices(): Observable<Invoice[]> {
-    return this.http.get<Invoice[]>(
-      this.urlApi.concat(
-        '/invoice/GetAllInvoices'),
-      httpOptions
+  getAllInvoices(startDate?: Date, endDate?: Date): Observable<Response | null> {
+    const params = new HttpParams({
+      fromObject: {
+        ...(startDate && { startDate: startDate.toISOString() }),
+        ...(endDate && { endDate: endDate.toISOString() })
+      }
+    });
+
+    return this.http.get<Response>(
+      `${this.urlApi}/invoice/GetAllInvoices`,
+      { ...httpOptions, params }
     ).pipe(
-      map((response) => {
-        if (Array.isArray(response)) {
-          return response;
-        } else {
-          console.error('ERROR: ' + response);
-          return null;
-        }
-      }),
+      map(response => response || null),
+      catchError(error => {
+        console.error('Error getting invoices:', error);
+        return of(null);
+      })
     );
   }
 

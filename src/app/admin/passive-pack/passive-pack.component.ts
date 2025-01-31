@@ -1,7 +1,7 @@
-import { InvoiceDetail } from './../../core/models/invoice-detail-model/invoice-detail.model';
 import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
+import { map } from 'rxjs/operators';
 
 import { Invoice } from '@app/core/models/invoice-model/invoice.model';
 import { InvoiceService } from '@app/core/service/invoice-service/invoice.service';
@@ -38,7 +38,9 @@ export class PassivePackComponent implements OnInit {
   }
 
   loadInvoiceList() {
-    this.invoiceService.getAllInvoices().subscribe((resp: Invoice[]) => {
+    this.invoiceService.getAllInvoices().pipe(
+      map((response: any) => response as Invoice[])
+    ).subscribe((resp: Invoice[]) => {
       if (resp != null) {
         const data = resp.map(invoice => {
           return invoice.invoicesDetails.map(detail => {
