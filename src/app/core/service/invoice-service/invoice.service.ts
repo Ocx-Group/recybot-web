@@ -2,6 +2,8 @@ import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/comm
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { catchError, map } from 'rxjs/operators';
+import { PagedResult } from './../../interfaces/paged-result';
+import { PaginationRequest } from './../../interfaces/pagination-request';
 import { ModelBalancesInvoices } from './../../models/invoice-model/model-balances-invoices';
 
 import { Invoice } from '@app/core/models/invoice-model/invoice.model';
@@ -45,15 +47,17 @@ export class InvoiceService {
     );
   }
 
-  getAllInvoices(startDate?: Date, endDate?: Date): Observable<Response | null> {
+  getAllInvoices(request: PaginationRequest): Observable<Response<PagedResult<Invoice>> | null> {
     const params = new HttpParams({
       fromObject: {
-        ...(startDate && { startDate: startDate.toISOString() }),
-        ...(endDate && { endDate: endDate.toISOString() })
+        pageSize: request.pageSize.toString(),
+        pageNumber: request.pageNumber.toString(),
+        ...(request.startDate && { startDate: request.startDate.toISOString() }),
+        ...(request.endDate && { endDate: request.endDate.toISOString() })
       }
     });
 
-    return this.http.get<Response>(
+    return this.http.get<Response<PagedResult<Invoice>>>(
       `${this.urlApi}/invoice/GetAllInvoices`,
       { ...httpOptions, params }
     ).pipe(
@@ -146,5 +150,28 @@ export class InvoiceService {
           };
         })
       );
+  }
+
+  exportToExcel(startDate?: Date, endDate?: Date): Observable<Blob> {
+    const params = new HttpParams({
+      fromObject: {
+        ...(startDate && { startDate: startDate.toISOString() }),
+        ...(endDate && { endDate: endDate.toISOString() })
+      }
+    });
+
+    const options = {
+      responseType: 'blob' as 'json',
+      params,
+      headers: new HttpHeaders({
+        'Authorization': environment.tokens.walletService.toString(),
+        'X-Client-ID': environment.tokens.clientID.toString()
+      })
+    };
+
+    return this.http.get<Blob>(
+      `${this.urlApi}/invoice/ExportToExcel`,
+      options
+    );
   }
 }

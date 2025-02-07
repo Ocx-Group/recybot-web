@@ -2,8 +2,8 @@ import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular
 import { DatatableComponent } from '@swimlane/ngx-datatable';
 import { ClipboardService } from 'ngx-clipboard';
 import { ToastrService } from 'ngx-toastr';
-import * as XLSX from 'xlsx';
 
+import { PaginationRequest } from '@app/core/interfaces/pagination-request';
 import { InvoiceService } from '@app/core/service/invoice-service/invoice.service';
 import { PrintService } from '@app/core/service/print-service/print.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -32,6 +32,9 @@ export class PurchasesListComponent implements OnInit {
   modal: any;
   @ViewChild('detailsModal') detailsModal: ElementRef;
   @ViewChild('table') table: DatatableComponent;
+  totalElements: number = 0;
+  pageSize: number = 10;
+  currentPage: number = 1;
 
   constructor(
     private toastr: ToastrService,
@@ -57,15 +60,22 @@ export class PurchasesListComponent implements OnInit {
   }
 
   loadData() {
-    let start = this.startDate ? new Date(this.startDate) : null;
-    let end = this.endDate ? new Date(this.endDate) : null;
+    const request: PaginationRequest = {
+      pageSize: this.pageSize,
+      pageNumber: this.currentPage,
+      startDate: this.startDate ? new Date(this.startDate) : null,
+      endDate: this.endDate ? new Date(this.endDate) : null
+    };
 
     this.loadingIndicator = true;
-    this.invoiceService.getAllInvoices(start, end).subscribe({
+    this.invoiceService.getAllInvoices(request).subscribe({
       next: (response) => {
-        if (response.success) {
-          this.rows = response.data;
-          this.temp = response.data;
+        if (response?.success) {
+          this.rows = response.data.items;
+          this.temp = response.data.items;
+          this.totalElements = response.data.totalCount;
+          this.pageSize = response.data.pageSize;
+          this.currentPage = response.data.currentPage;
         }
         this.loadingIndicator = false;
       },
@@ -75,6 +85,11 @@ export class PurchasesListComponent implements OnInit {
         this.toastr.error('Error al cargar los datos');
       }
     });
+  }
+
+  onPage(event: any) {
+    this.currentPage = event.offset + 1;
+    this.loadData();
   }
 
   onDateFilterChange() {
@@ -182,68 +197,39 @@ export class PurchasesListComponent implements OnInit {
     );
   }
 
-  exportToExcel() {
-    if (this.temp.length === 0) {
-      this.toastr.info('No hay datos para exportar');
-      return;
-    }
-
+  async exportToExcel() {
     try {
-      const totalSum = this.temp.reduce((sum, item) => sum + item.totalInvoice, 0);
+      this.loadingIndicator = true;
+      const startDate = this.startDate ? new Date(this.startDate) : null;
+      const endDate = this.endDate ? new Date(this.endDate) : null;
 
-      const data = this.temp.map(row => ({
-        'Afiliado': row.userName,
-        'Nombre y Apellido': `${row.name} ${row.lastName}`,
-        'No. Factura': row.id,
-        'Estado factura': row.status ? 'Activa' : 'Pendiente o Nula',
-        'Total pagado': row.totalInvoice,
-        'Método de pago': row.paymentMethod,
-        'Banco': row.bank,
-        'No. Recibo': row.receiptNumber,
-        'Fecha de pago': row.depositDate ? new Date(row.depositDate).toLocaleDateString() : ''
-      }));
+      this.invoiceService.exportToExcel(startDate, endDate).subscribe({
+        next: (blob: Blob) => {
+          const today = new Date();
+          const dateStr = today.toLocaleDateString('es-CO').replace(/\//g, '-');
+          const timeStr = today.toLocaleTimeString('es-CO').replace(/:/g, '-');
+          const fileName = `Lista_de_compras_${dateStr}_${timeStr}.xlsx`;
 
-      const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
+          const url = window.URL.createObjectURL(blob);
+          const link = document.createElement('a');
+          link.href = url;
+          link.download = fileName;
+          link.click();
+          window.URL.revokeObjectURL(url);
 
-      const blankRow = { 'Afiliado': '' };
-      XLSX.utils.sheet_add_json(ws, [blankRow], {
-        skipHeader: true,
-        origin: -1
+          this.loadingIndicator = false;
+          this.toastr.success('Excel generado exitosamente');
+        },
+        error: (error) => {
+          console.error('Error al exportar el excel', error);
+          this.loadingIndicator = false;
+          this.toastr.error('Error al generar el excel');
+        }
       });
-
-      const totalRow = { 'Afiliado': 'TOTAL:', 'Total pagado': totalSum };
-      XLSX.utils.sheet_add_json(ws, [totalRow], {
-        skipHeader: true,
-        origin: -1
-      });
-
-      const wb: XLSX.WorkBook = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(wb, ws, 'Compras');
-
-      const colWidths = [
-        { wch: 15 },
-        { wch: 25 },
-        { wch: 12 },
-        { wch: 12 },
-        { wch: 15 },
-        { wch: 15 },
-        { wch: 15 },
-        { wch: 15 },
-        { wch: 15 }
-      ];
-
-      ws['!cols'] = colWidths;
-
-      const today = new Date();
-      const dateStr = today.toLocaleDateString('es-CO').replace(/\//g, '-');
-      const timeStr = today.toLocaleTimeString('es-CO').replace(/:/g, '-');
-      const fileName = `Lista_de_compras_${dateStr}_${timeStr}.xlsx`;
-      XLSX.writeFile(wb, fileName);
-      this.toastr.success('Excel generado exitosamente');
-
     } catch (error) {
       console.error('Error al exportar el excel', error);
       this.toastr.error('Error al generar el excel');
+      this.loadingIndicator = false;
     }
   }
 }

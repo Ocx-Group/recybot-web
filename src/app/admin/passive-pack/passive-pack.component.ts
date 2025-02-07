@@ -3,6 +3,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
 import { map } from 'rxjs/operators';
 
+import { PaginationRequest } from '@app/core/interfaces/pagination-request';
 import { Invoice } from '@app/core/models/invoice-model/invoice.model';
 import { InvoiceService } from '@app/core/service/invoice-service/invoice.service';
 
@@ -16,7 +17,10 @@ export class PassivePackComponent implements OnInit {
   loadingIndicator = true;
   reorderable = true;
   scrollBarHorizontal = window.innerWidth < 1200;
-
+  totalElements: number = 0;
+  pageSize: number = 10;
+  currentPage: number = 1;  startDate: string = null;
+  endDate: string = null;
   @ViewChild('table') table: DatatableComponent;
 
   constructor(
@@ -38,7 +42,13 @@ export class PassivePackComponent implements OnInit {
   }
 
   loadInvoiceList() {
-    this.invoiceService.getAllInvoices().pipe(
+    const request: PaginationRequest = {
+      pageSize: this.pageSize,
+      pageNumber: this.currentPage,
+      startDate: this.startDate ? new Date(this.startDate) : null,
+      endDate: this.endDate ? new Date(this.endDate) : null
+    };
+    this.invoiceService.getAllInvoices(request).pipe(
       map((response: any) => response as Invoice[])
     ).subscribe((resp: Invoice[]) => {
       if (resp != null) {
