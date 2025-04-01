@@ -71,6 +71,8 @@ import {ChangeModelModule} from './change-model/change-model.module';
 import {SharedModule} from "../shared/shared.module";
 import {TicketViewAdminComponent} from './tickets/tick-view/ticket-view-admin.component';
 import {CreateAdminModalComponent} from './tickets/create-admin-modal/create-admin-modal.component';
+import { MatrixListComponent } from './matrix-configuration/matrix-list/matrix-list.component';
+import { MatrixCreateComponent } from './matrix-configuration/matrix-create/matrix-create.component';
 
 const icons = {
   Search,
@@ -109,7 +111,9 @@ const icons = {
     WireTransferListComponent,
     EducationalProgramsControlComponent,
     TicketViewAdminComponent,
-    CreateAdminModalComponent
+    CreateAdminModalComponent,
+    MatrixListComponent,
+    MatrixCreateComponent
   ],
   exports: [],
   imports: [

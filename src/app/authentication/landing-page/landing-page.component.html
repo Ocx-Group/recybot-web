@@ -1,6 +1,27 @@
 <main class="main-container">
   <nav class="navbar">
-    <img src="../../../assets/images/logo-yellow.png" alt="RecyCoin" class="navbar-logo neon-effect" />
+    <div class="navbar-left">
+      <picture>
+        <!-- móviles, tablets y dispositivos pequeños -->
+        <source media="(max-width: 1024px)" srcset="../../../assets/images/yellow-logo.png">
+        <!-- laptops y PCs -->
+        <img src="../../../assets/images/logo-yellow.png" alt="RecyCoin" class="navbar-logo neon-effect">
+      </picture>
+
+      <div *ngIf="user" class="user-container green-theme">
+        <div role="button" class="user-panel">
+          <div class="image">
+            <img [src]="user?.image_profile_url ? user?.image_profile_url : 'assets/images/user.png'"
+              class="img-fluid img-circle" alt="User Image" />
+          </div>
+        </div>
+        <div class="profile-usertitle">
+          <div class="sidebar-userpic-name">{{this.user.name}} {{this.user.last_name}}</div>
+          <div class="profile-usertitle-job">{{this.user.user_name}}</div>
+          <div *ngIf="this.user.phone" class="profile-usertitle-job">{{this.user.phone}}</div>
+        </div>
+      </div>
+    </div>
 
     <button class="navbar-toggle" (click)="toggleNavbar()">
       <label class="menu-label">Menú</label>
@@ -16,10 +37,10 @@
             *ngIf="currentLang === 'en'">
         </button>
         <div class="language-dropdown" [class.show]="isLanguageDropdownOpen">
-          <a (click)="changeLanguage('es'); $event.stopPropagation()">
+          <a href="#" (click)="changeLanguage('es'); $event.preventDefault(); $event.stopPropagation()">
             <img src="../../../assets/images/flags/spain.jpg" alt="español" class="flag-icon">
           </a>
-          <a (click)="changeLanguage('en'); $event.stopPropagation()">
+          <a href="#" (click)="changeLanguage('en'); $event.preventDefault(); $event.stopPropagation()">
             <img src="../../../assets/images/flags/us.jpg" alt="english" class="flag-icon">
           </a>
         </div>
@@ -37,6 +58,9 @@
       <a class="nav-link hover-glow" href="#" routerLink="/products-preview">
         {{ 'LANDING-PAGE.NAVBAR.PRODUCT' | translate }}
       </a>
+      <button class="btn neon-button" routerLink="/signup/{{this.user?.user_name}}">
+        {{ 'LANDING-PAGE.CTA.CREATE_ACCOUNT' | translate }}
+      </button>
       <button class="btn neon-button" (click)="openNewTab('/signin')">
         {{ 'LANDING-PAGE.NAVBAR.LOGIN' | translate }}
       </button>
@@ -85,9 +109,6 @@
   <div class="cta-section">
     <button class="btn neon-button" (click)="showDocument('legalDoc')">
       {{ 'LANDING-PAGE.CTA.LEGAL_DOCS' | translate }}
-    </button>
-    <button class="btn neon-button" routerLink="/signup">
-      {{ 'LANDING-PAGE.CTA.CREATE_ACCOUNT' | translate }}
     </button>
     <button class="btn neon-button" routerLink="/contact">
       {{ 'LANDING-PAGE.CTA.CONTACT_FORM' | translate }}

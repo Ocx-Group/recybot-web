@@ -1,28 +1,28 @@
-import {AffiliateBtcService} from '@app/core/service/affiliate-btc-service/affiliate-btc.service';
-import {ChangeDetectorRef, Component, NgZone, ViewChild} from '@angular/core';
+import am4geodata_worldLow from '@amcharts/amcharts4-geodata/worldLow';
 import * as am4core from '@amcharts/amcharts4/core';
 import * as am4maps from '@amcharts/amcharts4/maps';
-import am4geodata_worldLow from '@amcharts/amcharts4-geodata/worldLow';
 import am5themes_Animated from '@amcharts/amcharts4/themes/animated';
-import {EMPTY, map, Subject, switchMap, takeUntil} from 'rxjs';
-import {ChartComponent} from 'ng-apexcharts';
+import { ChangeDetectorRef, Component, NgZone, ViewChild } from '@angular/core';
+import { AffiliateBtcService } from '@app/core/service/affiliate-btc-service/affiliate-btc.service';
+import { ChartComponent } from 'ng-apexcharts';
+import { EMPTY, map, Subject, switchMap, takeUntil } from 'rxjs';
 
-import {BalanceInformation} from '@app/core/models/wallet-model/balance-information.model';
-import {AuthService} from '@app/core/service/authentication-service/auth.service';
-import {WalletService} from '@app/core/service/wallet-service/wallet.service';
-import {UserAffiliate} from '@app/core/models/user-affiliate-model/user.affiliate.model';
-import {ToastrService} from 'ngx-toastr';
-import {AffiliateService} from '@app/core/service/affiliate-service/affiliate.service';
-import {EChartsOption} from 'echarts';
-import {PurchasePerMonthDto} from '@app/core/models/wallet-model/network-purchases.model';
-import {WalletModel1AService} from '@app/core/service/wallet-model-1a-service/wallet-model-1a.service';
-import {WalletModel1BService} from '@app/core/service/wallet-model-1b-service/wallet-model-1b.service';
-import {ModelsVisibilityService} from '@app/core/service/models-visibility-service/models-visibility.service';
-import {BalanceInformationModel1A} from '@app/core/models/wallet-model-1a/balance-information-1a.model';
-import {BalanceInformationModel1B} from '@app/core/models/wallet-model-1b/balance-information-1b.model';
-import {StatisticsInformation} from '@app/core/models/wallet-model/statisticsInformation';
-import {AffiliateBtc} from '@app/core/models/affiliate-btc-model/affiliate-btc.model';
-import {Response} from '@app/core/models/response-model/response.model';
+import { AffiliateBtc } from '@app/core/models/affiliate-btc-model/affiliate-btc.model';
+import { Response } from '@app/core/models/response-model/response.model';
+import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
+import { BalanceInformationModel1A } from '@app/core/models/wallet-model-1a/balance-information-1a.model';
+import { BalanceInformationModel1B } from '@app/core/models/wallet-model-1b/balance-information-1b.model';
+import { BalanceInformation } from '@app/core/models/wallet-model/balance-information.model';
+import { PurchasePerMonthDto } from '@app/core/models/wallet-model/network-purchases.model';
+import { StatisticsInformation } from '@app/core/models/wallet-model/statisticsInformation';
+import { AffiliateService } from '@app/core/service/affiliate-service/affiliate.service';
+import { AuthService } from '@app/core/service/authentication-service/auth.service';
+import { ModelsVisibilityService } from '@app/core/service/models-visibility-service/models-visibility.service';
+import { WalletModel1AService } from '@app/core/service/wallet-model-1a-service/wallet-model-1a.service';
+import { WalletModel1BService } from '@app/core/service/wallet-model-1b-service/wallet-model-1b.service';
+import { WalletService } from '@app/core/service/wallet-service/wallet.service';
+import { EChartsOption } from 'echarts';
+import { ToastrService } from 'ngx-toastr';
 
 am4core.useTheme(am5themes_Animated);
 
@@ -147,7 +147,7 @@ export class HomeComponent {
   }
 
   get registerUrl() {
-    return `https://www.recycoin.net/main-options/${this.user.user_name.toString()}`;
+    return `https://www.recycoin.net/welcome/${this.user.user_name.toString()}`;
   }
 
   showSuccess(message: string) {

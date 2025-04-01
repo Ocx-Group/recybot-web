@@ -248,6 +248,9 @@
     }
   },
   "REQUESTS-PAGE": {
+    "PROCESS-PAYMENT": {
+      "TEXT": "Procesar pago"
+    },
     "TITTLE-PAGE": {
       "TEXT": "Realizar solicitud de pago"
     },
@@ -255,7 +258,7 @@
       "TEXT": "El monto que solicita debe ser menor o igual al monto disponible que tenga en su billetera."
     },
     "SECOND-MSJ-INFO": {
-      "TEXT": "El monto mínimo para retirar es de USD"
+      "TEXT": "El monto mínimo permitido para procesar el pago es de USD"
     },
     "THIRD-MSJ-INFO": {
       "TEXT": "El monto máximo para retirar es de USD"
@@ -811,16 +814,16 @@
       "TEXT": "Árboles de mi Red"
     },
     "UNILEVEL-MODEL": {
-      "TEXT": "Modelo 1, 2, 3 (Unilevel)"
+      "TEXT": "Unimax"
     },
     "BINARY-MODEL": {
-      "TEXT": "Modelo 4 (Binario)"
+      "TEXT": "Estructura Pro"
     },
     "MATRIX-MODEL-5": {
-      "TEXT": "Modelo 5 (Matriz)"
+      "TEXT": "Estructura Plus"
     },
     "MATRIX-MODEL-6": {
-      "TEXT": "Modelo 6 (Matriz)"
+      "TEXT": "Estructura Max"
     },
     "BACK": {
       "TEXT": "Volver"
@@ -1062,7 +1065,8 @@
     "INSTRUCTIONS": "Por favor, envía el pago a la dirección de billetera mostrada. El sistema detectará automáticamente cuando se haya recibido el pago.",
     "CLOSE": "Cerrar",
     "CHANGE_NETWORK": "Cambiar red",
-    "SELECT_NETWORK": "Seleccione la red a realizar el pago"
+    "SELECT_NETWORK": "Seleccione la red a realizar el pago",
+    "SELECT_CRYPTO": "Seleccione la criptomoneda"
   },
   "HOME-ADMIN-PAGE": {
     "ACTIVE-AFFILIATES": {
@@ -2573,9 +2577,9 @@
       "LOGIN": "Ingresar"
     },
     "MAIN_TITLE": {
-      "LINE1": "El token ecológico",
-      "LINE2": "que valora tu patrimonio",
-      "LINE3": "y el medioambiente"
+      "LINE1": "RECYCOIN: Riqueza Inteligente",
+      "LINE2": "Planeta Saludable",
+      "LINE3": "Ganamos juntos"
     },
     "FEATURES": {
       "ECOLOGICAL_CRYPTO": "Cripto ecológica",
@@ -2585,7 +2589,7 @@
     },
     "CTA": {
       "LEGAL_DOCS": "Documentos Legales",
-      "CREATE_ACCOUNT": "Crear Cuenta",
+      "CREATE_ACCOUNT": "Registrarse",
       "CONTACT_FORM": "Formulario Contacto",
       "TESTIMONIALS": "Testimonios"
     },
@@ -2600,5 +2604,35 @@
       "LINE3": "paquetes",
       "LINE4": "Recycoin"
     }
+  },
+  "SIGNUP": {
+    "TITLE": "Formulario de Registro",
+    "SPONSOR": "El nombre de su patrocinador es:",
+    "USERNAME": "Nombre de usuario",
+    "USERNAME_REQUIRED": "El nombre de usuario es requerido",
+    "USERNAME_WHITESPACE": "El nombre de usuario no puede contener espacios",
+    "PASSWORD": "Contraseña",
+    "PASSWORD_REQUIRED": "La contraseña es requerida",
+    "PASSWORD_MINLENGTH": "La contraseña debe tener al menos 8 caracteres",
+    "PASSWORD_PATTERN": "La contraseña debe contener mayúsculas, minúsculas, números y un carácter especial",
+    "REPEAT_PASSWORD": "Repetir Contraseña",
+    "REPEAT_PASSWORD_REQUIRED": "La repetición de la contraseña es requerida",
+    "PASSWORD_MISMATCH": "Las contraseñas no coinciden",
+    "NAME": "Nombre",
+    "NAME_REQUIRED": "El nombre es requerido",
+    "LAST_NAME": "Apellido",
+    "LAST_NAME_REQUIRED": "El apellido es requerido",
+    "COUNTRY": "País",
+    "COUNTRY_REQUIRED": "El país es requerido",
+    "PHONE": "Número de teléfono",
+    "PHONE_REQUIRED": "El número de teléfono es requerido",
+    "EMAIL": "Correo electrónico",
+    "EMAIL_REQUIRED": "El correo electrónico es requerido",
+    "TERMS_AND_CONDITIONS": "Términos y condiciones",
+    "TERMS_REQUIRED": "Los términos y condiciones son requeridos",
+    "SUBMIT": "Registrarse",
+    "ALREADY_HAVE_ACCOUNT": "¿Ya tienes una cuenta?",
+    "SIGN_IN": "Iniciar sesión",
+    "INVALID_FORM": "Formulario inválido."
   }
 }

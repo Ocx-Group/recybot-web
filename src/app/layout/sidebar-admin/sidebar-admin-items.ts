@@ -281,7 +281,6 @@ export const ROUTESADMIN: RouteInfo[] = [
       },
     ],
   },
-
   {
     path: '',
     title: 'ADMIN-ITEMS.PRODUCTS-SERVICES.TEXT',
@@ -494,7 +493,6 @@ export const ROUTESADMIN: RouteInfo[] = [
       }
     ],
   },
-  ,
   {
     path: '/admin/educational-programs-control',
     title: 'Control de programas educativos',
@@ -507,10 +505,10 @@ export const ROUTESADMIN: RouteInfo[] = [
     submenu: [],
   },
   {
-    path: '',
-    title: 'ADMIN-ITEMS.IMPORT.TEXT',
+    path: '/admin/matrix-configuration',
+    title: 'Configuración de matrices',
     iconType: 'feather',
-    icon: 'upload-cloud',
+    icon: 'grid',
     class: '',
     groupTitle: false,
     badge: '',
@@ -522,28 +520,6 @@ export const ROUTESADMIN: RouteInfo[] = [
     title: 'ADMIN-ITEMS.TICKETS.TEXT',
     iconType: 'feather',
     icon: 'tag',
-    class: '',
-    groupTitle: false,
-    badge: '',
-    badgeClass: '',
-    submenu: [],
-  },
-  {
-    path: '',
-    title: 'ADMIN-ITEMS.NEWS.TEXT',
-    iconType: 'feather',
-    icon: 'file-text',
-    class: '',
-    groupTitle: false,
-    badge: '',
-    badgeClass: '',
-    submenu: [],
-  },
-  {
-    path: '',
-    title: 'ADMIN-ITEMS.GENERAL-REPORTS.TEXT',
-    iconType: 'feather',
-    icon: 'book-open',
     class: '',
     groupTitle: false,
     badge: '',

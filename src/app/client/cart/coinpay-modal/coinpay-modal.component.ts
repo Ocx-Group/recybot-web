@@ -1,12 +1,12 @@
-import { ToastrService } from 'ngx-toastr';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ChangeDetectorRef, Component, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProductRequest, RequestPayment } from '@app/core/models/coinpay-model/request-payment.model';
-import { CoinpayService } from '@app/core/service/coinpay-service/coinpay.service';
 import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
-import { Subscription, switchMap, timer } from 'rxjs';
+import { CoinpayService } from '@app/core/service/coinpay-service/coinpay.service';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { ToastrService } from 'ngx-toastr';
 import QRCode from 'qrcode';
+import { Subscription, switchMap, timer } from 'rxjs';
 
 @Component({
   selector: 'app-coinpay-modal',
@@ -18,6 +18,7 @@ export class CoinpayModalComponent implements OnInit {
   @Input() user: UserAffiliate;
   @Input() products: any[];
   @Input() total: number;
+  selectedCrypto: 'BTC' | 'USDT' = null;
   selectedNetwork: {
     id: number;
     idChain: number;
@@ -36,6 +37,8 @@ export class CoinpayModalComponent implements OnInit {
   private modalReference: NgbModalRef;
   @ViewChild('coinpayPaymentModal') coinpayPaymentModal: TemplateRef<any>;
   private readonly iconMap = {
+    'BTC': 'assets/images/crypto/bitcoin.png',
+    'USDT': 'assets/images/crypto/thether.png',
     'ERC20': 'assets/images/crypto/erc20.png',
     'BEP20': 'assets/images/crypto/bep20.png',
     'PoS': 'assets/images/crypto/polygon.png',
@@ -53,7 +56,6 @@ export class CoinpayModalComponent implements OnInit {
 
   ngOnInit(): void {
     this.initControls();
-    this.getNetworksByUSDT();
   }
 
   showSuccess(message: string) {
@@ -79,11 +81,12 @@ export class CoinpayModalComponent implements OnInit {
     })
   }
 
-  getNetworksByUSDT() {
-    let networkId = 19;
+  getNetworksById(id: number) {
+    let networkId = id;
     this.coinpayService.getNetworks(networkId).subscribe({
       next: (response) => {
         if (response) {
+          console.log(response);
           this.networks = response;
         }
       },
@@ -114,8 +117,26 @@ export class CoinpayModalComponent implements OnInit {
     });
   }
 
+  selectCrypto(crypto: 'BTC' | 'USDT') {
+    this.selectedCrypto = crypto;
+    this.selectedNetwork = null;
+    this.resetPaymentDetails();
+
+    if (crypto === 'USDT') {
+      this.getNetworksById(19);
+    } else {
+      this.getNetworksById(1);
+    }
+  }
+
+  backToCryptoSelection() {
+    this.selectedCrypto = null;
+    this.selectedNetwork = null;
+    this.resetPaymentDetails();
+    this.stopTransactionStatusPolling();
+  }
+
   selectNetwork(network: any) {
-    console.log(network);
     this.selectedNetwork = { ...network };
     this.paymentGroup.get('network').setValue(network.idChain);
     this.resetPaymentDetails();
@@ -176,7 +197,8 @@ export class CoinpayModalComponent implements OnInit {
     request.userName = this.user.user_name;
     request.amount = this.total;
     request.products = this.constructProductDetails();
-    request.networkId = networkId;
+    request.networkId = this.selectedCrypto === 'BTC' ? 1 : networkId;
+    request.currencyId = this.selectedCrypto === 'BTC' ? 1 : 19;
     return request;
   }
 

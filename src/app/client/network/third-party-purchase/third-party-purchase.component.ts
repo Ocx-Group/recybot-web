@@ -1,16 +1,16 @@
-import { Component, TemplateRef, ViewChild, Input, Output, EventEmitter, ChangeDetectorRef, NgZone, OnInit, OnDestroy } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, NgZone, OnDestroy, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { ToastrService } from "ngx-toastr";
 import QRCode from 'qrcode';
 import { Subscription, switchMap, timer } from "rxjs";
-import { ToastrService } from "ngx-toastr";
 
-import { UserAffiliate } from "@app/core/models/user-affiliate-model/user.affiliate.model";
-import { CoinpayService } from "@app/core/service/coinpay-service/coinpay.service";
 import { RequestPayment } from "@app/core/models/coinpay-model/request-payment.model";
 import { Product } from '@app/core/models/product-model/product.model';
+import { UserAffiliate } from "@app/core/models/user-affiliate-model/user.affiliate.model";
 import { WalletRequest } from '@app/core/models/wallet-model/wallet-request.model';
-import { AuthService } from 'src/app/core/service/authentication-service/auth.service';
+import { CoinpayService } from "@app/core/service/coinpay-service/coinpay.service";
 import { WalletService } from '@app/core/service/wallet-service/wallet.service';
+import { AuthService } from 'src/app/core/service/authentication-service/auth.service';
 
 @Component({
   selector: 'app-third-party-purchase',
@@ -165,7 +165,8 @@ export class ThirdPartyPurchaseComponent implements OnInit, OnDestroy {
         productId: product.id,
         quantity: 1
       })),
-      networkId: 56
+      networkId: 56,
+      currencyId: 19
     };
   }
 

@@ -113,6 +113,4 @@ export class AuthorizeReturnsComponent implements OnInit {
       }
     });
   }
-
-
 }

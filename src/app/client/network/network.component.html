@@ -63,7 +63,7 @@
                       <div class="form-group">
                         <div class="input-group mb-2">
                           <div class="input-group-prepend">
-                            <div role="button" class="input-group-text" (click)="getUserAffiliateByUserName()">
+                            <div role="button" class="input-group-text" title="Search" (click)="getUserAffiliateByUserName()">
                               <i-feather name="search" style="color: #96a2b4;"></i-feather>
                             </div>
                           </div>
@@ -116,25 +116,10 @@
                           }}
                         </button>
                         <div ngbDropdownMenu>
-                          <a ngbDropdownItem id="btn-delete" *ngIf="isNewUser"
-                            (click)="showConfirmationTransferBalanceForMembership(row)">
-                            <i class="bi bi-person-badge"></i>
-                            <span style="margin-left: 10px">{{
-                              'NETWORK-PAGE.ACTIVATE-MEMBERSHIP.BALANCE.TEXT' |
-                              translate
-                              }}</span>
-                          </a>
                           <a ngbDropdownItem *ngIf="isNewUser" (click)="createPagaditoTransaction(row)">
                             <i class="bi bi-credit-card"></i>
                             <span style="margin-left: 10px">{{
                               'NETWORK-PAGE.ACTIVATE-MEMBERSHIP.CARD.TEXT' | translate
-                              }}</span>
-                          </a>
-                          <a ngbDropdownItem id="btn-detailGlobal" *ngIf="row.activation_date != null"
-                            (click)="showConfirmationTransferBalance(row)">
-                            <i class="bi bi-currency-exchange"></i>
-                            <span style="margin-left: 10px">{{
-                              'NETWORK-PAGE.TRANSFER-BALANCE.TEXT' | translate
                               }}</span>
                           </a>
                         </div>
@@ -143,7 +128,6 @@
                   </ngx-datatable-column>
                 </ngx-datatable>
               </div>
-
             </div>
           </div>
         </div>
@@ -167,7 +151,7 @@
                         <div class="form-group">
                           <div class="input-group mb-2">
                             <div class="input-group-prepend">
-                              <div role="button" class="input-group-text">
+                              <div role="button" class="input-group-text" title="Search">
                                 <i-feather name="search" style="color: #96a2b4;"></i-feather>
                               </div>
                             </div>
@@ -242,32 +226,10 @@
                           }}
                         </button>
                         <div ngbDropdownMenu>
-                          <a ngbDropdownItem id="btn-detail" *ngIf="row.activationDate != null"
-                            (click)="showConfirmationTransferBalance(row)">
-                            <i class="bi bi-currency-exchange me-1"></i>
-                            <span>{{
-                              'NETWORK-PAGE.TRANSFER-BALANCE.TEXT' | translate
-                              }}</span>
-                          </a>
                           <a ngbDropdownItem id="btn-purchase" (click)="purchaseModal.openModal(row)">
                             <i class="bi bi-currency-exchange me-1"></i>
                             <span>{{
                               'NETWORK-PAGE.THIRD-PURCHASE.TEXT' | translate
-                              }}</span>
-                          </a>
-                          <a ngbDropdownItem id="btn-deleteGlobal" *ngIf="row.activationDate == null"
-                            (click)="showConfirmationTransferBalanceForMembership(row)">
-                            <i class="bi bi-person-badge me-1"></i>
-                            <span>{{
-                              'NETWORK-PAGE.ACTIVATE-MEMBERSHIP.BALANCE.TEXT' |
-                              translate
-                              }}</span>
-                          </a>
-                          <a ngbDropdownItem *ngIf="row.activationDate == null"
-                            (click)="createPagaditoTransaction(row)">
-                            <i class="bi bi-credit-card me-1"></i>
-                            <span>{{
-                              'NETWORK-PAGE.ACTIVATE-MEMBERSHIP.CARD.TEXT' | translate
                               }}</span>
                           </a>
                         </div>

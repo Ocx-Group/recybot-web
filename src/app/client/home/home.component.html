@@ -278,11 +278,11 @@
                 </button>
               </p>
               <p class="clearfix">
-                <span role="button" class="float-start" (click)="openNewWindow('https://recycoin.net/')">
+                <span role="button" class="float-start" (click)="openNewWindow(registerUrl)">
                   {{ 'HOME-PAGE-CLIENT.PUBLIC-STORE.TEXT' | translate }}
                 </span>
                 <button class="btn btn-primary float-end"
-                        (click)="shareModalComponent.openShareModal('https://recycoin.net/')">
+                        (click)="shareModalComponent.openShareModal(registerUrl)">
                   <i class="bi bi-share-fill ms-2"></i>{{ 'HOME-PAGE-CLIENT.SHARE-LINK.TEXT' | translate }}
                 </button>
               </p>

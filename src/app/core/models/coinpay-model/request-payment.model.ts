@@ -9,6 +9,7 @@ export class RequestPayment {
   amount: number;
   products: ProductRequest[];
   networkId: number;
+  currencyId: number;
 
   constructor() {
     this.affiliateId = 0;
@@ -16,5 +17,6 @@ export class RequestPayment {
     this.amount = 0;
     this.products = [];
     this.networkId = 0;
+    this.currencyId = 0;
   }
 }

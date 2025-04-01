@@ -3,6 +3,9 @@ import { Component, HostListener, OnDestroy, OnInit, ViewChild, ViewEncapsulatio
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 
+import { ActivatedRoute } from '@angular/router';
+import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
+import { AffiliateService } from '@app/core/service/affiliate-service/affiliate.service';
 import { PdfViewerService } from "@app/core/service/pdf-viewer-service/pdf-viewer.service";
 import { PdfViewerComponent } from "@app/shared/components/pdf-viewer/pdf-viewer.component";
 
@@ -47,22 +50,33 @@ export class LandingPageComponent implements OnInit, OnDestroy {
   currentVideoUrl: string = '';
   currentLang: string = 'en'
   isLanguageDropdownOpen: boolean = false;
-
+  key: string = '';
   videos = {
     es: {
-      url: 'comRPFXYv5M',
+      url: 'wbSMwTLqtp0',
       title: 'Ver Video Informativo'
     },
     en: {
-      url: 'pSgIQxTb9PQ',
+      url: 'wbSMwTLqtp0',
       title: 'Watch Information Video'
     }
   };
   isPreviewHovered: boolean = false;
+  user: UserAffiliate | null = null;
 
-  constructor(private pdfViewerService: PdfViewerService, private translate: TranslateService) {
+  constructor(
+    private pdfViewerService: PdfViewerService,
+    private translate: TranslateService,
+    private activatedRoute: ActivatedRoute,
+    private affiliateService: AffiliateService) {
+
     translate.setDefaultLang('en');
     this.currentLang = translate.currentLang || 'en';
+    this.key = this.activatedRoute.snapshot.params.key;
+
+    if (this.key) {
+      this.getUserByUsername(this.key);
+    }
   }
 
   ngOnInit() {
@@ -86,6 +100,16 @@ export class LandingPageComponent implements OnInit, OnDestroy {
   triggerAutomaticVideo(): void {
     this.showPreview();
     this.showVideo();
+  }
+
+  getUserByUsername(key: string) {
+    if (!key) return;
+    this.affiliateService.getAffiliateByUserName(key).subscribe(
+      (user: UserAffiliate) => {
+        if (user !== null) {
+          this.user = user;
+        }
+      });
   }
 
   changeLanguage(lang: string) {
