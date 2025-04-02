@@ -1,0 +1,1 @@
+{"version":3,"file":"coinpay-withdrawal.model.js","sourceRoot":"","sources":["../../../../../../src/app/core/models/coinpay-model/coinpay-withdrawal.model.ts"],"names":[],"mappings":"AAAA,MAAM,OAAO,iBAAiB;IAK5B;QACE,IAAI,CAAC,EAAE,GAAG,CAAC,CAAC;QACZ,IAAI,CAAC,WAAW,GAAG,CAAC,CAAC;QACrB,IAAI,CAAC,MAAM,GAAG,CAAC,CAAC;IAClB,CAAC;CACF"}

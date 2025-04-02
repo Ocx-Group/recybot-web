@@ -1,12 +1,12 @@
-import {ToastrService} from 'ngx-toastr';
-import {FormGroup, FormBuilder, Validators} from '@angular/forms';
-import {ChangeDetectorRef, Component, Input, OnInit, TemplateRef, ViewChild} from '@angular/core';
-import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {ProductRequest, RequestPayment} from '@app/core/models/coinpay-model/request-payment.model';
-import {CoinpayService} from '@app/core/service/coinpay-service/coinpay.service';
-import {UserAffiliate} from '@app/core/models/user-affiliate-model/user.affiliate.model';
-import {Subscription, switchMap, timer} from 'rxjs';
+import { ChangeDetectorRef, Component, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ProductRequest, RequestPayment } from '@app/core/models/coinpay-model/request-payment.model';
+import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
+import { CoinpayService } from '@app/core/service/coinpay-service/coinpay.service';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { ToastrService } from 'ngx-toastr';
 import QRCode from 'qrcode';
+import { Subscription, switchMap, timer } from 'rxjs';
 
 @Component({
   selector: 'app-coinpay-modal',
@@ -18,7 +18,15 @@ export class CoinpayModalComponent implements OnInit {
   @Input() user: UserAffiliate;
   @Input() products: any[];
   @Input() total: number;
-  selectedNetwork: any;
+  selectedCrypto: 'BTC' | 'USDT' = null;
+  selectedNetwork: {
+    id: number;
+    idChain: number;
+    name: string;
+    shortName: string;
+    minimunTransferAmount: number;
+    fee: number;
+  } = null;
   qrCodeDataUrl: string;
   walletAddress: string;
   transactionId: string;
@@ -28,6 +36,15 @@ export class CoinpayModalComponent implements OnInit {
   networks: any[] = [];
   private modalReference: NgbModalRef;
   @ViewChild('coinpayPaymentModal') coinpayPaymentModal: TemplateRef<any>;
+  private readonly iconMap = {
+    'BTC': 'assets/images/crypto/bitcoin.png',
+    'USDT': 'assets/images/crypto/thether.png',
+    'ERC20': 'assets/images/crypto/erc20.png',
+    'BEP20': 'assets/images/crypto/bep20.png',
+    'PoS': 'assets/images/crypto/polygon.png',
+    'TRC20': 'assets/images/crypto/trc20.png',
+    'Solana': 'assets/images/crypto/solana.png'
+  };
 
   constructor(
     private formBuilder: FormBuilder,
@@ -39,7 +56,6 @@ export class CoinpayModalComponent implements OnInit {
 
   ngOnInit(): void {
     this.initControls();
-    this.getNetworksByUSDT();
   }
 
   showSuccess(message: string) {
@@ -50,6 +66,14 @@ export class CoinpayModalComponent implements OnInit {
     this.toastr.error(message);
   }
 
+  trackByNetwork(index: number, network: any): number {
+    return network.id;
+  }
+
+  getNetworkIcon(shortName: string): string {
+    return this.iconMap[shortName] || 'assets/images/crypto/default.png';
+  }
+
   initControls() {
     this.paymentGroup = this.formBuilder.group({
       network: ['', Validators.required],
@@ -57,51 +81,67 @@ export class CoinpayModalComponent implements OnInit {
     })
   }
 
-  getNetworksByUSDT() {
-    let networkId = 19;
+  getNetworksById(id: number) {
+    let networkId = id;
     this.coinpayService.getNetworks(networkId).subscribe({
       next: (response) => {
         if (response) {
+          console.log(response);
           this.networks = response;
         }
       },
       error: (err) => {
-        console.log(err);
+        console.error(err);
       },
     });
   }
 
+  backToNetworkSelection() {
+    this.selectedNetwork = null;
+    this.resetPaymentDetails();
+    this.stopTransactionStatusPolling();
+  }
+
+  resetPaymentDetails() {
+    this.walletAddress = '';
+    this.transactionId = '';
+    this.qrCodeDataUrl = '';
+  }
+
   openCoinpayModal() {
+    this.selectedNetwork = null;
     this.modalReference = this.modalService.open(this.coinpayPaymentModal, {
       ariaLabelledBy: 'modal-basic-title',
       size: 'lg',
       centered: true,
     });
-    this.selectNetwork();
   }
 
-  getNetworkIcon(shortName: string): string {
-    const iconMap = {
-      'ERC20': 'assets/images/crypto/erc20.png',
-      'BEP20': 'assets/images/crypto/bep20.png',
-      'PoS': 'assets/images/crypto/polygon.png',
-      'TRC20': 'assets/images/crypto/trc20.png',
-      'Solana': 'assets/images/crypto/solana.png'
-    };
-    return iconMap[shortName] || 'assets/images/crypto/default.png';
+  selectCrypto(crypto: 'BTC' | 'USDT') {
+    this.selectedCrypto = crypto;
+    this.selectedNetwork = null;
+    this.resetPaymentDetails();
+
+    if (crypto === 'USDT') {
+      this.getNetworksById(19);
+    } else {
+      this.getNetworksById(1);
+    }
   }
 
-  selectNetwork() {
-    // this.selectedNetwork = network;
-    // this.paymentGroup.get('network').setValue(network.idChain);
-
-    this.walletAddress = '';
-    this.transactionId = '';
-    this.qrCodeDataUrl = '';
-
-    this.createCoinPayTransaction(56);
+  backToCryptoSelection() {
+    this.selectedCrypto = null;
+    this.selectedNetwork = null;
+    this.resetPaymentDetails();
+    this.stopTransactionStatusPolling();
   }
 
+  selectNetwork(network: any) {
+    this.selectedNetwork = { ...network };
+    this.paymentGroup.get('network').setValue(network.idChain);
+    this.resetPaymentDetails();
+    this.createCoinPayTransaction(network.idChain);
+  }
 
   constructProductDetails(): ProductRequest[] {
     return this.products.map(product => {
@@ -124,6 +164,8 @@ export class CoinpayModalComponent implements OnInit {
           this.walletAddress = transactionData.address;
           this.transactionId = transactionData.idExternalIdentification.toString();
 
+          console.log(response);
+
           try {
             this.qrCodeDataUrl = await QRCode.toDataURL(this.walletAddress);
             this.isLoading = false;
@@ -143,20 +185,20 @@ export class CoinpayModalComponent implements OnInit {
       },
       error: (err) => {
         this.isLoading = false;
-        console.log(err);
+        console.error(err);
         this.showError("Error al crear la transacción");
       },
     });
   }
 
   createTransactionRequest(networkId: number): RequestPayment {
-    this.selectedNetwork = true;
     const request = new RequestPayment();
     request.affiliateId = this.user.id;
     request.userName = this.user.user_name;
     request.amount = this.total;
     request.products = this.constructProductDetails();
-    request.networkId = networkId;
+    request.networkId = this.selectedCrypto === 'BTC' ? 1 : networkId;
+    request.currencyId = this.selectedCrypto === 'BTC' ? 1 : 19;
     return request;
   }
 

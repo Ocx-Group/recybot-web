@@ -1,0 +1,1 @@
+{"version":3,"file":"news-admin.component.js","sourceRoot":"","sources":["../../../../../src/app/admin/news/news-admin.component.ts"],"names":[],"mappings":";AAAA,OAAO,EAAE,SAAS,EAAE,MAAM,eAAe,CAAC;AAMnC,IAAM,kBAAkB,GAAxB,MAAM,kBAAkB;CAE9B,CAAA;AAFY,kBAAkB;IAJ9B,SAAS,CAAC;QACT,QAAQ,EAAC,gBAAgB;QACzB,WAAW,EAAC,6BAA6B;KAC1C,CAAC;GACW,kBAAkB,CAE9B;SAFY,kBAAkB"}

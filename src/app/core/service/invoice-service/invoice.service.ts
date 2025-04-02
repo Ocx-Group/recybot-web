@@ -1,13 +1,15 @@
-import { ModelBalancesInvoices } from './../../models/invoice-model/model-balances-invoices';
+import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
-import { map } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
+import { PagedResult } from './../../interfaces/paged-result';
+import { PaginationRequest } from './../../interfaces/pagination-request';
+import { ModelBalancesInvoices } from './../../models/invoice-model/model-balances-invoices';
 
+import { Invoice } from '@app/core/models/invoice-model/invoice.model';
 import { Response } from '@app/core/models/response-model/response.model';
 import { environment } from '@environments/environment';
-import { Invoice } from '@app/core/models/invoice-model/invoice.model';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 const httpOptions = {
 
@@ -45,20 +47,25 @@ export class InvoiceService {
     );
   }
 
-  getAllInvoices(): Observable<Invoice[]> {
-    return this.http.get<Invoice[]>(
-      this.urlApi.concat(
-        '/invoice/GetAllInvoices'),
-      httpOptions
+  getAllInvoices(request: PaginationRequest): Observable<Response<PagedResult<Invoice>> | null> {
+    const params = new HttpParams({
+      fromObject: {
+        pageSize: request.pageSize.toString(),
+        pageNumber: request.pageNumber.toString(),
+        ...(request.startDate && { startDate: request.startDate.toISOString() }),
+        ...(request.endDate && { endDate: request.endDate.toISOString() })
+      }
+    });
+
+    return this.http.get<Response<PagedResult<Invoice>>>(
+      `${this.urlApi}/invoice/GetAllInvoices`,
+      { ...httpOptions, params }
     ).pipe(
-      map((response) => {
-        if (Array.isArray(response)) {
-          return response;
-        } else {
-          console.error('ERROR: ' + response);
-          return null;
-        }
-      }),
+      map(response => response || null),
+      catchError(error => {
+        console.error('Error getting invoices:', error);
+        return of(null);
+      })
     );
   }
 
@@ -143,5 +150,28 @@ export class InvoiceService {
           };
         })
       );
+  }
+
+  exportToExcel(startDate?: Date, endDate?: Date): Observable<Blob> {
+    const params = new HttpParams({
+      fromObject: {
+        ...(startDate && { startDate: startDate.toISOString() }),
+        ...(endDate && { endDate: endDate.toISOString() })
+      }
+    });
+
+    const options = {
+      responseType: 'blob' as 'json',
+      params,
+      headers: new HttpHeaders({
+        'Authorization': environment.tokens.walletService.toString(),
+        'X-Client-ID': environment.tokens.clientID.toString()
+      })
+    };
+
+    return this.http.get<Blob>(
+      `${this.urlApi}/invoice/ExportToExcel`,
+      options
+    );
   }
 }

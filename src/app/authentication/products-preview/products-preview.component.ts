@@ -10,9 +10,7 @@ import { ProductService } from '@app/core/service/product-service/product.servic
 export class ProductsPreviewComponent implements OnInit {
   public productList: any;
 
-  constructor(private productService: ProductService) {
-
-  }
+  constructor(private productService: ProductService) { }
 
   ngOnInit(): void {
     this.loadAllRecyCoin();

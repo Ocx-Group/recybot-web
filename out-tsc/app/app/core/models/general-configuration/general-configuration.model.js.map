@@ -1,0 +1,1 @@
+{"version":3,"file":"general-configuration.model.js","sourceRoot":"","sources":["../../../../../../src/app/core/models/general-configuration/general-configuration.model.ts"],"names":[],"mappings":"AAAA,MAAM,OAAO,oBAAoB;IAI/B;QACE,IAAI,CAAC,sBAAsB,GAAG,IAAI,IAAI,EAAE,CAAC;QACzC,IAAI,CAAC,kBAAkB,GAAG,KAAK,CAAC;IAClC,CAAC;CACF"}

@@ -1,18 +1,17 @@
-import { LoginMovements } from './../../core/models/signin-model/login-movements.model';
-import { Component, HostListener, ViewChild, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
+import { LoginMovements } from './../../core/models/signin-model/login-movements.model';
 
 import { AffiliateService } from '@app/core/service/affiliate-service/affiliate.service';
+import { AuthService } from '@app/core/service/authentication-service/auth.service';
+import { GradingService } from '@app/core/service/grading-service/grading.service';
 import { PrintService } from '@app/core/service/print-service/print.service';
 import { ClipboardService } from 'ngx-clipboard';
 import { ToastrService } from 'ngx-toastr';
-import { AuthService } from '@app/core/service/authentication-service/auth.service';
-import { GradingService } from '@app/core/service/grading-service/grading.service';
 
-import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
 import { Grading } from '@app/core/models/grading-model/grading.model';
-import { error } from 'console';
+import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
 
 const header = ['Movimientos', 'IP', 'Fecha'];
 

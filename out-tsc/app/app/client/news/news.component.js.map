@@ -1,0 +1,1 @@
+{"version":3,"file":"news.component.js","sourceRoot":"","sources":["../../../../../src/app/client/news/news.component.ts"],"names":[],"mappings":";AAAA,OAAO,EAAE,SAAS,EAAU,MAAM,eAAe,CAAC;AAM3C,IAAM,aAAa,GAAnB,MAAM,aAAa;IAExB,gBAAgB,CAAC;IAEjB,QAAQ;IACR,CAAC;CAEF,CAAA;AAPY,aAAa;IAJzB,SAAS,CAAC;QACT,QAAQ,EAAE,UAAU;QACpB,WAAW,EAAE,uBAAuB;KACrC,CAAC;GACW,aAAa,CAOzB;SAPY,aAAa"}

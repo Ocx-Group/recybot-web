@@ -1,29 +1,29 @@
-import { AffiliateBtcService } from '@app/core/service/affiliate-btc-service/affiliate-btc.service';
-import { ChangeDetectorRef, Component, NgZone, OnInit, ViewChild } from '@angular/core';
+import am4geodata_worldLow from '@amcharts/amcharts4-geodata/worldLow';
 import * as am4core from '@amcharts/amcharts4/core';
 import * as am4maps from '@amcharts/amcharts4/maps';
-import am4geodata_worldLow from '@amcharts/amcharts4-geodata/worldLow';
 import am5themes_Animated from '@amcharts/amcharts4/themes/animated';
-import { EMPTY, map, Subject, switchMap, takeUntil } from 'rxjs';
+import { ChangeDetectorRef, Component, NgZone, ViewChild } from '@angular/core';
+import { AffiliateBtcService } from '@app/core/service/affiliate-btc-service/affiliate-btc.service';
 import { ChartComponent } from 'ng-apexcharts';
+import { EMPTY, map, Subject, switchMap, takeUntil } from 'rxjs';
 
-import { BalanceInformation } from '@app/core/models/wallet-model/balance-information.model';
-import { AuthService } from '@app/core/service/authentication-service/auth.service';
-import { WalletService } from '@app/core/service/wallet-service/wallet.service';
-import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
-import { ToastrService } from 'ngx-toastr';
-import { AffiliateService } from '@app/core/service/affiliate-service/affiliate.service';
-import { EChartsOption } from 'echarts';
-import { PurchasePerMonthDto } from '@app/core/models/wallet-model/network-purchases.model';
-import { WalletModel1AService } from '@app/core/service/wallet-model-1a-service/wallet-model-1a.service';
-import { WalletModel1BService } from '@app/core/service/wallet-model-1b-service/wallet-model-1b.service';
-import { ModelsVisibilityService } from '@app/core/service/models-visibility-service/models-visibility.service';
-import { BalanceInformationModel1A } from '@app/core/models/wallet-model-1a/balance-information-1a.model';
-import { BalanceInformationModel1B } from '@app/core/models/wallet-model-1b/balance-information-1b.model';
-import { StatisticsInformation } from '@app/core/models/wallet-model/statisticsInformation';
-import { AddressBtc } from '@app/core/models/affiliate-btc-model/address-btc.model';
 import { AffiliateBtc } from '@app/core/models/affiliate-btc-model/affiliate-btc.model';
 import { Response } from '@app/core/models/response-model/response.model';
+import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
+import { BalanceInformationModel1A } from '@app/core/models/wallet-model-1a/balance-information-1a.model';
+import { BalanceInformationModel1B } from '@app/core/models/wallet-model-1b/balance-information-1b.model';
+import { BalanceInformation } from '@app/core/models/wallet-model/balance-information.model';
+import { PurchasePerMonthDto } from '@app/core/models/wallet-model/network-purchases.model';
+import { StatisticsInformation } from '@app/core/models/wallet-model/statisticsInformation';
+import { AffiliateService } from '@app/core/service/affiliate-service/affiliate.service';
+import { AuthService } from '@app/core/service/authentication-service/auth.service';
+import { ModelsVisibilityService } from '@app/core/service/models-visibility-service/models-visibility.service';
+import { WalletModel1AService } from '@app/core/service/wallet-model-1a-service/wallet-model-1a.service';
+import { WalletModel1BService } from '@app/core/service/wallet-model-1b-service/wallet-model-1b.service';
+import { WalletService } from '@app/core/service/wallet-service/wallet.service';
+import { EChartsOption } from 'echarts';
+import { ToastrService } from 'ngx-toastr';
+
 am4core.useTheme(am5themes_Animated);
 
 @Component({
@@ -60,9 +60,9 @@ export class HomeComponent {
   information: StatisticsInformation = new StatisticsInformation();
   private chart: am4maps.MapChart;
   public pieChartOptions: any;
-  public avgLecChartOptions: any;
   public pieChartOptionsModel1A: any;
   public pieChartOptionsModel1B: any;
+
   constructor(
     private authService: AuthService,
     private walletService: WalletService,
@@ -75,9 +75,9 @@ export class HomeComponent {
     private cdr: ChangeDetectorRef,
     private affiliateBtService: AffiliateBtcService
   ) {
-    this.pieChartOptions = { series: [], chart: {}, labels: [], responsive: [], dataLabels: {}, legend: {} };
-    this.pieChartOptionsModel1A = { series: [], chart: {}, labels: [], responsive: [], dataLabels: {}, legend: {} };
-    this.pieChartOptionsModel1B = { series: [], chart: {}, labels: [], responsive: [], dataLabels: {}, legend: {} };
+    this.pieChartOptions = {series: [], chart: {}, labels: [], responsive: [], dataLabels: {}, legend: {}};
+    this.pieChartOptionsModel1A = {series: [], chart: {}, labels: [], responsive: [], dataLabels: {}, legend: {}};
+    this.pieChartOptionsModel1B = {series: [], chart: {}, labels: [], responsive: [], dataLabels: {}, legend: {}};
 
     this.currentYear = new Date().getFullYear();
     this.previousYear = this.currentYear - 1;
@@ -91,12 +91,12 @@ export class HomeComponent {
         if (user && user.id) {
           this.user = user;
           return this.modelsVisibilityService.canUserSeePaymentModels().pipe(
-            map(canSee => ({ user, canSee }))
+            map(canSee => ({user, canSee}))
           );
         }
         return EMPTY;
       })
-    ).subscribe(({ user, canSee }) => {
+    ).subscribe(({user, canSee}) => {
       this.canSeePaymentModels = canSee;
       this.resetComponent();
       this.loadUserData(user.id);
@@ -129,32 +129,32 @@ export class HomeComponent {
       console.error('Error initializing Model 2 Chart:', error);
     }
 
-    try {
-      this.initChartModel1A();
-    } catch (error) {
-      console.error('Error initializing Model 1A Chart:', error);
-    }
-
-    if (this.canSeePaymentModels) {
-      try {
-        this.initChartModel1B();
-      } catch (error) {
-        console.error('Error initializing Model 1B Chart:', error);
-      }
-    } else {
-      console.error('User cannot see payment models, skipping Model 1B Chart');
-    }
+    // try {
+    //   this.initChartModel1A();
+    // } catch (error) {
+    //   console.error('Error initializing Model 1A Chart:', error);
+    // }
+    //
+    // if (this.canSeePaymentModels) {
+    //   try {
+    //     this.initChartModel1B();
+    //   } catch (error) {
+    //     console.error('Error initializing Model 1B Chart:', error);
+    //   }
+    // } else {
+    //   console.error('User cannot see payment models, skipping Model 1B Chart');
+    // }
   }
 
   get registerUrl() {
-    return `https://www.recycoin.net/main-options/${this.user.user_name.toString()}`;
+    return `https://www.recycoin.net/welcome/${this.user.user_name.toString()}`;
   }
 
-  showSuccess(message) {
+  showSuccess(message: string) {
     this.toastr.success(message);
   }
 
-  showError(message) {
+  showError(message: string) {
     this.toastr.error(message);
   }
 
@@ -304,22 +304,6 @@ export class HomeComponent {
       balance.bonusAmount !== undefined;
   }
 
-  isBalanceInformation1AValid(balance: BalanceInformationModel1A): boolean {
-    return balance.serviceBalance !== undefined &&
-      balance.availableBalance !== undefined &&
-      balance.totalCommissionsPaid !== undefined &&
-      balance.totalAcquisitions !== undefined &&
-      balance.reverseBalance !== undefined;
-  }
-
-  isBalanceInformation1BValid(balance: BalanceInformationModel1B): boolean {
-    return balance.serviceBalance !== undefined &&
-      balance.availableBalance !== undefined &&
-      balance.totalCommissionsPaid !== undefined &&
-      balance.totalAcquisitions !== undefined &&
-      balance.reverseBalance !== undefined;
-  }
-
   private initChartModel2() {
 
     if (!this.balanceInformation || !this.isBalanceInformationValid(this.balanceInformation)) {
@@ -359,115 +343,7 @@ export class HomeComponent {
           options: {
             dataLabels: {
               enabled: true,
-              formatter: function (val) {
-                return val + "%"
-              },
-              plotOptions: {
-                pie: {
-                  expandOnClick: false
-                }
-              }
-            }
-          },
-        },
-      ],
-    };
-  }
-
-  private initChartModel1A() {
-
-    if (!this.balanceInformationModel1A || !this.isBalanceInformation1AValid(this.balanceInformationModel1A)) {
-      console.error('Invalid balance information for Model 1A');
-      return;
-    }
-    this.pieChartOptionsModel1A = {
-      series: [
-        this.balanceInformationModel1A.serviceBalance,
-        this.balanceInformationModel1A.availableBalance,
-        this.balanceInformationModel1A.totalCommissionsPaid,
-        this.balanceInformationModel1A.totalAcquisitions,
-        this.balanceInformationModel1A.reverseBalance
-      ],
-
-      colors: ['#f44336', '#2196f3', '#96a2b4', '#4caf50', '#9c27b0'],
-      chart: {
-        type: 'donut',
-        width: 200,
-      },
-      legend: {
-        show: false,
-      },
-      dataLabels: {
-        enabled: false,
-      },
-      labels: [
-        'Saldo de servicios',
-        'Saldo Disponible',
-        'Total Pagado',
-        'Total Adquisiciones',
-        'Saldo balance'
-      ],
-      responsive: [
-        {
-          breakpoint: 480,
-          options: {
-            dataLabels: {
-              enabled: true,
-              formatter: function (val) {
-                return val + "%"
-              },
-              plotOptions: {
-                pie: {
-                  expandOnClick: false
-                }
-              }
-            }
-          },
-        },
-      ],
-    };
-  }
-
-  private initChartModel1B() {
-
-    if (!this.balanceInformationModel1B || !this.isBalanceInformation1BValid(this.balanceInformationModel1B)) {
-      console.error('Invalid balance information for Model 1B');
-      return;
-    }
-    this.pieChartOptionsModel1B = {
-      series: [
-        this.balanceInformationModel1B.serviceBalance,
-        this.balanceInformationModel1B.availableBalance,
-        this.balanceInformationModel1B.totalCommissionsPaid,
-        this.balanceInformationModel1B.totalAcquisitions,
-        this.balanceInformationModel1B.reverseBalance
-      ],
-
-      colors: ['#f44336', '#2196f3', '#96a2b4', '#4caf50', '#9c27b0'],
-      chart: {
-        type: 'donut',
-        width: 200,
-      },
-      legend: {
-        show: false,
-      },
-      dataLabels: {
-        enabled: false,
-      },
-      labels: [
-        'Saldo de servicios',
-        'Saldo Disponible',
-        'Total Pagado',
-        'Total Adquisiciones',
-        'Saldo balance'
-      ],
-      responsive: [
-        {
-          breakpoint: 480,
-          options: {
-            dataLabels: {
-              enabled: true,
-              formatter: function (val) {
+              formatter: function (val: any) {
                 return val + "%"
               },
               plotOptions: {
@@ -489,7 +365,7 @@ export class HomeComponent {
         this.setMapInfo();
       },
       error: (err) => {
-        this.showError("Error");
+        console.error('Error fetching locations:', err);
       },
     })
   }
@@ -589,29 +465,13 @@ export class HomeComponent {
     });
   }
 
-  initChartWithRetry(initFunction: () => void, chartName: string, maxRetries: number = 5) {
-    const attempt = (retryCount: number) => {
-      try {
-        initFunction();
-      } catch (error) {
-        console.error(`Error initializing ${chartName}:`, error);
-        if (retryCount < maxRetries) {
-          setTimeout(() => attempt(retryCount + 1), 1000);
-        } else {
-          console.error(`Failed to initialize ${chartName} after ${maxRetries} attempts:`, error);
-        }
-      }
-    };
-    attempt(0);
-  }
-
   resetComponent() {
     this.balanceInformation = new BalanceInformation();
     this.balanceInformationModel1A = new BalanceInformationModel1A();
     this.balanceInformationModel1B = new BalanceInformationModel1B();
-    this.pieChartOptions = { series: [], chart: {}, labels: [], responsive: [], dataLabels: {}, legend: {} };
-    this.pieChartOptionsModel1A = { series: [], chart: {}, labels: [], responsive: [], dataLabels: {}, legend: {} };
-    this.pieChartOptionsModel1B = { series: [], chart: {}, labels: [], responsive: [], dataLabels: {}, legend: {} };
+    this.pieChartOptions = {series: [], chart: {}, labels: [], responsive: [], dataLabels: {}, legend: {}};
+    this.pieChartOptionsModel1A = {series: [], chart: {}, labels: [], responsive: [], dataLabels: {}, legend: {}};
+    this.pieChartOptionsModel1B = {series: [], chart: {}, labels: [], responsive: [], dataLabels: {}, legend: {}};
   }
 
   loadInformation() {
@@ -620,7 +480,7 @@ export class HomeComponent {
         this.information = value;
       },
       error: (err) => {
-        this.showError('Error');
+        console.error('Error fetching statistics information:', err);
       },
     })
   }
@@ -630,19 +490,35 @@ export class HomeComponent {
       next: (value: Response & { data: AffiliateBtc[] }) => {
         if (value.success) {
 
-          const address = value.data.reduce((acc, item) => {
-            if (item.networkId == 2) {
+          const address = value.data.reduce((acc: any, item: any) => {
+            if (item?.networkId === 2) {
               acc.bnb_address = item.address;
             }
-
             return acc;
-          }, { bnb_address: '' })
+          }, {bnb_address: ''});
 
           this.recycoinInfo.bnbAddress = address.bnb_address;
         }
       }, error: (err) => {
-        this.showError('No se pudo cargar la billetera Bnb Smart Chain.')
+        console.error('Error fetching BNB address:', err);
       },
     })
+  }
+
+  copyToClipboard(text: string, type: string) {
+    if (text != '') {
+      navigator.clipboard.writeText(text)
+        .then(() => {
+
+          this.showCopyNotification(type);
+        })
+        .catch(err => {
+          console.error('Error al copiar:', err);
+        });
+    }
+  }
+
+  private showCopyNotification(type: string) {
+    this.toastr.success(`${type} copiado al portapapeles`);
   }
 }

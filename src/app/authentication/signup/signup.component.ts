@@ -1,21 +1,22 @@
-import { CreateAffiliate } from './../../core/models/user-affiliate-model/create-affiliate.model';
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import {Component, OnInit} from '@angular/core';
 import {
+  AbstractControl,
   FormBuilder,
   FormGroup,
-  Validators,
-  AbstractControl,
-  ValidationErrors
+  ValidationErrors,
+  Validators
 } from '@angular/forms';
-import { AffiliateService } from '@app/core/service/affiliate-service/affiliate.service';
-import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
-import { Country } from '@app/core/models/country-model/country.model';
-import { State } from '@app/core/models/state-model/state.model';
-import { City } from '@app/core/models/cities-model/cities.model';
-import { LogoService } from '@app/core/service/logo-service/logo.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {City} from '@app/core/models/cities-model/cities.model';
+import {Country} from '@app/core/models/country-model/country.model';
+import {State} from '@app/core/models/state-model/state.model';
+import {UserAffiliate} from '@app/core/models/user-affiliate-model/user.affiliate.model';
+import {AffiliateService} from '@app/core/service/affiliate-service/affiliate.service';
+import {LogoService} from '@app/core/service/logo-service/logo.service';
+import {PdfViewerService} from '@app/core/service/pdf-viewer-service/pdf-viewer.service';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {ToastrService} from 'ngx-toastr';
+import {CreateAffiliate} from '@app/core/models/user-affiliate-model/create-affiliate.model';
 
 @Component({
   selector: 'app-signup',
@@ -43,7 +44,8 @@ export class SignupComponent implements OnInit {
     private formBuilder: FormBuilder,
     private affiliateService: AffiliateService,
     private toastr: ToastrService,
-    private logoService: LogoService
+    private logoService: LogoService,
+    private pdfViewerService: PdfViewerService
   ) {
     this.key = this.activatedRoute.snapshot.params.key || '';
     this.side = this.user.side?.toString() || '';
@@ -69,7 +71,7 @@ export class SignupComponent implements OnInit {
 
   onCountrySelected(countryIso: any) {
     let country = this.listcountry.find((c) => c.id == countryIso);
-    if (country === null || country === undefined) {
+    if (!country) {
       return;
     }
     if (country.phoneCode === '1') {
@@ -81,29 +83,40 @@ export class SignupComponent implements OnInit {
   }
 
   loadValidations() {
-    this.registerForm = this.formBuilder.group({
-      user_name: ['', [Validators.required, NoWhitespaceValidator]],
-      password: ['', [Validators.required, Validators.minLength(8), Validators.pattern(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*#?&^_-]).{8,}/)]],
-      repitpassword: ['', [Validators.required, Validators.minLength(8), Validators.pattern(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*#?&^_-]).{8,}/)]],
-      name: ['', Validators.required],
-      last_name: ['', [Validators.required]],
-      phone: ['', Validators.required],
-      country: ['', Validators.required],
-      email: ['', Validators.required],
-      terms_conditions: [false, Validators.required]
-    },
+    this.registerForm = this.formBuilder.group(
+      {
+        user_name: ['', [Validators.required, NoWhitespaceValidator]],
+        password: [
+          '',
+          [
+            Validators.required,
+            Validators.minLength(8),
+            Validators.pattern(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*#?&^_-]).{8,}/)
+          ]
+        ],
+        repitpassword: [
+          '',
+          [
+            Validators.required,
+            Validators.minLength(8),
+            Validators.pattern(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*#?&^_-]).{8,}/)
+          ]
+        ],
+        name: ['', Validators.required],
+        last_name: ['', Validators.required],
+        phone: ['', Validators.required],
+        country: ['', Validators.required],
+        email: ['', Validators.required],
+        terms_conditions: [false, Validators.requiredTrue]
+      },
       {
         validator: passwordMatchValidator
-      });
-  }
-
-  get create_user_controls(): { [key: string]: AbstractControl } {
-    return this.registerForm.controls;
+      }
+    );
   }
 
   getUserByUsername(key: string) {
-    if (!key)
-      return;
+    if (!key) return;
 
     this.affiliateService.getAffiliateByUserName(key).subscribe(
       (user: UserAffiliate) => {
@@ -111,11 +124,11 @@ export class SignupComponent implements OnInit {
           this.sponsor = user.user_name;
           this.user = user;
         } else {
-          this.router.navigate(['/signin']);
+          this.router.navigate(['/signin']).then();
         }
       },
-      (err: any) => {
-        this.router.navigate(['/signin']);
+      () => {
+        this.router.navigate(['/signin']).then();
       }
     );
   }
@@ -127,19 +140,13 @@ export class SignupComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
     this.error = '';
-    let termis_conditions = this.registerForm.value.terms_conditions;
 
     if (this.registerForm.invalid) {
       this.showError("Formulario invalido.");
       return;
     }
-    if (termis_conditions === false) {
-      this.showError("Los terminos y condiciones son requeridos.");
-      return;
-    }
 
     let user = new CreateAffiliate();
-
     user.user_name = this.registerForm.value.user_name;
     user.password = this.registerForm.value.password;
     user.name = this.registerForm.value.name;
@@ -159,7 +166,7 @@ export class SignupComponent implements OnInit {
       if (response.success) {
         this.showSuccess(response.message);
         setTimeout(() => {
-          this.router.navigate(['/signin']);
+          this.router.navigate(['/signin']).then();
         }, 5000);
       } else {
         this.showError(response.message);
@@ -175,30 +182,40 @@ export class SignupComponent implements OnInit {
     });
   }
 
-  showSuccess(message) {
+  showSuccess(message: string) {
     this.toastr.success(message);
   }
 
-  showError(message) {
+  showError(message: string) {
     this.toastr.error(message);
   }
 
   getLogoUrl() {
     this.logoUrl = this.logoService.getLogoSrc();
   }
+
+  showTermsAndConditions() {
+    const doc = {
+      url: '/assets/pdf/T&C RecyCoin V1.2.pdf',
+      title: 'Términos y condiciones'
+    };
+
+    this.pdfViewerService.showPdf(doc);
+  }
 }
 
+// Validador para comparar contraseñas a nivel de formulario
 export function passwordMatchValidator(formGroup: FormGroup) {
   const password = formGroup.get('password').value;
   const confirmPassword = formGroup.get('repitpassword').value;
-  return password === confirmPassword ? null : { passwordMismatch: true };
+  return password === confirmPassword ? null : {passwordMismatch: true};
 }
 
+// Validador para evitar espacios en blanco en el User name
 export function NoWhitespaceValidator(control: AbstractControl): ValidationErrors | null {
   if (control.value.indexOf(' ') >= 0) {
-    return { 'whitespace': true };
+    return {whitespace: true};
   } else {
     return null;
   }
 }
-

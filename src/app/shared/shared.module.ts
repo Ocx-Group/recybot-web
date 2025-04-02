@@ -1,15 +1,23 @@
-import { AdminRespondedPipe } from './admin-responded.pipe';
-import { BootstrapModule } from './bootstrap.module';
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { PdfViewerComponent } from "@app/shared/components/pdf-viewer/pdf-viewer.component";
+import { PdfViewerModule } from "ng2-pdf-viewer";
+import { AdminRespondedPipe } from './admin-responded.pipe';
+import { BootstrapModule } from './bootstrap.module';
 import { IconsModule } from './feather-icons.module';
+import { SafePipe } from './safe.pipe';
 import { TruncateDecimalsPipe } from './truncate-decimals.pipe';
 
-
 @NgModule({
-  declarations: [TruncateDecimalsPipe, AdminRespondedPipe],
+  declarations: [
+    TruncateDecimalsPipe,
+    AdminRespondedPipe,
+    PdfViewerComponent,
+    PdfViewerComponent,
+    SafePipe
+  ],
   imports: [
     CommonModule,
     FormsModule,
@@ -17,6 +25,7 @@ import { TruncateDecimalsPipe } from './truncate-decimals.pipe';
     RouterModule,
     IconsModule,
     BootstrapModule,
+    PdfViewerModule
 
   ],
   exports: [
@@ -27,10 +36,15 @@ import { TruncateDecimalsPipe } from './truncate-decimals.pipe';
     IconsModule,
     BootstrapModule,
     TruncateDecimalsPipe,
-    AdminRespondedPipe
+    AdminRespondedPipe,
+    PdfViewerComponent,
+    PdfViewerComponent,
+    SafePipe
   ],
   providers: [
-    TruncateDecimalsPipe
+    TruncateDecimalsPipe,
+    SafePipe
   ]
 })
-export class SharedModule { }
+export class SharedModule {
+}

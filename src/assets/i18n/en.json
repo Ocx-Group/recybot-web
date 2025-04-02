@@ -245,6 +245,9 @@
     }
   },
   "REQUESTS-PAGE": {
+    "PROCESS-PAYMENT": {
+      "TEXT": "Process payment"
+    },
     "TITTLE-PAGE": {
       "TEXT": "Make payment request"
     },
@@ -252,7 +255,7 @@
       "TEXT": "The amount you request must be less than or equal to the available amount you have in your wallet."
     },
     "SECOND-MSJ-INFO": {
-      "TEXT": "The minimum amount to withdraw is USD"
+      "TEXT": "The minimum amount allowed to process payment is USD"
     },
     "THIRD-MSJ-INFO": {
       "TEXT": "The maximum amount to withdraw is USD"
@@ -808,16 +811,16 @@
       "TEXT": "My Network Trees"
     },
     "UNILEVEL-MODEL": {
-      "TEXT": "Model 1, 2, 3 (Unilevel)"
+      "TEXT": "Unimax"
     },
     "BINARY-MODEL": {
-      "TEXT": "Model 4 (Binary)"
+      "TEXT": "Pro Structure"
     },
     "MATRIX-MODEL-5": {
-      "TEXT": "Model 5 (Matrix)"
+      "TEXT": "Plus Structure"
     },
     "MATRIX-MODEL-6": {
-      "TEXT": "Model 6 (Matrix)"
+      "TEXT": "Max Structure"
     },
     "BACK": {
       "TEXT": "Back"
@@ -1057,7 +1060,10 @@
     "WALLET_ADDRESS": "Wallet address",
     "QR_CODE": "QR Code",
     "INSTRUCTIONS": "Please send the payment to the displayed wallet address. The system will automatically detect when the payment has been received.",
-    "CLOSE": "Close"
+    "CLOSE": "Close",
+    "CHANGE_NETWORK": "Change network",
+    "SELECT_NETWORK": "Select the network to be paid",
+    "SELECT_CRYPTO": "Select the cryptocurrency"
   },
   "HOME-ADMIN-PAGE": {
     "ACTIVE-AFFILIATES": {
@@ -2563,5 +2569,73 @@
     "SUBTITLE": {
       "TEXT": "Parameter settings"
     }
+  },
+  "LANDING-PAGE": {
+    "NAVBAR": {
+      "COLLABORATORS": "Collaborators",
+      "RECYCOIN_PROJECT": "RecyCoin Project",
+      "WHITE_PAPER": "White Paper",
+      "BNB_SCANNER": "BNB Scanner",
+      "PRODUCT": "Product",
+      "LOGIN": "Login"
+    },
+    "MAIN_TITLE": {
+      "LINE1": "RECYCOIN: Smart Wealth",
+      "LINE2": "Healthy Planet",
+      "LINE3": "We Win Together"
+    },
+    "FEATURES": {
+      "ECOLOGICAL_CRYPTO": "Ecological Crypto",
+      "SECURE_TRANSACTIONS": "Secure Transactions",
+      "REAL_TIME_ANALYSIS": "Real-time Analysis",
+      "BIOMETRIC_SECURITY": "Biometric Security"
+    },
+    "CTA": {
+      "LEGAL_DOCS": "Legal Documents",
+      "CREATE_ACCOUNT": "Register",
+      "CONTACT_FORM": "Contact Form",
+      "TESTIMONIALS": "Testimonials"
+    },
+    "VIDEO": {
+      "LANGUAGE": "English"
+    }
+  },
+  "PRODUCTS-PREVIEW": {
+    "EXPLORE": {
+      "LINE1": "Explore the",
+      "LINE2": "different",
+      "LINE3": "packages",
+      "LINE4": "Recycoin"
+    }
+  },
+  "SIGNUP": {
+    "TITLE": "Signup Form",
+    "SPONSOR": "Your sponsor's name is:",
+    "USERNAME": "Username",
+    "USERNAME_REQUIRED": "Username is required",
+    "USERNAME_WHITESPACE": "Username cannot contain spaces",
+    "PASSWORD": "Password",
+    "PASSWORD_REQUIRED": "Password is required",
+    "PASSWORD_MINLENGTH": "Password must be at least 8 characters long",
+    "PASSWORD_PATTERN": "Password must contain uppercase, lowercase, number, and a special character",
+    "REPEAT_PASSWORD": "Repeat Password",
+    "REPEAT_PASSWORD_REQUIRED": "Repeat password is required",
+    "PASSWORD_MISMATCH": "Passwords do not match",
+    "NAME": "First Name",
+    "NAME_REQUIRED": "First name is required",
+    "LAST_NAME": "Last Name",
+    "LAST_NAME_REQUIRED": "Last name is required",
+    "COUNTRY": "Country",
+    "COUNTRY_REQUIRED": "Country is required",
+    "PHONE": "Phone Number",
+    "PHONE_REQUIRED": "Phone number is required",
+    "EMAIL": "Email",
+    "EMAIL_REQUIRED": "Email is required",
+    "TERMS_AND_CONDITIONS": "Terms and Conditions",
+    "TERMS_REQUIRED": "You must accept the terms and conditions",
+    "SUBMIT": "Sign Up",
+    "ALREADY_HAVE_ACCOUNT": "Already have an account?",
+    "SIGN_IN": "Sign In",
+    "INVALID_FORM": "Invalid form."
   }
 }

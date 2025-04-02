@@ -1,13 +1,11 @@
-import { MembershipManagerService } from '@app/core/service/membership-manager-service/membership-manager.service';
 import { Component, OnInit } from '@angular/core';
 import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
-import { AuthService } from '@app/core/service/authentication-service/auth.service';
-import { DocumentCheckService } from '@app/core/service/document-check-service/document-check.service';
-import { TermsConditionsService } from '@app/core/service/terms-conditions-service/terms-conditions.service';
-import Swal from 'sweetalert2';
 import { AffiliateService } from '@app/core/service/affiliate-service/affiliate.service';
-import { ToastrService } from 'ngx-toastr';
+import { AuthService } from '@app/core/service/authentication-service/auth.service';
+import { MembershipManagerService } from '@app/core/service/membership-manager-service/membership-manager.service';
+import { TermsConditionsService } from '@app/core/service/terms-conditions-service/terms-conditions.service';
 import { TicketHubService } from '@app/core/service/ticket-service/ticket-hub.service';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -18,7 +16,7 @@ import { TicketHubService } from '@app/core/service/ticket-service/ticket-hub.se
 export class MainLayoutComponent implements OnInit {
   user: UserAffiliate = new UserAffiliate();
   constructor(
-    private documentCheckService: DocumentCheckService,
+    // private documentCheckService: DocumentCheckService,
     private termsConditionsService: TermsConditionsService,
     private authService: AuthService,
     private membershipManagerService: MembershipManagerService,

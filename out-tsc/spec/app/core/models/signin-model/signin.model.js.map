@@ -1,0 +1,1 @@
+{"version":3,"file":"signin.model.js","sourceRoot":"","sources":["../../../../../../src/app/core/models/signin-model/signin.model.ts"],"names":[],"mappings":"AAAA,MAAM,OAAO,MAAM;IAOjB;QACE,IAAI,CAAC,QAAQ,GAAG,EAAE,CAAC;QACnB,IAAI,CAAC,QAAQ,GAAG,EAAE,CAAC;QACnB,IAAI,CAAC,WAAW,GAAG,EAAE,CAAC;QACtB,IAAI,CAAC,eAAe,GAAG,EAAE,CAAC;QAC1B,IAAI,CAAC,SAAS,GAAG,EAAE,CAAC;IACtB,CAAC;CACF"}

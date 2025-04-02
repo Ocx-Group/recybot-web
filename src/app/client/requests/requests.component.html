@@ -31,20 +31,20 @@
                       {{ 'REQUESTS-PAGE.TITTLE-MSJ-INFO.TEXT' | translate }}
                     </div>
                     <ul>
-                      <li>
+                      <!-- <li>
                         {{ 'REQUESTS-PAGE.FIST-MSJ-INFO.TEXT' | translate }}
-                      </li>
+                      </li> -->
                       <li>
                         {{ 'REQUESTS-PAGE.SECOND-MSJ-INFO.TEXT' | translate }} {{ walletWithdrawalsConfig.minimum_amount
                         }}
                       </li>
-                      <li *ngIf="walletWithdrawalsConfig.maximum_amount != 0">
+                      <!-- <li *ngIf="walletWithdrawalsConfig.maximum_amount != 0">
                         {{ 'REQUESTS-PAGE.THIRD-MSJ-INFO.TEXT' | translate }} {{ walletWithdrawalsConfig.maximum_amount
                         }}
                       </li>
                       <li>
                         {{ 'REQUESTS-PAGE.FOUR-MSJ-INFO.TEXT' | translate }}
-                      </li>
+                      </li> -->
                     </ul>
                   </div>
                 </ngb-alert>
@@ -86,9 +86,9 @@
                   <div class="col-sm-1">
                     <div class="header-buttons-left">
                       <div class="tbl-btn-style">
-                        <button class="btn btn-icon icon-left btn-primary rounded-button"
+                        <button class="btn btn-primary"
                           (click)="modalChildCreate.openCreateRequestModal(modalChildCreate['createRequestModal'])">
-                          <i class="material-icons">add</i>
+                          {{'REQUESTS-PAGE.PROCESS-PAYMENT.TEXT' | translate}}
                         </button>
                       </div>
                     </div>

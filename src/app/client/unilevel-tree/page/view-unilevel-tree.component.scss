@@ -1,11 +1,15 @@
-
 :host {
   display: block;
   text-align: center;
-  padding: 64px;
 }
 
-// ugly css for quick test, use your own!
+// Container styles
+.scrollable-container {
+  position: relative;
+  max-width: 100% !important;
+}
+
+// Zoom button styles
 .zoom-button {
   padding: 0;
   margin: 0;
@@ -16,8 +20,9 @@
   overflow: hidden;
 }
 
-// style for my custom nodes for this example
+// Chart node styles
 .chart-node {
+  -webkit-user-select: none;
   user-select: none;
   display: flex;
   flex-direction: row;
@@ -31,64 +36,80 @@
   overflow: hidden;
   padding: 8px;
 
-  img {
-      user-select: none;
-      width: 3em;
-      height: 3em;
-      transition: width 250ms, height 250ms;
-      border-radius: 50%;
+  .node-image {
+    -webkit-user-select: none;
+    user-select: none;
+    width: 3em;
+    height: 3em;
+    transition: width 250ms, height 250ms;
+    border-radius: 50%;
+    height: 50% !important;
+    width: 50% !important;
+    margin: 5px 0px 0px 5px !important;
   }
 
   .name {
-      user-select: none;
-      font-weight: bold;
-      text-align: center;
-      width: 5.5em;
-      margin: 0.25em;
-      transition: width 250ms, height 250ms;
-      color: #FEF;
-  }
+    -webkit-user-select: none;
+    user-select: none;
+    font-weight: bold;
+    text-align: center;
+    width: 5.5em;
+    margin: 0.25em;
+    transition: width 250ms, height 250ms;
+    margin-top: 1.25em !important;
 
-  .description {
+    .user-name {
+      color: white;
+      font-size: 9px;
+    }
+
+    .description {
+      -webkit-user-select: none;
       user-select: none;
       font-size: 90%;
       overflow: auto;
       color: #CDC;
+    }
   }
 
   .tree-fold-btn {
-      position: absolute;
-      width: 16px;
-      height: 16px;
-      line-height: 16px;
-      top: 0;
-      right: 0;
-      background-color: wheat;
-      border-radius: 50%;
-      margin: 0;
-      padding: 0;
-      text-align: center;
-      font-weight: bold;
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    line-height: 16px;
+    top: 0;
+    right: 0;
+    background-color: wheat;
+    border-radius: 50%;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    font-weight: bold;
+    margin: 5px 5px 0px 0px !important;
   }
 }
 
-// just show the image when the chart is zoomed out
-.ng13-org-chart-zoom-out { // predefined in the library, applyed to show overview
+// Zoom out styles
+.ng13-org-chart-zoom-out {
   .chart-node:not(:hover) {
-      min-height: 0em;
-      padding: 0;
-      img {
-          width: 32px;
-          height: 32px;
-      }
-      .tree-fold-btn {
-          visibility: hidden;
-      }
-      .name {
-          visibility: hidden;
-      }
-      .description {
-          visibility: hidden;
-      }
+    min-height: 0em;
+    padding: 0;
+
+    img {
+      width: 32px;
+      height: 32px;
+    }
+
+    .tree-fold-btn {
+      visibility: hidden;
+    }
+
+    .name {
+      visibility: hidden;
+    }
+
+    .description {
+      visibility: hidden;
+    }
   }
 }

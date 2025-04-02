@@ -1,13 +1,14 @@
-import { AuthService } from 'src/app/core/service/authentication-service/auth.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { FormControl, FormGroup } from '@angular/forms';
-import { Validators } from '@angular/forms';
 import { Response } from '@app/core/models/response-model/response.model';
-import { ToastrService } from 'ngx-toastr';
-declare var particlesJS: any;
 import { TranslateService } from '@ngx-translate/core';
+import { ToastrService } from 'ngx-toastr';
+import { AuthService } from 'src/app/core/service/authentication-service/auth.service';
 
+declare var particlesJS: any;
+
+import { animate, state, style, transition, trigger } from "@angular/animations";
 import { Signin } from '@app/core/models/signin-model/signin.model';
 import { LogoService } from '@app/core/service/logo-service/logo.service';
 import { DeviceDetectorService } from 'ngx-device-detector';
@@ -16,10 +17,21 @@ import { DeviceDetectorService } from 'ngx-device-detector';
   selector: 'app-signin',
   templateUrl: './signin.component.html',
   styleUrls: ['./signin.component.scss'],
+  animations: [
+    trigger('backgroundFade', [
+      state('visible', style({
+        opacity: 1
+      })),
+      state('hidden', style({
+        opacity: 0
+      })),
+      transition('visible => hidden', animate('1000ms ease-out')),
+      transition('hidden => visible', animate('1000ms ease-in'))
+    ])
+  ]
 })
-export class SigninComponent implements OnInit {
+export class SigninComponent implements OnInit, OnDestroy {
   submitted = false;
-  returnUrl: string;
   error = '';
   loading = false;
   hide = true;
@@ -34,6 +46,14 @@ export class SigninComponent implements OnInit {
   passwordErrorMessage =
     'La contraseña debe tener al menos 6 y un máximo de 15 caracteres';
   userNameErrorMessage = 'El nombre de usuario no es válido';
+  backgroundImages: string[] = [
+    '/assets/images/login-option-1.png',
+    '/assets/images/login-option-2.png',
+    '/assets/images/login-option-3.png'
+  ];
+  currentImageIndex = 0;
+  private intervalId: any;
+  showPassword: boolean = false;
 
   constructor(
     private router: Router,
@@ -42,7 +62,8 @@ export class SigninComponent implements OnInit {
     private logoService: LogoService,
     private translate: TranslateService,
     private deviceService: DeviceDetectorService
-  ) {}
+  ) {
+  }
 
   ngOnInit() {
     this.getTheme();
@@ -50,10 +71,18 @@ export class SigninComponent implements OnInit {
     particlesJS.load(
       'particles-js',
       'assets/particles/particles.json',
-      function () {}
+      function () {
+      }
     );
     this.setLabels();
     this.setErrorMessages();
+    this.startBackgroundRotation();
+  }
+
+  ngOnDestroy() {
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
   }
 
   authLogin = new FormGroup({
@@ -99,25 +128,25 @@ export class SigninComponent implements OnInit {
     this.error = '';
     signin.userName = this.authLogin.value.email;
     signin.password = this.authLogin.value.pwd;
-  
+
     signin.browserInfo = this.deviceService.getDeviceInfo().browser;
     signin.operatingSystem = this.deviceService.getDeviceInfo().os;
-  
+
     this.authService.fetchIpAddress().subscribe((ip) => {
       signin.ipAddress = ip;
       console.log(signin);
-  
+
       if (signin.userName === '' || signin.password === '') {
         return;
       }
       this.loading = true;
-  
+
       this.authService.loginUser(signin).subscribe((response: Response) => {
         if (response.success) {
           if (response.data.is_affiliate) {
-            this.router.navigate(['/app/home']);
+            this.router.navigate(['/app/home']).then();
           } else {
-            this.router.navigate(['admin/home-admin']);
+            this.router.navigate(['admin/home-admin']).then();
           }
         } else {
           this.showError(response.message);
@@ -127,11 +156,11 @@ export class SigninComponent implements OnInit {
     });
   }
 
-  showSuccess(message) {
+  showSuccess(message: string) {
     this.toastr.success(message, 'Success!');
   }
 
-  showError(message) {
+  showError(message: string) {
     this.toastr.error(message, 'Error!');
   }
 
@@ -149,5 +178,15 @@ export class SigninComponent implements OnInit {
 
   getTheme() {
     this.logoUrl = this.logoService.getLogoSrc();
+  }
+
+  private startBackgroundRotation() {
+    this.intervalId = setInterval(() => {
+      this.currentImageIndex = (this.currentImageIndex + 1) % this.backgroundImages.length;
+    }, 10000);
+  }
+
+  togglePasswordVisibility(): void {
+    this.showPassword = !this.showPassword;
   }
 }

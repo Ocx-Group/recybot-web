@@ -1,14 +1,14 @@
+import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { BalanceInformation } from '@app/core/models/wallet-model/balance-information.model';
-import { Component, ViewChild, HostListener, OnInit } from '@angular/core';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
 
-import { WalletRequestService } from '@app/core/service/wallet-request/wallet-request.service';
-import { AuthService } from '@app/core/service/authentication-service/auth.service';
 import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
-import { ToastrService } from 'ngx-toastr';
-import { WalletService } from '@app/core/service/wallet-service/wallet.service';
-import { ConfigurationService } from '@app/core/service/configuration-service/configuration.service';
 import { WalletWithdrawalsConfiguration } from '@app/core/models/wallet-withdrawals-configuration-model/wallet-withdrawals-configuration.model';
+import { AuthService } from '@app/core/service/authentication-service/auth.service';
+import { ConfigurationService } from '@app/core/service/configuration-service/configuration.service';
+import { WalletRequestService } from '@app/core/service/wallet-request/wallet-request.service';
+import { WalletService } from '@app/core/service/wallet-service/wallet.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-requests',
@@ -62,7 +62,6 @@ export class RequestsComponent implements OnInit {
     this.walletService.getBalanceInformationByAffiliateId(this.user.id).subscribe(balanceInfo => {
       this.balanceInfo = balanceInfo;
     });
-
   }
 
   private loadWalletWithdrawalConfiguration() {

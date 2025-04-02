@@ -150,11 +150,11 @@ export class NetworkComponent implements OnInit {
     }
   }
 
-  getRowHeight(row) {
+  getRowHeight(row: any) {
     return row.height;
   }
 
-  updateFilter(event) {
+  updateFilter(event: any) {
     const val = event.target.value.toLowerCase();
 
     this.rows = this.temp.filter(function (d) {
@@ -312,7 +312,7 @@ export class NetworkComponent implements OnInit {
     })
   }
 
-  setUserAffiliateByUserName(event) {
+  setUserAffiliateByUserName(event: any) {
     this.userName = event.target.value;
   }
 
@@ -485,7 +485,7 @@ export class NetworkComponent implements OnInit {
           icon: 'error',
           confirmButtonColor: '#3085d6',
           confirmButtonText: 'Cerrar'
-        });
+        }).then();
       },
     });
   }
@@ -497,7 +497,7 @@ export class NetworkComponent implements OnInit {
       icon: 'info',
       confirmButtonColor: '#3085d6',
       confirmButtonText: 'Entendido'
-    });
+    }).then();
   }
 
   loadInformation() {

@@ -1,5 +1,5 @@
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {NgModule} from '@angular/core';
+import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 import {CommonModule, NgOptimizedImage} from '@angular/common';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {PerfectScrollbarModule} from 'ngx-perfect-scrollbar';
@@ -70,7 +70,9 @@ import {
 import {ChangeModelModule} from './change-model/change-model.module';
 import {SharedModule} from "../shared/shared.module";
 import {TicketViewAdminComponent} from './tickets/tick-view/ticket-view-admin.component';
-import { CreateAdminModalComponent } from './tickets/create-admin-modal/create-admin-modal.component';
+import {CreateAdminModalComponent} from './tickets/create-admin-modal/create-admin-modal.component';
+import { MatrixListComponent } from './matrix-configuration/matrix-list/matrix-list.component';
+import { MatrixCreateComponent } from './matrix-configuration/matrix-create/matrix-create.component';
 
 const icons = {
   Search,
@@ -109,7 +111,9 @@ const icons = {
     WireTransferListComponent,
     EducationalProgramsControlComponent,
     TicketViewAdminComponent,
-    CreateAdminModalComponent
+    CreateAdminModalComponent,
+    MatrixListComponent,
+    MatrixCreateComponent
   ],
   exports: [],
   imports: [
@@ -149,8 +153,10 @@ const icons = {
     CKEditorModule,
     ChangeModelModule,
     SharedModule,
-    NgOptimizedImage
-  ]
+    NgOptimizedImage,
+    NgApexchartsModule,
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AdminModule {
 }

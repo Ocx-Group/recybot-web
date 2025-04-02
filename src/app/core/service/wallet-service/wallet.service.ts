@@ -1,14 +1,13 @@
-import { CreditTransactionAdminRequest } from '@app/core/models/wallet-model/creditTransactionAdminRequest.mode';
-import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { map } from 'rxjs/operators';
+import {CreditTransactionAdminRequest} from '@app/core/models/wallet-model/creditTransactionAdminRequest.mode';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {map} from 'rxjs/operators';
 
-import { Response } from '@app/core/models/response-model/response.model';
-import { environment } from '@environments/environment';
-import { Wallet } from '@app/core/models/wallet-model/wallet.model';
-import { TransferBalance } from '@app/core/models/wallet-model/transfer-balance.model'
-import { WalletRequest } from '@app/core/models/wallet-model/wallet-request.model';
+import {Response} from '@app/core/models/response-model/response.model';
+import {environment} from '@environments/environment';
+import {Wallet} from '@app/core/models/wallet-model/wallet.model';
+import {TransferBalance} from '@app/core/models/wallet-model/transfer-balance.model'
+import {WalletRequest} from '@app/core/models/wallet-model/wallet-request.model';
 
 const httpOptions = {
 
@@ -19,11 +18,11 @@ const httpOptions = {
   }),
 };
 
-@Injectable({ providedIn: 'root' })
+@Injectable({providedIn: 'root'})
 export class WalletService {
   private urlApi: string;
 
-  constructor(private router: Router, private http: HttpClient) {
+  constructor(private http: HttpClient) {
     this.urlApi = environment.apis.walletService;
   }
 

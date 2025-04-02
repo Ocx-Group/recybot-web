@@ -1,57 +1,58 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
+import { MatrixListComponent } from './matrix-configuration/matrix-list/matrix-list.component';
 
-import { AffiliatesListComponent } from './affiliates-list/affiliates-list.component';
-import { CalculateCommissionsComponent } from './../admin/calculate-commissions/calculate-commissions.component';
-import { VirtualWalletComponent } from './virtual-wallet/virtual-wallet.component';
-import { CompensationPlansComponent } from './compensation-plans-configuration/compensation-plans.component';
-import { GeneralReportsComponent } from './general-reports/general-reports.component';
-import { ImportComponent } from './import/import.component';
-import { HomeAdminComponent } from './home/home-admin.component';
-import { ProductsAndServicesComponent } from './products-and-services/products-and-services.component';
-import { NewsAdminComponent } from './news/news-admin.component';
-import { PurchasesListComponent } from './purchases-list/purchases-list.component';
-import { SettingsComponent } from './settings/settings.component';
-import { TicketsAdminComponent } from './tickets/tickets-admin.component';
-import { UsersListComponent } from './users-list/users-list.component';
-import { RolListComponent } from './rol-list/rol-list.component';
-import { AuthorizeAffiliatesComponent } from './authorize-affiliates/authorize-affiliates.component';
-import { PurchaseOrderListComponent } from './purchase-order-list/purchase-order-list.component';
-import { AuthorizePurchasesComponent } from './authorize-purchases/authorize-purchases.component';
-import { ClosureConceptsComponent } from './closure-concepts/closure-concepts.component';
-import { PeriodClosingComponent } from './period-closing/period-closing.component';
-import { CalculatedCommissionsComponent } from './calculated-commissions/calculated-commissions.component';
-import { AccreditedCommissionsComponent } from './accredited-commissions/accredited-commissions.component';
-import { CommissionsPaidComponent } from './commissions-paid/commissions-paid.component';
-import { IncentivesDeliveredComponent } from './incentives-delivered/incentives-delivered.component';
-import { IncentivesForDeliveringComponent } from './incentives-for-delivering/incentives-for-delivering.component';
-import { PageUnilevelTreeComponent } from './unilevel-tree/page/page-unilevel-tree.component';
-import { PageForceGenealogicalTreeComponent } from './force-genealogical-tree/page/page-force-genealogical-tree.component';
-import { MyProfileComponent } from './my-profile/my-profile.component';
-import { PageBinaryGenealogicalTreeComponent } from './binary-genealogical-tree/page/page-binary-genealogical-tree.component';
-import { CalculationGroupsComponent } from './calculation-groups/calculation-groups.component';
-import { IncentivesListComponent } from './incentives-list/incentives-list.component';
-import { CalificationsListComponent } from './califications-list/califications-list.component';
-import { ConceptListComponent } from './concept-list/concept-list.component';
-import { ArraysConfigurationsComponent } from './arrays-configurations/arrays-configurations.component';
-import { CategoriesComponent } from './categories/categories.component';
-import { AttributesListComponent } from './attributes-list/attributes-list.component';
-import { PassivePackComponent } from './passive-pack/passive-pack.component';
-import { ProductsServicesConfigurationsComponent } from './products-services-configurations/products-services-configurations.component';
-import { BalanceOfWalletComponent } from './Balance-of-wallet/balance-of-wallet.component';
-import { WalletRemovalComponent } from './wallet-removal/wallet-removal.component';
-import { TransactionsCommissionComponent } from './transactions-commission/transactions-commission.component';
-import { WalletParametersComponent } from './wallet-parameters/wallet-parameters.component';
-import { ResultsEcopoolComponent } from './results-ecopool/results-ecopool.component';
-import { AuthorizeReturnsComponent } from './authorize-returns/authorize-returns.component';
-import { WalkwaysBenchesComponent } from './walkways-benches/walkways-benches.component';
-import { WireTransferListComponent } from './wire-transfer-list/wire-transfer-list.component';
-import { EducationalProgramsControlComponent } from './educational-programs-control/educational-programs-control.component';
-import { ChangeModelComponent } from './change-model/change-model.component';
-import { WalletRefillComponent } from './wallet-refill/wallet-refill.component';
+import { TicketViewAdminComponent } from '@app/admin//tickets/tick-view/ticket-view-admin.component';
 import { AuthGuardAdmin } from '@app/core/guard/auth.guard.admin';
 import { MaintenanceGuard } from '@app/core/guard/maintenance.guard';
-import {TicketViewAdminComponent} from '@app/admin//tickets/tick-view/ticket-view-admin.component';
+import { CalculateCommissionsComponent } from './../admin/calculate-commissions/calculate-commissions.component';
+import { AccreditedCommissionsComponent } from './accredited-commissions/accredited-commissions.component';
+import { AffiliatesListComponent } from './affiliates-list/affiliates-list.component';
+import { ArraysConfigurationsComponent } from './arrays-configurations/arrays-configurations.component';
+import { AttributesListComponent } from './attributes-list/attributes-list.component';
+import { AuthorizeAffiliatesComponent } from './authorize-affiliates/authorize-affiliates.component';
+import { AuthorizePurchasesComponent } from './authorize-purchases/authorize-purchases.component';
+import { AuthorizeReturnsComponent } from './authorize-returns/authorize-returns.component';
+import { BalanceOfWalletComponent } from './Balance-of-wallet/balance-of-wallet.component';
+import { PageBinaryGenealogicalTreeComponent } from './binary-genealogical-tree/page/page-binary-genealogical-tree.component';
+import { CalculatedCommissionsComponent } from './calculated-commissions/calculated-commissions.component';
+import { CalculationGroupsComponent } from './calculation-groups/calculation-groups.component';
+import { CalificationsListComponent } from './califications-list/califications-list.component';
+import { CategoriesComponent } from './categories/categories.component';
+import { ChangeModelComponent } from './change-model/change-model.component';
+import { ClosureConceptsComponent } from './closure-concepts/closure-concepts.component';
+import { CommissionsPaidComponent } from './commissions-paid/commissions-paid.component';
+import { CompensationPlansComponent } from './compensation-plans-configuration/compensation-plans.component';
+import { ConceptListComponent } from './concept-list/concept-list.component';
+import { EducationalProgramsControlComponent } from './educational-programs-control/educational-programs-control.component';
+import { PageForceGenealogicalTreeComponent } from './force-genealogical-tree/page/page-force-genealogical-tree.component';
+import { GeneralReportsComponent } from './general-reports/general-reports.component';
+import { HomeAdminComponent } from './home/home-admin.component';
+import { ImportComponent } from './import/import.component';
+import { IncentivesDeliveredComponent } from './incentives-delivered/incentives-delivered.component';
+import { IncentivesForDeliveringComponent } from './incentives-for-delivering/incentives-for-delivering.component';
+import { IncentivesListComponent } from './incentives-list/incentives-list.component';
+import { MyProfileComponent } from './my-profile/my-profile.component';
+import { NewsAdminComponent } from './news/news-admin.component';
+import { PassivePackComponent } from './passive-pack/passive-pack.component';
+import { PeriodClosingComponent } from './period-closing/period-closing.component';
+import { ProductsAndServicesComponent } from './products-and-services/products-and-services.component';
+import { ProductsServicesConfigurationsComponent } from './products-services-configurations/products-services-configurations.component';
+import { PurchaseOrderListComponent } from './purchase-order-list/purchase-order-list.component';
+import { PurchasesListComponent } from './purchases-list/purchases-list.component';
+import { ResultsEcopoolComponent } from './results-ecopool/results-ecopool.component';
+import { RolListComponent } from './rol-list/rol-list.component';
+import { SettingsComponent } from './settings/settings.component';
+import { TicketsAdminComponent } from './tickets/tickets-admin.component';
+import { TransactionsCommissionComponent } from './transactions-commission/transactions-commission.component';
+import { PageUnilevelTreeComponent } from './unilevel-tree/page/page-unilevel-tree.component';
+import { UsersListComponent } from './users-list/users-list.component';
+import { VirtualWalletComponent } from './virtual-wallet/virtual-wallet.component';
+import { WalkwaysBenchesComponent } from './walkways-benches/walkways-benches.component';
+import { WalletParametersComponent } from './wallet-parameters/wallet-parameters.component';
+import { WalletRefillComponent } from './wallet-refill/wallet-refill.component';
+import { WalletRemovalComponent } from './wallet-removal/wallet-removal.component';
+import { WireTransferListComponent } from './wire-transfer-list/wire-transfer-list.component';
 
 const routes: Routes = [
   {
@@ -301,7 +302,12 @@ const routes: Routes = [
   },
   {
     path: 'ticket-for-admin/message',
-    component:TicketViewAdminComponent,
+    component: TicketViewAdminComponent,
+    canActivate: [AuthGuardAdmin, MaintenanceGuard],
+  },
+  {
+    path: 'matrix-configuration',
+    component: MatrixListComponent,
     canActivate: [AuthGuardAdmin, MaintenanceGuard],
   }
 ];

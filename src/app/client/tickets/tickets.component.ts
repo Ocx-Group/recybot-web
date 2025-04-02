@@ -1,20 +1,18 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
-import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { ToastrService } from 'ngx-toastr';
+import {AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Router} from '@angular/router';
+import {Subject} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {ToastrService} from 'ngx-toastr';
 import Swal from 'sweetalert2';
-import { DatatableComponent, SelectionType } from '@swimlane/ngx-datatable';
+import {DatatableComponent, SelectionType} from '@swimlane/ngx-datatable';
 
-import { TicketCategoriesService } from '@app/core/service/ticket-categories-service/ticket-categories.service';
-import { CreateTicketModalComponent } from './create-ticket-modal/create-ticket-modal.component';
-import { TicketHubService } from '@app/core/service/ticket-service/ticket-hub.service';
-import { AuthService } from '@app/core/service/authentication-service/auth.service';
-import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
-import { Ticket } from '@app/core/models/ticket-model/ticket.model';
-
-
+import {TicketCategoriesService} from '@app/core/service/ticket-categories-service/ticket-categories.service';
+import {CreateTicketModalComponent} from './create-ticket-modal/create-ticket-modal.component';
+import {TicketHubService} from '@app/core/service/ticket-service/ticket-hub.service';
+import {AuthService} from '@app/core/service/authentication-service/auth.service';
+import {UserAffiliate} from '@app/core/models/user-affiliate-model/user.affiliate.model';
+import {Ticket} from '@app/core/models/ticket-model/ticket.model';
 
 @Component({
   selector: 'app-tickets',
@@ -116,7 +114,7 @@ export class TicketsComponent implements OnInit, AfterViewInit, OnDestroy {
         this.categories = value;
       },
       error: () => {
-         this.showError('Error al cargar las categorías.');
+        this.showError('Error al cargar las categorías.');
       },
     });
   }
@@ -136,9 +134,9 @@ export class TicketsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   openModal(content: any, ticket: Ticket) {
-    this.selectedTicket.images = ticket.images || [];
+    this.selectedTicket.images = ticket.ticketImages || [];
 
-    this.modalService.open(content, { size: 'lg', centered: true }).result.then(() => {
+    this.modalService.open(content, {size: 'lg', centered: true}).result.then(() => {
     });
   }
 
