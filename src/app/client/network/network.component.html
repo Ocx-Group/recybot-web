@@ -14,22 +14,32 @@
       <div class="col-lg-12 col-sm-6">
         <div class="info-box7 l-bg-blue order-info-box7">
           <div class="info-box7-block">
-            <h5 class="m-b-20">{{ 'NETWORK-PAGE.NETWORK-REFERRAL.TEXT' | translate }}</h5>
-            <h6 class="m-b-10">{{ 'NETWORK-PAGE.DIRECT-CUSTOMERS.TEXT' | translate }}</h6>
-            <h6 class="text-end"><i class="fas fa-user float-start"></i>
+            <h5 class="m-b-20">
+              {{ 'NETWORK-PAGE.NETWORK-REFERRAL.TEXT' | translate }}
+            </h5>
+            <h6 class="m-b-10">
+              {{ 'NETWORK-PAGE.DIRECT-CUSTOMERS.TEXT' | translate }}
+            </h6>
+            <h6 class="text-end">
+              <i class="fas fa-user float-start"></i>
               <span>
                 {{
-                (information.amountUsersDirectModel123 ?? 0) + ' ' + ('NETWORK-PAGE.DIRECT-CUSTOMERS.TEXT' |
-                translate)
+                  (information.amountUsersDirectModel123 ?? 0) +
+                    ' ' +
+                    ('NETWORK-PAGE.DIRECT-CUSTOMERS.TEXT' | translate)
                 }}
               </span>
             </h6>
-            <h6 class="m-b-10 m">{{ 'NETWORK-PAGE.INDIRECT-CUSTOMERS.TEXT' | translate }}</h6>
-            <h6 class="text-end"><i class="fas fa-users float-start"></i>
+            <h6 class="m-b-10 m">
+              {{ 'NETWORK-PAGE.INDIRECT-CUSTOMERS.TEXT' | translate }}
+            </h6>
+            <h6 class="text-end">
+              <i class="fas fa-users float-start"></i>
               <span>
                 {{
-                (information.amountUsersNetworkModel123 ?? 0) + ' ' + ('NETWORK-PAGE.DIRECT-CUSTOMERS.TEXT' |
-                translate)
+                  (information.amountUsersNetworkModel123 ?? 0) +
+                    ' ' +
+                    ('NETWORK-PAGE.DIRECT-CUSTOMERS.TEXT' | translate)
                 }}
               </span>
             </h6>
@@ -43,11 +53,17 @@
           <div class="card-header">
             <div class="row d-flex justify-content-end">
               <div class="col-xl-10">
-                <h4>{{ 'NETWORK-PAGE.NETWORK-ALL-CUSTOMERS.TEXT' | translate }}</h4>
+                <h4>
+                  {{ 'NETWORK-PAGE.NETWORK-ALL-CUSTOMERS.TEXT' | translate }}
+                </h4>
               </div>
               <div class="col-xl-2 text-right">
-                <span class="btn btn-outline-primary btn-sm" (click)="isCollapsed = !isCollapsed"
-                  [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
+                <span
+                  class="btn btn-outline-primary btn-sm"
+                  (click)="isCollapsed = !isCollapsed"
+                  [attr.aria-expanded]="!isCollapsed"
+                  aria-controls="collapseExample"
+                >
                   <i class="bi bi-arrows-collapse"></i>
                 </span>
               </div>
@@ -55,7 +71,7 @@
           </div>
           <div class="card-body">
             <div id="collapseExample" [ngbCollapse]="isCollapsed">
-              <br>
+              <br />
               <div class="row">
                 <div class="col-sm-3">
                   <div class="table-search-area">
@@ -63,13 +79,29 @@
                       <div class="form-group">
                         <div class="input-group mb-2">
                           <div class="input-group-prepend">
-                            <div role="button" class="input-group-text" title="Search" (click)="getUserAffiliateByUserName()">
-                              <i-feather name="search" style="color: #96a2b4;"></i-feather>
+                            <div
+                              role="button"
+                              class="input-group-text"
+                              title="Search"
+                              (click)="getUserAffiliateByUserName()"
+                            >
+                              <i-feather
+                                name="search"
+                                style="color: #96a2b4"
+                              ></i-feather>
                             </div>
                           </div>
-                          <input style="background-color: white;" type="text" class="form-control"
-                            id="inlineFormInputGroup2" (keyup)="setUserAffiliateByUserName($event)"
-                            aria-label="Search box" placeholder="{{ 'NETWORK-PAGE.SEARCH.TEXT' | translate }}">
+                          <input
+                            style="background-color: white"
+                            type="text"
+                            class="form-control"
+                            id="inlineFormInputGroup2"
+                            (keyup)="setUserAffiliateByUserName($event)"
+                            aria-label="Search box"
+                            placeholder="{{
+                              'NETWORK-PAGE.SEARCH.TEXT' | translate
+                            }}"
+                          />
                         </div>
                       </div>
                     </div>
@@ -77,50 +109,94 @@
                 </div>
               </div>
               <div class="row" *ngIf="rowsGlobal && rowsGlobal.length > 0">
-                <ngx-datatable #tableRef class="material" [rows]="rowsGlobal"
-                  [loadingIndicator]="loadingIndicatorGlobal" columnMode="force" [headerHeight]="50" [footerHeight]="50"
-                  rowHeight="auto" [limit]="10" [scrollbarH]="scrollBarHorizontal" [reorderable]="reorderable">
-                  <ngx-datatable-column name="{{ 'NETWORK-PAGE.ROW-USER.TEXT' | translate }}">
+                <ngx-datatable
+                  #tableRef
+                  class="material"
+                  [rows]="rowsGlobal"
+                  [loadingIndicator]="loadingIndicatorGlobal"
+                  columnMode="force"
+                  [headerHeight]="50"
+                  [footerHeight]="50"
+                  rowHeight="auto"
+                  [limit]="10"
+                  [scrollbarH]="scrollBarHorizontal"
+                  [reorderable]="reorderable"
+                >
+                  <ngx-datatable-column
+                    name="{{ 'NETWORK-PAGE.ROW-USER.TEXT' | translate }}"
+                  >
                     <ng-template let-row="row" ngx-datatable-cell-template>
                       {{ row.user_name }}
                     </ng-template>
                   </ngx-datatable-column>
-                  <ngx-datatable-column name="{{ 'NETWORK-PAGE.ROW-FULL-NAME.TEXT' | translate }}">
+                  <ngx-datatable-column
+                    name="{{ 'NETWORK-PAGE.ROW-FULL-NAME.TEXT' | translate }}"
+                  >
                     <ng-template let-row="row" ngx-datatable-cell-template>
                       {{ row.name }} {{ row.last_name }}
                     </ng-template>
                   </ngx-datatable-column>
-                  <ngx-datatable-column name="{{ 'NETWORK-PAGE.ROW-STATE.TEXT' | translate }}">
+                  <ngx-datatable-column
+                    name="{{ 'NETWORK-PAGE.ROW-STATE.TEXT' | translate }}"
+                  >
                     <ng-template let-row="row" ngx-datatable-cell-template>
-                      <div *ngIf="row.activation_date != null" class="badge-outline col-green">
+                      <div
+                        *ngIf="row.activation_date != null"
+                        class="badge-outline col-green"
+                      >
                         {{ 'NETWORK-PAGE.ACTIVE.TEXT' | translate }}
                       </div>
-                      <div *ngIf="row.activation_date == null" class="badge-outline col-red">
+                      <div
+                        *ngIf="row.activation_date == null"
+                        class="badge-outline col-red"
+                      >
                         {{ 'NETWORK-PAGE.INACTIVE.TEXT' | translate }}
                       </div>
                     </ng-template>
                   </ngx-datatable-column>
-                  <ngx-datatable-column name="{{
+                  <ngx-datatable-column
+                    name="{{
                       'NETWORK-PAGE.ROW-QUALIFICATION.TEXT' | translate
-                    }}">
+                    }}"
+                  >
                     <ng-template let-row="row" ngx-datatable-cell-template>
                       {{ getNameGrading(row.external_grading_before_id) }}
                     </ng-template>
                   </ngx-datatable-column>
-                  <ngx-datatable-column name="{{ 'NETWORK-PAGE.ROW-DETAIL.TEXT' | translate }}" sortable="false">
+                  <ngx-datatable-column
+                    name="{{ 'NETWORK-PAGE.ROW-DETAIL.TEXT' | translate }}"
+                    sortable="false"
+                  >
                     <ng-template let-row="row" ngx-datatable-cell-template>
                       <div ngbDropdown container="body">
-                        <button type="button" class="btn btn-outline-primary btn-sm" ngbDropdownToggle>
-                          {{
-                          'NETWORK-PAGE.BTN-ACTIONS.TEXT' | translate
-                          }}
+                        <button
+                          type="button"
+                          class="btn btn-outline-primary btn-sm"
+                          ngbDropdownToggle
+                        >
+                          {{ 'NETWORK-PAGE.BTN-ACTIONS.TEXT' | translate }}
                         </button>
                         <div ngbDropdownMenu>
-                          <a ngbDropdownItem *ngIf="isNewUser" (click)="createPagaditoTransaction(row)">
+                          <a
+                            ngbDropdownItem
+                            *ngIf="isNewUser"
+                            (click)="createPagaditoTransaction(row)"
+                          >
                             <i class="bi bi-credit-card"></i>
                             <span style="margin-left: 10px">{{
-                              'NETWORK-PAGE.ACTIVATE-MEMBERSHIP.CARD.TEXT' | translate
-                              }}</span>
+                              'NETWORK-PAGE.ACTIVATE-MEMBERSHIP.CARD.TEXT'
+                                | translate
+                            }}</span>
+                          </a>
+                          <a
+                            ngbDropdownItem
+                            id="btn-purchase"
+                            (click)="purchaseModal.openModal(row)"
+                          >
+                            <i class="bi bi-currency-exchange me-1"></i>
+                            <span>{{
+                              'NETWORK-PAGE.THIRD-PURCHASE.TEXT' | translate
+                            }}</span>
                           </a>
                         </div>
                       </div>
@@ -151,13 +227,28 @@
                         <div class="form-group">
                           <div class="input-group mb-2">
                             <div class="input-group-prepend">
-                              <div role="button" class="input-group-text" title="Search">
-                                <i-feather name="search" style="color: #96a2b4;"></i-feather>
+                              <div
+                                role="button"
+                                class="input-group-text"
+                                title="Search"
+                              >
+                                <i-feather
+                                  name="search"
+                                  style="color: #96a2b4"
+                                ></i-feather>
                               </div>
                             </div>
-                            <input style="background-color: white;" type="text" class="form-control"
-                              id="inlineFormInputGroup" (keyup)='updateFilter($event)' aria-label="Search box"
-                              placeholder="{{ 'NETWORK-PAGE.SEARCH.TEXT' | translate }}">
+                            <input
+                              style="background-color: white"
+                              type="text"
+                              class="form-control"
+                              id="inlineFormInputGroup"
+                              (keyup)="updateFilter($event)"
+                              aria-label="Search box"
+                              placeholder="{{
+                                'NETWORK-PAGE.SEARCH.TEXT' | translate
+                              }}"
+                            />
                           </div>
                         </div>
                       </div>
@@ -165,7 +256,10 @@
                   </div>
                   <div class="col align-self-end">
                     <ul class="nav justify-content-end">
-                      <li class="nav-item m-2" (click)="redirectToUnilevelTree()">
+                      <li
+                        class="nav-item m-2"
+                        (click)="redirectToUnilevelTree()"
+                      >
                         <button type="button" class="btn btn-primary">
                           <i class="bi bi-diagram-3 ms-2"></i>
                           {{ 'NETWORK-PAGE.VIEW-NETWORK.TEXT' | translate }}
@@ -187,50 +281,84 @@
                     </ul>
                   </div>
                 </div>
-                <ngx-datatable id="htmlTable" #tableRefGlobal class="material" [rows]="rows"
-                  [loadingIndicator]="loadingIndicator" columnMode="force" [headerHeight]="50" [footerHeight]="50"
-                  rowHeight="auto" [limit]="10" [scrollbarH]="scrollBarHorizontal" [reorderable]="reorderable">
-                  <ngx-datatable-column name="{{ 'NETWORK-PAGE.ROW-USER.TEXT' | translate }}">
+                <ngx-datatable
+                  id="htmlTable"
+                  #tableRefGlobal
+                  class="material"
+                  [rows]="rows"
+                  [loadingIndicator]="loadingIndicator"
+                  columnMode="force"
+                  [headerHeight]="50"
+                  [footerHeight]="50"
+                  rowHeight="auto"
+                  [limit]="10"
+                  [scrollbarH]="scrollBarHorizontal"
+                  [reorderable]="reorderable"
+                >
+                  <ngx-datatable-column
+                    name="{{ 'NETWORK-PAGE.ROW-USER.TEXT' | translate }}"
+                  >
                     <ng-template let-row="row" ngx-datatable-cell-template>
                       {{ row.userName }}
                     </ng-template>
                   </ngx-datatable-column>
-                  <ngx-datatable-column name="{{ 'NETWORK-PAGE.ROW-FULL-NAME.TEXT' | translate }}">
+                  <ngx-datatable-column
+                    name="{{ 'NETWORK-PAGE.ROW-FULL-NAME.TEXT' | translate }}"
+                  >
                     <ng-template let-row="row" ngx-datatable-cell-template>
                       {{ row.fullName }}
                     </ng-template>
                   </ngx-datatable-column>
-                  <ngx-datatable-column name="{{ 'NETWORK-PAGE.ROW-STATE.TEXT' | translate }}">
+                  <ngx-datatable-column
+                    name="{{ 'NETWORK-PAGE.ROW-STATE.TEXT' | translate }}"
+                  >
                     <ng-template let-row="row" ngx-datatable-cell-template>
-                      <div *ngIf="row.activationDate != null" class="badge-outline col-green">
+                      <div
+                        *ngIf="row.activationDate != null"
+                        class="badge-outline col-green"
+                      >
                         {{ 'NETWORK-PAGE.ACTIVE.TEXT' | translate }}
                       </div>
-                      <div *ngIf="row.activationDate == null" class="badge-outline col-red">
+                      <div
+                        *ngIf="row.activationDate == null"
+                        class="badge-outline col-red"
+                      >
                         {{ 'NETWORK-PAGE.INACTIVE.TEXT' | translate }}
                       </div>
                     </ng-template>
                   </ngx-datatable-column>
-                  <ngx-datatable-column name="{{
+                  <ngx-datatable-column
+                    name="{{
                       'NETWORK-PAGE.ROW-QUALIFICATION.TEXT' | translate
-                    }}">
+                    }}"
+                  >
                     <ng-template let-row="row" ngx-datatable-cell-template>
                       {{ getNameGrading(row.externalGradingIdBefore) }}
                     </ng-template>
                   </ngx-datatable-column>
-                  <ngx-datatable-column name="{{ 'NETWORK-PAGE.ROW-DETAIL.TEXT' | translate }}" sortable="false">
+                  <ngx-datatable-column
+                    name="{{ 'NETWORK-PAGE.ROW-DETAIL.TEXT' | translate }}"
+                    sortable="false"
+                  >
                     <ng-template let-row="row" ngx-datatable-cell-template>
                       <div ngbDropdown container="body">
-                        <button type="button" class="btn btn-outline-primary btn-sm" ngbDropdownToggle>
-                          {{
-                          'NETWORK-PAGE.BTN-ACTIONS.TEXT' | translate
-                          }}
+                        <button
+                          type="button"
+                          class="btn btn-outline-primary btn-sm"
+                          ngbDropdownToggle
+                        >
+                          {{ 'NETWORK-PAGE.BTN-ACTIONS.TEXT' | translate }}
                         </button>
                         <div ngbDropdownMenu>
-                          <a ngbDropdownItem id="btn-purchase" (click)="purchaseModal.openModal(row)">
+                          <a
+                            ngbDropdownItem
+                            id="btn-purchase"
+                            (click)="purchaseModal.openModal(row)"
+                          >
                             <i class="bi bi-currency-exchange me-1"></i>
                             <span>{{
                               'NETWORK-PAGE.THIRD-PURCHASE.TEXT' | translate
-                              }}</span>
+                            }}</span>
                           </a>
                         </div>
                       </div>

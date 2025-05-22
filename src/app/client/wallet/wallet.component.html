@@ -168,7 +168,10 @@
                   </ngx-datatable-column>
                   <ngx-datatable-column name="{{ 'WALLET-PAGE.DETAILS-COLUMN.TEXT' | translate }}" sortable="false">
                     <ng-template let-value="value" let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
-                      <a class="msr-2 h-auto tblEditBtn">
+                      <a *ngIf="row.detail" class="msr-2 h-auto" (click)="showDetail(row.detail)">
+                        <i class="bi bi-folder2-open">Ver detalles</i>
+                      </a>
+                      <a *ngIf="!row.detail" class="msr-2 h-auto tblEditBtn">
                         <i class="bi bi-folder2-open">{{ 'WALLET-PAGE.DETAILS-BTN.TEXT' | translate }}</i>
                       </a>
                     </ng-template>

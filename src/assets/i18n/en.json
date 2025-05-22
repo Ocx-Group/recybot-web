@@ -776,10 +776,13 @@
     }
   },
   "THIRD_PARTY_PURCHASE": {
+    "SELECT_FLOW": "What do you want to do?",
     "SELECT_RECYCOINS": "Select Recycoins",
+    "SELECT_MATRIX": "Select the matrix level",
     "REVIEW_SELECTION": "Review your selection",
     "SCAN_QR": "Scan the QR code to pay",
     "PURCHASE_RECYCOINS": "Purchase Recycoins",
+    "FLOW_MATRIX": "Activate your matrix",
     "PRICE": "Price",
     "SELECTED": "Selected",
     "SELECT": "Select",
@@ -801,7 +804,9 @@
     "WALLET_PAYMENT": "Wallet Payment",
     "SUFFICIENT_BALANCE": "You have sufficient balance for this purchase",
     "INSUFFICIENT_BALANCE": "Insufficient balance for this purchase",
-    "CONFIRM_PAYMENT": "Confirm Payment"
+    "CONFIRM_PAYMENT": "Confirm Payment",
+    "MATRIX_COST": "Matrix price",
+    "CONFIRM_MATRIX_ACTIVATION": "Confirm matrix activation"
   },
   "MY-NETWORK-PAGE": {
     "TITLE": {

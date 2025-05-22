@@ -370,7 +370,6 @@ export class NetworkComponent implements OnInit {
     });
   }
 
-
   copyTableData() {
     const rows = this.table._internalRows;
     if (rows?.length ?? 0) {

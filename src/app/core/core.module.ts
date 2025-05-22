@@ -67,6 +67,7 @@ import { WalletRetentionConfigService } from './service/wallet-retention-config-
 import { WalletService } from './service/wallet-service/wallet.service';
 import { WalletWaitService } from './service/wallet-wait-service/wallet-wait.service';
 import { WalletWithDrawalService } from './service/wallet-withdrawal-service/wallet-withdrawal.service';
+import {MatrixQualificationService} from "@app/core/service/matrix-qualification-service/matrix-qualification.service";
 
 @NgModule({
   declarations: [],
@@ -132,7 +133,8 @@ import { WalletWithDrawalService } from './service/wallet-withdrawal-service/wal
     ModelsVisibilityService,
     PdfViewerService,
     MatrixConfigurationService,
-    MatrixService
+    MatrixService,
+    MatrixQualificationService
   ],
 })
 export class CoreModule {

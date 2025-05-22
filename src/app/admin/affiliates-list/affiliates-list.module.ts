@@ -16,13 +16,22 @@ import { MakePurchaseModalComponent } from './make-purchase-modal/make-purchase-
 import { BalanceInformationModalComponent } from './balance-information-modal/balance-information-modal.component';
 import { SharedModule } from '@app/shared/shared.module';
 import { NgApexchartsModule } from 'ng-apexcharts';
+import {
+  MatrixActivationModalComponent
+} from "@app/admin/affiliates-list/matrix-activation/matrix-activation-modal.component";
 
 
 const icons = {
   Search,
 };
 @NgModule({
-  declarations: [AffiliatesListEditModalComponent, AffiliatesListComponent, MakePurchaseModalComponent, BalanceInformationModalComponent],
+  declarations: [
+    AffiliatesListEditModalComponent,
+    AffiliatesListComponent,
+    MakePurchaseModalComponent,
+    BalanceInformationModalComponent,
+    MatrixActivationModalComponent,
+  ],
   imports: [
     CommonModule,
     PerfectScrollbarModule,

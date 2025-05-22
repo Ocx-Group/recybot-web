@@ -1,26 +1,44 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input, NgZone, OnDestroy, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  NgZone,
+  OnDestroy,
+  OnInit,
+  Output,
+  TemplateRef,
+  ViewChild,
+} from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { ToastrService } from "ngx-toastr";
+import { ToastrService } from 'ngx-toastr';
 import QRCode from 'qrcode';
-import { Subscription, switchMap, timer } from "rxjs";
+import { Subscription, switchMap, timer } from 'rxjs';
 
-import { RequestPayment } from "@app/core/models/coinpay-model/request-payment.model";
+import { RequestPayment } from '@app/core/models/coinpay-model/request-payment.model';
 import { Product } from '@app/core/models/product-model/product.model';
-import { UserAffiliate } from "@app/core/models/user-affiliate-model/user.affiliate.model";
+import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
 import { WalletRequest } from '@app/core/models/wallet-model/wallet-request.model';
-import { CoinpayService } from "@app/core/service/coinpay-service/coinpay.service";
+import { CoinpayService } from '@app/core/service/coinpay-service/coinpay.service';
 import { WalletService } from '@app/core/service/wallet-service/wallet.service';
 import { AuthService } from 'src/app/core/service/authentication-service/auth.service';
+import { MatrixConfigurationService } from '@app/core/service/matrix-configuration/matrix-configuration.service';
+import { MatrixRequest } from '@app/core/interfaces/matrix-request';
+import Swal from 'sweetalert2';
+import { MatrixQualificationService } from '@app/core/service/matrix-qualification-service/matrix-qualification.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-third-party-purchase',
   templateUrl: './third-party-purchase.component.html',
-  styleUrls: ['./third-party-purchase.component.scss']
+  styleUrls: ['./third-party-purchase.component.scss'],
 })
 export class ThirdPartyPurchaseComponent implements OnInit, OnDestroy {
-  @ViewChild('thirdPartyPurchaseModal') thirdPartyPurchaseModal: TemplateRef<any>;
+  @ViewChild('thirdPartyPurchaseModal')
+  thirdPartyPurchaseModal: TemplateRef<any>;
   @Input() recycoins: Product[];
-  @Output() purchaseAction = new EventEmitter<Product>();
+  @Output() purchaseAction = new EventEmitter<any>();
+  matrixConfigurations: any[] = [];
 
   protected userReceivingPurchase: UserAffiliate;
   public currentUser: UserAffiliate;
@@ -30,6 +48,9 @@ export class ThirdPartyPurchaseComponent implements OnInit, OnDestroy {
   private readonly POLLING_INTERVAL = 5000;
 
   currentStep = 1;
+  selectedFlow: 'purchase' | 'matrix' | null = null;
+  chosenMatrixLevel: number | null = null;
+  chosenMatrixConfig: any = null;
   selectedItems: Product[] = [];
   qrCodeData: string = '';
   paymentAddress: string = '';
@@ -44,15 +65,38 @@ export class ThirdPartyPurchaseComponent implements OnInit, OnDestroy {
     private cdr: ChangeDetectorRef,
     private zone: NgZone,
     private walletService: WalletService,
-    private authService: AuthService
-  ) { }
+    private authService: AuthService,
+    private matrixConfigurationService: MatrixConfigurationService,
+    private matrixQualificationService: MatrixQualificationService,
+    private spinnerService: NgxSpinnerService,
+    private toastrService: ToastrService
+  ) {}
 
   ngOnInit(): void {
     this.currentUser = this.authService.currentUserAffiliateValue;
+    this.getAllMatrixConfigurations();
   }
 
   ngOnDestroy(): void {
     this.stopTransactionStatusPolling();
+  }
+
+  successMessage(message: string) {
+    this.toastrService.success(message, 'Éxito', {
+      timeOut: 3000,
+      progressBar: true,
+      progressAnimation: 'increasing',
+      closeButton: true,
+    });
+  }
+
+  errorMessage(message: string) {
+    this.toastrService.error(message, 'Error', {
+      timeOut: 3000,
+      progressBar: true,
+      progressAnimation: 'increasing',
+      closeButton: true,
+    });
   }
 
   openModal(user: UserAffiliate): void {
@@ -62,64 +106,76 @@ export class ThirdPartyPurchaseComponent implements OnInit, OnDestroy {
     this.modalReference = this.modalService.open(this.thirdPartyPurchaseModal, {
       ariaLabelledBy: 'modal-basic-title',
       size: 'lg',
-      centered: true
+      centered: true,
     });
   }
 
   toggleSelection(recycoin: Product): void {
-    const index = this.selectedItems.findIndex(item => item.id === recycoin.id);
-    if (index > -1) {
-      this.selectedItems.splice(index, 1);
-    } else {
-      this.selectedItems.push(recycoin);
-    }
+    const index = this.selectedItems.findIndex(
+      (item) => item.id === recycoin.id
+    );
+    if (index > -1) this.selectedItems.splice(index, 1);
+    else this.selectedItems.push(recycoin);
   }
 
   nextStep(): void {
-    if (this.currentStep < 3) {
+    if (this.currentStep < 4) {
       this.currentStep++;
-    }
-    if (this.currentStep === 3) {
-      this.processPayment();
+      if (this.currentStep === 4 && this.selectedFlow === 'purchase') {
+        this.processPayment();
+      }
     }
   }
 
   previousStep(): void {
-    if (this.currentStep > 1) {
-      this.currentStep--;
-    }
+    if (this.currentStep > 1) this.currentStep--;
   }
 
   getStepTitle(): string {
     const titles = [
-      'THIRD_PARTY_PURCHASE.SELECT_RECYCOINS',
-      'THIRD_PARTY_PURCHASE.SELECT_PAYMENT_METHOD',
-      this.paymentMethod === 'coinpay' ? 'THIRD_PARTY_PURCHASE.SCAN_QR' : 'THIRD_PARTY_PURCHASE.WALLET_PAYMENT'
+      'THIRD_PARTY_PURCHASE.SELECT_FLOW',
+      this.selectedFlow === 'purchase'
+        ? 'THIRD_PARTY_PURCHASE.SELECT_RECYCOINS'
+        : 'THIRD_PARTY_PURCHASE.SELECT_MATRIX',
+      this.selectedFlow === 'purchase'
+        ? 'THIRD_PARTY_PURCHASE.SELECT_PAYMENT_METHOD'
+        : 'THIRD_PARTY_PURCHASE.CONFIRM_MATRIX_ACTIVATION',
+      this.selectedFlow === 'purchase'
+        ? this.paymentMethod === 'coinpay'
+          ? 'THIRD_PARTY_PURCHASE.SCAN_QR'
+          : 'THIRD_PARTY_PURCHASE.WALLET_PAYMENT'
+        : 'THIRD_PARTY_PURCHASE.CONFIRM_MATRIX_ACTIVATION',
     ];
-    return titles[this.currentStep - 1] || 'THIRD_PARTY_PURCHASE.PURCHASE_RECYCOINS';
+    return titles[this.currentStep - 1] || '';
   }
 
   copyToClipboard(text: string): void {
-    navigator.clipboard.writeText(text)
+    navigator.clipboard
+      .writeText(text)
       .then(() => this.showSuccess('Texto copiado al portapeles'))
-      .catch(err => console.error('Error al copiar texto: ', err));
+      .catch((err) => console.error('Error al copiar texto: ', err));
   }
 
   private resetModalState(): void {
     this.currentStep = 1;
+    this.selectedFlow = null;
+    this.chosenMatrixLevel = null;
     this.selectedItems = [];
     this.qrCodeData = '';
     this.coinpayTransactionId = '';
+    this.paymentMethod = undefined;
   }
 
   private getWalletBalance(): void {
-    this.walletService.getBalanceInformationByAffiliateId(this.currentUser.id).subscribe({
-      next: (balance) => this.walletBalance = balance.availableBalance,
-      error: (err) => {
-        console.error('Error fetching wallet balance:', err);
-        this.showError("Error al obtener el saldo de la billetera");
-      }
-    });
+    this.walletService
+      .getBalanceInformationByAffiliateId(this.currentUser.id)
+      .subscribe({
+        next: (balance) => (this.walletBalance = balance.availableBalance),
+        error: (err) => {
+          console.error('Error fetching wallet balance:', err);
+          this.showError('Error al obtener el saldo de la billetera');
+        },
+      });
   }
 
   private processPayment(): void {
@@ -132,7 +188,7 @@ export class ThirdPartyPurchaseComponent implements OnInit, OnDestroy {
     const request: RequestPayment = this.prepareCoinPayRequest();
     this.coinpayService.createChannel(request).subscribe({
       next: this.handleCoinPayResponse.bind(this),
-      error: this.handlePaymentError.bind(this)
+      error: this.handlePaymentError.bind(this),
     });
   }
 
@@ -149,10 +205,10 @@ export class ThirdPartyPurchaseComponent implements OnInit, OnDestroy {
             console.error(response);
           }
         },
-        error: this.handlePaymentError.bind(this)
+        error: this.handlePaymentError.bind(this),
       });
     } else {
-      this.showError("Saldo insuficiente en la billetera");
+      this.showError('Saldo insuficiente en la billetera');
     }
   }
 
@@ -161,12 +217,12 @@ export class ThirdPartyPurchaseComponent implements OnInit, OnDestroy {
       affiliateId: this.userReceivingPurchase.id,
       userName: this.userReceivingPurchase.user_name,
       amount: this.getTotalAmount(),
-      products: this.selectedItems.map(product => ({
+      products: this.selectedItems.map((product) => ({
         productId: product.id,
-        quantity: 1
+        quantity: 1,
       })),
       networkId: 56,
-      currencyId: 19
+      currencyId: 19,
     };
   }
 
@@ -175,9 +231,9 @@ export class ThirdPartyPurchaseComponent implements OnInit, OnDestroy {
     request.affiliateId = this.currentUser.id;
     request.affiliateUserName = this.currentUser.user_name;
     request.purchaseFor = this.userReceivingPurchase.id;
-    request.productsList = this.selectedItems.map(product => ({
+    request.productsList = this.selectedItems.map((product) => ({
       idProduct: product.id,
-      count: 1
+      count: 1,
     }));
     return request;
   }
@@ -190,43 +246,51 @@ export class ThirdPartyPurchaseComponent implements OnInit, OnDestroy {
       this.startTransactionStatusPolling(this.coinpayTransactionId);
     } else {
       console.error('Invalid response structure:', response);
-      this.showError("Error al crear la transacción: dirección de pago no disponible");
+      this.showError(
+        'Error al crear la transacción: dirección de pago no disponible'
+      );
     }
   }
 
   private handlePaymentError(error: any): void {
     console.error('Payment processing error:', error);
-    this.showError("Error al procesar el pago");
+    this.showError('Error al procesar el pago');
   }
 
   private generateQRCode(address: string): void {
     QRCode.toDataURL(address)
-      .then(url => {
+      .then((url) => {
         this.zone.run(() => {
           this.qrCodeData = url;
           this.cdr.detectChanges();
         });
       })
-      .catch(err => this.showError("Error al generar el código QR: " + err.message));
+      .catch((err) =>
+        this.showError('Error al generar el código QR: ' + err.message)
+      );
   }
 
   private startTransactionStatusPolling(reference: string): void {
-    this.pollingSubscription = timer(0, this.POLLING_INTERVAL).pipe(
-      switchMap(() => this.coinpayService.getTransactionByReference(reference))
-    ).subscribe({
-      next: (response) => {
-        if (response.data === true) {
-          this.showSuccess('Pago confirmado');
+    this.pollingSubscription = timer(0, this.POLLING_INTERVAL)
+      .pipe(
+        switchMap(() =>
+          this.coinpayService.getTransactionByReference(reference)
+        )
+      )
+      .subscribe({
+        next: (response) => {
+          if (response.data === true) {
+            this.showSuccess('Pago confirmado');
+            this.stopTransactionStatusPolling();
+            this.cleanAndCloseModal();
+          }
+        },
+        error: (error) => {
+          console.error('Error al obtener el estado de la transacción:', error);
+          this.showError('Error al verificar el estado del pago');
           this.stopTransactionStatusPolling();
-          this.cleanAndCloseModal();
-        }
-      },
-      error: (error) => {
-        console.error('Error al obtener el estado de la transacción:', error);
-        this.showError('Error al verificar el estado del pago');
-        this.stopTransactionStatusPolling();
-      }
-    });
+        },
+      });
   }
 
   private stopTransactionStatusPolling(): void {
@@ -251,19 +315,103 @@ export class ThirdPartyPurchaseComponent implements OnInit, OnDestroy {
   }
 
   isSelected(recycoin: Product): boolean {
-    return this.selectedItems.some(item => item.id === recycoin.id);
+    return this.selectedItems.some((item) => item.id === recycoin.id);
   }
 
   getTotalAmount(): number {
-    return this.selectedItems.reduce((total, item) => total + item.baseAmount, 0);
+    return this.selectedItems.reduce(
+      (total, item) => total + item.baseAmount,
+      0
+    );
   }
 
   canProceed(): boolean {
-    if (this.currentStep === 1) {
-      return this.selectedItems.length > 0;
-    } else if (this.currentStep === 2) {
-      return this.paymentMethod !== undefined;
+    switch (this.currentStep) {
+      case 1:
+        return this.selectedFlow !== null;
+      case 2:
+        return this.selectedFlow === 'purchase'
+          ? this.selectedItems.length > 0
+          : this.chosenMatrixConfig !== null;
+      case 3:
+        return this.selectedFlow === 'purchase'
+          ? this.paymentMethod !== undefined
+          : true;
+      default:
+        return true;
     }
-    return true;
+  }
+
+  // --- Flujo inicial: elegir compra o matrices ---
+  selectFlow(flow: 'purchase' | 'matrix'): void {
+    this.selectedFlow = flow;
+    this.nextStep();
+  }
+
+  // Selección de nivel de matriz
+  selectMatrixLevel(level: number): void {
+    this.chosenMatrixLevel = level;
+  }
+
+  selectMatrixConfig(config: any): void {
+    this.chosenMatrixConfig = config;
+  }
+
+  activateMatrixWithBalance(): void {
+    const user = this.authService.currentUserAffiliateValue;
+    if (!user || !this.chosenMatrixConfig || !this.userReceivingPurchase) {
+      this.errorMessage('Datos insuficientes para activar la matriz.');
+      return;
+    }
+
+    const request: MatrixRequest = {
+      userId: user.id,
+      matrixType: this.chosenMatrixConfig.matrixType,
+      recipientId: this.userReceivingPurchase.id,
+    };
+
+    Swal.fire({
+      title: 'Activar matriz',
+      text: '¿Está seguro de activar la matriz con saldo?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, activar',
+      cancelButtonText: 'Cancelar',
+      reverseButtons: true,
+    }).then((result) => {
+      if (!result.isConfirmed) return;
+
+      this.spinnerService.show();
+      this.matrixQualificationService
+        .processDirectPaymentMatrixActivation(request)
+        .subscribe({
+          next: (response) => {
+            this.spinnerService.hide();
+            if (response) {
+              this.successMessage('Matriz activada con éxito.');
+              this.cleanAndCloseModal();
+            } else {
+              this.errorMessage('Error al activar la matriz.');
+            }
+          },
+          error: (error) => {
+            this.spinnerService.hide();
+            console.error('Error en la activación:', error);
+            this.errorMessage('Error en la activación de la matriz.');
+          },
+        });
+    });
+  }
+
+  getAllMatrixConfigurations() {
+    this.matrixConfigurationService.getAllMatrixConfigurations().subscribe({
+      next: (config) => {
+        console.log('config:', config);
+        this.matrixConfigurations = config;
+      },
+      error: (err) => {
+        console.error('Error', err);
+      },
+    });
   }
 }

@@ -113,9 +113,8 @@ const icons = {
     TicketViewAdminComponent,
     CreateAdminModalComponent,
     MatrixListComponent,
-    MatrixCreateComponent
+    MatrixCreateComponent,
   ],
-  exports: [],
   imports: [
     CommonModule,
     UserListModule,

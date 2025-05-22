@@ -6,6 +6,8 @@ import { Wallet } from '@app/core/models/wallet-model/wallet.model';
 import { PrintService } from '@app/core/service/print-service/print.service';
 import { WalletService } from '@app/core/service/wallet-service/wallet.service';
 import { ToastrService } from 'ngx-toastr';
+import Swal from 'sweetalert2';
+import { TranslateService } from '@ngx-translate/core';
 
 const header = [
   'Usuario Responsable',
@@ -29,12 +31,12 @@ export class BalanceOfWalletComponent implements OnInit {
   scrollBarHorizontal = window.innerWidth < 1200;
 
   @ViewChild('table') table: DatatableComponent;
-
   constructor(
     private walletService: WalletService,
     private printService: PrintService,
     private clipboardService: ClipboardService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private translateService: TranslateService
   ) {}
 
   ngOnInit(): void {
@@ -52,6 +54,7 @@ export class BalanceOfWalletComponent implements OnInit {
     this.walletService.getAllWallets().subscribe((resp) => {
       if (resp != null) {
         this.temp = [...resp];
+        console.log(this.temp);
         this.rows = resp;
         this.loadingIndicator = false;
       }
@@ -65,9 +68,21 @@ export class BalanceOfWalletComponent implements OnInit {
   updateFilter(event) {
     const val = event.target.value.toLowerCase();
 
-    const temp = this.temp.filter(function (d) {
-      return d.name.toLowerCase().indexOf(val) !== -1 || !val;
+    const searchFields = [
+      'affiliateUserName',
+      'credit',
+      'debit',
+      'concept',
+      'detail',
+    ];
+
+    const temp = this.temp.filter((d) => {
+      return searchFields.some((field) => {
+        const fieldValue = d[field]?.toString().toLowerCase() || '';
+        return fieldValue.includes(val);
+      });
     });
+
     this.rows = temp;
     this.table.offset = 0;
   }
@@ -102,5 +117,25 @@ export class BalanceOfWalletComponent implements OnInit {
     });
 
     this.printService.print(header, body, 'Balance de Billetera', false);
+  }
+
+  showDetail(detail: string) {
+    Swal.fire({
+      title: this.translateService.instant('WALLET-PAGE.DETAILS-COLUMN.TEXT'),
+      text: detail,
+      icon: 'info',
+      confirmButtonText: 'OK',
+      confirmButtonColor: '#3085d6',
+      showCancelButton: false,
+      allowOutsideClick: false,
+      backdrop: true,
+      customClass: {
+        popup: 'swal-popup',
+        container: 'swal-container',
+      },
+    }).then((result) => {
+      if (result.isConfirmed) {
+      }
+    });
   }
 }

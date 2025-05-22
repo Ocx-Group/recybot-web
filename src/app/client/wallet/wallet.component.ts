@@ -1,15 +1,16 @@
-import {Component, HostListener, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {Subscription} from 'rxjs';
-import {ToastrService} from 'ngx-toastr';
-import {TranslateService} from '@ngx-translate/core';
+import { Component, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
+import { TranslateService } from '@ngx-translate/core';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
+import Swal from 'sweetalert2';
 
-import {BalanceInformation} from '@app/core/models/wallet-model/balance-information.model';
-import {UserAffiliate} from '@app/core/models/user-affiliate-model/user.affiliate.model';
-import {WalletService} from '@app/core/service/wallet-service/wallet.service';
-import {DatatableComponent} from '@swimlane/ngx-datatable';
-import {AuthService} from '@app/core/service/authentication-service/auth.service';
+import { BalanceInformation } from '@app/core/models/wallet-model/balance-information.model';
+import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
+import { WalletService } from '@app/core/service/wallet-service/wallet.service';
+import { DatatableComponent } from '@swimlane/ngx-datatable';
+import { AuthService } from '@app/core/service/authentication-service/auth.service';
 
 @Component({
   selector: 'app-wallet',
@@ -66,6 +67,7 @@ export class WalletComponent implements OnInit, OnDestroy {
       next: (resp) => {
         if (resp != null && resp.length > 0) {
           this.temp = [...resp];
+          console.log(resp);
           this.rows = resp;
         }
         this.loadingIndicator = false;
@@ -120,7 +122,7 @@ export class WalletComponent implements OnInit, OnDestroy {
       const posY = 30;
 
       pdf.setFontSize(18);
-      pdf.text('Movimientos de mi billetera', pageWidth / 2, 20, {align: 'center'});
+      pdf.text('Movimientos de mi billetera', pageWidth / 2, 20, { align: 'center' });
 
       const contentDataURL = canvas.toDataURL('image/png');
       pdf.addImage(contentDataURL, 'PNG', posX, posY, imgWidth, imgHeight);
@@ -174,4 +176,26 @@ export class WalletComponent implements OnInit, OnDestroy {
 
     document.body.removeChild(textArea);
   }
+
+  showDetail(detail: string) {
+    Swal.fire({
+      title: this.translateService.instant('WALLET-PAGE.DETAILS-COLUMN.TEXT'),
+      text: detail,
+      icon: 'info',
+      confirmButtonText: 'OK',
+      confirmButtonColor: '#3085d6',
+      showCancelButton: false,
+      allowOutsideClick: false,
+      backdrop: true,
+      customClass: {
+        popup: 'swal-popup',
+        container: 'swal-container'
+      },
+    }).then((result) => {
+      if (result.isConfirmed) {
+
+      }
+    });
+  }
 }
+

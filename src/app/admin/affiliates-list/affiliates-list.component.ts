@@ -1,20 +1,22 @@
+import {Component, HostListener, OnInit, ViewChild} from '@angular/core';
+import {DatatableComponent} from '@swimlane/ngx-datatable';
+import {ClipboardService} from 'ngx-clipboard';
+import {ToastrService} from 'ngx-toastr';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
-import { Component, ViewChild, HostListener, OnInit } from '@angular/core';
-import { DatatableComponent } from '@swimlane/ngx-datatable';
-import { ClipboardService } from 'ngx-clipboard';
-import { ToastrService } from 'ngx-toastr';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-
-import { AffiliateService } from '@app/core/service/affiliate-service/affiliate.service';
-import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
-import { PrintService } from '@app/core/service/print-service/print.service';
-import { Router } from '@angular/router';
+import {AffiliateService} from '@app/core/service/affiliate-service/affiliate.service';
+import {UserAffiliate} from '@app/core/models/user-affiliate-model/user.affiliate.model';
+import {PrintService} from '@app/core/service/print-service/print.service';
+import {Router} from '@angular/router';
 import Swal from 'sweetalert2';
-import { WalletService } from '@app/core/service/wallet-service/wallet.service';
-import { CreditTransactionAdminRequest } from '@app/core/models/wallet-model/creditTransactionAdminRequest.mode';
-import { BalanceInformationModalComponent } from './balance-information-modal/balance-information-modal.component';
-import { WalletModel1AService } from '@app/core/service/wallet-model-1a-service/wallet-model-1a.service';
-import { WalletModel1BService } from '@app/core/service/wallet-model-1b-service/wallet-model-1b.service';
+import {WalletService} from '@app/core/service/wallet-service/wallet.service';
+import {CreditTransactionAdminRequest} from '@app/core/models/wallet-model/creditTransactionAdminRequest.mode';
+import {BalanceInformationModalComponent} from './balance-information-modal/balance-information-modal.component';
+import {WalletModel1AService} from '@app/core/service/wallet-model-1a-service/wallet-model-1a.service';
+import {WalletModel1BService} from '@app/core/service/wallet-model-1b-service/wallet-model-1b.service';
+import {
+  MatrixActivationModalComponent
+} from "@app/admin/affiliates-list/matrix-activation/matrix-activation-modal.component";
 
 const header = [
   'Usuario',
@@ -41,6 +43,7 @@ export class AffiliatesListComponent implements OnInit {
   scrollBarHorizontal = window.innerWidth < 1200;
   @ViewChild(BalanceInformationModalComponent) private balanceInformationModalComponent: BalanceInformationModalComponent;
   @ViewChild('table') table: DatatableComponent;
+  @ViewChild(MatrixActivationModalComponent) private matrixActivationModalComponent: MatrixActivationModalComponent;
 
   constructor(
     private router: Router,
@@ -59,21 +62,22 @@ export class AffiliatesListComponent implements OnInit {
   }
 
   @HostListener('window:resize', ['$event'])
-  onResize(event) {
+  onResize() {
     this.scrollBarHorizontal = window.innerWidth < 1200;
     this.table.recalculate();
     this.table.recalculateColumns();
   }
-  createOpenModal(content) {
-    this.modalService.open(content, {
-      ariaLabelledBy: 'modal-basic-title',
-      size: 'lg',
-    });
-  }
 
-  closeModals() {
-    this.modalService.dismissAll();
-  }
+  // createOpenModal(content) {
+  //   this.modalService.open(content, {
+  //     ariaLabelledBy: 'modal-basic-title',
+  //     size: 'lg',
+  //   });
+  // }
+  //
+  // closeModals() {
+  //   this.modalService.dismissAll();
+  // }
 
   loadAffiliateList() {
     this.affiliateService.getAll().subscribe((affiliates: UserAffiliate[]) => {
@@ -94,21 +98,19 @@ export class AffiliatesListComponent implements OnInit {
   updateFilter(event) {
     const val = event.target.value.toLowerCase();
 
-    const temp = this.temp.filter(function (d) {
+    this.rows = this.temp.filter(function (d) {
       return d.user_name.toLowerCase().indexOf(val) !== -1 || !val;
     });
-    this.rows = temp;
     this.table.offset = 0;
   }
 
   clipBoardCopy() {
-    var string = JSON.stringify(this.temp);
-    var result = this.clipboardService.copyFromContent(string);
-
+    const string = JSON.stringify(this.temp);
+    this.clipboardService.copyFromContent(string);
     if (this.temp != null) {
       this.toast.info('no data to copy');
     } else {
-      this.toast.success('copied ' + this.temp.length + ' rows successfully');
+      this.toast.success(`copied ${this.temp!.length} rows successfully`);
     }
   }
 
@@ -122,7 +124,7 @@ export class AffiliatesListComponent implements OnInit {
 
   onPrint() {
     const body = this.temp.map((items: UserAffiliate) => {
-      const data = [
+      return [
         items.user_name,
         items.status,
         items.affiliate_mode,
@@ -133,22 +135,21 @@ export class AffiliatesListComponent implements OnInit {
         items.sponsor,
         items.binary_sponsor,
       ];
-      return data;
     });
 
     this.printService.print(header, body, 'Lista de Afiliados', false);
   }
 
   onRouteUnilevelTree(id: number) {
-    this.router.navigate([`admin/unilevel-tree/${id}`]);
+    this.router.navigate([`admin/unilevel-tree/${id}`]).then();
   }
 
   onRouteForceGenealogicalTree() {
-    this.router.navigate(['admin/force-genealogical-tree']);
+    this.router.navigate(['admin/force-genealogical-tree']).then();
   }
 
   onRouteBinaryGenealogicalTree(id: number) {
-    this.router.navigate([`admin/binary-genealogical-tree/${id}`]);
+    this.router.navigate([`admin/binary-genealogical-tree/${id}`]).then();
   }
 
   confirmationCreateBalance(user: UserAffiliate) {
@@ -217,7 +218,7 @@ export class AffiliatesListComponent implements OnInit {
           this.showError('No se pudo crear la transacción');
         }
       },
-      error: (err) => {
+      error: () => {
         this.showError('Error');
       },
     })
@@ -232,7 +233,7 @@ export class AffiliatesListComponent implements OnInit {
           this.showError('No se pudo crear la transacción');
         }
       },
-      error: (err) => {
+      error: () => {
         this.showError('Error');
       },
     })
@@ -247,7 +248,7 @@ export class AffiliatesListComponent implements OnInit {
           this.showError('No se pudo crear la transacción');
         }
       },
-      error: (err) => {
+      error: () => {
         this.showError('Error');
       },
     })
@@ -256,6 +257,12 @@ export class AffiliatesListComponent implements OnInit {
   openBalanceInformationModal(userAffiliate: UserAffiliate) {
     if (this.balanceInformationModalComponent) {
       this.balanceInformationModalComponent.initModal(userAffiliate);
+    }
+  }
+
+  openMatrixActivationModal(userAffiliate: UserAffiliate) {
+    if (this.matrixActivationModalComponent) {
+      this.matrixActivationModalComponent.openModal(userAffiliate);
     }
   }
 }
