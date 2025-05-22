@@ -92,7 +92,7 @@ export class MakePurchaseModalComponent implements OnInit {
   }
 
   loadAllEcoPooles() {
-    this.productService.getAllEcoPooles().subscribe((ecopools: Product) => {
+    this.productService.getAllRecyCoin().subscribe((ecopools: Product) => {
       this.productList = ecopools;
       this.filterCategory = ecopools;
       this.productList.forEach((item: any) => {

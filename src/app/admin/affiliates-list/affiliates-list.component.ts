@@ -1,22 +1,20 @@
-import {Component, HostListener, OnInit, ViewChild} from '@angular/core';
-import {DatatableComponent} from '@swimlane/ngx-datatable';
-import {ClipboardService} from 'ngx-clipboard';
-import {ToastrService} from 'ngx-toastr';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
+import { DatatableComponent } from '@swimlane/ngx-datatable';
+import { ClipboardService } from 'ngx-clipboard';
+import { ToastrService } from 'ngx-toastr';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
-import {AffiliateService} from '@app/core/service/affiliate-service/affiliate.service';
-import {UserAffiliate} from '@app/core/models/user-affiliate-model/user.affiliate.model';
-import {PrintService} from '@app/core/service/print-service/print.service';
-import {Router} from '@angular/router';
+import { AffiliateService } from '@app/core/service/affiliate-service/affiliate.service';
+import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
+import { PrintService } from '@app/core/service/print-service/print.service';
+import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
-import {WalletService} from '@app/core/service/wallet-service/wallet.service';
-import {CreditTransactionAdminRequest} from '@app/core/models/wallet-model/creditTransactionAdminRequest.mode';
-import {BalanceInformationModalComponent} from './balance-information-modal/balance-information-modal.component';
-import {WalletModel1AService} from '@app/core/service/wallet-model-1a-service/wallet-model-1a.service';
-import {WalletModel1BService} from '@app/core/service/wallet-model-1b-service/wallet-model-1b.service';
-import {
-  MatrixActivationModalComponent
-} from "@app/admin/affiliates-list/matrix-activation/matrix-activation-modal.component";
+import { WalletService } from '@app/core/service/wallet-service/wallet.service';
+import { CreditTransactionAdminRequest } from '@app/core/models/wallet-model/creditTransactionAdminRequest.mode';
+import { BalanceInformationModalComponent } from './balance-information-modal/balance-information-modal.component';
+import { WalletModel1AService } from '@app/core/service/wallet-model-1a-service/wallet-model-1a.service';
+import { WalletModel1BService } from '@app/core/service/wallet-model-1b-service/wallet-model-1b.service';
+import { MatrixActivationModalComponent } from '@app/admin/affiliates-list/matrix-activation/matrix-activation-modal.component';
 
 const header = [
   'Usuario',
@@ -41,9 +39,11 @@ export class AffiliatesListComponent implements OnInit {
   loadingIndicator = true;
   reorderable = true;
   scrollBarHorizontal = window.innerWidth < 1200;
-  @ViewChild(BalanceInformationModalComponent) private balanceInformationModalComponent: BalanceInformationModalComponent;
+  @ViewChild(BalanceInformationModalComponent)
+  private balanceInformationModalComponent: BalanceInformationModalComponent;
   @ViewChild('table') table: DatatableComponent;
-  @ViewChild(MatrixActivationModalComponent) private matrixActivationModalComponent: MatrixActivationModalComponent;
+  @ViewChild(MatrixActivationModalComponent)
+  private matrixActivationModalComponent: MatrixActivationModalComponent;
 
   constructor(
     private router: Router,
@@ -55,7 +55,7 @@ export class AffiliatesListComponent implements OnInit {
     private walletService: WalletService,
     private walletModel1AService: WalletModel1AService,
     private walletModel1BService: WalletModel1BService
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.loadAffiliateList();
@@ -175,17 +175,25 @@ export class AffiliatesListComponent implements OnInit {
       cancelButtonText: 'Cancelar',
       focusConfirm: false,
       preConfirm: () => {
-        const amount = (Swal.getPopup().querySelector('#swal-input-amount') as HTMLInputElement).value;
-        const type = (Swal.getPopup().querySelector('#swal-select-type') as HTMLSelectElement).value;
+        const amount = (
+          Swal.getPopup().querySelector(
+            '#swal-input-amount'
+          ) as HTMLInputElement
+        ).value;
+        const type = (
+          Swal.getPopup().querySelector(
+            '#swal-select-type'
+          ) as HTMLSelectElement
+        ).value;
         if (!amount || isNaN(Number(amount)) || Number(amount) <= 0) {
           Swal.showValidationMessage('Por favor ingrese un monto válido.');
           return false;
         }
         return {
           amount: Number(amount),
-          type
+          type,
         };
-      }
+      },
     }).then((result) => {
       if (result.isConfirmed && result.value !== false) {
         let creditRequest = new CreditTransactionAdminRequest();
@@ -221,7 +229,7 @@ export class AffiliatesListComponent implements OnInit {
       error: () => {
         this.showError('Error');
       },
-    })
+    });
   }
 
   createServiceBalanceModel1A(request: CreditTransactionAdminRequest) {
@@ -236,7 +244,7 @@ export class AffiliatesListComponent implements OnInit {
       error: () => {
         this.showError('Error');
       },
-    })
+    });
   }
 
   createServiceBalanceModel1B(request: CreditTransactionAdminRequest) {
@@ -251,7 +259,7 @@ export class AffiliatesListComponent implements OnInit {
       error: () => {
         this.showError('Error');
       },
-    })
+    });
   }
 
   openBalanceInformationModal(userAffiliate: UserAffiliate) {
