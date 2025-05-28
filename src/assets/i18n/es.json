@@ -118,7 +118,7 @@
       "TEXT": "Tienda medio ambiente"
     },
     "BUY-RECYCOIN": {
-      "TEXT": "Comprar RecyCoin"
+      "TEXT": "Comprar"
     },
     "BILLING-MY-PURCHASES": {
       "TEXT": "Recibos Mis Compras"
@@ -1058,6 +1058,12 @@
     },
     "EMPTY-CART": {
       "TEXT": "Vaciar Carrito"
+    },
+    "BUY": {
+      "TEXT": "Comprar Recycoin"
+    },
+    "ACTIVATE-MATRIX": {
+      "TEXT": "Activar Matrices"
     }
   },
   "PAYMENT_MODAL": {

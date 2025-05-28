@@ -115,7 +115,7 @@
       "TEXT": "Environmental store"
     },
     "BUY-RECYCOIN": {
-      "TEXT": "Buy RecyCoin"
+      "TEXT": "Buy"
     },
     "BILLING-MY-PURCHASES": {
       "TEXT": "Receipts My Purchases"
@@ -1055,6 +1055,12 @@
     },
     "EMPTY-CART": {
       "TEXT": "Empty Cart"
+    },
+    "BUY": {
+      "TEXT": "Buy Recycoin"
+    },
+    "ACTIVATE-MATRIX": {
+      "TEXT": "Activate Matrices"
     }
   },
   "PAYMENT_MODAL": {

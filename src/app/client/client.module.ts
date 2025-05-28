@@ -47,6 +47,7 @@ import { SavingsPlansOneBComponent } from './savings-plans-one-b/savings-plans-o
 import { PurchaseConfirmationComponent } from './purchase-confirmation/purchase-confirmation.component';
 import { CoinpayModalComponent } from './cart/coinpay-modal/coinpay-modal.component';
 import { ThirdPartyPurchaseComponent } from './network/third-party-purchase/third-party-purchase.component';
+import { ActivateMatrixComponent } from './cart/activate-matrix/activate-matrix.component';
 
 const icons = {
   Search
@@ -80,7 +81,8 @@ const icons = {
     SavingsPlansOneBComponent,
     PurchaseConfirmationComponent,
     CoinpayModalComponent,
-    ThirdPartyPurchaseComponent
+    ThirdPartyPurchaseComponent,
+    ActivateMatrixComponent
   ],
   imports: [
     CommonModule,
