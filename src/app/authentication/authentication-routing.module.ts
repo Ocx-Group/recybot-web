@@ -59,10 +59,6 @@ const routes: Routes = [
     component: Page500Component,
   },
   {
-    path: 'main-options/:userName',
-    component: MainOptionsComponent,
-  },
-  {
     path: 'conpayment-confirmation',
     component: ConpaymentConfirmationComponent,
     canActivate: [AuthGuard]
