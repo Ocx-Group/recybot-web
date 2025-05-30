@@ -67,7 +67,6 @@ export class WalletComponent implements OnInit, OnDestroy {
       next: (resp) => {
         if (resp != null && resp.length > 0) {
           this.temp = [...resp];
-          console.log(resp);
           this.rows = resp;
         }
         this.loadingIndicator = false;
@@ -84,8 +83,11 @@ export class WalletComponent implements OnInit, OnDestroy {
       .getBalanceInformationByAffiliateId(this.userCookie.id)
       .subscribe({
         next: (resp) => {
+          console.log(resp);
           this.balanceInformation.availableBalance = resp.availableBalance;
           this.balanceInformation.reverseBalance = resp.reverseBalance;
+          this.balanceInformation.totalCommissionsPaid = resp.totalCommissionsPaid;
+          this.balanceInformation.bonusAmount = resp.bonusAmount;
         },
         error: (err) => {
           this.showError('Error!');

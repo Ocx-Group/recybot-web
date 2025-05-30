@@ -406,7 +406,7 @@
       "TEXT": "Available Balance"
     },
     "REVERSE-BALANCE": {
-      "TEXT": "Balance amount"
+      "TEXT": "Earned Balance"
     },
     "REQUEST-RECHARGE": {
       "TEXT": "Recharge Requested"
@@ -457,6 +457,9 @@
       "NOT-ATTENDED": {
         "TEXT": "Not Attended"
       }
+    },
+    "TOKEN-BONUS": {
+      "TEXT": "Earned Tokens"
     }
   },
   "TICKETS-PAGE": {

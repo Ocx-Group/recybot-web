@@ -374,7 +374,7 @@
       "TEXT": "Saldo Disponible"
     },
     "REVERSE-BALANCE": {
-      "TEXT": "Saldo balance"
+      "TEXT": "Saldo Ganado"
     },
     "REQUEST-RECHARGE": {
       "TEXT": "Recarga Solicitada"
@@ -425,6 +425,9 @@
       "NOT-ATTENDED": {
         "TEXT": "No Atendido"
       }
+    },
+    "TOKEN-BONUS": {
+      "TEXT": "Tokens ganados"
     }
   },
   "ECOPOOL-PAGE": {
