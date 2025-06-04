@@ -1,3 +1,4 @@
+import { ActivateMatrixComponent } from './cart/activate-matrix/activate-matrix.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
@@ -187,7 +188,12 @@ const routes: Routes = [
       { path: ':parametro1/:parametro2', component: PurchaseConfirmationComponent }
     ],
     canActivate: [AuthGuard],
-  }
+  },
+  {
+    path: 'activate-matrix',
+    component: ActivateMatrixComponent,
+    canActivate: [AuthGuard, MaintenanceGuard],
+  },
 ];
 @NgModule({
   imports: [RouterModule.forChild(routes)],
