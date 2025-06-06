@@ -1,7 +1,7 @@
 import { TranslateService } from '@ngx-translate/core';
 import { Component, OnInit } from '@angular/core';
 
-import { PaymentDetails, PaymentTranslations } from './index';
+import { PaymentDetails, PaymentTranslations } from './activate-matrix-interfaces';
 import { ConpaymentTransaction } from '@app/core/models/coinpayment-model/conpayment-transaction.model';
 import { CreatePayment } from '@app/core/models/coinpayment-model/create-payment.model';
 import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
@@ -189,7 +189,6 @@ export class ActivateMatrixComponent implements OnInit {
     return `
     <div style="text-align: left; margin: 20px 0;">
       <p><strong>Matriz:</strong> ${paymentDetails.matrixName}</p>
-      <p><strong>${translations.matrixType}:</strong> ${paymentDetails.matrixType}</p>
       <p><strong>${translations.matrixCost}:</strong> ${paymentDetails.matrixCost}</p>
       <p><strong>${translations.gatewayFee} (1%):</strong> ${paymentDetails.gatewayFee}</p>
       <hr style="margin: 10px 0; border: 1px solid #ddd;">
