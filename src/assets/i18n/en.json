@@ -42,19 +42,26 @@
     "ACTIVATION_WARNING": "Once you activate the matrix, you will not be able to change it.",
     "AVAILABLE": "Available",
     "AVAILABLE_MATRICES": "Available matrices",
+    "CANCEL": "Cancel",
     "CANCEL_SELECTION": "Cancel selection",
+    "CONFIRM_PAYMENT": "Yes, pay",
     "CURRENT_USER": "Current user",
     "DATE": "Date",
+    "GATEWAY_FEE": "Gateway fee",
+    "GATEWAY_FEE_INFO": "The payment gateway charges a 1% fee on the purchase amount.",
     "LOADING_MATRICES": "Loading matrices...",
+    "MATRIX_COST": "Matrix cost",
     "MATRIX_TYPE": "Matrix type",
     "NO_MATRICES": "No matrices",
     "NO_MATRICES_DESCRIPTION": "You don't have matrices available to activate.",
+    "PAYMENT_WARNING": "If the full amount is not confirmed, your purchase will be automatically reversed.",
     "SELECT": "Select",
     "SELECT_MATRIX": "Select matrix",
     "SELECTED": "Selected",
     "SELECTED_MATRIX": "Selected matrix",
     "TITLE": "Matrix Activation",
-    "TOTAL_COST": "Total cost"
+    "TOTAL_COST": "Total cost",
+    "TOTAL_TO_PAY": "Total to pay"
   },
   "ADDRESSES-PAGE": {
     "ADDRESSES-TITLE": {

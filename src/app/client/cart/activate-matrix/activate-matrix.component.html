@@ -8,8 +8,7 @@
     <li class="breadcrumb-item bcrumb-1">
       <a routerLink="/dashboard/main"><i class="fas fa-home font-17"></i></a>
     </li>
-    <li class="breadcrumb-item">
-    </li>
+    <li class="breadcrumb-item"></li>
   </ul>
 
   <div class="section-body">
@@ -34,20 +33,20 @@
               <div class="invoice-title">
                 <h2>{{ 'ACTIVATE_MATRIX.TITLE' | translate }}</h2>
               </div>
-              <hr>
+              <hr />
               <div class="row">
                 <div class="col-md-6">
                   <address>
-                    <strong>{{ 'ACTIVATE_MATRIX.CURRENT_USER' | translate }}:</strong><br>
-                    {{ currentUser?.name + ' ' + currentUser?.last_name }}<br>
-                    {{ currentUser?.user_name }}<br>
-                    {{ currentUser?.phone }}<br>
+                    <strong>{{ 'ACTIVATE_MATRIX.CURRENT_USER' | translate }}:</strong><br />
+                    {{ currentUser?.name + ' ' + currentUser?.last_name }}<br />
+                    {{ currentUser?.user_name }}<br />
+                    {{ currentUser?.phone }}<br />
                   </address>
                 </div>
                 <div class="col-md-6 invoice-right-align">
                   <address>
-                    <strong>{{ 'ACTIVATE_MATRIX.DATE' | translate }}:</strong><br>
-                    {{ today | date:'dd/MM/yyyy hh:mm:ss a' }}<br><br>
+                    <strong>{{ 'ACTIVATE_MATRIX.DATE' | translate }}:</strong><br />
+                    {{ today | date : 'dd/MM/yyyy hh:mm:ss a' }}<br /><br />
                   </address>
                 </div>
               </div>
@@ -64,7 +63,6 @@
                 <div *ngFor="let config of matrixConfigurations; let i = index" class="matrix-item"
                   [class.selected]="selectedMatrixConfig?.matrixType === config.matrixType"
                   (click)="selectMatrixConfig(config)">
-
                   <div class="matrix-card">
                     <!-- Header de la card -->
                     <div class="matrix-header">
@@ -73,9 +71,9 @@
                       </div>
                       <div class="selection-indicator">
                         <i class="fas" [ngClass]="{
-                          'fa-check-circle text-success': selectedMatrixConfig?.matrixType === config.matrixType,
-                          'fa-circle text-muted': selectedMatrixConfig?.matrixType !== config.matrixType
-                        }"></i>
+                            'fa-check-circle text-success': selectedMatrixConfig?.matrixType === config.matrixType,
+                            'fa-circle text-muted': selectedMatrixConfig?.matrixType !== config.matrixType
+                          }"></i>
                       </div>
                     </div>
 
@@ -131,7 +129,7 @@
                     <div class="invoice-detail-name">{{ 'ACTIVATE_MATRIX.MATRIX_TYPE' | translate }}</div>
                     <div class="invoice-detail-value">{{ selectedMatrixConfig.matrixType }}</div>
                   </div>
-                  <hr class="mt-2 mb-2">
+                  <hr class="mt-2 mb-2" />
                   <div class="invoice-detail-item">
                     <div class="invoice-detail-name">{{ 'ACTIVATE_MATRIX.TOTAL_COST' | translate }}</div>
                     <div class="invoice-detail-value invoice-detail-value-lg">$ {{ selectedMatrixConfig.feeAmount }}
