@@ -87,7 +87,7 @@ export class ActivateMatrixComponent implements OnInit {
     request.buyer_email = this.currentUser.email;
     request.buyer_name = `${this.currentUser.name} ${this.currentUser.last_name}`;
     request.item_number = this.currentUser.id.toString();
-    request.ipn_url = 'https://webhook.site/8dac8f7b-640e-4263-ba9d-6bed44928828';
+    request.ipn_url = 'https://wallet.recycoin.net/api/v1/MatrixQualification/coinpayments_matrix_activation_confirmation';
     request.currency1 = 'USDT.BEP20';
     request.currency2 = 'USDT.BEP20';
     request.item_name = `${this.selectedMatrixConfig.matrixName} - ${this.selectedMatrixConfig.matrixType}`;

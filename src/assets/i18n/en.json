@@ -39,9 +39,9 @@
   },
   "ACTIVATE_MATRIX": {
     "ACTIVATE_WITH_BALANCE": "Activate with CoinPayments",
-    "ACTIVATION_WARNING": "Once you activate the matrix, you will not be able to change it.",
+    "ACTIVATION_WARNING": "Once you activate the structure, you cannot change it.",
     "AVAILABLE": "Available",
-    "AVAILABLE_MATRICES": "Available matrices",
+    "AVAILABLE_MATRICES": "Available structures",
     "CANCEL": "Cancel",
     "CANCEL_SELECTION": "Cancel selection",
     "CONFIRM_PAYMENT": "Yes, pay",
@@ -49,17 +49,17 @@
     "DATE": "Date",
     "GATEWAY_FEE": "Gateway fee",
     "GATEWAY_FEE_INFO": "The payment gateway charges a 1% fee on the purchase amount.",
-    "LOADING_MATRICES": "Loading matrices...",
-    "MATRIX_COST": "Matrix cost",
-    "MATRIX_TYPE": "Matrix type",
-    "NO_MATRICES": "No matrices",
-    "NO_MATRICES_DESCRIPTION": "You don't have matrices available to activate.",
-    "PAYMENT_WARNING": "If the full amount is not confirmed, your purchase will be automatically reversed.",
+    "LOADING_MATRICES": "Loading structures...",
+    "MATRIX_COST": "Structure cost",
+    "MATRIX_TYPE": "Structure type",
+    "NO_MATRICES": "No structures",
+    "NO_MATRICES_DESCRIPTION": "You have no available structures to activate.",
+    "PAYMENT_WARNING": "If the entire amount is not confirmed, your purchase will be automatically reversed.",
     "SELECT": "Select",
-    "SELECT_MATRIX": "Select matrix",
+    "SELECT_MATRIX": "Select structure",
     "SELECTED": "Selected",
-    "SELECTED_MATRIX": "Selected matrix",
-    "TITLE": "Matrix Activation",
+    "SELECTED_MATRIX": "Selected structure",
+    "TITLE": "Structure activation",
     "TOTAL_COST": "Total cost",
     "TOTAL_TO_PAY": "Total to pay"
   },
@@ -775,7 +775,7 @@
   },
   "CART-PAGE": {
     "ACTIVATE-MATRIX": {
-      "TEXT": "Activate Matrices"
+      "TEXT": "Activate Structures"
     },
     "ADDRESS": {
       "TEXT": "Address"
@@ -2645,7 +2645,7 @@
       "TEXT": "Movements"
     },
     "TOKEN-BONUS": {
-      "TEXT": "Earned Tokens"
+      "TEXT": "Tokens bonus"
     },
     "USER-COLUMN": {
       "TEXT": "Responsible user"

@@ -39,9 +39,9 @@
   },
   "ACTIVATE_MATRIX": {
     "ACTIVATE_WITH_BALANCE": "Activar con CoinPayments",
-    "ACTIVATION_WARNING": "Una vez que actives la matriz, no podrás cambiarla.",
+    "ACTIVATION_WARNING": "Una vez que actives la estructura, no podrás cambiarla.",
     "AVAILABLE": "Disponible",
-    "AVAILABLE_MATRICES": "Matrices disponibles",
+    "AVAILABLE_MATRICES": "Estructuras disponibles",
     "CANCEL": "Cancelar",
     "CANCEL_SELECTION": "Cancelar selección",
     "CONFIRM_PAYMENT": "Sí, pagar",
@@ -49,17 +49,17 @@
     "DATE": "Fecha",
     "GATEWAY_FEE": "Fee de pasarela",
     "GATEWAY_FEE_INFO": "La pasarela de pago cobra un fee del 1% sobre el monto de la compra.",
-    "LOADING_MATRICES": "Cargando matrices...",
-    "MATRIX_COST": "Costo de matriz",
-    "MATRIX_TYPE": "Tipo de matriz",
-    "NO_MATRICES": "No hay matrices",
-    "NO_MATRICES_DESCRIPTION": "No tienes matrices disponibles para activar.",
+    "LOADING_MATRICES": "Cargando estructuras...",
+    "MATRIX_COST": "Costo de estructura",
+    "MATRIX_TYPE": "Tipo de estructura",
+    "NO_MATRICES": "No hay estructuras",
+    "NO_MATRICES_DESCRIPTION": "No tienes estructuras disponibles para activar.",
     "PAYMENT_WARNING": "En caso de que no se confirme la totalidad de los fondos, su compra será revertida automáticamente.",
     "SELECT": "Seleccionar",
-    "SELECT_MATRIX": "Seleccionar matriz",
+    "SELECT_MATRIX": "Seleccionar estructura",
     "SELECTED": "Seleccionada",
-    "SELECTED_MATRIX": "Matriz seleccionada",
-    "TITLE": "Activación de matrices",
+    "SELECTED_MATRIX": "Estructura seleccionada",
+    "TITLE": "Activación de estructuras",
     "TOTAL_COST": "Costo total",
     "TOTAL_TO_PAY": "Total a pagar"
   },
@@ -772,7 +772,7 @@
   },
   "CART-PAGE": {
     "ACTIVATE-MATRIX": {
-      "TEXT": "Activar Matrices"
+      "TEXT": "Activar Estructuras"
     },
     "ADDRESS": {
       "TEXT": "Dirección"
@@ -2642,7 +2642,7 @@
       "TEXT": "Movimientos"
     },
     "TOKEN-BONUS": {
-      "TEXT": "Tokens ganados"
+      "TEXT": "Tokens bonos"
     },
     "USER-COLUMN": {
       "TEXT": "Usuario Responsable"
