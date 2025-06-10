@@ -25,6 +25,7 @@ export class CreateRequestsModalComponent implements OnInit {
   sendRequest: FormGroup;
   submitted = false;
   today: string;
+  showPassword: boolean = false;
 
   withdrawalDates = [];
   @Input() user: UserAffiliate;
@@ -40,7 +41,7 @@ export class CreateRequestsModalComponent implements OnInit {
     private toastr: ToastrService,
     private affiliateService: AffiliateService,
     private affiliateBtcService: AffiliateBtcService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.getUtcToday();
@@ -78,7 +79,7 @@ export class CreateRequestsModalComponent implements OnInit {
       amount_requested: new FormControl('', Validators.required),
       access_key: new FormControl('', Validators.required),
       observation: new FormControl('', Validators.required),
-      generation_code: new FormControl('', Validators.required)
+      generation_code: new FormControl('', Validators.required),
     });
   }
 
@@ -101,7 +102,7 @@ export class CreateRequestsModalComponent implements OnInit {
     }
 
     this.walletRequestService.createWalletRequest(this.walletRequest).subscribe({
-      next: (resp) => {
+      next: resp => {
         if (resp.success == true) {
           this.showSuccess('Su solicitud de retiro se ha creado correctamente');
           this.sendRequest.reset();
@@ -109,14 +110,14 @@ export class CreateRequestsModalComponent implements OnInit {
           this.loadWalletRequest.emit();
           this.setAvailableBalance.emit();
         } else if (resp.success == false) {
-          this.showError('Las credenciales no coinciden');
+          this.showError(resp.message);
           this.sendRequest.reset();
         }
       },
-      error: (err) => {
+      error: err => {
         this.showError('Ha ocurrido un error al procesar su solicitud.');
       },
-    })
+    });
   }
 
   private setWalletRequest(): void {
@@ -130,17 +131,11 @@ export class CreateRequestsModalComponent implements OnInit {
 
   private isValidAmount(amount: number): boolean {
     if (amount <= 0) {
-
       return false;
     } else if (this.walletWithdrawalConfig.maximum_amount == 0) {
-
-      return amount <= this.checkMinimumAmount() &&
-        amount >= this.walletWithdrawalConfig.minimum_amount;
+      return amount <= this.checkMinimumAmount() && amount >= this.walletWithdrawalConfig.minimum_amount;
     } else {
-
-      return amount <= this.checkMinimumAmount() &&
-        amount >= this.walletWithdrawalConfig.minimum_amount &&
-        amount <= this.walletWithdrawalConfig.maximum_amount;
+      return amount <= this.checkMinimumAmount() && amount >= this.walletWithdrawalConfig.minimum_amount && amount <= this.walletWithdrawalConfig.maximum_amount;
     }
   }
 
@@ -151,15 +146,15 @@ export class CreateRequestsModalComponent implements OnInit {
 
   onGenerateVerificationCode() {
     this.affiliateService.generateVerificationCode(this.user.id, false).subscribe({
-      next: (resp) => {
+      next: resp => {
         if (resp.success) {
           this.showSuccess('Se ha generado correctamente el código de verificación. Por favor, revise su correo electrónico para obtener el código de verificación.');
         } else {
           this.messageNotIsWithdrawalDate();
         }
       },
-      error: (err) => {
-        this.showError("Error");
+      error: err => {
+        this.showError('Error');
       },
     });
   }
@@ -169,20 +164,22 @@ export class CreateRequestsModalComponent implements OnInit {
       icon: 'warning',
       title: '¡Saludos!',
       text: 'Las comisiones voluntarias estarán disponibles para ser retiradas en su billetera según el calendario de la empresa.',
-      confirmButtonText: 'Entendido'
+      confirmButtonText: 'Entendido',
     });
   }
 
   hasCoinPaymentAddress() {
     this.affiliateBtcService.getAffiliateBtcByAffiliateId(this.user.id).subscribe({
       next: (value: Response & { data: AffiliateBtc[] }) => {
-
         if (value.success) {
-          const address = value.data.reduce((acc: AffiliateBtc, item: AffiliateBtc) => {
-            acc.trc20Address = item.trc20Address;
+          const address = value.data.reduce(
+            (acc: AffiliateBtc, item: AffiliateBtc) => {
+              acc.trc20Address = item.trc20Address;
 
-            return acc;
-          }, { trc20Address: '' })
+              return acc;
+            },
+            { trc20Address: '' }
+          );
 
           this.affiliateBtc.trc20Address = address.trc20Address;
         }
@@ -190,6 +187,10 @@ export class CreateRequestsModalComponent implements OnInit {
       error: () => {
         this.showError('Error');
       },
-    })
+    });
+  }
+
+  togglePasswordVisibility(): void {
+    this.showPassword = !this.showPassword;
   }
 }
