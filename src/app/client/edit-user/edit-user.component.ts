@@ -1,15 +1,9 @@
-
 import { FaceApiService } from '@app/core/service/face-api-service/face-api.service';
 import { Component, ViewChild, OnInit, OnDestroy } from '@angular/core';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
 import { Storage, ref, uploadBytesResumable, getDownloadURL } from '@angular/fire/storage';
 import { ToastrService } from 'ngx-toastr';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 
 import { Country } from '@app/core/models/country-model/country.model';
@@ -48,28 +42,25 @@ export class EditUserComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private storage: Storage,
     private faceApiService: FaceApiService
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
-    this.faceApiService.getFunctionUpload()
+    this.faceApiService
+      .getFunctionUpload()
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(() => {
         this.startUpload();
       });
 
-
     this.userValidations();
     this.fetchCountry();
     this.getUserInfo();
-
   }
 
   ngOnDestroy(): void {
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
   }
-
 
   showError(message) {
     this.toastr.error(message, 'Error!');
@@ -97,7 +88,7 @@ export class EditUserComponent implements OnInit, OnDestroy {
       beneficiary_name: [],
       legal_authorized_first: [],
       legal_authorized_second: [],
-      side: []
+      side: [],
     });
   }
 
@@ -126,7 +117,7 @@ export class EditUserComponent implements OnInit, OnDestroy {
 
     if (affiliate.beneficiary_name) {
       this.updateUserForm.get('beneficiary_name').setValue(affiliate.beneficiary_name);
-      this.updateUserForm.get('beneficiary_name').disable();
+      // this.updateUserForm.get('beneficiary_name').disable();
     }
 
     if (affiliate.legal_authorized_first) {
@@ -160,14 +151,12 @@ export class EditUserComponent implements OnInit, OnDestroy {
     });
   }
 
-  checkAndDisableInput() {
-
-  }
+  checkAndDisableInput() {}
 
   getUserInfo() {
     this.userCookie = this.authService.currentUserAffiliateValue;
     this.setValues(this.userCookie);
-    this.affiliateService.getAffiliateById(this.userCookie.id).subscribe((response) => {
+    this.affiliateService.getAffiliateById(this.userCookie.id).subscribe(response => {
       if (response.success) {
         this.user = response.data;
         this.setValues(this.user);
@@ -176,7 +165,7 @@ export class EditUserComponent implements OnInit, OnDestroy {
   }
 
   private fetchCountry() {
-    this.affiliateService.getCountries().subscribe((data) => {
+    this.affiliateService.getCountries().subscribe(data => {
       this.listcountry = data;
     });
   }
@@ -209,10 +198,9 @@ export class EditUserComponent implements OnInit, OnDestroy {
     userUpdate.id = this.user.id;
     this.affiliateService.updateUserProfile(userUpdate).subscribe((response: UserAffiliate) => {
       if (response !== null) {
-        this.showSuccess('The credentials is valid!');
+        this.showSuccess('La información se actualizó correctamente!');
         this.setValues(response);
-      }
-      else {
+      } else {
         this.showError('Error!');
       }
     });
@@ -257,7 +245,6 @@ export class EditUserComponent implements OnInit, OnDestroy {
         // this.authService.setUserAffiliateValue(this.user);
       }
       // });
-
     } else {
       this.showError('Error: demasiados archivos seleccionados.');
       this.updateCardIdAuthorization(0);
@@ -311,7 +298,8 @@ export class EditUserComponent implements OnInit, OnDestroy {
     this.isUploadCompleted = false;
     this.uploadTask = uploadBytesResumable(this.fileRef, this.files[0]);
 
-    this.uploadTask.on('state_changed',
+    this.uploadTask.on(
+      'state_changed',
       snapshot => this.updateProgress(snapshot),
       error => this.handleError(error),
       () => this.handleComplete()
@@ -330,9 +318,8 @@ export class EditUserComponent implements OnInit, OnDestroy {
       },
       error: () => {
         this.toastr.error('error');
-
       },
-    })
+    });
   }
 
   deleteFile(index: number): void {
@@ -343,16 +330,16 @@ export class EditUserComponent implements OnInit, OnDestroy {
 
   updateCardIdAuthorization(option: number) {
     this.affiliateService.updateCardIdAuthorization(this.user.id, option).subscribe({
-      next: (value) => {
+      next: value => {
         if (value.card_id_authorization) {
           this.showSuccess('Afiliado verificado correctamente');
         } else {
-          this.showError('Su verificación se encuentra pendiente')
+          this.showError('Su verificación se encuentra pendiente');
         }
       },
-      error: (err) => {
-        this.showError('No se pudo verificar el afiliado')
+      error: err => {
+        this.showError('No se pudo verificar el afiliado');
       },
-    })
+    });
   }
 }
