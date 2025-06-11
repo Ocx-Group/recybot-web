@@ -125,14 +125,14 @@
                   <ngx-datatable-column name="{{ 'WALLET-PAGE.CREDIT-COLUMN.TEXT' | translate }}">
                     <ng-template let-row="row" ngx-datatable-cell-template>
                       <div class="col-green">
-                        {{ row.credit }}
+                        {{ row.credit | truncateDecimals:2 }}
                       </div>
                     </ng-template>
                   </ngx-datatable-column>
                   <ngx-datatable-column name="{{ 'WALLET-PAGE.DEBIT-COLUMN.TEXT' | translate }}">
                     <ng-template let-row="row" ngx-datatable-cell-template>
                       <div class="col-red">
-                        {{ row.debit }}
+                        {{ row.debit | truncateDecimals:2 }}
                       </div>
                     </ng-template>
                   </ngx-datatable-column>
