@@ -1202,6 +1202,54 @@
       "TEXT": "Pack pasivos"
     }
   },
+  "EDIT-PROFILE": {
+    "ADD_COMBINATION": "Agregar Combinación",
+    "ADDITIONAL_FIELDS": "Campos Adicionales para el beneficiario",
+    "ADDRESS": "Dirección",
+    "ATTRIBUTE": "Atributo",
+    "BENEFICIARY_EMAIL": "Correo del beneficiario",
+    "BENEFICIARY_NAME": "Nombre de Beneficiario",
+    "BENEFICIARY_PHONE": "Teléfono del beneficiario",
+    "BIRTHDAY": "Fecha de Nacimiento",
+    "COLUMN_ATTRIBUTE": "Atributo - valor par",
+    "COLUMN_DELETE": "Eliminar",
+    "COLUMN_REFERENCE": "Referencia",
+    "COLUMN_STOCK": "Existencias",
+    "COMBINATION": "Combinación",
+    "COMBINATIONS_LIST": "Lista de Combinaciones",
+    "COUNTRY": "País",
+    "EMAIL": "Correo",
+    "FATHER": "Patrocinador",
+    "IDENTIFICATION": "Nro de Identificación",
+    "INFO_ALERT_LIST": {
+      "ITEM1": "1) Se debe subir una foto de su rostro tipo selfie.",
+      "ITEM2": "2) Se debe subir el documento de identidad asociado a su país en anverso.",
+      "ITEM3": "3) La cantidad máxima de archivos a cargar es 2.",
+      "ITEM4": "4) El sistema verifica automáticamente la documentación; en caso de ser rechazada, será atendido por el área administrativa en un plazo máximo de 72hrs.",
+      "ITEM5": "5) La capacidad máxima y obligatoria de archivos a cargar es 28.4 megas (Formatos permitidos: jpg, png, pdf)."
+    },
+    "INFO_ALERT_TITLE": "Información importante sobre los documentos",
+    "LAST_NAME": "Apellido",
+    "MAIN_DATA": "Datos Principales",
+    "NAME": "Nombre",
+    "PHONE": "Teléfono",
+    "REFERENCE": "Referencia",
+    "REGISTER_DATE": "Fecha de Registro",
+    "REQUIRED_ATTRIBUTE": "El atributo es requerido.",
+    "SAVE": "Guardar",
+    "SAVE_CHANGES": "Guardar Cambios",
+    "SECONDARY_DATA": "Datos Secundarios",
+    "SELECT_OPTION": "Seleccione una opción",
+    "TAB1": "Datos de Perfil",
+    "TAB2": "Documentos del Afiliado",
+    "TITLE": {
+      "TEXT": "Editar Datos de Perfil"
+    },
+    "UPLOAD_ID_IMAGE": "Imagen de identificación",
+    "USERNAME": "Usuario",
+    "VALUE": "Valor",
+    "ZIP_CODE": "Código Postal"
+  },
   "EDUCATIONAL-COURSES": {
     "ACADEMY-TRADING": {
       "TEXT": "Academia de Trading"

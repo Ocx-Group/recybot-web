@@ -1205,6 +1205,54 @@
       "TEXT": "Passive pack"
     }
   },
+  "EDIT-PROFILE": {
+    "ADD_COMBINATION": "Add Combination",
+    "ADDITIONAL_FIELDS": "Additional Fields for Beneficiary",
+    "ADDRESS": "Address",
+    "ATTRIBUTE": "Attribute",
+    "BENEFICIARY_EMAIL": "Beneficiary Email",
+    "BENEFICIARY_NAME": "Beneficiary Name",
+    "BENEFICIARY_PHONE": "Beneficiary Phone",
+    "BIRTHDAY": "Date of Birth",
+    "COLUMN_ATTRIBUTE": "Attribute - value pair",
+    "COLUMN_DELETE": "Delete",
+    "COLUMN_REFERENCE": "Reference",
+    "COLUMN_STOCK": "Stock",
+    "COMBINATION": "Combination",
+    "COMBINATIONS_LIST": "Combinations List",
+    "COUNTRY": "Country",
+    "EMAIL": "Email",
+    "FATHER": "Sponsor",
+    "IDENTIFICATION": "ID Number",
+    "INFO_ALERT_LIST": {
+      "ITEM1": "1) A selfie photo of your face must be uploaded.",
+      "ITEM2": "2) Upload the front side of your national ID.",
+      "ITEM3": "3) The maximum number of files to upload is 2.",
+      "ITEM4": "4) The system automatically verifies the documentation; if rejected, it will be reviewed by the administrative area within 72 hours.",
+      "ITEM5": "5) The maximum required file size is 28.4 MB (Allowed formats: jpg, png, pdf)."
+    },
+    "INFO_ALERT_TITLE": "Important Information About Documents",
+    "LAST_NAME": "Last Name",
+    "MAIN_DATA": "Main Information",
+    "NAME": "First Name",
+    "PHONE": "Phone",
+    "REFERENCE": "Reference",
+    "REGISTER_DATE": "Registration Date",
+    "REQUIRED_ATTRIBUTE": "The attribute is required.",
+    "SAVE": "Save",
+    "SAVE_CHANGES": "Save Changes",
+    "SECONDARY_DATA": "Secondary Information",
+    "SELECT_OPTION": "Select an option",
+    "TAB1": "Profile Data",
+    "TAB2": "Member Documents",
+    "TITLE": {
+      "TEXT": "Edit Profile Data"
+    },
+    "UPLOAD_ID_IMAGE": "ID Image",
+    "USERNAME": "Username",
+    "VALUE": "Value",
+    "ZIP_CODE": "Zip Code"
+  },
   "EDUCATIONAL-COURSES": {
     "ACADEMY-TRADING": {
       "TEXT": "Academy Trading"

@@ -1,4 +1,4 @@
-import { Country } from "../country-model/country.model";
+import { Country } from '../country-model/country.model';
 
 export class UserAffiliate {
   id: number;
@@ -44,6 +44,8 @@ export class UserAffiliate {
   updated_at?: Date;
   termsConditions: boolean;
   message_alert?: number;
+  beneficiary_email?: string;
+  beneficiary_phone?: string;
 
   constructor() {
     this.id = 0;
@@ -78,5 +80,7 @@ export class UserAffiliate {
     this.external_product_id = 0;
     this.image_id_path = '';
     this.termsConditions = false;
+    this.beneficiary_email = '';
+    this.beneficiary_phone = '';
   }
 }

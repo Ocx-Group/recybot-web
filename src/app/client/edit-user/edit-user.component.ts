@@ -89,6 +89,8 @@ export class EditUserComponent implements OnInit, OnDestroy {
       legal_authorized_first: [],
       legal_authorized_second: [],
       side: [],
+      beneficiary_email: [],
+      beneficiary_phone: [],
     });
   }
 
@@ -148,6 +150,8 @@ export class EditUserComponent implements OnInit, OnDestroy {
       beneficiary_name: affiliate.beneficiary_name ?? '',
       legal_authorized_first: affiliate.legal_authorized_first ?? '',
       legal_authorized_second: affiliate.legal_authorized_second ?? '',
+      beneficiary_email: affiliate.beneficiary_email ?? '',
+      beneficiary_phone: affiliate.beneficiary_phone ?? '',
     });
   }
 
@@ -193,9 +197,11 @@ export class EditUserComponent implements OnInit, OnDestroy {
     userUpdate.tax_id = this.updateUserForm.get('tax_id').value;
     userUpdate.beneficiary_name = this.updateUserForm.get('beneficiary_name').value;
     userUpdate.legal_authorized_first = this.updateUserForm.get('legal_authorized_first').value;
-
     userUpdate.legal_authorized_second = this.updateUserForm.get('legal_authorized_second').value;
     userUpdate.id = this.user.id;
+    userUpdate.beneficiary_email = this.updateUserForm.get('beneficiary_email').value;
+    userUpdate.beneficiary_phone = this.updateUserForm.get('beneficiary_phone').value;
+
     this.affiliateService.updateUserProfile(userUpdate).subscribe((response: UserAffiliate) => {
       if (response !== null) {
         this.showSuccess('La información se actualizó correctamente!');
