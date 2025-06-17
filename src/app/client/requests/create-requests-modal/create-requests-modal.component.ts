@@ -14,6 +14,7 @@ import { WalletWithdrawalsConfiguration } from '@app/core/models/wallet-withdraw
 import { AffiliateBtcService } from '@app/core/service/affiliate-btc-service/affiliate-btc.service';
 import { AffiliateBtc } from '@app/core/models/affiliate-btc-model/affiliate-btc.model';
 import { Response } from '@app/core/models/response-model/response.model';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-create-requests-modal',
@@ -109,13 +110,15 @@ export class CreateRequestsModalComponent implements OnInit {
           this.modalService.dismissAll();
           this.loadWalletRequest.emit();
           this.setAvailableBalance.emit();
-        } else if (resp.success == false) {
-          this.showError(resp.message);
-          this.sendRequest.reset();
         }
       },
-      error: err => {
-        this.showError('Ha ocurrido un error al procesar su solicitud.');
+      error: (err: HttpErrorResponse) => {
+        if (err.error && err.error.success === false) {
+          this.showError(err.error.message);
+          this.sendRequest.reset();
+        } else {
+          this.showError('Ha ocurrido un error al procesar su solicitud.');
+        }
       },
     });
   }
