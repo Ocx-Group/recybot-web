@@ -6,24 +6,30 @@ import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute } from '@angular/router';
 import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
 import { AffiliateService } from '@app/core/service/affiliate-service/affiliate.service';
-import { PdfViewerService } from "@app/core/service/pdf-viewer-service/pdf-viewer.service";
-import { PdfViewerComponent } from "@app/shared/components/pdf-viewer/pdf-viewer.component";
+import { PdfViewerService } from '@app/core/service/pdf-viewer-service/pdf-viewer.service';
+import { PdfViewerComponent } from '@app/shared/components/pdf-viewer/pdf-viewer.component';
 
 @Component({
   selector: 'app-home',
   templateUrl: './landing-page.component.html',
-  styleUrls: ['./landing-page.component.scss',],
+  styleUrls: ['./landing-page.component.scss'],
   animations: [
     trigger('slideInOut', [
-      state('in', style({
-        transform: 'translateX(0)'
-      })),
-      state('out', style({
-        transform: 'translateX(100%)'
-      })),
+      state(
+        'in',
+        style({
+          transform: 'translateX(0)',
+        })
+      ),
+      state(
+        'out',
+        style({
+          transform: 'translateX(100%)',
+        })
+      ),
       transition('in => out', animate('300ms ease-in-out')),
-      transition('out => in', animate('300ms ease-in-out'))
-    ])
+      transition('out => in', animate('300ms ease-in-out')),
+    ]),
   ],
   encapsulation: ViewEncapsulation.ShadowDom,
   providers: [ToastrService],
@@ -33,43 +39,38 @@ export class LandingPageComponent implements OnInit, OnDestroy {
   documents = {
     whitePaper: {
       url: '/assets/pdf/WHITEPAPER.pdf',
-      title: 'White Paper - RecyCoin'
+      title: 'White Paper - RecyCoin',
     },
     legalDoc: {
       url: '/assets/pdf/LEGAL-DOCUMENTATION.pdf',
-      title: 'Documentos Legales - RecyCoin'
+      title: 'Documentos Legales - RecyCoin',
     },
     recycoinProject: {
       url: '/assets/pdf/PROJECT.pdf',
-      title: 'Proyecto RecyCoin'
-    }
+      title: 'Proyecto RecyCoin',
+    },
   };
   @ViewChild('whitePaperModal') whitePaperModal!: PdfViewerComponent;
   @ViewChild('legalDocsModal') legalDocsModal!: PdfViewerComponent;
   showVideoModal: boolean = false;
   currentVideoUrl: string = '';
-  currentLang: string = 'en'
+  currentLang: string = 'en';
   isLanguageDropdownOpen: boolean = false;
   key: string = '';
   videos = {
     es: {
-      url: 'wbSMwTLqtp0',
-      title: 'Ver Video Informativo'
+      url: 'YrHUEyq9cyY',
+      title: 'Ver Video Informativo',
     },
     en: {
-      url: 'wbSMwTLqtp0',
-      title: 'Watch Information Video'
-    }
+      url: 'YrHUEyq9cyY',
+      title: 'Watch Information Video',
+    },
   };
   isPreviewHovered: boolean = false;
   user: UserAffiliate | null = null;
 
-  constructor(
-    private pdfViewerService: PdfViewerService,
-    private translate: TranslateService,
-    private activatedRoute: ActivatedRoute,
-    private affiliateService: AffiliateService) {
-
+  constructor(private pdfViewerService: PdfViewerService, private translate: TranslateService, private activatedRoute: ActivatedRoute, private affiliateService: AffiliateService) {
     translate.setDefaultLang('en');
     this.currentLang = translate.currentLang || 'en';
     this.key = this.activatedRoute.snapshot.params.key;
@@ -96,7 +97,6 @@ export class LandingPageComponent implements OnInit, OnDestroy {
     this.closeVideo();
   }
 
-
   triggerAutomaticVideo(): void {
     this.showPreview();
     this.showVideo();
@@ -104,12 +104,11 @@ export class LandingPageComponent implements OnInit, OnDestroy {
 
   getUserByUsername(key: string) {
     if (!key) return;
-    this.affiliateService.getAffiliateByUserName(key).subscribe(
-      (user: UserAffiliate) => {
-        if (user !== null) {
-          this.user = user;
-        }
-      });
+    this.affiliateService.getAffiliateByUserName(key).subscribe((user: UserAffiliate) => {
+      if (user !== null) {
+        this.user = user;
+      }
+    });
   }
 
   changeLanguage(lang: string) {
@@ -143,7 +142,7 @@ export class LandingPageComponent implements OnInit, OnDestroy {
   }
 
   openNewTab(url: string) {
-    window.open(url, '_blank')
+    window.open(url, '_blank');
   }
 
   showVideo(): void {
@@ -168,4 +167,3 @@ export class LandingPageComponent implements OnInit, OnDestroy {
     this.isPreviewHovered = false;
   }
 }
-
