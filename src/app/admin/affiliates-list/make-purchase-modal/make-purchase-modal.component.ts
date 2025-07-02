@@ -1,4 +1,3 @@
-
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Product } from '@app/core/models/product-model/product.model';
@@ -13,7 +12,7 @@ import Swal from 'sweetalert2';
 @Component({
   selector: 'app-make-purchase-modal',
   templateUrl: './make-purchase-modal.component.html',
-  styleUrls: ['./make-purchase-modal.component.sass']
+  styleUrls: ['./make-purchase-modal.component.sass'],
 })
 export class MakePurchaseModalComponent implements OnInit {
   makePurchaseForm: FormGroup;
@@ -24,11 +23,7 @@ export class MakePurchaseModalComponent implements OnInit {
   public productList: any;
   public filterCategory: any;
 
-  constructor(private modalService: NgbModal,
-    private walletService: WalletService,
-    private toastr: ToastrService,
-    private productService: ProductService) {
-  }
+  constructor(private modalService: NgbModal, private walletService: WalletService, private toastr: ToastrService, private productService: ProductService) {}
 
   ngOnInit(): void {
     this.loadAllEcoPooles();
@@ -38,7 +33,7 @@ export class MakePurchaseModalComponent implements OnInit {
   initMakePurchaseForm() {
     this.makePurchaseForm = new FormGroup({
       selectedProduct: new FormControl('', Validators.required),
-      quantity: new FormControl(1, Validators.required)
+      quantity: new FormControl(1, Validators.required),
     });
   }
 
@@ -67,7 +62,7 @@ export class MakePurchaseModalComponent implements OnInit {
     });
 
     this.walletService.payWithMyBalanceAdmin(this.walletRequest).subscribe({
-      next: (value) => {
+      next: value => {
         if (value.success == true) {
           this.showSuccess('Pago realizado correctamente');
           this.walletRequest.productsList = [];
@@ -77,7 +72,7 @@ export class MakePurchaseModalComponent implements OnInit {
           this.showError('Error: No se pudo realizar el pago.');
         }
       },
-      error: (err) => {
+      error: err => {
         this.showError('Error: No se pudo realizar el pago.');
       },
     });
@@ -111,7 +106,7 @@ export class MakePurchaseModalComponent implements OnInit {
     } else {
       this.products.push({
         ...selectedProduct,
-        quantity: quantity
+        quantity: quantity,
       });
     }
 
@@ -132,8 +127,8 @@ export class MakePurchaseModalComponent implements OnInit {
       icon: 'warning',
       showCancelButton: true,
       confirmButtonText: 'Sí, comprar!',
-      cancelButtonText: 'Cancelar'
-    }).then((result) => {
+      cancelButtonText: 'Cancelar',
+    }).then(result => {
       if (result.isConfirmed) {
         this.processPayment(option);
       }

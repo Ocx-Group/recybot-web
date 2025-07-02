@@ -18,7 +18,9 @@
         <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
           <label>Producto <span class="text-danger">*</span></label>
           <select class="form-control" formControlName="selectedProduct">
-            <option *ngFor="let product of productList" [value]="product.id">{{product.name}}</option>
+            <option *ngFor="let product of productList" [value]="product.id">{{product.name}} --- {{ product.salePrice
+              }}
+            </option>
           </select>
         </div>
         <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
@@ -30,7 +32,7 @@
         <h5>Productos agregados:</h5>
         <ul>
           <li *ngFor="let item of products">
-            Producto: {{ item.name }} --- Cantidad: {{ item.quantity }}
+            Producto: {{ item.name }} --- Monto: {{ item.salePrice }} --- Cantidad: {{ item.quantity }}
             <button type="button" class="btn btn-sm btn-danger mt-2" (click)="removeProductFromList(item)">
               <i class="material-icons">delete</i>
             </button>
