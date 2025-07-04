@@ -39,7 +39,7 @@ export class ThirdPartyPurchaseComponent implements OnInit, OnDestroy {
   @Input() recycoins: Product[];
   @Output() purchaseAction = new EventEmitter<any>();
   matrixConfigurations: any[] = [];
-
+  @Input() isReachedWithdrawalLimit: boolean = false;
   protected userReceivingPurchase: UserAffiliate;
   public currentUser: UserAffiliate;
 
@@ -69,7 +69,7 @@ export class ThirdPartyPurchaseComponent implements OnInit, OnDestroy {
     private matrixConfigurationService: MatrixConfigurationService,
     private matrixQualificationService: MatrixQualificationService,
     private spinnerService: NgxSpinnerService,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
   ) {}
 
   ngOnInit(): void {
@@ -111,9 +111,7 @@ export class ThirdPartyPurchaseComponent implements OnInit, OnDestroy {
   }
 
   toggleSelection(recycoin: Product): void {
-    const index = this.selectedItems.findIndex(
-      (item) => item.id === recycoin.id
-    );
+    const index = this.selectedItems.findIndex(item => item.id === recycoin.id);
     if (index > -1) this.selectedItems.splice(index, 1);
     else this.selectedItems.push(recycoin);
   }
@@ -153,7 +151,7 @@ export class ThirdPartyPurchaseComponent implements OnInit, OnDestroy {
     navigator.clipboard
       .writeText(text)
       .then(() => this.showSuccess('Texto copiado al portapeles'))
-      .catch((err) => console.error('Error al copiar texto: ', err));
+      .catch(err => console.error('Error al copiar texto: ', err));
   }
 
   private resetModalState(): void {
@@ -170,8 +168,8 @@ export class ThirdPartyPurchaseComponent implements OnInit, OnDestroy {
     this.walletService
       .getBalanceInformationByAffiliateId(this.currentUser.id)
       .subscribe({
-        next: (balance) => (this.walletBalance = balance.availableBalance),
-        error: (err) => {
+        next: balance => (this.walletBalance = balance.availableBalance),
+        error: err => {
           console.error('Error fetching wallet balance:', err);
           this.showError('Error al obtener el saldo de la billetera');
         },
@@ -196,7 +194,7 @@ export class ThirdPartyPurchaseComponent implements OnInit, OnDestroy {
     const request = this.prepareWalletRequest();
     if (this.walletBalance >= this.getTotalAmount()) {
       this.walletService.payWithMyBalanceForOthers(request).subscribe({
-        next: (response) => {
+        next: response => {
           console.log(response);
           if (response.success) {
             this.showSuccess('Pago realizado con éxito');
@@ -217,7 +215,7 @@ export class ThirdPartyPurchaseComponent implements OnInit, OnDestroy {
       affiliateId: this.userReceivingPurchase.id,
       userName: this.userReceivingPurchase.user_name,
       amount: this.getTotalAmount(),
-      products: this.selectedItems.map((product) => ({
+      products: this.selectedItems.map(product => ({
         productId: product.id,
         quantity: 1,
       })),
@@ -231,7 +229,7 @@ export class ThirdPartyPurchaseComponent implements OnInit, OnDestroy {
     request.affiliateId = this.currentUser.id;
     request.affiliateUserName = this.currentUser.user_name;
     request.purchaseFor = this.userReceivingPurchase.id;
-    request.productsList = this.selectedItems.map((product) => ({
+    request.productsList = this.selectedItems.map(product => ({
       idProduct: product.id,
       count: 1,
     }));
@@ -247,7 +245,7 @@ export class ThirdPartyPurchaseComponent implements OnInit, OnDestroy {
     } else {
       console.error('Invalid response structure:', response);
       this.showError(
-        'Error al crear la transacción: dirección de pago no disponible'
+        'Error al crear la transacción: dirección de pago no disponible',
       );
     }
   }
@@ -259,14 +257,14 @@ export class ThirdPartyPurchaseComponent implements OnInit, OnDestroy {
 
   private generateQRCode(address: string): void {
     QRCode.toDataURL(address)
-      .then((url) => {
+      .then(url => {
         this.zone.run(() => {
           this.qrCodeData = url;
           this.cdr.detectChanges();
         });
       })
-      .catch((err) =>
-        this.showError('Error al generar el código QR: ' + err.message)
+      .catch(err =>
+        this.showError('Error al generar el código QR: ' + err.message),
       );
   }
 
@@ -274,18 +272,18 @@ export class ThirdPartyPurchaseComponent implements OnInit, OnDestroy {
     this.pollingSubscription = timer(0, this.POLLING_INTERVAL)
       .pipe(
         switchMap(() =>
-          this.coinpayService.getTransactionByReference(reference)
-        )
+          this.coinpayService.getTransactionByReference(reference),
+        ),
       )
       .subscribe({
-        next: (response) => {
+        next: response => {
           if (response.data === true) {
             this.showSuccess('Pago confirmado');
             this.stopTransactionStatusPolling();
             this.cleanAndCloseModal();
           }
         },
-        error: (error) => {
+        error: error => {
           console.error('Error al obtener el estado de la transacción:', error);
           this.showError('Error al verificar el estado del pago');
           this.stopTransactionStatusPolling();
@@ -315,13 +313,13 @@ export class ThirdPartyPurchaseComponent implements OnInit, OnDestroy {
   }
 
   isSelected(recycoin: Product): boolean {
-    return this.selectedItems.some((item) => item.id === recycoin.id);
+    return this.selectedItems.some(item => item.id === recycoin.id);
   }
 
   getTotalAmount(): number {
     return this.selectedItems.reduce(
       (total, item) => total + item.baseAmount,
-      0
+      0,
     );
   }
 
@@ -378,14 +376,14 @@ export class ThirdPartyPurchaseComponent implements OnInit, OnDestroy {
       confirmButtonText: 'Sí, activar',
       cancelButtonText: 'Cancelar',
       reverseButtons: true,
-    }).then((result) => {
+    }).then(result => {
       if (!result.isConfirmed) return;
 
       this.spinnerService.show();
       this.matrixQualificationService
         .processDirectPaymentMatrixActivation(request)
         .subscribe({
-          next: (response) => {
+          next: response => {
             this.spinnerService.hide();
             if (response) {
               this.successMessage('Matriz activada con éxito.');
@@ -394,7 +392,7 @@ export class ThirdPartyPurchaseComponent implements OnInit, OnDestroy {
               this.errorMessage('Error al activar la matriz.');
             }
           },
-          error: (error) => {
+          error: error => {
             this.spinnerService.hide();
             console.error('Error en la activación:', error);
             this.errorMessage('Error en la activación de la matriz.');
@@ -405,11 +403,10 @@ export class ThirdPartyPurchaseComponent implements OnInit, OnDestroy {
 
   getAllMatrixConfigurations() {
     this.matrixConfigurationService.getAllMatrixConfigurations().subscribe({
-      next: (config) => {
-        console.log('config:', config);
+      next: config => {
         this.matrixConfigurations = config;
       },
-      error: (err) => {
+      error: err => {
         console.error('Error', err);
       },
     });

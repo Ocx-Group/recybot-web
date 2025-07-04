@@ -9,6 +9,7 @@ import { ConfigurationService } from '@app/core/service/configuration-service/co
 import { WalletRequestService } from '@app/core/service/wallet-request/wallet-request.service';
 import { WalletService } from '@app/core/service/wallet-service/wallet.service';
 import { ToastrService } from 'ngx-toastr';
+import { MatrixQualificationService } from '@app/core/service/matrix-qualification-service/matrix-qualification.service';
 
 @Component({
   selector: 'app-requests',
@@ -17,13 +18,14 @@ import { ToastrService } from 'ngx-toastr';
 export class RequestsComponent implements OnInit {
   user: UserAffiliate = new UserAffiliate();
   balanceInfo: BalanceInformation = new BalanceInformation();
-  walletWithdrawalsConfig: WalletWithdrawalsConfiguration = new WalletWithdrawalsConfiguration();
+  walletWithdrawalsConfig: WalletWithdrawalsConfiguration =
+    new WalletWithdrawalsConfiguration();
   rows = [];
   temp = [];
   loadingIndicator = true;
   reorderable = true;
   scrollBarHorizontal = window.innerWidth < 1200;
-
+  isReachedWithdrawalLimit: boolean = false;
   @ViewChild('table') table: DatatableComponent;
 
   constructor(
@@ -31,8 +33,9 @@ export class RequestsComponent implements OnInit {
     private authService: AuthService,
     private toastr: ToastrService,
     private configurationService: ConfigurationService,
-    private walletService: WalletService
-  ) { }
+    private walletService: WalletService,
+    private matrixQualificationService: MatrixQualificationService,
+  ) {}
 
   ngOnInit(): void {
     this.getUserInfo();
@@ -45,36 +48,37 @@ export class RequestsComponent implements OnInit {
     this.walletRequestService
       .getWalletRequestByAffiliateId(this.user.id)
       .subscribe({
-        next: (resp) => {
+        next: resp => {
           if (resp != null) {
             this.temp = [...resp];
             this.rows = resp;
           }
           this.loadingIndicator = false;
         },
-        error: (err) => {
+        error: err => {
           this.showError('Error');
         },
       });
   }
 
   setAvailableBalance() {
-    this.walletService.getBalanceInformationByAffiliateId(this.user.id).subscribe(balanceInfo => {
-      this.balanceInfo = balanceInfo;
-    });
+    this.walletService
+      .getBalanceInformationByAffiliateId(this.user.id)
+      .subscribe(balanceInfo => {
+        this.balanceInfo = balanceInfo;
+      });
   }
 
   private loadWalletWithdrawalConfiguration() {
     this.configurationService.getWithdrawalsWalletConfiguration().subscribe({
-      next: (resp) => {
+      next: resp => {
         this.walletWithdrawalsConfig.minimum_amount = resp.minimum_amount;
         this.walletWithdrawalsConfig.maximum_amount = resp.maximum_amount;
       },
-      error: (err) => {
+      error: err => {
         this.showError('Error');
       },
-    })
-
+    });
   }
 
   @HostListener('window:resize', ['$event'])
@@ -101,13 +105,31 @@ export class RequestsComponent implements OnInit {
 
   getUserInfo() {
     this.authService.currentUserAffiliate.subscribe({
-      next: (value) => {
+      next: value => {
         this.user = value;
-      }
+        this.hasReachedWithdrawalLimit(this.user.id);
+      },
     });
   }
 
   showError(message) {
     this.toastr.error(message);
+  }
+
+  hasReachedWithdrawalLimit(userId: number) {
+    this.matrixQualificationService
+      .hasReachedWithdrawalLimit(userId)
+      .subscribe({
+        next: value => {
+          if (value.success) {
+            this.isReachedWithdrawalLimit = value.data;
+          } else {
+            this.isReachedWithdrawalLimit = false;
+          }
+        },
+        error: err => {
+          console.error(err);
+        },
+      });
   }
 }

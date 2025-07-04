@@ -86,7 +86,7 @@
                   <div class="col-sm-1">
                     <div class="header-buttons-left">
                       <div class="tbl-btn-style">
-                        <button class="btn btn-primary"
+                        <button class="btn btn-primary" *ngIf="!isReachedWithdrawalLimit"
                           (click)="modalChildCreate.openCreateRequestModal(modalChildCreate['createRequestModal'])">
                           {{'REQUESTS-PAGE.PROCESS-PAYMENT.TEXT' | translate}}
                         </button>

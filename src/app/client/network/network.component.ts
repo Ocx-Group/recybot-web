@@ -1,42 +1,43 @@
-import {ThirdPartyPurchaseComponent} from './third-party-purchase/third-party-purchase.component';
-import {TranslateService} from '@ngx-translate/core';
+import { ThirdPartyPurchaseComponent } from './third-party-purchase/third-party-purchase.component';
+import { TranslateService } from '@ngx-translate/core';
 import Swal from 'sweetalert2';
-import {Component, HostListener, OnInit, ViewChild} from '@angular/core';
-import {DatatableComponent} from '@swimlane/ngx-datatable';
-import {Observable, Subject, takeUntil} from 'rxjs';
-import {Router} from '@angular/router';
+import {
+  Component,
+  HostListener,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
+import { DatatableComponent } from '@swimlane/ngx-datatable';
+import { Observable, Subject, takeUntil } from 'rxjs';
+import { Router } from '@angular/router';
 import html2canvas from 'html2canvas';
 import JSPDF from 'jspdf';
 
-import {NetworkAffiliate} from '@app/core/models/network-affiliate/network.affiliate.model';
-import {AffiliateService} from '@app/core/service/affiliate-service/affiliate.service';
-import {UserAffiliate} from '@app/core/models/user-affiliate-model/user.affiliate.model';
-import {Grading} from '@app/core/models/grading-model/grading.model';
-import {GradingService} from '@app/core/service/grading-service/grading.service';
-import {AuthService} from '@app/core/service/authentication-service/auth.service';
-import {WalletService} from '@app/core/service/wallet-service/wallet.service';
-import {ToastrService} from 'ngx-toastr';
-import {TransferBalance} from '@app/core/models/wallet-model/transfer-balance.model';
-import {EncryptService} from '@app/core/service/encrypt-service/encrypt.service';
-import {ConfigurationService} from '@app/core/service/configuration-service/configuration.service';
-import {
-  WalletWithdrawalsConfiguration
-} from '@app/core/models/wallet-withdrawals-configuration-model/wallet-withdrawals-configuration.model';
-import {TruncateDecimalsPipe} from "@app/shared/truncate-decimals.pipe";
-import {
-  PagaditoTransactionDetailRequest
-} from '@app/core/models/pagadito-model/pagadito-transaction-detail-request.model';
-import {
-  CreatePagaditoTransactionRequest
-} from '@app/core/models/pagadito-model/create-pagadito-transaction-request.model';
-import {PagaditoService} from '@app/core/service/pagadito-service/pagadito.service';
-import {Product} from '@app/core/models/product-model/product.model';
-import {ProductService} from '@app/core/service/product-service/product.service';
-import {StatisticsInformation} from '@app/core/models/wallet-model/statisticsInformation';
+import { NetworkAffiliate } from '@app/core/models/network-affiliate/network.affiliate.model';
+import { AffiliateService } from '@app/core/service/affiliate-service/affiliate.service';
+import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
+import { Grading } from '@app/core/models/grading-model/grading.model';
+import { GradingService } from '@app/core/service/grading-service/grading.service';
+import { AuthService } from '@app/core/service/authentication-service/auth.service';
+import { WalletService } from '@app/core/service/wallet-service/wallet.service';
+import { ToastrService } from 'ngx-toastr';
+import { TransferBalance } from '@app/core/models/wallet-model/transfer-balance.model';
+import { EncryptService } from '@app/core/service/encrypt-service/encrypt.service';
+import { ConfigurationService } from '@app/core/service/configuration-service/configuration.service';
+import { WalletWithdrawalsConfiguration } from '@app/core/models/wallet-withdrawals-configuration-model/wallet-withdrawals-configuration.model';
+import { TruncateDecimalsPipe } from '@app/shared/truncate-decimals.pipe';
+import { PagaditoTransactionDetailRequest } from '@app/core/models/pagadito-model/pagadito-transaction-detail-request.model';
+import { CreatePagaditoTransactionRequest } from '@app/core/models/pagadito-model/create-pagadito-transaction-request.model';
+import { PagaditoService } from '@app/core/service/pagadito-service/pagadito.service';
+import { Product } from '@app/core/models/product-model/product.model';
+import { ProductService } from '@app/core/service/product-service/product.service';
+import { StatisticsInformation } from '@app/core/models/wallet-model/statisticsInformation';
+import { MatrixQualificationService } from '@app/core/service/matrix-qualification-service/matrix-qualification.service';
 
 @Component({
   selector: 'app-network',
-  templateUrl: './network.component.html'
+  templateUrl: './network.component.html',
 })
 export class NetworkComponent implements OnInit {
   isCollapsed = true;
@@ -63,6 +64,7 @@ export class NetworkComponent implements OnInit {
   @ViewChild('tableRef') table: DatatableComponent;
   @ViewChild('tableRefGlobal') tableRefGlobal: DatatableComponent;
   recycoins$: Observable<Product[]>;
+  isReachedWithdrawalLimit: boolean = false;
 
   constructor(
     private affiliateService: AffiliateService,
@@ -77,27 +79,35 @@ export class NetworkComponent implements OnInit {
     private truncatedDecimals: TruncateDecimalsPipe,
     private pagaditoService: PagaditoService,
     private productService: ProductService,
-  ) {
-  }
+    private matrixQualificationService: MatrixQualificationService,
+  ) {}
 
   ngOnInit() {
     this.loadingIndicatorGlobal = false;
-    this.loadAllMemberships()
-    this.authService.currentUserAffiliate.pipe(takeUntil(this.destroy$)).subscribe((user) => {
-      if (user.id) {
-        this.user = user;
-        this.affiliateService.changeId(this.user.id);
-        this.gradingService.getAll().pipe(takeUntil(this.destroy$)).subscribe((gradings: Grading[]) => {
-          this.gradings = gradings;
-        });
-
-        this.affiliateService.GetPersonalNetwork(user.id).pipe(takeUntil(this.destroy$)).subscribe((affiliates: NetworkAffiliate[]) => {
-          this.temp = [...affiliates];
-          this.rows = affiliates;
-        });
-      }
-      this.loadingIndicator = false;
-    });
+    this.loadAllMemberships();
+    this.authService.currentUserAffiliate
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(user => {
+        if (user.id) {
+          this.user = user;
+          this.affiliateService.changeId(this.user.id);
+          this.gradingService
+            .getAll()
+            .pipe(takeUntil(this.destroy$))
+            .subscribe((gradings: Grading[]) => {
+              this.gradings = gradings;
+            });
+          this.hasReachedWithdrawalLimit(this.user.id);
+          this.affiliateService
+            .GetPersonalNetwork(user.id)
+            .pipe(takeUntil(this.destroy$))
+            .subscribe((affiliates: NetworkAffiliate[]) => {
+              this.temp = [...affiliates];
+              this.rows = affiliates;
+            });
+        }
+        this.loadingIndicator = false;
+      });
 
     this.loadBalanceAvailable();
     this.loadWithdrawalConfiguration();
@@ -119,23 +129,24 @@ export class NetworkComponent implements OnInit {
   }
 
   loadBalanceAvailable() {
-    this.walletService.getBalanceInformationByAffiliateId(this.user.id).subscribe({
-      next: (value) => {
-        this.userBalance = value.availableBalance;
-      },
-      error: () => {
-        this.showError("Error");
-      },
-    })
+    this.walletService
+      .getBalanceInformationByAffiliateId(this.user.id)
+      .subscribe({
+        next: value => {
+          this.userBalance = value.availableBalance;
+        },
+        error: () => {
+          this.showError('Error');
+        },
+      });
   }
 
   loadAllMemberships() {
     this.productService.getAllMembership().subscribe({
-      next: (resp) => {
+      next: resp => {
         this.currentMembership = resp[0];
       },
-      error: () => {
-      },
+      error: () => {},
     });
   }
 
@@ -168,42 +179,49 @@ export class NetworkComponent implements OnInit {
     this.transferBalance.fromUserName = this.user.user_name;
     this.transferBalance.toUserName = user.userName || user.user_name;
 
-    this.walletService.transferBalanceForMembership(this.transferBalance).subscribe({
-      next: (value) => {
-        if (value) {
-          this.showSuccess("Transferencia realizada correctamente");
-        } else {
-          this.showError("Error, verifique que tenga saldo.");
-        }
-      },
-      error: () => {
-        this.showError("Error");
-      },
-    });
+    this.walletService
+      .transferBalanceForMembership(this.transferBalance)
+      .subscribe({
+        next: value => {
+          if (value) {
+            this.showSuccess('Transferencia realizada correctamente');
+          } else {
+            this.showError('Error, verifique que tenga saldo.');
+          }
+        },
+        error: () => {
+          this.showError('Error');
+        },
+      });
   }
 
   showConfirmationTransferBalanceForMembership(row) {
     this.generateVerificationCode();
     Swal.fire({
-      title: 'Ingrese el código de verificación que ha sido enviado a su correo electrónico.',
+      title:
+        'Ingrese el código de verificación que ha sido enviado a su correo electrónico.',
       html: `<input id = "swal-input-code" type="text" placeholder="Código de verificación" class="swal2-input">`,
       showCancelButton: true,
       confirmButtonText: 'Ok',
       cancelButtonText: 'Cancelar',
       preConfirm: () => {
-        const codeElement = Swal.getPopup().querySelector('#swal-input-code') as HTMLInputElement;
+        const codeElement = Swal.getPopup().querySelector(
+          '#swal-input-code',
+        ) as HTMLInputElement;
         if (!codeElement) return;
 
         const code = codeElement.value.trim();
         if (!code) {
-          Swal.showValidationMessage('Por favor ingrese el código de verificación');
+          Swal.showValidationMessage(
+            'Por favor ingrese el código de verificación',
+          );
         }
 
         this.transferBalance.securityCode = code;
 
         return code;
       },
-    }).then((result) => {
+    }).then(result => {
       if (result.isConfirmed) {
         this.TransferBalanceForMembership(row);
       }
@@ -213,12 +231,18 @@ export class NetworkComponent implements OnInit {
   showConfirmationTransferBalance(row) {
     this.generateVerificationCode();
 
-    let formattedBalance = this.truncatedDecimals.transform(this.userBalance, 2);
+    let formattedBalance = this.truncatedDecimals.transform(
+      this.userBalance,
+      2,
+    );
 
     Swal.fire({
-      title: 'Ingrese el código de verificación que ha sido enviado a su correo electrónico.',
+      title:
+        'Ingrese el código de verificación que ha sido enviado a su correo electrónico.',
       html: `
-    <span style="font-size: 18px;">Transferencia para <span style="color: #ff5733;">${row.userName || row.user_name}</span></span><br>
+    <span style="font-size: 18px;">Transferencia para <span style="color: #ff5733;">${
+      row.userName || row.user_name
+    }</span></span><br>
     <span style="font-size: 18px;">Saldo Disponible <span style="color: #ff5733;">${formattedBalance}</span></span>
       <input id="swal-input-amount" type="number" placeholder="Monto" min="0" step="0.01" class="swal2-input">
       <input id="swal-input-code" type="text" placeholder="Código de verificación" class="swal2-input">
@@ -226,19 +250,23 @@ export class NetworkComponent implements OnInit {
       showCancelButton: true,
       confirmButtonText: 'Transferir',
       cancelButtonText: 'Cancelar',
-      preConfirm: this.swalPreConfirm.bind(this)
+      preConfirm: this.swalPreConfirm.bind(this),
     })
       .then(result => {
         if (result.isConfirmed) {
           this.handleAmountEntry(result.value, row);
         }
       })
-      .catch(error => console.error("Error:", error));
+      .catch(error => console.error('Error:', error));
   }
 
   swalPreConfirm() {
-    const amountElement = Swal.getPopup().querySelector('#swal-input-amount') as HTMLInputElement;
-    const codeElement = Swal.getPopup().querySelector('#swal-input-code') as HTMLInputElement;
+    const amountElement = Swal.getPopup().querySelector(
+      '#swal-input-amount',
+    ) as HTMLInputElement;
+    const codeElement = Swal.getPopup().querySelector(
+      '#swal-input-code',
+    ) as HTMLInputElement;
 
     if (!amountElement || !codeElement) return;
 
@@ -253,7 +281,9 @@ export class NetworkComponent implements OnInit {
       Swal.showValidationMessage('Por favor ingrese el código de verificación');
     }
     if (amount > this.userBalance) {
-      Swal.showValidationMessage('El monto no puede ser mayor al saldo disponible');
+      Swal.showValidationMessage(
+        'El monto no puede ser mayor al saldo disponible',
+      );
     }
 
     return amount;
@@ -280,14 +310,16 @@ export class NetworkComponent implements OnInit {
       showCancelButton: true,
       confirmButtonText: 'Sí',
       cancelButtonText: 'No',
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.transferBalance.amount = amount;
-        this.TransferBalance(row);
-      }
-    }).catch(error => {
-      console.error("Error:", error);
-    });
+    })
+      .then(result => {
+        if (result.isConfirmed) {
+          this.transferBalance.amount = amount;
+          this.TransferBalance(row);
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
   }
 
   TransferBalance(user) {
@@ -299,7 +331,7 @@ export class NetworkComponent implements OnInit {
     }
     const result = this.encryptService.encryptObject(this.transferBalance);
     this.walletService.transferBalance(result).subscribe({
-      next: (value) => {
+      next: value => {
         if (value.success) {
           this.showSuccess(value.message);
         } else {
@@ -307,9 +339,9 @@ export class NetworkComponent implements OnInit {
         }
       },
       error: () => {
-        this.showError("Error");
+        this.showError('Error');
       },
-    })
+    });
   }
 
   setUserAffiliateByUserName(event: any) {
@@ -319,7 +351,7 @@ export class NetworkComponent implements OnInit {
   getUserAffiliateByUserName() {
     this.rowsGlobal = [];
     this.affiliateService.getAffiliateByUserName(this.userName).subscribe({
-      next: (value) => {
+      next: value => {
         if (value) {
           this.isNewUser = value.activation_date == null;
           this.rowsGlobal = [value];
@@ -332,8 +364,8 @@ export class NetworkComponent implements OnInit {
       },
       error: () => {
         this.showError('Error');
-      }
-    })
+      },
+    });
   }
 
   /*
@@ -343,7 +375,6 @@ export class NetworkComponent implements OnInit {
     }*/
 
   redirectToUnilevelTree() {
-
     this.route.navigate(['app/trees']).then();
   }
 
@@ -356,13 +387,13 @@ export class NetworkComponent implements OnInit {
       const pageWidth = 297;
       const imgWidth = pageWidth - 40;
 
-      const imgHeight = canvas.height * imgWidth / canvas.width;
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
       const posX = 20;
       const posY = 30;
 
       pdf.setFontSize(18);
-      pdf.text('Mi red', pageWidth / 2, 20, {align: 'center'});
+      pdf.text('Mi red', pageWidth / 2, 20, { align: 'center' });
 
       const contentDataURL = canvas.toDataURL('image/png');
       pdf.addImage(contentDataURL, 'PNG', posX, posY, imgWidth, imgHeight);
@@ -378,7 +409,7 @@ export class NetworkComponent implements OnInit {
         this.translateService.instant('NETWORK-PAGE.ROW-STATE.TEXT'),
         this.translateService.instant('NETWORK-PAGE.ROW-QUALIFICATION.TEXT'),
         this.translateService.instant('NETWORK-PAGE.ROW-EMAIL.TEXT'),
-        this.translateService.instant('NETWORK-PAGE.ROW-DETAIL.TEXT')
+        this.translateService.instant('NETWORK-PAGE.ROW-DETAIL.TEXT'),
       ];
 
       const data = rows.map(row => [
@@ -386,10 +417,12 @@ export class NetworkComponent implements OnInit {
         row.status ? 'Activa' : 'Cancelada',
         row.calification,
         row.email,
-        '...'
+        '...',
       ]);
 
-      const tableText = [headers, ...data].map(row => row.join('\t')).join('\n');
+      const tableText = [headers, ...data]
+        .map(row => row.join('\t'))
+        .join('\n');
       this.copyTextToClipboard(tableText);
     }
   }
@@ -403,7 +436,7 @@ export class NetworkComponent implements OnInit {
 
     try {
       document.execCommand('copy');
-      this.toastr.success('Se ha copiado al portapapeles')
+      this.toastr.success('Se ha copiado al portapapeles');
     } catch (err) {
       console.error('Error: ', err);
     }
@@ -413,41 +446,48 @@ export class NetworkComponent implements OnInit {
 
   loadWithdrawalConfiguration() {
     this.configurationService.getWithdrawalsWalletConfiguration().subscribe({
-      next: (value) => {
-        this.withdrawalConfiguration.activate_invoice_cancellation = value.activate_invoice_cancellation;
+      next: value => {
+        this.withdrawalConfiguration.activate_invoice_cancellation =
+          value.activate_invoice_cancellation;
       },
       error: () => {
         this.showError('Error');
       },
-    })
+    });
   }
 
   generateVerificationCode() {
-    this.affiliateService.generateVerificationCode(this.user.id, false).subscribe({
-      next: (value) => {
-        if (value.success) {
-          const toastConfig = {
-            positionClass: 'toast-top-center'
-          };
+    this.affiliateService
+      .generateVerificationCode(this.user.id, false)
+      .subscribe({
+        next: value => {
+          if (value.success) {
+            const toastConfig = {
+              positionClass: 'toast-top-center',
+            };
 
-          this.toastr.success('Se ha generado un código de seguridad, por favor revisa el correo electronico.', null, toastConfig);
-        }
-      },
-      error: () => {
-        this.showError('Error');
-      }
-    })
+            this.toastr.success(
+              'Se ha generado un código de seguridad, por favor revisa el correo electronico.',
+              null,
+              toastConfig,
+            );
+          }
+        },
+        error: () => {
+          this.showError('Error');
+        },
+      });
   }
 
   createPagaditoTransaction(row: UserAffiliate) {
-    this.pagaditoRequest.amount = this.currentMembership.salePrice * 1.10;
+    this.pagaditoRequest.amount = this.currentMembership.salePrice * 1.1;
     this.pagaditoRequest.affiliate_id = row.id;
 
     let detail = new PagaditoTransactionDetailRequest();
     detail.quantity = 1;
     detail.description = this.currentMembership.description;
 
-    detail.price = this.currentMembership.salePrice * 1.10;
+    detail.price = this.currentMembership.salePrice * 1.1;
     detail.url_product = this.currentMembership.id.toString();
 
     this.pagaditoRequest.details.push(detail);
@@ -460,8 +500,8 @@ export class NetworkComponent implements OnInit {
       cancelButtonText: 'Cancelar',
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Sí, realizar pago'
-    }).then((result) => {
+      confirmButtonText: 'Sí, realizar pago',
+    }).then(result => {
       if (result.isConfirmed) {
         this.executePagaditoTransaction();
       }
@@ -470,20 +510,20 @@ export class NetworkComponent implements OnInit {
 
   executePagaditoTransaction() {
     this.pagaditoService.createTransaction(this.pagaditoRequest).subscribe({
-      next: (response) => {
+      next: response => {
         if (response.success) {
           window.open(response.data);
           this.showPostPaymentModal();
         }
       },
-      error: (err) => {
+      error: err => {
         console.log(err);
         Swal.fire({
           title: 'Error',
           text: 'Ocurrió un error al procesar el pago. Por favor, intente nuevamente.',
           icon: 'error',
           confirmButtonColor: '#3085d6',
-          confirmButtonText: 'Cerrar'
+          confirmButtonText: 'Cerrar',
         }).then();
       },
     });
@@ -495,22 +535,41 @@ export class NetworkComponent implements OnInit {
       text: 'Una vez realizado el pago, el sistema activará automáticamente al usuario.',
       icon: 'info',
       confirmButtonColor: '#3085d6',
-      confirmButtonText: 'Entendido'
+      confirmButtonText: 'Entendido',
     }).then();
   }
 
   loadInformation() {
-    this.walletService.getStatisticsInformationByAffiliateId(this.user.id).subscribe({
-      next: (value) => {
-        this.information = value;
-      },
-      error: () => {
-        this.showError('Error');
-      },
-    })
+    this.walletService
+      .getStatisticsInformationByAffiliateId(this.user.id)
+      .subscribe({
+        next: value => {
+          this.information = value;
+        },
+        error: () => {
+          this.showError('Error');
+        },
+      });
   }
 
   loadRecycoins() {
     this.recycoins$ = this.productService.getAllRecyCoin();
+  }
+
+  hasReachedWithdrawalLimit(userId: number) {
+    this.matrixQualificationService
+      .hasReachedWithdrawalLimit(userId)
+      .subscribe({
+        next: value => {
+          if (value.success) {
+            this.isReachedWithdrawalLimit = value.data;
+          } else {
+            this.isReachedWithdrawalLimit = false;
+          }
+        },
+        error: err => {
+          console.error(err);
+        },
+      });
   }
 }

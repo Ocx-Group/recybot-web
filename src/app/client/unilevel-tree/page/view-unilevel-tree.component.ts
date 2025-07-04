@@ -5,9 +5,9 @@ import { MyTreeNodeClient } from '@app/core/models/unilevel-tree-model/tree-node
 import { NgxSpinnerService } from 'ngx-spinner';
 
 import { MatrixRequest } from '@app/core/interfaces/matrix-request';
-import { UserAffiliate } from "@app/core/models/user-affiliate-model/user.affiliate.model";
-import { AffiliateService } from "@app/core/service/affiliate-service/affiliate.service";
-import { AuthService } from "@app/core/service/authentication-service/auth.service";
+import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
+import { AffiliateService } from '@app/core/service/affiliate-service/affiliate.service';
+import { AuthService } from '@app/core/service/authentication-service/auth.service';
 import { MatrixConfigurationService } from '@app/core/service/matrix-configuration/matrix-configuration.service';
 import { MatrixService } from '@app/core/service/matrix-service/matrix.service';
 import 'perfect-scrollbar';
@@ -24,7 +24,7 @@ export class ViewUnilevelTreeComponent {
   btnBack: boolean = false;
   active;
   matrixConfigurations: any[] = [];
-
+  isReachedWithdrawalLimit: boolean = false;
   tree: MyTreeNodeClient = {
     id: 0,
     userName: '',
@@ -41,7 +41,7 @@ export class ViewUnilevelTreeComponent {
     private matrixConfigurationService: MatrixConfigurationService,
     private matrixService: MatrixService,
     private matrixQualificationService: MatrixQualificationService,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
   ) {
     this.typeSelected = 'cube-transition';
   }
@@ -52,6 +52,7 @@ export class ViewUnilevelTreeComponent {
     this.userId = this.user.id;
     if (this.userId) {
       this.onloadFamilyTree(this.userId);
+      this.hasReachedWithdrawalLimit(this.userId);
       this.btnBack = false;
     }
     this.getAllMatrixConfigurations();
@@ -77,13 +78,13 @@ export class ViewUnilevelTreeComponent {
 
   getAllMatrixConfigurations() {
     this.matrixConfigurationService.getAllMatrixConfigurations().subscribe({
-      next: (config) => {
+      next: config => {
         console.log('config:', config);
         this.matrixConfigurations = config;
       },
-      error: (err) => {
+      error: err => {
         console.error('Error', err);
-      }
+      },
     });
   }
 
@@ -94,8 +95,7 @@ export class ViewUnilevelTreeComponent {
 
     if (this.active === 1) {
       this.loadUnilevelTree(id);
-    }
-    else if (this.active >= 3) {
+    } else if (this.active >= 3) {
       const matrixIndex = this.active - 3;
 
       if (matrixIndex >= 0 && matrixIndex < this.matrixConfigurations.length) {
@@ -104,7 +104,10 @@ export class ViewUnilevelTreeComponent {
         const matrixTypeValue = matrixConfig.matrixType;
 
         if (!matrixTypeValue) {
-          console.error('No se pudo determinar el matrixType a partir de la configuración:', matrixConfig);
+          console.error(
+            'No se pudo determinar el matrixType a partir de la configuración:',
+            matrixConfig,
+          );
           this.spinnerService.hide();
           return;
         }
@@ -132,7 +135,7 @@ export class ViewUnilevelTreeComponent {
       error => {
         console.error('Error loading unilevel tree:', error);
         this.spinnerService.hide();
-      }
+      },
     );
   }
 
@@ -145,7 +148,7 @@ export class ViewUnilevelTreeComponent {
   loadMatrixTree(id: number, matrixType: number) {
     const request: MatrixRequest = {
       userId: id,
-      matrixType: matrixType
+      matrixType: matrixType,
     };
 
     this.showDiv = false;
@@ -164,7 +167,7 @@ export class ViewUnilevelTreeComponent {
       error => {
         console.error('Error loading matrix tree:', error);
         this.spinnerService.hide();
-      }
+      },
     );
   }
 
@@ -172,7 +175,7 @@ export class ViewUnilevelTreeComponent {
     const user = this.authService.currentUserAffiliateValue;
     const request: MatrixRequest = {
       userId: user.id,
-      matrixType: matrixType
+      matrixType: matrixType,
     };
 
     Swal.fire({
@@ -183,25 +186,44 @@ export class ViewUnilevelTreeComponent {
       confirmButtonText: 'Sí, activar',
       cancelButtonText: 'Cancelar',
       reverseButtons: true,
-    }).then((result) => {
+    }).then(result => {
       if (result.isConfirmed) {
         this.spinnerService.show();
-        this.matrixQualificationService.processDirectPaymentMatrixActivation(request).subscribe({
-          next: (response) => {
-            console.log('Respuesta de activación:', response);
-            if (response) {
-              this.active = matrixType + 2;
-              this.onloadFamilyTree(this.userId);
-              this.successMessage('Matriz activada con éxito.');
-            } else {
-              this.errorMessage('Error al activar la matriz.');
-            }
-          }
-          , error: (error) => {
-            console.error('Error en la activación:', error);
-          }
-        });
+        this.matrixQualificationService
+          .processDirectPaymentMatrixActivation(request)
+          .subscribe({
+            next: response => {
+              console.log('Respuesta de activación:', response);
+              if (response) {
+                this.active = matrixType + 2;
+                this.onloadFamilyTree(this.userId);
+                this.successMessage('Matriz activada con éxito.');
+              } else {
+                this.errorMessage('Error al activar la matriz.');
+              }
+            },
+            error: error => {
+              console.error('Error en la activación:', error);
+            },
+          });
       }
     });
+  }
+
+  hasReachedWithdrawalLimit(userId: number) {
+    this.matrixQualificationService
+      .hasReachedWithdrawalLimit(userId)
+      .subscribe({
+        next: value => {
+          if (value.success) {
+            this.isReachedWithdrawalLimit = value.data;
+          } else {
+            this.isReachedWithdrawalLimit = false;
+          }
+        },
+        error: err => {
+          console.error(err);
+        },
+      });
   }
 }
