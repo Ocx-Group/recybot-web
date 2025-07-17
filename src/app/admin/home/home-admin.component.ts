@@ -1,19 +1,20 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import * as am4core from '@amcharts/amcharts4/core';
 import * as am4maps from '@amcharts/amcharts4/maps';
-import am4geodata_worldLow from "@amcharts/amcharts4-geodata/worldLow";
-import am5themes_Animated from "@amcharts/amcharts4/themes/animated";
-import {EChartsOption} from 'echarts';
-import {WalletService} from '@app/core/service/wallet-service/wallet.service';
-import {AffiliateService} from '@app/core/service/affiliate-service/affiliate.service';
-import {ToastrService} from 'ngx-toastr';
+import am4geodata_worldLow from '@amcharts/amcharts4-geodata/worldLow';
+import am5themes_Animated from '@amcharts/amcharts4/themes/animated';
+import { EChartsOption } from 'echarts';
+import { WalletService } from '@app/core/service/wallet-service/wallet.service';
+import { AffiliateService } from '@app/core/service/affiliate-service/affiliate.service';
+import { ToastrService } from 'ngx-toastr';
 import {
   ApexNonAxisChartSeries,
   ApexChart,
   ApexResponsive,
   ApexDataLabels,
   ApexLegend,
-  ApexPlotOptions, ChartComponent
+  ApexPlotOptions,
+  ChartComponent,
 } from 'ng-apexcharts';
 
 export interface ChartOptions {
@@ -42,25 +43,30 @@ export class HomeAdminComponent implements OnInit {
   walletProfit: number;
   calculatedCommissions: number;
   totalReverseBalance: number;
+  adminCommissions: number;
   maps: any[] = [];
   @ViewChild('chart') chart1: ChartComponent;
 
-  constructor(private walletService: WalletService, private affiliateService: AffiliateService, private toastr: ToastrService) {
+  constructor(
+    private walletService: WalletService,
+    private affiliateService: AffiliateService,
+    private toastr: ToastrService,
+  ) {
     this.pieChartOptions = {
       series: [],
       chart: {
-        type: "donut",
-        width: 200
+        type: 'donut',
+        width: 200,
       },
       labels: [],
       colors: [],
       dataLabels: {
-        enabled: false
+        enabled: false,
       },
       legend: {
-        show: false
+        show: false,
       },
-      responsive: []
+      responsive: [],
     };
     this.getBalanceInformationAdmin();
   }
@@ -81,13 +87,21 @@ export class HomeAdminComponent implements OnInit {
   private initChartReport3() {
     this.pieChartOptions = {
       series: [
+        Number(this.adminCommissions),
         Number(this.walletProfit),
-        Number(this.totalMembers),
-        Number(this.calculatedCommissions),
         Number(this.commissionsPaid),
+        Number(this.calculatedCommissions),
+        Number(this.totalMembers),
         Number(this.totalReverseBalance),
       ],
-      colors: ['#f44336', '#2196f3', '#96a2b4', '#4caf50', '#9c27b0'],
+      colors: [
+        '#bfd34cff',
+        '#f44336',
+        '#2196f3',
+        '#96a2b4',
+        '#4caf50',
+        '#9c27b0',
+      ],
       chart: {
         type: 'donut',
         width: 200,
@@ -99,11 +113,12 @@ export class HomeAdminComponent implements OnInit {
         enabled: false,
       },
       labels: [
+        'Comisiones para el admin',
         'Beneficio en billetera',
-        'Total afiliados',
-        'Total comisiones calculadas',
-        'Total Pagado',
-        'Saldo Modelo 2'
+        'Total comisiones pagadas',
+        'Total recycoins vendidos',
+        'Afiliados activos',
+        'Saldo balance 2',
       ],
       responsive: [
         {
@@ -112,17 +127,17 @@ export class HomeAdminComponent implements OnInit {
             dataLabels: {
               enabled: true,
               formatter: function (val: any) {
-                return val + "%"
-              }
+                return val + '%';
+              },
             },
             plotOptions: {
               pie: {
-                expandOnClick: false
-              }
-            }
-          }
-        }
-      ]
+                expandOnClick: false,
+              },
+            },
+          },
+        },
+      ],
     };
   }
 
@@ -299,7 +314,8 @@ export class HomeAdminComponent implements OnInit {
 
   getBalanceInformationAdmin() {
     this.walletService.getBalanceInformationAdmin().subscribe({
-      next: (value) => {
+      next: value => {
+        this.adminCommissions = value.data.totalCommissionsEarned;
         this.totalMembers = value.data.enabledAffiliates;
         this.calculatedCommissions = value.data.calculatedCommissions;
         this.commissionsPaid = value.data.commissionsPaid;
@@ -307,10 +323,10 @@ export class HomeAdminComponent implements OnInit {
         this.totalReverseBalance = value.data.totalReverseBalance;
         this.initChartReport3();
       },
-      error: (err) => {
+      error: err => {
         console.log(err);
       },
-    })
+    });
   }
 
   setMapInfo() {
@@ -356,14 +372,13 @@ export class HomeAdminComponent implements OnInit {
 
   loadLocations() {
     this.affiliateService.getTotalAffiliatesByCountries().subscribe({
-      next: (value) => {
+      next: value => {
         this.maps = value.data;
         this.setMapInfo();
       },
       error: () => {
-        this.showError("Error");
+        this.showError('Error');
       },
-    })
+    });
   }
 }
-

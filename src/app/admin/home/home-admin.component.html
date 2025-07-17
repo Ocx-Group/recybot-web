@@ -17,46 +17,52 @@
           <div class="card-body d-flex flex-column">
             <div id="chart1" class="flex-grow-1">
               <apx-chart [series]="pieChartOptions.series" [chart]="pieChartOptions.chart"
-                         [labels]="pieChartOptions.labels" [responsive]="pieChartOptions.responsive"
-                         [dataLabels]="pieChartOptions.dataLabels" [legend]="pieChartOptions.legend"
-                         [colors]="pieChartOptions.colors" class="apex-pie-center">
+                [labels]="pieChartOptions.labels" [responsive]="pieChartOptions.responsive"
+                [dataLabels]="pieChartOptions.dataLabels" [legend]="pieChartOptions.legend"
+                [colors]="pieChartOptions.colors" class="apex-pie-center">
               </apx-chart>
             </div>
             <div class="table-responsive mt-3">
               <table class="table align-items-center table-row-border">
                 <tbody>
-                <tr>
-                  <td class="col-red">
-                    <i class="fa fa-circle col-red msr-2"></i> Beneficio en billetera
-                  </td>
-                  <td class="col-red">USD {{ walletProfit | truncateDecimals:2 }}</td>
-                </tr>
-                <tr>
-                  <td class="col-blue">
-                    <i class="fa fa-circle col-blue msr-2 "></i>Total comisiones pagadas
-                  </td>
-                  <td class="col-blue">USD {{ commissionsPaid | truncateDecimals:2 }}</td>
-                </tr>
-                <tr>
-                  <td class="col-emerald">
-                    <i class="fa fa-circle col-emerald msr-2"></i>Total recycoins vendidos
-                  </td>
-                  <td class="col-emerald">USD {{ calculatedCommissions | truncateDecimals:2 }}</td>
-                </tr>
-                <tr>
-                  <td class="col-green">
-                    <i class="fa fa-circle col-green msr-2 col-green"></i>
-                    Afiliados activos
-                  </td>
-                  <td class="col-green">USD {{ totalMembers | truncateDecimals:2 }}</td>
-                </tr>
-                <tr>
-                  <td class="col-purple">
-                    <i class="fa fa-circle col-purple msr-2 col-purple"></i>
-                    Saldo balance 2
-                  </td>
-                  <td class="col-purple">USD {{ totalReverseBalance | truncateDecimals:2 }}</td>
-                </tr>
+                  <tr>
+                    <td class="col-yellow">
+                      <i class="fa fa-circle col-yellow msr-2"></i> Comisiones para el admin
+                    </td>
+                    <td class="col-yellow">USD {{ adminCommissions | truncateDecimals:2 }}</td>
+                  </tr>
+                  <tr>
+                    <td class="col-red">
+                      <i class="fa fa-circle col-red msr-2"></i> Beneficio en billetera
+                    </td>
+                    <td class="col-red">USD {{ walletProfit | truncateDecimals:2 }}</td>
+                  </tr>
+                  <tr>
+                    <td class="col-blue">
+                      <i class="fa fa-circle col-blue msr-2 "></i>Total comisiones pagadas
+                    </td>
+                    <td class="col-blue">USD {{ commissionsPaid | truncateDecimals:2 }}</td>
+                  </tr>
+                  <tr>
+                    <td class="col-emerald">
+                      <i class="fa fa-circle col-emerald msr-2"></i>Total recycoins vendidos
+                    </td>
+                    <td class="col-emerald">USD {{ calculatedCommissions | truncateDecimals:2 }}</td>
+                  </tr>
+                  <tr>
+                    <td class="col-green">
+                      <i class="fa fa-circle col-green msr-2 col-green"></i>
+                      Afiliados activos
+                    </td>
+                    <td class="col-green">USD {{ totalMembers | truncateDecimals:2 }}</td>
+                  </tr>
+                  <tr>
+                    <td class="col-purple">
+                      <i class="fa fa-circle col-purple msr-2 col-purple"></i>
+                      Saldo balance 2
+                    </td>
+                    <td class="col-purple">USD {{ totalReverseBalance | truncateDecimals:2 }}</td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -76,10 +82,10 @@
               <div id="new-orders" class="media-list" style="max-height: 200px;" [perfectScrollbar]>
                 <table id="new-orders-table" class="table table-hover table-xl table-row-border mb-0">
                   <tbody *ngFor="let item of maps">
-                  <tr>
-                    <td class="text-truncate">{{ item.title }}</td>
-                    <td class="text-truncate">{{ item.value }}</td>
-                  </tr>
+                    <tr>
+                      <td class="text-truncate">{{ item.title }}</td>
+                      <td class="text-truncate">{{ item.value }}</td>
+                    </tr>
                   </tbody>
                 </table>
               </div>
@@ -121,7 +127,7 @@
               <div class="col-6 col-sm-3 col-lg-3 mb-4 mb-md-0">
                 <div class="avatar-item">
                   <img alt="image" src="./assets/images/users/user-1.png" class="img-fluid" data-toggle="tooltip"
-                       title="Ashton Cox"/>
+                    title="Ashton Cox" />
                   <div class="avatar-badge" title="Editor" data-toggle="tooltip">
                     <i class="fas fa-cog"></i>
                   </div>
@@ -130,7 +136,7 @@
               <div class="col-6 col-sm-3 col-lg-3 mb-4 mb-md-0">
                 <div class="avatar-item">
                   <img alt="image" src="assets/images/users/user-2.png" class="img-fluid" data-toggle="tooltip"
-                       title="John Doe"/>
+                    title="John Doe" />
                   <div class="avatar-badge" title="Admin" data-toggle="tooltip">
                     <i class="fas fa-cog"></i>
                   </div>
@@ -139,7 +145,7 @@
               <div class="col-6 col-sm-3 col-lg-3 mb-4 mb-md-0">
                 <div class="avatar-item">
                   <img alt="image" src="assets/images/users/user-3.png" class="img-fluid" data-toggle="tooltip"
-                       title="Airi Satou"/>
+                    title="Airi Satou" />
                   <div class="avatar-badge" title="Author" data-toggle="tooltip">
                     <i class="fas fa-cog"></i>
                   </div>
@@ -148,7 +154,7 @@
               <div class="col-6 col-sm-3 col-lg-3 mb-4 mb-md-0">
                 <div class="avatar-item">
                   <img alt="image" src="assets/images/users/user-4.png" class="img-fluid" data-toggle="tooltip"
-                       title="Hasan Basri"/>
+                    title="Hasan Basri" />
                   <div class="avatar-badge" title="Author" data-toggle="tooltip">
                     <i class="fas fa-cog"></i>
                   </div>
@@ -159,7 +165,7 @@
               <div class="col-6 col-sm-3 col-lg-3 mb-4 mb-md-0">
                 <div class="avatar-item">
                   <img alt="image" src="assets/images/users/user-5.png" class="img-fluid" data-toggle="tooltip"
-                       title="Airi Satou"/>
+                    title="Airi Satou" />
                   <div class="avatar-badge" title="Editor" data-toggle="tooltip">
                     <i class="fas fa-cog"></i>
                   </div>
@@ -168,7 +174,7 @@
               <div class="col-6 col-sm-3 col-lg-3 mb-4 mb-md-0">
                 <div class="avatar-item">
                   <img alt="image" src="assets/images/users/user-4.png" class="img-fluid" data-toggle="tooltip"
-                       title="Angelica Ramos"/>
+                    title="Angelica Ramos" />
                   <div class="avatar-badge" title="Admin" data-toggle="tooltip">
                     <i class="fas fa-cog"></i>
                   </div>
@@ -177,7 +183,7 @@
               <div class="col-6 col-sm-3 col-lg-3 mb-4 mb-md-0">
                 <div class="avatar-item">
                   <img alt="image" src="assets/images/users/user-1.png" class="img-fluid" data-toggle="tooltip"
-                       title="Ashton Cox"/>
+                    title="Ashton Cox" />
                   <div class="avatar-badge" title="Author" data-toggle="tooltip">
                     <i class="fas fa-cog"></i>
                   </div>
@@ -186,7 +192,7 @@
               <div class="col-6 col-sm-3 col-lg-3 mb-4 mb-md-0">
                 <div class="avatar-item">
                   <img alt="image" src="assets/images/users/user-2.png" class="img-fluid" data-toggle="tooltip"
-                       title="Cara Stevens"/>
+                    title="Cara Stevens" />
                   <div class="avatar-badge" title="Admin" data-toggle="tooltip">
                     <i class="fas fa-cog"></i>
                   </div>
