@@ -25,7 +25,7 @@
             <div class="table-responsive mt-3">
               <table class="table align-items-center table-row-border">
                 <tbody>
-                  <tr>
+                  <tr *ngIf="this.user.user_name == 'onecall'">
                     <td class="col-yellow">
                       <i class="fa fa-circle col-yellow msr-2"></i> Comisiones para el admin
                     </td>

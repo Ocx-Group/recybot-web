@@ -1,3 +1,4 @@
+import { AuthService } from 'src/app/core/service/authentication-service/auth.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import * as am4core from '@amcharts/amcharts4/core';
 import * as am4maps from '@amcharts/amcharts4/maps';
@@ -45,12 +46,14 @@ export class HomeAdminComponent implements OnInit {
   totalReverseBalance: number;
   adminCommissions: number;
   maps: any[] = [];
+  user: any;
   @ViewChild('chart') chart1: ChartComponent;
 
   constructor(
     private walletService: WalletService,
     private affiliateService: AffiliateService,
     private toastr: ToastrService,
+    private authService: AuthService,
   ) {
     this.pieChartOptions = {
       series: [],
@@ -74,6 +77,8 @@ export class HomeAdminComponent implements OnInit {
   ngOnInit() {
     this.initChartReport();
     this.loadLocations();
+    this.user = this.authService.currentUserAdminValue;
+    console.log(this.user);
   }
 
   showSuccess(message: string) {
