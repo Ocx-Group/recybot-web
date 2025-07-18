@@ -1256,6 +1256,9 @@
   "EDUCATIONAL-COURSES": {
     "ACADEMY-TRADING": {
       "TEXT": "Academy Trading"
+    },
+    "ADD": {
+      "TEXT": "Add"
     }
   },
   "FORCED-GENEALOGICAL-TREE-PAGE": {
