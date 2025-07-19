@@ -1,4 +1,10 @@
-import { Component, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  HostListener,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '@ngx-translate/core';
@@ -31,20 +37,19 @@ export class WalletComponent implements OnInit, OnDestroy {
     private walletService: WalletService,
     private authService: AuthService,
     private toastr: ToastrService,
-    private translateService: TranslateService
-  ) {
-  }
+    private translateService: TranslateService,
+  ) {}
 
   ngOnInit(): void {
     this.subscription = this.authService.currentUserAffiliate.subscribe(
-      (user) => {
+      user => {
         this.userCookie = user;
         if (user) {
           this.loadBalanceInformation();
         }
-      }
+      },
     );
-    this.loadWalletList()
+    this.loadWalletList();
   }
 
   ngOnDestroy(): void {
@@ -64,16 +69,16 @@ export class WalletComponent implements OnInit, OnDestroy {
 
   loadWalletList() {
     this.walletService.getWalletByAffiliateId(this.userCookie.id).subscribe({
-      next: (resp) => {
+      next: resp => {
         if (resp != null && resp.length > 0) {
           this.temp = [...resp];
           this.rows = resp;
         }
         this.loadingIndicator = false;
       },
-      error: (err) => {
+      error: err => {
         this.showError('Error!');
-        console.error(err)
+        console.error(err);
       },
     });
   }
@@ -82,16 +87,16 @@ export class WalletComponent implements OnInit, OnDestroy {
     this.walletService
       .getBalanceInformationByAffiliateId(this.userCookie.id)
       .subscribe({
-        next: (resp) => {
-          console.log(resp);
+        next: resp => {
           this.balanceInformation.availableBalance = resp.availableBalance;
           this.balanceInformation.reverseBalance = resp.reverseBalance;
-          this.balanceInformation.totalCommissionsPaid = resp.totalCommissionsPaid;
+          this.balanceInformation.totalCommissionsPaid =
+            resp.totalCommissionsPaid;
           this.balanceInformation.bonusAmount = resp.bonusAmount;
         },
-        error: (err) => {
+        error: err => {
           this.showError('Error!');
-          console.error(err)
+          console.error(err);
         },
       });
   }
@@ -104,7 +109,7 @@ export class WalletComponent implements OnInit, OnDestroy {
     const val = event.target.value.toLowerCase();
 
     this.rows = this.temp.filter(function (d) {
-      return d.name.toLowerCase().indexOf(val) !== -1 || !val;
+      return d.concept.toLowerCase().indexOf(val) !== -1 || !val;
     });
     this.table.offset = 0;
   }
@@ -118,13 +123,15 @@ export class WalletComponent implements OnInit, OnDestroy {
       const pageWidth = 297;
       const imgWidth = pageWidth - 40;
 
-      const imgHeight = canvas.height * imgWidth / canvas.width;
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
       const posX = 20;
       const posY = 30;
 
       pdf.setFontSize(18);
-      pdf.text('Movimientos de mi billetera', pageWidth / 2, 20, { align: 'center' });
+      pdf.text('Movimientos de mi billetera', pageWidth / 2, 20, {
+        align: 'center',
+      });
 
       const contentDataURL = canvas.toDataURL('image/png');
       pdf.addImage(contentDataURL, 'PNG', posX, posY, imgWidth, imgHeight);
@@ -154,10 +161,12 @@ export class WalletComponent implements OnInit, OnDestroy {
         row.state ? 'Atendido' : 'No atendido',
         row.concept,
         row.date,
-        '...'
+        '...',
       ]);
 
-      const tableText = [headers, ...data].map(row => row.join('\t')).join('\n');
+      const tableText = [headers, ...data]
+        .map(row => row.join('\t'))
+        .join('\n');
       this.copyTextToClipboard(tableText);
     }
   }
@@ -171,7 +180,7 @@ export class WalletComponent implements OnInit, OnDestroy {
 
     try {
       document.execCommand('copy');
-      this.toastr.success('Se ha copiado al portapapeles')
+      this.toastr.success('Se ha copiado al portapapeles');
     } catch (err) {
       console.error('Error: ', err);
     }
@@ -191,13 +200,11 @@ export class WalletComponent implements OnInit, OnDestroy {
       backdrop: true,
       customClass: {
         popup: 'swal-popup',
-        container: 'swal-container'
+        container: 'swal-container',
       },
-    }).then((result) => {
+    }).then(result => {
       if (result.isConfirmed) {
-
       }
     });
   }
 }
-
