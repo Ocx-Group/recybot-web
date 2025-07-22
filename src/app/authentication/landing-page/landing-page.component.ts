@@ -1,5 +1,18 @@
-import { animate, state, style, transition, trigger } from '@angular/animations';
-import { Component, HostListener, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import {
+  animate,
+  state,
+  style,
+  transition,
+  trigger,
+} from '@angular/animations';
+import {
+  Component,
+  HostListener,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+  ViewEncapsulation,
+} from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 
@@ -19,13 +32,13 @@ import { PdfViewerComponent } from '@app/shared/components/pdf-viewer/pdf-viewer
         'in',
         style({
           transform: 'translateX(0)',
-        })
+        }),
       ),
       state(
         'out',
         style({
           transform: 'translateX(100%)',
-        })
+        }),
       ),
       transition('in => out', animate('300ms ease-in-out')),
       transition('out => in', animate('300ms ease-in-out')),
@@ -59,18 +72,23 @@ export class LandingPageComponent implements OnInit, OnDestroy {
   key: string = '';
   videos = {
     es: {
-      url: 'Oze2OiW3oAI',
+      url: '8ZRGTZD_ZrQ',
       title: 'Ver Video Informativo',
     },
     en: {
-      url: 'Oze2OiW3oAI',
+      url: '8ZRGTZD_ZrQ',
       title: 'Watch Information Video',
     },
   };
   isPreviewHovered: boolean = false;
   user: UserAffiliate | null = null;
 
-  constructor(private pdfViewerService: PdfViewerService, private translate: TranslateService, private activatedRoute: ActivatedRoute, private affiliateService: AffiliateService) {
+  constructor(
+    private pdfViewerService: PdfViewerService,
+    private translate: TranslateService,
+    private activatedRoute: ActivatedRoute,
+    private affiliateService: AffiliateService,
+  ) {
     translate.setDefaultLang('en');
     this.currentLang = translate.currentLang || 'en';
     this.key = this.activatedRoute.snapshot.params.key;
@@ -104,11 +122,13 @@ export class LandingPageComponent implements OnInit, OnDestroy {
 
   getUserByUsername(key: string) {
     if (!key) return;
-    this.affiliateService.getAffiliateByUserName(key).subscribe((user: UserAffiliate) => {
-      if (user !== null) {
-        this.user = user;
-      }
-    });
+    this.affiliateService
+      .getAffiliateByUserName(key)
+      .subscribe((user: UserAffiliate) => {
+        if (user !== null) {
+          this.user = user;
+        }
+      });
   }
 
   changeLanguage(lang: string) {
