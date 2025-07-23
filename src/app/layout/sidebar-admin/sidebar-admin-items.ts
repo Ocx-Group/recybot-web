@@ -10,6 +10,7 @@ export const ROUTESADMIN: RouteInfo[] = [
     groupTitle: true,
     badge: '',
     badgeClass: '',
+    roles: ['Administrador', 'subAdministrador'],
     submenu: [],
   },
   {
@@ -21,6 +22,7 @@ export const ROUTESADMIN: RouteInfo[] = [
     groupTitle: false,
     badge: '',
     badgeClass: '',
+    roles: ['Administrador', 'subAdministrador'],
     submenu: [],
   },
   {
@@ -32,6 +34,7 @@ export const ROUTESADMIN: RouteInfo[] = [
     groupTitle: false,
     badge: '',
     badgeClass: '',
+    roles: ['Administrador'],
     submenu: [
       {
         path: '/admin/users-list',
@@ -66,6 +69,7 @@ export const ROUTESADMIN: RouteInfo[] = [
     groupTitle: false,
     badge: '',
     badgeClass: '',
+    roles: ['Administrador'],
     submenu: [
       {
         path: '/admin/affiliates-list',
@@ -111,6 +115,7 @@ export const ROUTESADMIN: RouteInfo[] = [
     groupTitle: false,
     badge: '',
     badgeClass: '',
+    roles: ['Administrador', 'subAdministrador'],
     submenu: [
       {
         path: '/admin/purchases-list',
@@ -180,7 +185,6 @@ export const ROUTESADMIN: RouteInfo[] = [
       },
     ],
   },
-
   {
     path: '',
     title: 'ADMIN-ITEMS.COMMISSIONS.TEXT',
@@ -190,6 +194,7 @@ export const ROUTESADMIN: RouteInfo[] = [
     groupTitle: false,
     badge: '',
     badgeClass: '',
+    roles: ['Administrador'],
     submenu: [
       {
         path: '/admin/calculate-commissions',
@@ -290,6 +295,7 @@ export const ROUTESADMIN: RouteInfo[] = [
     groupTitle: false,
     badge: '',
     badgeClass: '',
+    roles: ['Administrador'],
     submenu: [
       {
         path: '/admin/products-and-services',
@@ -357,6 +363,7 @@ export const ROUTESADMIN: RouteInfo[] = [
     groupTitle: false,
     badge: '',
     badgeClass: '',
+    roles: ['Administrador'],
     submenu: [
       {
         path: '/admin/arrays-configurations',
@@ -435,6 +442,7 @@ export const ROUTESADMIN: RouteInfo[] = [
     groupTitle: false,
     badge: '',
     badgeClass: '',
+    roles: ['Administrador'],
     submenu: [
       {
         path: '/admin/balance-of-wallet',
@@ -490,7 +498,7 @@ export const ROUTESADMIN: RouteInfo[] = [
         badge: '',
         badgeClass: '',
         submenu: [],
-      }
+      },
     ],
   },
   {
@@ -502,6 +510,7 @@ export const ROUTESADMIN: RouteInfo[] = [
     groupTitle: false,
     badge: '',
     badgeClass: '',
+    roles: ['Administrador'],
     submenu: [],
   },
   {
@@ -513,6 +522,7 @@ export const ROUTESADMIN: RouteInfo[] = [
     groupTitle: false,
     badge: '',
     badgeClass: '',
+    roles: ['Administrador'],
     submenu: [],
   },
   {
@@ -524,6 +534,7 @@ export const ROUTESADMIN: RouteInfo[] = [
     groupTitle: false,
     badge: '',
     badgeClass: '',
+    roles: ['Administrador'],
     submenu: [],
   },
   {
@@ -535,6 +546,7 @@ export const ROUTESADMIN: RouteInfo[] = [
     groupTitle: false,
     badge: '',
     badgeClass: '',
+    roles: ['Administrador'],
     submenu: [
       {
         path: '/admin/settings',
