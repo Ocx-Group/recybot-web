@@ -94,14 +94,14 @@
                   </div>
                   <div class="col align-self-end">
                     <ul class="nav justify-content-end">
-                      <li class="nav-item m-2" (click)="copyTableData()">
-                        <button type="button" class="btn btn-primary">
+                      <li class="nav-item m-2">
+                        <button type="button" class="btn btn-primary" (click)="copyTableData()">
                           <i class="bi bi-clipboard-check"></i>
                           {{ 'WALLET-PAGE.COPY-BTN.TEXT' | translate }}
                         </button>
                       </li>
-                      <li class="nav-item m-2" (click)="downloadPDF()">
-                        <button type="button" class="btn btn-primary">
+                      <li class="nav-item m-2">
+                        <button type="button" class="btn btn-primary" (click)="downloadPDF()">
                           <i class="bi bi-printer"></i>
                           {{ 'WALLET-PAGE.PDF-BTN.TEXT' | translate }}
                         </button>

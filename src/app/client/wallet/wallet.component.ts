@@ -116,6 +116,7 @@ export class WalletComponent implements OnInit, OnDestroy {
 
   downloadPDF() {
     const DATA = document.getElementById('htmlTable');
+    const today = new Date();
 
     html2canvas(DATA).then(canvas => {
       let pdf = new jsPDF('l', 'mm', 'a4');
@@ -135,7 +136,20 @@ export class WalletComponent implements OnInit, OnDestroy {
 
       const contentDataURL = canvas.toDataURL('image/png');
       pdf.addImage(contentDataURL, 'PNG', posX, posY, imgWidth, imgHeight);
-      pdf.save('documento.pdf');
+
+      const formattedDate = today
+        .toLocaleString('es-ES', {
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit',
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit',
+        })
+        .replace(/[/:]/g, '-')
+        .replace(', ', '_');
+
+      pdf.save(`movimientos_billetera_${formattedDate}.pdf`);
     });
   }
 
@@ -204,6 +218,7 @@ export class WalletComponent implements OnInit, OnDestroy {
       },
     }).then(result => {
       if (result.isConfirmed) {
+        /* empty */
       }
     });
   }
