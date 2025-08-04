@@ -2701,6 +2701,9 @@
     "USER-COLUMN": {
       "TEXT": "Responsible user"
     },
+    "VIEW-DETAILS": {
+      "TEXT": "View Details"
+    },
     "WITHDRAWAL-PENDING": {
       "TEXT": "Withdrawal Pending"
     }

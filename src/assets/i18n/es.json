@@ -2661,7 +2661,7 @@
       "TEXT": "Sin novedades"
     },
     "DETAILS-COLUMN": {
-      "TEXT": "Ver detalle"
+      "TEXT": "Detalle"
     },
     "PDF-BTN": {
       "TEXT": "PDF"
@@ -2697,6 +2697,9 @@
     },
     "USER-COLUMN": {
       "TEXT": "Usuario Responsable"
+    },
+    "VIEW-DETAILS": {
+      "TEXT": "Ver Detalles"
     },
     "WITHDRAWAL-PENDING": {
       "TEXT": "Retiro Pendiente"

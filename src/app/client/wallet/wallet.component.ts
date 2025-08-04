@@ -106,12 +106,19 @@ export class WalletComponent implements OnInit, OnDestroy {
   }
 
   updateFilter(event: any) {
-    const val = event.target.value.toLowerCase();
+    const val = this.normalizeText(event.target.value);
 
-    this.rows = this.temp.filter(function (d) {
-      return d.concept.toLowerCase().indexOf(val) !== -1 || !val;
+    this.rows = this.temp.filter(d => {
+      return this.normalizeText(d.concept).indexOf(val) !== -1 || !val;
     });
     this.table.offset = 0;
+  }
+
+  private normalizeText(text: string): string {
+    return text
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '');
   }
 
   downloadPDF() {
