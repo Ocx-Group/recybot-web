@@ -17,7 +17,7 @@
     <form class="register-form" [autocomplete]="off" [formGroup]="sendRequest" (ngSubmit)="onSaveRequest()">
       <div class="row">
         <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-          <label>
+          <label for="amount_requested">
             {{ 'REQUESTS-PAGE.AMOUNT-REQUESTED.TEXT' | translate }}
             <span class="text-danger">*</span></label>
           <input type="number" class="form-control" formControlName="amount_requested"
@@ -30,7 +30,7 @@
           </div>
         </div>
         <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-          <label>
+          <label for="access_key">
             {{ 'REQUESTS-PAGE.ACCESS-KEY.TEXT' | translate }}
             <span class="text-danger">*</span>
           </label>
@@ -52,7 +52,8 @@
       </div>
       <div class="row">
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
-          <label>{{ 'REQUESTS-PAGE.OBSERVATION-FIELD.TEXT' | translate }}<span class="text-danger"></span></label>
+          <label for="observation">{{ 'REQUESTS-PAGE.OBSERVATION-FIELD.TEXT' | translate }}<span
+              class="text-danger"></span></label>
           <textarea type="textarea" class="form-control"
             placeholder="{{ 'REQUESTS-PAGE.OBSERVATION-FIELD.TEXT' | translate }}" formControlName="observation"
             [ngClass]="{
@@ -65,7 +66,8 @@
       </div>
       <div class="row">
         <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-          <label>{{ 'REQUESTS-PAGE.CONFIRM-CODE.TEXT' | translate }}<span class="text-danger">*</span></label>
+          <label for="generation_code">{{ 'REQUESTS-PAGE.CONFIRM-CODE.TEXT' | translate }}<span
+              class="text-danger">*</span></label>
           <div class="input-group">
             <input type="text" class="form-control" placeholder="{{ 'REQUESTS-PAGE.CONFIRM-CODE.TEXT' | translate }}"
               formControlName="generation_code" required [ngClass]="{
@@ -74,7 +76,7 @@
             <div *ngIf="submitted && request_controls.generation_code.errors" class="invalid-feedback">
               <div *ngIf="request_controls.generation_code.errors.required">El código de seguridad es requerido.</div>
             </div>
-            <button class="input-group-text btn-primary" type="button" (click)="onGenerateVerificationCode()">
+            <button class="input-group-text btn-primary ms-3" type="button" (click)="onGenerateVerificationCode()">
               {{ 'REQUESTS-PAGE.GENERATE-CODE-BTN.TEXT' | translate }}
             </button>
           </div>

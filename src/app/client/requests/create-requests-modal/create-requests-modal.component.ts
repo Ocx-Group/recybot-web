@@ -1,5 +1,17 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
+import {
+  AbstractControl,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
 import { DateTime } from 'luxon';
@@ -33,15 +45,17 @@ export class CreateRequestsModalComponent implements OnInit {
   @Input() balanceInfo: BalanceInformation;
   @Input() walletWithdrawalConfig: WalletWithdrawalsConfiguration;
   @ViewChild('createRequestModal') createRequestModal: NgbModal;
-  @Output('loadWalletRequest') loadWalletRequest: EventEmitter<any> = new EventEmitter();
-  @Output('setAvailableBalance') setAvailableBalance: EventEmitter<any> = new EventEmitter();
+  @Output('loadWalletRequest') loadWalletRequest: EventEmitter<any> =
+    new EventEmitter();
+  @Output('setAvailableBalance') setAvailableBalance: EventEmitter<any> =
+    new EventEmitter();
 
   constructor(
     private modalService: NgbModal,
     private walletRequestService: WalletRequestService,
     private toastr: ToastrService,
     private affiliateService: AffiliateService,
-    private affiliateBtcService: AffiliateBtcService
+    private affiliateBtcService: AffiliateBtcService,
   ) {}
 
   ngOnInit(): void {
@@ -86,7 +100,9 @@ export class CreateRequestsModalComponent implements OnInit {
 
   onSaveRequest() {
     if (!this.affiliateBtc || this.affiliateBtc.trc20Address == null) {
-      this.showError('Tiene que tener configurada su dirección de billetera para poder realizar la solicitud.');
+      this.showError(
+        'Tiene que tener configurada su dirección de billetera para poder realizar la solicitud.',
+      );
       return;
     }
 
@@ -102,32 +118,37 @@ export class CreateRequestsModalComponent implements OnInit {
       return;
     }
 
-    this.walletRequestService.createWalletRequest(this.walletRequest).subscribe({
-      next: resp => {
-        if (resp.success == true) {
-          this.showSuccess('Su solicitud de retiro se ha creado correctamente');
-          this.sendRequest.reset();
-          this.modalService.dismissAll();
-          this.loadWalletRequest.emit();
-          this.setAvailableBalance.emit();
-        }
-      },
-      error: (err: HttpErrorResponse) => {
-        if (err.error && err.error.success === false) {
-          this.showError(err.error.message);
-          this.sendRequest.reset();
-        } else {
-          this.showError('Ha ocurrido un error al procesar su solicitud.');
-        }
-      },
-    });
+    this.walletRequestService
+      .createWalletRequest(this.walletRequest)
+      .subscribe({
+        next: resp => {
+          if (resp.success) {
+            this.showSuccess(
+              'Su solicitud de retiro se ha creado correctamente',
+            );
+            this.sendRequest.reset();
+            this.modalService.dismissAll();
+            this.loadWalletRequest.emit();
+            this.setAvailableBalance.emit();
+          }
+        },
+        error: (err: HttpErrorResponse) => {
+          if (err.error && err.error.success === false) {
+            this.showError(err.error.message);
+            this.sendRequest.reset();
+          } else {
+            this.showError('Ha ocurrido un error al procesar su solicitud.');
+          }
+        },
+      });
   }
 
   private setWalletRequest(): void {
     this.walletRequest.affiliateId = this.user.id;
     this.walletRequest.affiliateName = `${this.user.name} ${this.user.last_name} (${this.user.user_name})`;
     this.walletRequest.userPassword = this.sendRequest.value.access_key;
-    this.walletRequest.verificationCode = this.sendRequest.value.generation_code;
+    this.walletRequest.verificationCode =
+      this.sendRequest.value.generation_code;
     this.walletRequest.amount = Number(this.sendRequest.value.amount_requested);
     this.walletRequest.concept = this.sendRequest.value.observation;
   }
@@ -136,9 +157,16 @@ export class CreateRequestsModalComponent implements OnInit {
     if (amount <= 0) {
       return false;
     } else if (this.walletWithdrawalConfig.maximum_amount == 0) {
-      return amount <= this.checkMinimumAmount() && amount >= this.walletWithdrawalConfig.minimum_amount;
+      return (
+        amount <= this.checkMinimumAmount() &&
+        amount >= this.walletWithdrawalConfig.minimum_amount
+      );
     } else {
-      return amount <= this.checkMinimumAmount() && amount >= this.walletWithdrawalConfig.minimum_amount && amount <= this.walletWithdrawalConfig.maximum_amount;
+      return (
+        amount <= this.checkMinimumAmount() &&
+        amount >= this.walletWithdrawalConfig.minimum_amount &&
+        amount <= this.walletWithdrawalConfig.maximum_amount
+      );
     }
   }
 
@@ -148,18 +176,22 @@ export class CreateRequestsModalComponent implements OnInit {
   }
 
   onGenerateVerificationCode() {
-    this.affiliateService.generateVerificationCode(this.user.id, false).subscribe({
-      next: resp => {
-        if (resp.success) {
-          this.showSuccess('Se ha generado correctamente el código de verificación. Por favor, revise su correo electrónico para obtener el código de verificación.');
-        } else {
-          this.messageNotIsWithdrawalDate();
-        }
-      },
-      error: err => {
-        this.showError('Error');
-      },
-    });
+    this.affiliateService
+      .generateVerificationCode(this.user.id, false)
+      .subscribe({
+        next: resp => {
+          if (resp.success) {
+            this.showSuccess(
+              'Se ha generado correctamente el código de verificación. Por favor, revise su correo electrónico para obtener el código de verificación.',
+            );
+          } else {
+            this.messageNotIsWithdrawalDate();
+          }
+        },
+        error: err => {
+          this.showError('Error');
+        },
+      });
   }
 
   messageNotIsWithdrawalDate() {
@@ -172,25 +204,27 @@ export class CreateRequestsModalComponent implements OnInit {
   }
 
   hasCoinPaymentAddress() {
-    this.affiliateBtcService.getAffiliateBtcByAffiliateId(this.user.id).subscribe({
-      next: (value: Response & { data: AffiliateBtc[] }) => {
-        if (value.success) {
-          const address = value.data.reduce(
-            (acc: AffiliateBtc, item: AffiliateBtc) => {
-              acc.trc20Address = item.trc20Address;
+    this.affiliateBtcService
+      .getAffiliateBtcByAffiliateId(this.user.id)
+      .subscribe({
+        next: (value: Response & { data: AffiliateBtc[] }) => {
+          if (value.success) {
+            const address = value.data.reduce(
+              (acc: AffiliateBtc, item: AffiliateBtc) => {
+                acc.trc20Address = item.trc20Address;
 
-              return acc;
-            },
-            { trc20Address: '' }
-          );
+                return acc;
+              },
+              { trc20Address: '' },
+            );
 
-          this.affiliateBtc.trc20Address = address.trc20Address;
-        }
-      },
-      error: () => {
-        this.showError('Error');
-      },
-    });
+            this.affiliateBtc.trc20Address = address.trc20Address;
+          }
+        },
+        error: () => {
+          this.showError('Error');
+        },
+      });
   }
 
   togglePasswordVisibility(): void {

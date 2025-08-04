@@ -15,7 +15,7 @@ import { ToastrModule } from 'ngx-toastr';
 
 import { Search } from 'angular-feather/icons';
 import { CreateRequestsModalComponent } from './create-requests-modal/create-requests-modal.component';
-import {SharedModule} from "@app/shared/shared.module";
+import { SharedModule } from '@app/shared/shared.module';
 
 const icons = {
   Search,
@@ -23,23 +23,23 @@ const icons = {
 
 @NgModule({
   declarations: [RequestsComponent, CreateRequestsModalComponent],
-    imports: [
-        CommonModule,
-        FormsModule,
-        ClipboardModule,
-        ReactiveFormsModule,
-        NgbModule,
-        TranslateModule,
-        NgxEchartsModule.forRoot({
-            echarts: () => import('echarts'),
-        }),
-        ToastrModule.forRoot(),
-        FeatherModule.pick(icons),
-        NgxDatatableModule,
-        PerfectScrollbarModule,
-        NgApexchartsModule,
-        NgxGaugeModule,
-        SharedModule,
-    ]
+  imports: [
+    CommonModule,
+    FormsModule,
+    ClipboardModule,
+    ReactiveFormsModule,
+    NgbModule,
+    TranslateModule,
+    NgxEchartsModule.forRoot({
+      echarts: () => import('echarts'),
+    }),
+    ToastrModule.forRoot(),
+    FeatherModule.pick(icons),
+    NgxDatatableModule,
+    PerfectScrollbarModule,
+    NgApexchartsModule,
+    NgxGaugeModule,
+    SharedModule,
+  ],
 })
-export class RequestsModule { }
+export class RequestsModule {}
