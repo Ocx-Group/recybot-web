@@ -1,16 +1,11 @@
 import { Component, ViewChild, HostListener } from '@angular/core';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import {
-  UntypedFormGroup,
-  UntypedFormBuilder,
-  UntypedFormControl,
-  Validators,
-} from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-request-wallet',
-  templateUrl: './request-wallet.component.html'
+  templateUrl: './request-wallet.component.html',
 })
 export class RequestWalletComponent {
   rows = [];
@@ -24,7 +19,7 @@ export class RequestWalletComponent {
   @ViewChild('table') table: DatatableComponent;
 
   constructor(private modalService: NgbModal) {
-    this.fetch((data) => {
+    this.fetch(data => {
       this.temp = [...data];
       this.rows = data;
       setTimeout(() => {
@@ -83,5 +78,4 @@ export class RequestWalletComponent {
     // min and max included
     return Math.floor(Math.random() * (max - min + 1) + min);
   }
-
 }
