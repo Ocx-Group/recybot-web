@@ -17,7 +17,7 @@
       <div class="col-12 col-md-12 col-lg-12">
         <div class="card">
           <div class="card-header">
-            <h4></h4>
+
           </div>
           <div class="card-body">
             <div class="row mb-4">
@@ -73,9 +73,9 @@
                   <button type="button" class="btn btn-primary ms-1" (click)="exportToExcel()"
                     [disabled]="loadingIndicator" title="Exportar a excel">
                     <i class="bi" [ngClass]="loadingIndicator ? 'bi-hourglass-split' : 'bi-file-excel'"></i>
-                    <span *ngIf="loadingIndicator" class="spinner-border spinner-border-sm ms-1" role="status">
+                    <output *ngIf="loadingIndicator" class="spinner-border spinner-border-sm ms-1">
                       <span class="visually-hidden">Cargando...</span>
-                    </span>
+                    </output>
                   </button>
                 </div>
               </div>

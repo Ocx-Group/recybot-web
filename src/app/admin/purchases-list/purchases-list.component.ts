@@ -1,4 +1,10 @@
-import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  HostListener,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
 import { ClipboardService } from 'ngx-clipboard';
 import { ToastrService } from 'ngx-toastr';
@@ -13,7 +19,7 @@ const header = [
   'No. Factura',
   'Fecha',
   'Estado Factura',
-  'Pagado'
+  'Pagado',
 ];
 @Component({
   selector: 'app-purchases-list',
@@ -41,8 +47,8 @@ export class PurchasesListComponent implements OnInit {
     private clipboardService: ClipboardService,
     private printService: PrintService,
     private invoiceService: InvoiceService,
-    private modalService: NgbModal
-  ) { }
+    private modalService: NgbModal,
+  ) {}
 
   ngOnInit(): void {
     this.loadData();
@@ -64,12 +70,12 @@ export class PurchasesListComponent implements OnInit {
       pageSize: this.pageSize,
       pageNumber: this.currentPage,
       startDate: this.startDate ? new Date(this.startDate) : null,
-      endDate: this.endDate ? new Date(this.endDate) : null
+      endDate: this.endDate ? new Date(this.endDate) : null,
     };
 
     this.loadingIndicator = true;
     this.invoiceService.getAllInvoices(request).subscribe({
-      next: (response) => {
+      next: response => {
         if (response?.success) {
           this.rows = response.data.items;
           this.temp = response.data.items;
@@ -79,11 +85,11 @@ export class PurchasesListComponent implements OnInit {
         }
         this.loadingIndicator = false;
       },
-      error: (error) => {
+      error: error => {
         console.error(error);
         this.loadingIndicator = false;
         this.toastr.error('Error al cargar los datos');
-      }
+      },
     });
   }
 
@@ -95,7 +101,9 @@ export class PurchasesListComponent implements OnInit {
   onDateFilterChange() {
     if (this.startDate && this.endDate) {
       if (new Date(this.startDate) > new Date(this.endDate)) {
-        this.toastr.warning('La fecha de inicio no puede ser mayor que la fecha final');
+        this.toastr.warning(
+          'La fecha de inicio no puede ser mayor que la fecha final',
+        );
         return;
       }
     }
@@ -103,6 +111,8 @@ export class PurchasesListComponent implements OnInit {
   }
 
   clearDateFilters() {
+    this.temp = [];
+    this.rows = [];
     this.startDate = null;
     this.endDate = null;
     this.loadData();
@@ -126,16 +136,17 @@ export class PurchasesListComponent implements OnInit {
   }
 
   clipBoardCopy() {
-    var string = JSON.stringify(this.temp);
-    var result = this.clipboardService.copyFromContent(string);
+    const string = JSON.stringify(this.temp);
+    const result = this.clipboardService.copyFromContent(string);
 
     if (this.temp.length === 0) {
       this.toastr.info('no data to copy');
-    } else {
+    } else if (result) {
       this.toastr.success('copied ' + this.temp.length + ' rows successfully');
+    } else {
+      this.toastr.error('Failed to copy data to clipboard');
     }
   }
-
 
   onPrint() {
     const body = this.temp.map((items: any) => {
@@ -145,17 +156,12 @@ export class PurchasesListComponent implements OnInit {
         items.id,
         items.date,
         items.status ? 'Activa' : 'Pendiente o Anulada',
-        items.totalInvoice
+        items.totalInvoice,
       ];
       return data;
     });
 
-    this.printService.print(
-      header,
-      body,
-      'Lista de Compras',
-      false
-    );
+    this.printService.print(header, body, 'Lista de Compras', false);
   }
 
   showDetails(invoice: any) {
@@ -163,7 +169,7 @@ export class PurchasesListComponent implements OnInit {
     this.modal = this.modalService.open(this.detailsModal, {
       size: 'lg',
       backdrop: 'static',
-      keyboard: false
+      keyboard: false,
     });
   }
 
@@ -175,25 +181,20 @@ export class PurchasesListComponent implements OnInit {
   printInvoiceDetails() {
     if (!this.selectedInvoice) return;
 
-    const header = [
-      'Producto',
-      'Cantidad',
-      'Precio',
-      'Total'
-    ];
+    const header = ['Producto', 'Cantidad', 'Precio', 'Total'];
 
     const body = this.selectedInvoice.invoicesDetails.map(detail => [
       detail.productName,
       detail.productQuantity,
       detail.productPrice,
-      detail.baseAmount
+      detail.baseAmount,
     ]);
 
     this.printService.print(
       header,
       body,
       `Detalle de Compra #${this.selectedInvoice.id}`,
-      true
+      true,
     );
   }
 
@@ -220,11 +221,11 @@ export class PurchasesListComponent implements OnInit {
           this.loadingIndicator = false;
           this.toastr.success('Excel generado exitosamente');
         },
-        error: (error) => {
+        error: error => {
           console.error('Error al exportar el excel', error);
           this.loadingIndicator = false;
           this.toastr.error('Error al generar el excel');
-        }
+        },
       });
     } catch (error) {
       console.error('Error al exportar el excel', error);
