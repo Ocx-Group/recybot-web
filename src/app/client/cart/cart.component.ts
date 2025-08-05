@@ -95,9 +95,6 @@ export class CartComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    // setTimeout(() => {
-    //   this.showTermsAndConditions();
-    // }, 100);
     this.user = this.auth.currentUserAffiliateValue;
     this.hasReachedWithdrawalLimit(this.user.id);
     this.today = new Date();
@@ -184,6 +181,7 @@ export class CartComponent implements OnInit, OnDestroy {
           break;
         case 11:
           this.model = 'recycoin';
+          break;
         default:
           break;
       }
@@ -318,7 +316,7 @@ export class CartComponent implements OnInit, OnDestroy {
 
     this.walletService.payWithMyBalance(this.createBalanceRequest()).subscribe({
       next: value => {
-        if (value.success == true) {
+        if (value.success) {
           this.showSuccess('Pago realizado correctamente');
           this.router.navigate(['app/home']);
           this.emptycart();
@@ -341,7 +339,7 @@ export class CartComponent implements OnInit, OnDestroy {
       .payWithMyBalanceModel2(this.createBalanceRequest())
       .subscribe({
         next: value => {
-          if (value.success == true) {
+          if (value.success) {
             this.showSuccess('Pago realizado correctamente');
             this.router.navigate(['app/home']);
             this.emptycart();
@@ -493,7 +491,7 @@ export class CartComponent implements OnInit, OnDestroy {
       .payWithMyBalance(this.createBalanceRequest())
       .subscribe({
         next: value => {
-          if (value.success == true) {
+          if (value.success) {
             this.showSuccess('Pago realizado correctamente');
             this.router.navigate(['app/home']);
             this.emptycart();
@@ -516,7 +514,7 @@ export class CartComponent implements OnInit, OnDestroy {
       .payWithMyBalance(this.createBalanceRequest())
       .subscribe({
         next: value => {
-          if (value.success == true) {
+          if (value.success) {
             this.showSuccess('Pago realizado correctamente');
             this.router.navigate(['app/home']);
             this.emptycart();
@@ -559,7 +557,7 @@ export class CartComponent implements OnInit, OnDestroy {
       .payWithServiceBalance(this.createBalanceRequest())
       .subscribe({
         next: value => {
-          if (value.success == true) {
+          if (value.success) {
             this.showSuccess('Pago realizado correctamente');
             this.router.navigate(['app/home']);
             this.emptycart();
@@ -582,7 +580,7 @@ export class CartComponent implements OnInit, OnDestroy {
       .payWithMyServiceBalance(this.createBalanceRequest())
       .subscribe({
         next: value => {
-          if (value.success == true) {
+          if (value.success) {
             this.showSuccess('Pago realizado correctamente');
             this.router.navigate(['app/home']);
             this.emptycart();
@@ -597,7 +595,7 @@ export class CartComponent implements OnInit, OnDestroy {
   }
 
   acceptTerms() {
-    if (this.user.termsConditions != true) {
+    if (!this.user.termsConditions) {
       this.affiliateService.updateAffiliate(this.user).subscribe({
         next: () => {
           this.showSuccess('Términos y condiciones actualizados correctamente');
@@ -663,7 +661,7 @@ export class CartComponent implements OnInit, OnDestroy {
       )
       .subscribe({
         next: response => {
-          if (response.data == true) {
+          if (response.data) {
             this.swalInstance.update({
               title: 'Pago confirmado',
               html: 'Tu pago ha sido procesado exitosamente.',
@@ -693,15 +691,6 @@ export class CartComponent implements OnInit, OnDestroy {
       this.pollingSubscription.unsubscribe();
     }
   }
-
-  // showTermsAndConditions() {
-  //   const doc = {
-  //     url: '/assets/pdf/T&C RecyCoin V1.2.pdf',
-  //     title: 'Términos y condiciones'
-  //   };
-
-  //   this.pdfViewerService.showPdf(doc);
-  // }
 
   hasReachedWithdrawalLimit(userId: number) {
     this.matrixQualificationService
