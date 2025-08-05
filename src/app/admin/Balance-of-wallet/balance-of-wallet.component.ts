@@ -1,23 +1,13 @@
 import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { ClipboardService } from 'ngx-clipboard';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 
-import { Wallet } from '@app/core/models/wallet-model/wallet.model';
-import { PrintService } from '@app/core/service/print-service/print.service';
 import { WalletService } from '@app/core/service/wallet-service/wallet.service';
 import { ToastrService } from 'ngx-toastr';
 import Swal from 'sweetalert2';
 import { TranslateService } from '@ngx-translate/core';
-
-const header = [
-  'Usuario Responsable',
-  'Afiliado',
-  'Crédito',
-  'Débito',
-  'Estado',
-  'Concepto',
-  'Fecha',
-];
 
 @Component({
   selector: 'app-balance-of-wallet',
@@ -33,10 +23,9 @@ export class BalanceOfWalletComponent implements OnInit {
   @ViewChild('table') table: DatatableComponent;
   constructor(
     private walletService: WalletService,
-    private printService: PrintService,
     private clipboardService: ClipboardService,
     private toastr: ToastrService,
-    private translateService: TranslateService
+    private translateService: TranslateService,
   ) {}
 
   ngOnInit(): void {
@@ -51,10 +40,9 @@ export class BalanceOfWalletComponent implements OnInit {
   }
 
   loadWalletBalance() {
-    this.walletService.getAllWallets().subscribe((resp) => {
+    this.walletService.getAllWallets().subscribe(resp => {
       if (resp != null) {
         this.temp = [...resp];
-        console.log(this.temp);
         this.rows = resp;
         this.loadingIndicator = false;
       }
@@ -76,8 +64,8 @@ export class BalanceOfWalletComponent implements OnInit {
       'detail',
     ];
 
-    const temp = this.temp.filter((d) => {
-      return searchFields.some((field) => {
+    const temp = this.temp.filter(d => {
+      return searchFields.some(field => {
         const fieldValue = d[field]?.toString().toLowerCase() || '';
         return fieldValue.includes(val);
       });
@@ -92,31 +80,55 @@ export class BalanceOfWalletComponent implements OnInit {
   }
 
   clipBoardCopy() {
-    var string = JSON.stringify(this.temp);
-    var result = this.clipboardService.copyFromContent(string);
+    const string = JSON.stringify(this.temp);
+    const result = this.clipboardService.copyFromContent(string);
 
     if (this.temp.length === 0) {
       this.toastr.info('no data to copy');
-    } else {
+    } else if (result) {
       this.toastr.success('copied ' + this.temp.length + ' rows successfully');
+    } else {
+      this.toastr.error('Failed to copy data to clipboard');
     }
   }
 
   onPrint() {
-    const body = this.temp.map((items: Wallet) => {
-      const data = [
-        items.affiliateId,
-        items.userId,
-        items.credit,
-        items.debit,
-        items.status == true ? 'Atendido' : 'No atendido',
-        items.concept,
-        items.date,
-      ];
-      return data;
-    });
+    const DATA = document.getElementById('htmlTable');
+    const today = new Date();
 
-    this.printService.print(header, body, 'Balance de Billetera', false);
+    html2canvas(DATA).then(canvas => {
+      let pdf = new jsPDF('l', 'mm', 'a4');
+
+      const pageWidth = 297;
+      const imgWidth = pageWidth - 40;
+
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+      const posX = 20;
+      const posY = 30;
+
+      pdf.setFontSize(18);
+      pdf.text('Movimientos de mi billetera', pageWidth / 2, 20, {
+        align: 'center',
+      });
+
+      const contentDataURL = canvas.toDataURL('image/png');
+      pdf.addImage(contentDataURL, 'PNG', posX, posY, imgWidth, imgHeight);
+
+      const formattedDate = today
+        .toLocaleString('es-ES', {
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit',
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit',
+        })
+        .replace(/[/:]/g, '-')
+        .replace(', ', '_');
+
+      pdf.save(`movimientos_billetera_${formattedDate}.pdf`);
+    });
   }
 
   showDetail(detail: string) {
@@ -133,8 +145,9 @@ export class BalanceOfWalletComponent implements OnInit {
         popup: 'swal-popup',
         container: 'swal-container',
       },
-    }).then((result) => {
+    }).then(result => {
       if (result.isConfirmed) {
+        /*empty*/
       }
     });
   }

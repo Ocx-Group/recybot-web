@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, OnInit, Optional } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { jsPDF } from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { Observable, catchError, switchMap, throwError } from 'rxjs';
@@ -8,7 +8,6 @@ import { ToastrService } from 'ngx-toastr';
 import { AffiliateService } from '../affiliate-service/affiliate.service';
 import { Invoice } from '@app/core/models/invoice-model/invoice.model';
 import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
-import { options } from '@amcharts/amcharts4/core';
 
 const today = new Date();
 
@@ -21,19 +20,21 @@ export class PrintService {
   constructor(
     private http: HttpClient,
     private affiliateService: AffiliateService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
   ) {
     this.affiliateService.getCountries().subscribe({
-      next: (resp) => {
+      next: resp => {
         this.countries = resp;
       },
-      error: (err) => {
+      error: err => {
         this.toastr.error('error');
       },
     });
   }
 
   print(header: string[], body: Array<any>, title: string, save?: boolean) {
+    const today = new Date();
+
     const doc = new jsPDF({
       orientation: 'landscape',
       unit: 'px',
@@ -42,6 +43,7 @@ export class PrintService {
 
     doc.setFont('Helvetica', 'normal');
     doc.text(title, doc.internal.pageSize.width / 2, 25, { align: 'center' });
+
     autoTable(doc, {
       theme: 'striped',
       headStyles: {},
@@ -49,31 +51,26 @@ export class PrintService {
       body: body,
     });
 
-    if (save) {
-      doc.save(
-        today.getDate() +
-        today.getMonth() +
-        today.getFullYear() +
-        today.getTime() +
-        '.pdf'
-      );
-    } else {
-    }
     doc.setProperties({ title: title });
-    doc.output('dataurlnewwindow');
+
+    if (save) {
+      const fileName = `${today.getDate()}-${
+        today.getMonth() + 1
+      }-${today.getFullYear()}-${today.getTime()}.pdf`;
+      doc.save(fileName);
+    } else {
+      doc.output('dataurlnewwindow');
+    }
   }
 
   public downloadInvoice(invoice: Invoice, user: UserAffiliate) {
     this.getImageAsBase64('assets/images/logo-invoice.png').subscribe(
-      (base64Image) => {
+      base64Image => {
         const base64Data = base64Image.replace(
           /^data:image\/(png|jpg);base64,/,
-          ''
+          '',
         );
 
-        (error) => {
-
-        }
         const doc = new jsPDF();
 
         doc.addImage(base64Data, 'PNG', 5, 6, 70, 35);
@@ -97,14 +94,13 @@ export class PrintService {
                   '-' +
                   today.getFullYear(),
                 styles: {
-                  halign: 'right'
+                  halign: 'right',
                 },
               },
             ],
           ],
           theme: 'plain',
         });
-
 
         autoTable(doc, {
           body: [
@@ -114,7 +110,7 @@ export class PrintService {
                 styles: {
                   halign: 'left',
                   fontSize: 14,
-                  fontStyle: 'bold'
+                  fontStyle: 'bold',
                 },
               },
             ],
@@ -168,14 +164,12 @@ export class PrintService {
           theme: 'plain',
         });
 
-
         let totalDiscount = 0;
         let totalTax = 0;
         let subTotal = 0;
 
-        const bodyData = invoice.invoicesDetails.map((detail) => {
+        const bodyData = invoice.invoicesDetails.map(detail => {
           totalDiscount += detail.productDiscount;
-          totalTax = detail.productIva;
           subTotal += detail.productPrice;
 
           return [
@@ -183,7 +177,11 @@ export class PrintService {
             detail.productQuantity,
             '$' + detail.productPrice,
             '$' + detail.productDiscount,
-            '$' + (detail.productPrice * (detail.productQuantity + detail.productIva / 100)).toFixed(0)
+            '$' +
+              (
+                detail.productPrice *
+                (detail.productQuantity + detail.productIva / 100)
+              ).toFixed(0),
           ];
         });
         autoTable(doc, {
@@ -195,7 +193,6 @@ export class PrintService {
           },
         });
 
-
         autoTable(doc, {
           body: [
             [
@@ -204,7 +201,7 @@ export class PrintService {
                 styles: {
                   halign: 'right',
                   fontSize: 14,
-                  fontStyle: 'bold'
+                  fontStyle: 'bold',
                 },
               },
             ],
@@ -240,37 +237,40 @@ export class PrintService {
           theme: 'plain',
         });
         return doc.output('dataurlnewwindow');
-      });
+      },
+    );
   }
 
   getImageAsBase64(url: string): Observable<string> {
     return this.http.get(url, { responseType: 'blob' }).pipe(
-      switchMap((blob) => {
+      switchMap(blob => {
         if (blob instanceof Blob) {
           return this.convertBlobToBase64(blob);
         } else {
           return throwError('La respuesta no es un Blob');
         }
       }),
-      catchError((error) => {
+      catchError(error => {
         return throwError(error);
-      })
+      }),
     );
   }
 
   convertBlobToBase64(blob: Blob): Observable<string> {
     const reader = new FileReader();
     reader.readAsDataURL(blob);
-    return new Observable<string>((observer) => {
+    return new Observable<string>(observer => {
       reader.onloadend = () => {
         if (typeof reader.result === 'string') {
           observer.next(reader.result);
           observer.complete();
         } else {
-          observer.error('El resultado de la lectura del blob no es una cadena');
+          observer.error(
+            'El resultado de la lectura del blob no es una cadena',
+          );
         }
       };
-      reader.onerror = (error) => {
+      reader.onerror = error => {
         observer.error(error);
       };
     });
@@ -278,7 +278,7 @@ export class PrintService {
 
   getCountryName(id) {
     let countryName = '';
-    this.countries.find((item) => {
+    this.countries.find(item => {
       if (item.id === id) {
         countryName = item.name;
         return true;
