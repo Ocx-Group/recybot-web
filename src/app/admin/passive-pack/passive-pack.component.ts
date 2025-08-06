@@ -19,14 +19,15 @@ export class PassivePackComponent implements OnInit {
   scrollBarHorizontal = window.innerWidth < 1200;
   totalElements: number = 0;
   pageSize: number = 10;
-  currentPage: number = 1;  startDate: string = null;
+  currentPage: number = 1;
+  startDate: string = null;
   endDate: string = null;
   @ViewChild('table') table: DatatableComponent;
 
   constructor(
     private modalService: NgbModal,
-    private invoiceService: InvoiceService
-  ) { }
+    private invoiceService: InvoiceService,
+  ) {}
 
   ngOnInit(): void {
     this.loadInvoiceList();
@@ -46,29 +47,32 @@ export class PassivePackComponent implements OnInit {
       pageSize: this.pageSize,
       pageNumber: this.currentPage,
       startDate: this.startDate ? new Date(this.startDate) : null,
-      endDate: this.endDate ? new Date(this.endDate) : null
+      endDate: this.endDate ? new Date(this.endDate) : null,
     };
-    this.invoiceService.getAllInvoices(request).pipe(
-      map((response: any) => response as Invoice[])
-    ).subscribe((resp: Invoice[]) => {
-      if (resp != null) {
-        const data = resp.map(invoice => {
-          return invoice.invoicesDetails.map(detail => {
-            return {
-              ...detail,
-              invoiceId: invoice.id,
-              affiliate: invoice.affiliateId,
-              number: invoice.invoiceNumber,
-              status: invoice.status
-            }
-          });
-        }).flat();
+    this.invoiceService
+      .getAllInvoices(request)
+      .pipe(map((response: any) => response as Invoice[]))
+      .subscribe((resp: Invoice[]) => {
+        if (resp != null) {
+          const data = resp
+            .map(invoice => {
+              return invoice.invoicesDetails.map(detail => {
+                return {
+                  ...detail,
+                  invoiceId: invoice.id,
+                  affiliate: invoice.affiliateId,
+                  number: invoice.invoiceNumber,
+                  status: invoice.status,
+                };
+              });
+            })
+            .flat();
 
-        this.temp = [...data];
-        this.rows = data;
-        this.loadingIndicator = false;
-      }
-    });
+          this.temp = [...data];
+          this.rows = data;
+          this.loadingIndicator = false;
+        }
+      });
   }
 
   getRowHeight(row) {
@@ -85,17 +89,18 @@ export class PassivePackComponent implements OnInit {
     this.table.offset = 0;
   }
 
-  passivePackDetailModal(content) {
+  openModal(content: any, size: string = 'xl') {
     this.modalService.open(content, {
       ariaLabelledBy: 'modal-basic-title',
-      size: 'xl',
+      size: size,
     });
   }
 
+  passivePackDetailModal(content) {
+    this.openModal(content);
+  }
+
   runPassivePackModal(content) {
-    this.modalService.open(content, {
-      ariaLabelledBy: 'modal-basic-title',
-      size: 'xl',
-    });
+    this.openModal(content);
   }
 }
