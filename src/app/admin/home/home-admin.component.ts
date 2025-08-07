@@ -17,6 +17,7 @@ import {
   ApexPlotOptions,
   ChartComponent,
 } from 'ng-apexcharts';
+import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
 
 export interface ChartOptions {
   series?: ApexNonAxisChartSeries;
@@ -48,6 +49,7 @@ export class HomeAdminComponent implements OnInit {
   maps: any[] = [];
   user: any;
   @ViewChild('chart') chart1: ChartComponent;
+  lastRegisteredUsers: UserAffiliate[] = [];
 
   constructor(
     private walletService: WalletService,
@@ -78,7 +80,7 @@ export class HomeAdminComponent implements OnInit {
     this.initChartReport();
     this.loadLocations();
     this.user = this.authService.currentUserAdminValue;
-    console.log(this.user);
+    this.getLastRegisteredUsers();
   }
 
   showSuccess(message: string) {
@@ -378,8 +380,25 @@ export class HomeAdminComponent implements OnInit {
   loadLocations() {
     this.affiliateService.getTotalAffiliatesByCountries().subscribe({
       next: value => {
-        this.maps = value.data;
+        this.maps = value.data.map(item => ({
+          title: item.Title,
+          value: item.Value,
+          lat: item.Lat,
+          lng: item.Lng,
+        }));
+
         this.setMapInfo();
+      },
+      error: () => {
+        this.showError('Error');
+      },
+    });
+  }
+
+  getLastRegisteredUsers() {
+    this.affiliateService.getLastRegisteredAffiliates().subscribe({
+      next: value => {
+        this.lastRegisteredUsers = value.data;
       },
       error: () => {
         this.showError('Error');
