@@ -1,20 +1,21 @@
-import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
-import { DatatableComponent } from '@swimlane/ngx-datatable';
-import { ClipboardService } from 'ngx-clipboard';
-import { ToastrService } from 'ngx-toastr';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import {Component, HostListener, OnInit, ViewChild} from '@angular/core';
+import {DatatableComponent} from '@swimlane/ngx-datatable';
+import {ClipboardService} from 'ngx-clipboard';
+import {ToastrService} from 'ngx-toastr';
 
-import { AffiliateService } from '@app/core/service/affiliate-service/affiliate.service';
-import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
-import { PrintService } from '@app/core/service/print-service/print.service';
-import { Router } from '@angular/router';
+import {AffiliateService} from '@app/core/service/affiliate-service/affiliate.service';
+import {UserAffiliate} from '@app/core/models/user-affiliate-model/user.affiliate.model';
+import {PrintService} from '@app/core/service/print-service/print.service';
+import {Router} from '@angular/router';
 import Swal from 'sweetalert2';
-import { WalletService } from '@app/core/service/wallet-service/wallet.service';
-import { CreditTransactionAdminRequest } from '@app/core/models/wallet-model/creditTransactionAdminRequest.mode';
-import { BalanceInformationModalComponent } from './balance-information-modal/balance-information-modal.component';
-import { WalletModel1AService } from '@app/core/service/wallet-model-1a-service/wallet-model-1a.service';
-import { WalletModel1BService } from '@app/core/service/wallet-model-1b-service/wallet-model-1b.service';
-import { MatrixActivationModalComponent } from '@app/admin/affiliates-list/matrix-activation/matrix-activation-modal.component';
+import {WalletService} from '@app/core/service/wallet-service/wallet.service';
+import {CreditTransactionAdminRequest} from '@app/core/models/wallet-model/creditTransactionAdminRequest.mode';
+import {BalanceInformationModalComponent} from './balance-information-modal/balance-information-modal.component';
+import {WalletModel1AService} from '@app/core/service/wallet-model-1a-service/wallet-model-1a.service';
+import {WalletModel1BService} from '@app/core/service/wallet-model-1b-service/wallet-model-1b.service';
+import {
+  MatrixActivationModalComponent
+} from '@app/admin/affiliates-list/matrix-activation/matrix-activation-modal.component';
 
 const header = [
   'Usuario',
@@ -50,12 +51,12 @@ export class AffiliatesListComponent implements OnInit {
     private affiliateService: AffiliateService,
     private clipboardService: ClipboardService,
     private toast: ToastrService,
-    private modalService: NgbModal,
     private printService: PrintService,
     private walletService: WalletService,
     private walletModel1AService: WalletModel1AService,
     private walletModel1BService: WalletModel1BService
-  ) {}
+  ) {
+  }
 
   ngOnInit() {
     this.loadAffiliateList();
@@ -91,12 +92,13 @@ export class AffiliatesListComponent implements OnInit {
     });
   }
 
-  getRowHeight(row) {
+  getRowHeight(row: { height: any; }) {
     return row.height;
   }
 
-  updateFilter(event) {
-    const val = event.target.value.toLowerCase();
+  updateFilter(event: Event) {
+    const target = event.target as HTMLInputElement;
+    const val = target.value.toLowerCase();
 
     this.rows = this.temp.filter(function (d) {
       return d.user_name.toLowerCase().indexOf(val) !== -1 || !val;

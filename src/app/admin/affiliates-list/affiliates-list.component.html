@@ -31,10 +31,10 @@
                             </div>
                           </div>
                           <input style="background-color: white" type="text" class="form-control"
-                            id="inlineFormInputGroup" (keyup)="updateFilter($event)" aria-label="Search box"
-                            placeholder="{{
+                                 id="inlineFormInputGroup" (keyup)="updateFilter($event)" aria-label="Search box"
+                                 placeholder="{{
                               'USERS-LIST-PAGE.USERS-SEARCH.TEXT' | translate
-                            }}" />
+                            }}"/>
                         </div>
                       </div>
                     </div>
@@ -58,8 +58,8 @@
                   </div>
                 </div>
                 <ngx-datatable #table class="material" [rows]="rows" [loadingIndicator]="loadingIndicator"
-                  columnMode="force" [headerHeight]="50" [footerHeight]="50" rowHeight="auto" [limit]="10"
-                  [scrollbarH]="scrollBarHorizontal" [reorderable]="reorderable">
+                               columnMode="force" [headerHeight]="50" [footerHeight]="50" rowHeight="auto" [limit]="10"
+                               [scrollbarH]="scrollBarHorizontal" [reorderable]="reorderable">
                   <ngx-datatable-column name="{{
                       'AFFILIATES-LIST-PAGE.COL-USER.TEXT' | translate
                     }}">
@@ -134,12 +134,12 @@
 
                   <ngx-datatable-column name="{{
                       'AFFILIATES-LIST-PAGE.COL-DETAILS.TEXT' | translate
-                    }}" sortable="false">
-                    <ng-template let-value="value" let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+                    }}" [sortable]=false>
+                    <ng-template let-row="row" ngx-datatable-cell-template>
                       <div ngbDropdown container="body">
                         <button type="button" class="btn btn-outline-primary btn-sm" ngbDropdownToggle>
                           {{
-                          'AFFILIATES-LIST-PAGE.BTN-ACTIONS.TEXT' | translate
+                            'AFFILIATES-LIST-PAGE.BTN-ACTIONS.TEXT' | translate
                           }}
                         </button>
                         <div ngbDropdownMenu>
@@ -149,14 +149,12 @@
                           </a>
                           <a ngbDropdownItem id="btn-detail" (click)="detailModal(userDetailModal)">
                             <i class="bi bi-file-earmark-plus-fill"></i>
-                            <span style="margin-left: 10px" (click)="
-                                modalChildUpdate.updateOpenModal(
-                                  modalChildUpdate['rolUpdateModal'],
-                                  row
-                                )
-                              ">{{
-                              'AFFILIATES-LIST-PAGE.MORE-DETAILS.TEXT'
-                              | translate
+                            <span style="margin-left: 10px"
+                                  (click)="modalChildUpdate.updateOpenModal(modalChildUpdate['rolUpdateModal'], row)"
+                                  (keydown)="modalChildUpdate.updateOpenModal(modalChildUpdate['rolUpdateModal'], row)"
+                                  (keyup)="modalChildUpdate.updateOpenModal(modalChildUpdate['rolUpdateModal'], row)">{{
+                                'AFFILIATES-LIST-PAGE.MORE-DETAILS.TEXT'
+                                  | translate
                               }}</span>
                           </a>
                           <a ngbDropdownItem id="btn-edit" (click)="
@@ -167,48 +165,49 @@
                             ">
                             <i class="fas fa-edit"></i>
                             <span style="margin-left: 10px">{{
-                              'AFFILIATES-LIST-PAGE.EDIT.TEXT' | translate
+                                'AFFILIATES-LIST-PAGE.EDIT.TEXT' | translate
                               }}</span>
                           </a>
                           <a ngbDropdownItem id="btn-delete" (click)="onRouteUnilevelTree(row.id)">
                             <i class="bi bi-diagram-3-fill"></i>
                             <span style="margin-left: 10px">
                               {{
-                              'AFFILIATES-LIST-PAGE.UNILEVEL-FAMILY-TREE.TEXT'
-                              | translate
+                                'AFFILIATES-LIST-PAGE.UNILEVEL-FAMILY-TREE.TEXT'
+                                  | translate
                               }}</span>
                           </a>
                           <a ngbDropdownItem id="btn-delete" (click)="onRouteForceGenealogicalTree()">
                             <i class="bi bi-diagram-3-fill"></i>
                             <span style="margin-left: 10px">{{
-                              'AFFILIATES-LIST-PAGE.FORCED-GENEALOGICAL-TREE.TEXT'
-                              | translate
+                                'AFFILIATES-LIST-PAGE.FORCED-GENEALOGICAL-TREE.TEXT'
+                                  | translate
                               }}</span>
                           </a>
                           <a ngbDropdownItem id="btn-delete">
                             <i class="bi bi-diagram-3-fill"></i>
-                            <span style="margin-left: 10px" (click)="onRouteBinaryGenealogicalTree(row.id)">{{
-                              'AFFILIATES-LIST-PAGE.BINARY-GENEALOGICAL-TREE.TEXT'
-                              | translate
+                            <span style="margin-left: 10px"
+                                  (click)="onRouteBinaryGenealogicalTree(row.id)"
+                                  (keydown)="onRouteBinaryGenealogicalTree(row.id)"
+                                  (keyup)="onRouteBinaryGenealogicalTree(row.id)">{{
+                                'AFFILIATES-LIST-PAGE.BINARY-GENEALOGICAL-TREE.TEXT'
+                                  | translate
                               }}</span>
                           </a>
                           <a ngbDropdownItem id="btn-delete" (click)="deleteSingleRow(row.id)">
                             <i class="bi bi-wallet-fill"></i>
                             <span style="margin-left: 10px">{{
-                              'AFFILIATES-LIST-PAGE.WALLET-BALANCE.TEXT'
-                              | translate
+                                'AFFILIATES-LIST-PAGE.WALLET-BALANCE.TEXT'
+                                  | translate
                               }}</span>
                           </a>
                           <a ngbDropdownItem id="btn-delete">
                             <i class="bi bi-cart-check-fill"></i>
-                            <span style="margin-left: 10px" (click)="
-                                modalChildCreatePurchase.openMakePurchaseModal(
-                                  modalChildCreatePurchase['makePurchaseModal'],
-                                  row
-                                )
-                              ">{{
-                              'AFFILIATES-LIST-PAGE.MAKE-PURCHASE.TEXT'
-                              | translate
+                            <span style="margin-left: 10px"
+                                  (click)="modalChildCreatePurchase.openMakePurchaseModal(modalChildCreatePurchase['makePurchaseModal'], row)"
+                                  (keydown)="modalChildCreatePurchase.openMakePurchaseModal(modalChildCreatePurchase['makePurchaseModal'], row)"
+                                  (keyup)="modalChildCreatePurchase.openMakePurchaseModal(modalChildCreatePurchase['makePurchaseModal'], row)">{{
+                                'AFFILIATES-LIST-PAGE.MAKE-PURCHASE.TEXT'
+                                  | translate
                               }}</span>
                           </a>
                           <a ngbDropdownItem id="btn-create-balance" (click)="confirmationCreateBalance(row)">
@@ -218,36 +217,39 @@
                           <a ngbDropdownItem id="btn-delete" (click)="deleteSingleRow(row.id)">
                             <i class="bi bi-arrow-repeat"></i>
                             <span style="margin-left: 10px">{{
-                              'AFFILIATES-LIST-PAGE.CHANGE-SPONSOR.TEXT'
-                              | translate
+                                'AFFILIATES-LIST-PAGE.CHANGE-SPONSOR.TEXT'
+                                  | translate
                               }}</span>
                           </a>
                           <a ngbDropdownItem id="btn-delete">
                             <i class="bi bi-eye-fill"></i>
-                            <span style="margin-left: 10px" (click)="deleteSingleRow(row.id)">{{
-                              'AFFILIATES-LIST-PAGE.QUALIFICATION-AUDIT.TEXT'
-                              | translate
+                            <span style="margin-left: 10px"
+                                  (click)="deleteSingleRow(row.id)"
+                                  (keydown)="deleteSingleRow(row.id)"
+                                  (keyup)="deleteSingleRow(row.id)">{{
+                                'AFFILIATES-LIST-PAGE.QUALIFICATION-AUDIT.TEXT'
+                                  | translate
                               }}</span>
                           </a>
                           <a ngbDropdownItem id="btn-delete" (click)="deleteSingleRow(row.id)">
                             <i class="bi bi-database-fill-exclamation"></i>
                             <span style="margin-left: 10px">{{
-                              'AFFILIATES-LIST-PAGE.NETWORK-PURCHASE-REGISTRY.TEXT'
-                              | translate
+                                'AFFILIATES-LIST-PAGE.NETWORK-PURCHASE-REGISTRY.TEXT'
+                                  | translate
                               }}</span>
                           </a>
                           <a ngbDropdownItem id="btn-delete" (click)="deleteSingleRow(row.id)">
                             <i class="bi bi-currency-exchange"></i>
                             <span style="margin-left: 10px">{{
-                              'AFFILIATES-LIST-PAGE.TOPE-MAX-COINPAYMENTS.TEXT'
-                              | translate
+                                'AFFILIATES-LIST-PAGE.TOPE-MAX-COINPAYMENTS.TEXT'
+                                  | translate
                               }}</span>
                           </a>
                           <a ngbDropdownItem id="btn-delete" (click)="deleteSingleRow(row.id)">
                             <i class="fas fa-trash-alt"></i>
                             <span style="margin-left: 10px">{{
-                              'AFFILIATES-LIST-PAGE.REMOVE-AFFILIATE.TEXT'
-                              | translate
+                                'AFFILIATES-LIST-PAGE.REMOVE-AFFILIATE.TEXT'
+                                  | translate
                               }}</span>
                           </a>
                           <a ngbDropdownItem id="btn-delete" (click)="openBalanceInformationModal(row)">
@@ -261,7 +263,7 @@
                 </ngx-datatable>
 
                 <app-affiliates-list-edit-modal #modalChildEdit
-                  (loadAffiliateList)="loadAffiliateList()"></app-affiliates-list-edit-modal>
+                                                (loadAffiliateList)="loadAffiliateList()"></app-affiliates-list-edit-modal>
               </div>
             </div>
           </div>
