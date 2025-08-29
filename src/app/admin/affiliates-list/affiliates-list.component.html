@@ -147,14 +147,13 @@
                             <i class="bi bi-grid-3x3-gap-fill"></i>
                             <span class="ms-2">Activar Matriz</span>
                           </a>
-                          <a ngbDropdownItem id="btn-detail" (click)="detailModal(userDetailModal)">
+                          <a ngbDropdownItem id="btn-detail"
+                             (click)="detailModal(userDetailModal); modalChildUpdate.updateOpenModal(modalChildUpdate['rolUpdateModal'], row)"
+                             (keydown)="modalChildUpdate.updateOpenModal(modalChildUpdate['rolUpdateModal'], row)"
+                             (keyup)="modalChildUpdate.updateOpenModal(modalChildUpdate['rolUpdateModal'], row)">
                             <i class="bi bi-file-earmark-plus-fill"></i>
-                            <span style="margin-left: 10px"
-                                  (click)="modalChildUpdate.updateOpenModal(modalChildUpdate['rolUpdateModal'], row)"
-                                  (keydown)="modalChildUpdate.updateOpenModal(modalChildUpdate['rolUpdateModal'], row)"
-                                  (keyup)="modalChildUpdate.updateOpenModal(modalChildUpdate['rolUpdateModal'], row)">{{
-                                'AFFILIATES-LIST-PAGE.MORE-DETAILS.TEXT'
-                                  | translate
+                            <span style="margin-left: 10px">{{
+                                'AFFILIATES-LIST-PAGE.MORE-DETAILS.TEXT' | translate
                               }}</span>
                           </a>
                           <a ngbDropdownItem id="btn-edit" (click)="
@@ -183,12 +182,12 @@
                                   | translate
                               }}</span>
                           </a>
-                          <a ngbDropdownItem id="btn-delete">
+                          <a ngbDropdownItem id="btn-delete"
+                             (click)="onRouteBinaryGenealogicalTree(row.id)"
+                             (keydown)="onRouteBinaryGenealogicalTree(row.id)"
+                             (keyup)="onRouteBinaryGenealogicalTree(row.id)">
                             <i class="bi bi-diagram-3-fill"></i>
-                            <span style="margin-left: 10px"
-                                  (click)="onRouteBinaryGenealogicalTree(row.id)"
-                                  (keydown)="onRouteBinaryGenealogicalTree(row.id)"
-                                  (keyup)="onRouteBinaryGenealogicalTree(row.id)">{{
+                            <span style="margin-left: 10px">{{
                                 'AFFILIATES-LIST-PAGE.BINARY-GENEALOGICAL-TREE.TEXT'
                                   | translate
                               }}</span>
@@ -200,12 +199,12 @@
                                   | translate
                               }}</span>
                           </a>
-                          <a ngbDropdownItem id="btn-delete">
+                          <a ngbDropdownItem id="btn-delete"
+                             (click)="modalChildCreatePurchase.openMakePurchaseModal(modalChildCreatePurchase['makePurchaseModal'], row)"
+                             (keydown)="modalChildCreatePurchase.openMakePurchaseModal(modalChildCreatePurchase['makePurchaseModal'], row)"
+                             (keyup)="modalChildCreatePurchase.openMakePurchaseModal(modalChildCreatePurchase['makePurchaseModal'], row)">
                             <i class="bi bi-cart-check-fill"></i>
-                            <span style="margin-left: 10px"
-                                  (click)="modalChildCreatePurchase.openMakePurchaseModal(modalChildCreatePurchase['makePurchaseModal'], row)"
-                                  (keydown)="modalChildCreatePurchase.openMakePurchaseModal(modalChildCreatePurchase['makePurchaseModal'], row)"
-                                  (keyup)="modalChildCreatePurchase.openMakePurchaseModal(modalChildCreatePurchase['makePurchaseModal'], row)">{{
+                            <span style="margin-left: 10px">{{
                                 'AFFILIATES-LIST-PAGE.MAKE-PURCHASE.TEXT'
                                   | translate
                               }}</span>
@@ -221,12 +220,12 @@
                                   | translate
                               }}</span>
                           </a>
-                          <a ngbDropdownItem id="btn-delete">
+                          <a ngbDropdownItem id="btn-delete"
+                             (click)="deleteSingleRow(row.id)"
+                             (keydown)="deleteSingleRow(row.id)"
+                             (keyup)="deleteSingleRow(row.id)">
                             <i class="bi bi-eye-fill"></i>
-                            <span style="margin-left: 10px"
-                                  (click)="deleteSingleRow(row.id)"
-                                  (keydown)="deleteSingleRow(row.id)"
-                                  (keyup)="deleteSingleRow(row.id)">{{
+                            <span style="margin-left: 10px">{{
                                 'AFFILIATES-LIST-PAGE.QUALIFICATION-AUDIT.TEXT'
                                   | translate
                               }}</span>
