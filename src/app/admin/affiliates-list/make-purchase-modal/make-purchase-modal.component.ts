@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component,OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Product } from '@app/core/models/product-model/product.model';
 import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
@@ -37,7 +37,7 @@ export class MakePurchaseModalComponent implements OnInit {
     });
   }
 
-  openMakePurchaseModal(content, user) {
+  openMakePurchaseModal(content: NgbModal, user: UserAffiliate) {
     this.user = user;
 
     this.modalService.open(content, {
@@ -54,7 +54,7 @@ export class MakePurchaseModalComponent implements OnInit {
     this.walletRequest.paymentMethod = option;
     this.walletRequest.purchaseFor = 0;
 
-    this.products.forEach(item => {
+    this.products.forEach((item: { id: number; quantity: number; }) => {
       const productRequest = new ProductsRequests();
       productRequest.idProduct = item.id;
       productRequest.count = item.quantity;
@@ -63,7 +63,7 @@ export class MakePurchaseModalComponent implements OnInit {
 
     this.walletService.payWithMyBalanceAdmin(this.walletRequest).subscribe({
       next: value => {
-        if (value.success == true) {
+        if (value.success) {
           this.showSuccess('Pago realizado correctamente');
           this.walletRequest.productsList = [];
           this.products = [];
@@ -72,17 +72,17 @@ export class MakePurchaseModalComponent implements OnInit {
           this.showError('Error: No se pudo realizar el pago.');
         }
       },
-      error: err => {
+      error: () => {
         this.showError('Error: No se pudo realizar el pago.');
       },
     });
   }
 
-  showSuccess(message) {
+  showSuccess(message: string) {
     this.toastr.success(message);
   }
 
-  showError(message) {
+  showError(message: string) {
     this.toastr.error(message);
   }
 
@@ -97,10 +97,10 @@ export class MakePurchaseModalComponent implements OnInit {
   }
 
   addProductToList() {
-    const selectedProduct = this.productList.find(p => p.id == this.makePurchaseForm.get('selectedProduct').value);
+    const selectedProduct = this.productList.find((p: { id: any; }) => p.id == this.makePurchaseForm.get('selectedProduct').value);
     const quantity = this.makePurchaseForm.get('quantity').value;
 
-    const existingProduct = this.products.find(p => p.id == selectedProduct.id);
+    const existingProduct = this.products.find((p: { id: any; }) => p.id == selectedProduct.id);
     if (existingProduct) {
       existingProduct.quantity += quantity;
     } else {
@@ -113,8 +113,8 @@ export class MakePurchaseModalComponent implements OnInit {
     this.makePurchaseForm.reset();
   }
 
-  removeProductFromList(product) {
-    const index = this.products.findIndex(p => p.id == product.id);
+  removeProductFromList(product: { id: any; }) {
+    const index = this.products.findIndex((p: { id: any; }) => p.id == product.id);
     if (index !== -1) {
       this.products.splice(index, 1);
     }
