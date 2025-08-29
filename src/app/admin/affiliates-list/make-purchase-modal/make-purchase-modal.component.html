@@ -3,8 +3,9 @@
     <h4 class="modal-title" id="modal-basic-title">
       <div class="table-modal-header">
         <div class="modal-about">
-          <div class="fw-bold p-t-10 font-17">Realizar Compra para {{ user.name +' '+ user.last_name}}
-            ({{user.user_name}})</div>
+          <div class="fw-bold p-t-10 font-17">Realizar Compra para {{ user.name + ' ' + user.last_name }}
+            ({{ user.user_name }})
+          </div>
         </div>
       </div>
     </h4>
@@ -16,16 +17,17 @@
     <div class="modal-body">
       <div class="row">
         <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-          <label>Producto <span class="text-danger">*</span></label>
+          <label for="select-product">Producto <span class="text-danger">*</span></label>
           <select class="form-control" formControlName="selectedProduct">
-            <option *ngFor="let product of productList" [value]="product.id">{{product.name}} --- {{ product.salePrice
+            <option *ngFor="let product of productList" [value]="product.id">{{ product.name }} --- {{
+                product.salePrice
               }}
             </option>
           </select>
         </div>
         <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
-          <label>Cantidad <span class="text-danger">*</span></label>
-          <input type="number" class="form-control" formControlName="quantity" required />
+          <label for="quantity">Cantidad <span class="text-danger">*</span></label>
+          <input type="number" class="form-control" formControlName="quantity" required/>
         </div>
       </div>
       <div class="mt-3">
