@@ -7,6 +7,7 @@ export class WalletRequest {
   secretKey: string;
   receiptNumber: string;
   productsList: ProductsRequests[];
+  dailyBonusActivation?: boolean;
 
   constructor() {
     this.affiliateId = 0;
@@ -17,6 +18,7 @@ export class WalletRequest {
     this.secretKey = '';
     this.receiptNumber = '';
     this.productsList = [];
+    this.dailyBonusActivation = false;
   }
 }
 

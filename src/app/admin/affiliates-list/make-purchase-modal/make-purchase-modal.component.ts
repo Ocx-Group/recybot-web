@@ -34,6 +34,7 @@ export class MakePurchaseModalComponent implements OnInit {
     this.makePurchaseForm = new FormGroup({
       selectedProduct: new FormControl('', Validators.required),
       quantity: new FormControl(1, Validators.required),
+      dailyBonusActivation: new FormControl(false),
     });
   }
 
@@ -53,6 +54,7 @@ export class MakePurchaseModalComponent implements OnInit {
     this.walletRequest.affiliateUserName = this.user.user_name;
     this.walletRequest.paymentMethod = option;
     this.walletRequest.purchaseFor = 0;
+    this.walletRequest.dailyBonusActivation = this.makePurchaseForm.get('dailyBonusActivation')?.value || false;
 
     this.products.forEach((item: { id: number; quantity: number; }) => {
       const productRequest = new ProductsRequests();
