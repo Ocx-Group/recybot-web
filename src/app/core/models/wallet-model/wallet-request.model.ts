@@ -8,6 +8,7 @@ export class WalletRequest {
   receiptNumber: string;
   productsList: ProductsRequests[];
   dailyBonusActivation?: boolean;
+  includeInCommissionCalculation?: boolean;
 
   constructor() {
     this.affiliateId = 0;
@@ -19,6 +20,7 @@ export class WalletRequest {
     this.receiptNumber = '';
     this.productsList = [];
     this.dailyBonusActivation = false;
+    this.includeInCommissionCalculation = false;
   }
 }
 

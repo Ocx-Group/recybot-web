@@ -1,12 +1,12 @@
-import { Component,OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Product } from '@app/core/models/product-model/product.model';
-import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
-import { ProductsRequests, WalletRequest } from '@app/core/models/wallet-model/wallet-request.model';
-import { ProductService } from '@app/core/service/product-service/product.service';
-import { WalletService } from '@app/core/service/wallet-service/wallet.service';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ToastrService } from 'ngx-toastr';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {Product} from '@app/core/models/product-model/product.model';
+import {UserAffiliate} from '@app/core/models/user-affiliate-model/user.affiliate.model';
+import {ProductsRequests, WalletRequest} from '@app/core/models/wallet-model/wallet-request.model';
+import {ProductService} from '@app/core/service/product-service/product.service';
+import {WalletService} from '@app/core/service/wallet-service/wallet.service';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {ToastrService} from 'ngx-toastr';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -23,7 +23,8 @@ export class MakePurchaseModalComponent implements OnInit {
   public productList: any;
   public filterCategory: any;
 
-  constructor(private modalService: NgbModal, private walletService: WalletService, private toastr: ToastrService, private productService: ProductService) {}
+  constructor(private modalService: NgbModal, private walletService: WalletService, private toastr: ToastrService, private productService: ProductService) {
+  }
 
   ngOnInit(): void {
     this.loadAllEcoPooles();
@@ -35,6 +36,7 @@ export class MakePurchaseModalComponent implements OnInit {
       selectedProduct: new FormControl('', Validators.required),
       quantity: new FormControl(1, Validators.required),
       dailyBonusActivation: new FormControl(false),
+      includeInCommissionCalculation: new FormControl(false)
     });
   }
 
@@ -55,6 +57,7 @@ export class MakePurchaseModalComponent implements OnInit {
     this.walletRequest.paymentMethod = option;
     this.walletRequest.purchaseFor = 0;
     this.walletRequest.dailyBonusActivation = this.makePurchaseForm.get('dailyBonusActivation')?.value || false;
+    this.walletRequest.includeInCommissionCalculation = this.makePurchaseForm.get('includeInCommissionCalculation')?.value || false;
 
     this.products.forEach((item: { id: number; quantity: number; }) => {
       const productRequest = new ProductsRequests();
@@ -62,6 +65,8 @@ export class MakePurchaseModalComponent implements OnInit {
       productRequest.count = item.quantity;
       this.walletRequest.productsList.push(productRequest);
     });
+
+    console.log("Enviando request al backend", this.walletRequest);
 
     this.walletService.payWithMyBalanceAdmin(this.walletRequest).subscribe({
       next: value => {
@@ -93,13 +98,15 @@ export class MakePurchaseModalComponent implements OnInit {
       this.productList = ecopools;
       this.filterCategory = ecopools;
       this.productList.forEach((item: any) => {
-        Object.assign(item, { quantity: 1, total: item.salePrice });
+        Object.assign(item, {quantity: 1, total: item.salePrice});
       });
     });
   }
 
   addProductToList() {
-    const selectedProduct = this.productList.find((p: { id: any; }) => p.id == this.makePurchaseForm.get('selectedProduct').value);
+    const selectedProduct = this.productList.find((p: {
+      id: any;
+    }) => p.id == this.makePurchaseForm.get('selectedProduct').value);
     const quantity = this.makePurchaseForm.get('quantity').value;
 
     const existingProduct = this.products.find((p: { id: any; }) => p.id == selectedProduct.id);
@@ -112,7 +119,10 @@ export class MakePurchaseModalComponent implements OnInit {
       });
     }
 
-    this.makePurchaseForm.reset();
+    this.makePurchaseForm.patchValue({
+      selectedProduct: '',
+      quantity: 1
+    });
   }
 
   removeProductFromList(product: { id: any; }) {
