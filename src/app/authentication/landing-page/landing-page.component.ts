@@ -51,7 +51,7 @@ export class LandingPageComponent implements OnInit, OnDestroy {
   isNavbarVisible = false;
   documents = {
     whitePaper: {
-      url: '/assets/pdf/WHITEPAPER.pdf',
+      url: '/assets/pdf/WhitePaper-2025.pdf',
       title: 'White Paper - RecyCoin',
     },
     legalDoc: {
