@@ -72,11 +72,11 @@ export class LandingPageComponent implements OnInit, OnDestroy {
   key: string = '';
   videos = {
     es: {
-      url: '8ZRGTZD_ZrQ',
+      url: '5VY0Hu8EW-c',
       title: 'Ver Video Informativo',
     },
     en: {
-      url: '8ZRGTZD_ZrQ',
+      url: '5VY0Hu8EW-c',
       title: 'Watch Information Video',
     },
   };
