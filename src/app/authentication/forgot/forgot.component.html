@@ -12,7 +12,7 @@
               <p class="aurora-text-muted">Te enviaremos un enlace para restablecer tu contraseña</p>
               <div class="aurora-form-group">
                 <label for="email" class="aurora-label">Correo electrónico</label>
-                <input id="email" type="email" class="aurora-form-control" name="email" tabindex="1" required autofocus
+                <input id="email" type="email" class="aurora-form-control" name="email" required autofocus
                   formControlName="email" [ngClass]="{
                     'aurora-is-invalid': submitted && forgotPassword.get('email').errors,
                     'aurora-is-valid': forgotPassword.get('email').valid && forgotPassword.get('email').dirty
@@ -28,7 +28,7 @@
               </div>
               <div class="aurora-form-group">
                 <button type="submit"
-                  class="aurora-btn aurora-btn-primary aurora-btn-lg aurora-btn-block aurora-neon-button" tabindex="4">
+                  class="aurora-btn aurora-btn-primary aurora-btn-lg aurora-btn-block aurora-neon-button">
                   Enviar enlace
                 </button>
               </div>

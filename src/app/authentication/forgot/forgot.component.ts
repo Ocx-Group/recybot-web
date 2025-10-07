@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import Swal from 'sweetalert2';
-declare var particlesJS: any;
 
 import { AffiliateService } from '@app/core/service/affiliate-service/affiliate.service';
 import { ToastrService } from 'ngx-toastr';
@@ -14,11 +18,13 @@ import { ToastrService } from 'ngx-toastr';
 export class ForgotComponent implements OnInit {
   forgotPassword: FormGroup;
   submitted = false;
-  constructor(private affiliateService: AffiliateService, private toastr: ToastrService) { }
+  constructor(
+    private affiliateService: AffiliateService,
+    private toastr: ToastrService,
+  ) {}
 
   ngOnInit(): void {
     this.initForgotPassword();
-
   }
 
   get create_forgot_controls(): { [key: string]: AbstractControl } {
@@ -28,31 +34,30 @@ export class ForgotComponent implements OnInit {
   initForgotPassword() {
     this.forgotPassword = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
-    })
+    });
   }
 
   sendPasswordRecovery() {
     this.submitted = true;
 
-    if (this.forgotPassword.invalid)
-      return;
-
+    if (this.forgotPassword.invalid) return;
 
     let email = this.forgotPassword.value.email;
 
     this.affiliateService.sendPasswordRecovery(email).subscribe({
-      next: (value) => {
+      next: value => {
         if (value.success) {
           this.emailConfirmation();
         } else {
-          this.toastr.error('El usuario no se encuentra registrado en el sistema');
+          this.toastr.error(
+            'El usuario no se encuentra registrado en el sistema',
+          );
         }
-
       },
       error: () => {
         this.toastr.error('Error');
       },
-    })
+    });
   }
 
   validateEmail() {

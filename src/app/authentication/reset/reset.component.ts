@@ -1,19 +1,23 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap, take, timer } from 'rxjs';
 import Swal from 'sweetalert2';
-declare var particlesJS: any;
+declare let particlesJS: any;
 
 import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
 import { AffiliateService } from '@app/core/service/affiliate-service/affiliate.service';
-import { UserDataService } from '@app/core/service/affiliate-service/user-data.service';
-import { RequestResetPassword } from '@app/core/models/user-affiliate-model/request-reset-password-model'
+import { RequestResetPassword } from '@app/core/models/user-affiliate-model/request-reset-password-model';
 
 @Component({
   selector: 'app-reset',
   templateUrl: './reset.component.html',
-  styleUrls: ['./reset.component.scss']
+  styleUrls: ['./reset.component.scss'],
 })
 export class ResetComponent implements OnInit {
   resetPassword: FormGroup;
@@ -23,10 +27,13 @@ export class ResetComponent implements OnInit {
   isLoading: boolean = true;
   linkValid: boolean = false;
 
-  constructor(private affiliateService: AffiliateService, private activatedRoute: ActivatedRoute,
-    private router: Router) {
-
-    this.verificationCode = this.activatedRoute.snapshot.params.verificationCode;
+  constructor(
+    private affiliateService: AffiliateService,
+    private activatedRoute: ActivatedRoute,
+    private router: Router,
+  ) {
+    this.verificationCode =
+      this.activatedRoute.snapshot.params.verificationCode;
     if (!this.verificationCode) {
       this.router.navigate(['/signin']);
       return;
@@ -36,8 +43,11 @@ export class ResetComponent implements OnInit {
 
   ngOnInit(): void {
     this.initResetPassword();
-    particlesJS.load('particles-js', 'assets/particles/particles.json', function () {
-    });
+    particlesJS.load(
+      'particles-js',
+      'assets/particles/particles.json',
+      function () {},
+    );
   }
 
   get create_reset_password_controls(): { [key: string]: AbstractControl } {
@@ -45,10 +55,25 @@ export class ResetComponent implements OnInit {
   }
 
   initResetPassword() {
-    this.resetPassword = new FormGroup({
-      password: new FormControl('', [Validators.required, Validators.minLength(8), Validators.pattern(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*#?&^_-]).{8,}/)]),
-      confirm_password: new FormControl('', [Validators.required, Validators.minLength(8), Validators.pattern(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*#?&^_-]).{8,}/)])
-    }, { validators: this.passwordsMatchValidator });
+    this.resetPassword = new FormGroup(
+      {
+        password: new FormControl('', [
+          Validators.required,
+          Validators.minLength(8),
+          Validators.pattern(
+            /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*#?&^_-]).{8,}/,
+          ),
+        ]),
+        confirm_password: new FormControl('', [
+          Validators.required,
+          Validators.minLength(8),
+          Validators.pattern(
+            /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*#?&^_-]).{8,}/,
+          ),
+        ]),
+      },
+      { validators: this.passwordsMatchValidator },
+    );
 
     this.resetPassword.valueChanges.subscribe(() => {
       this.checkPasswords(this.resetPassword);
@@ -62,11 +87,13 @@ export class ResetComponent implements OnInit {
       icon: 'success',
       confirmButtonText: 'Entendido',
       timer: 2000,
-      showConfirmButton: false
+      showConfirmButton: false,
     });
   }
 
-  passwordsMatchValidator(control: AbstractControl): { [key: string]: boolean } | null {
+  passwordsMatchValidator(
+    control: AbstractControl,
+  ): { [key: string]: boolean } | null {
     const password = control.get('password');
     const confirmPassword = control.get('confirm_password');
 
@@ -74,41 +101,40 @@ export class ResetComponent implements OnInit {
       return null;
     }
 
-    return password.value === confirmPassword.value ? null : { 'mismatch': true };
+    return password.value === confirmPassword.value ? null : { mismatch: true };
   }
 
   changePassword() {
     this.submitted = true;
     let requestResetPassword = new RequestResetPassword();
 
-    if (this.resetPassword.invalid)
-      return;
+    if (this.resetPassword.invalid) return;
 
     requestResetPassword.password = this.resetPassword.value.password;
     requestResetPassword.verificationCode = this.verificationCode;
 
     this.affiliateService.resetPassword(requestResetPassword).subscribe({
-      next: (value) => {
+      next: value => {
         if (value) {
-          this.confirmation()
+          this.confirmation();
           setTimeout(() => {
             this.router.navigate(['/signin']);
           }, 2000);
         }
       },
-      error: (err) => {
-
-      },
-    })
+      error: err => {},
+    });
   }
 
   getAffiliateByVerificationCode(code: string) {
     timer(3000)
       .pipe(
-        switchMap(() => this.affiliateService.getAffiliateByVerificationCode(code))
+        switchMap(() =>
+          this.affiliateService.getAffiliateByVerificationCode(code),
+        ),
       )
       .subscribe({
-        next: (value) => {
+        next: value => {
           this.isLoading = false;
 
           if (value === null) {
@@ -137,7 +163,7 @@ export class ResetComponent implements OnInit {
       title: 'Error',
       text: 'El enlace ha expirado, solicite uno nuevamente',
       icon: 'error',
-      confirmButtonText: 'Entendido'
+      confirmButtonText: 'Entendido',
     }).then(() => {
       setTimeout(() => {
         this.router.navigate(['/signin']);
@@ -150,7 +176,8 @@ export class ResetComponent implements OnInit {
 
     let userUpdateTime = new Date(this.user.updated_at + 'Z');
 
-    let differenceInMinutes = (currentTimeUtc.getTime() - userUpdateTime.getTime()) / (1000 * 60);
+    let differenceInMinutes =
+      (currentTimeUtc.getTime() - userUpdateTime.getTime()) / (1000 * 60);
 
     if (differenceInMinutes > 10) {
       this.linkValid = false;
@@ -164,12 +191,14 @@ export class ResetComponent implements OnInit {
   startTimer() {
     const expireMinutes = 10 * 60 * 1000;
 
-    timer(expireMinutes).pipe(take(1)).subscribe(() => {
-      if (this.checkCodeTime()) {
-        this.isLoading = true;
-        this.router.navigate(['/signin']);
-      }
-    });
+    timer(expireMinutes)
+      .pipe(take(1))
+      .subscribe(() => {
+        if (this.checkCodeTime()) {
+          this.isLoading = true;
+          this.router.navigate(['/signin']);
+        }
+      });
   }
 
   checkPasswords(group: FormGroup) {
@@ -182,5 +211,4 @@ export class ResetComponent implements OnInit {
       group.setErrors(null);
     }
   }
-
 }
