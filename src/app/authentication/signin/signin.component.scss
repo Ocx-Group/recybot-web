@@ -26,7 +26,11 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: radial-gradient(circle, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.7) 100%);
+  background: radial-gradient(
+    circle,
+    rgba(0, 0, 0, 0.3) 0%,
+    rgba(0, 0, 0, 0.7) 100%
+  );
 }
 
 .login-wrapper::before {
@@ -36,7 +40,11 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: radial-gradient(circle, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.7) 100%);
+  background: radial-gradient(
+    circle,
+    rgba(0, 0, 0, 0.3) 0%,
+    rgba(0, 0, 0, 0.7) 100%
+  );
 }
 
 .login-card {
@@ -81,7 +89,7 @@
 .login-input-group input {
   width: 100%;
   height: 2.8125rem;
-  padding: 0 0.9375rem 0 2.5rem;
+  padding: 0 2.5rem 0 2.5rem;
   border-radius: 25px;
   background-color: #003637 !important;
   border: 1px solid #00bd6b;
@@ -169,7 +177,7 @@
   border: 0.2em solid currentColor;
   border-right-color: transparent;
   border-radius: 50%;
-  animation: spinner-border .75s linear infinite;
+  animation: spinner-border 0.75s linear infinite;
 }
 
 .form-text {
@@ -237,34 +245,25 @@
   object-fit: contain;
 }
 
-.login-input-group {
-  position: relative;
-  width: 100%;
-}
-
-.login-input-group input {
-  width: 100%;
-  height: 2.8125rem;
-  padding: 0 2.5rem 0 2.5rem;
-  border-radius: 25px;
-}
-
 .toggle-password {
   position: absolute;
   right: 0.9375rem;
-  top: 50%;
-  transform: translateY(-50%);
+  top: 0;
+  height: 2.8125rem;
   background: none;
   border: none;
   color: #00bd6b;
   z-index: 2;
   padding: 0;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
 }
 
 .toggle-password i {
   font-size: 1rem;
+  line-height: 1;
 }
-
 
 @media (max-width: 1024px) {
   .login-wrapper {

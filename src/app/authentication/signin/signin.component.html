@@ -1,7 +1,6 @@
 <main class="login-wrapper">
-  <div class="background-image"
-       [style.backgroundImage]="'url(' + backgroundImages[currentImageIndex] + ')'"
-       [@backgroundFade]="'visible'">
+  <div class="background-image" [style.backgroundImage]="'url(' + backgroundImages[currentImageIndex] + ')'"
+    [@backgroundFade]="'visible'">
   </div>
 
   <div class="login-card">
@@ -9,7 +8,7 @@
     <form class="validate-form" [formGroup]="authLogin" (ngSubmit)="loginSubmitted()">
       <div class="login-input-group">
 
-        <input id="email" type="email" formControlName="email" placeholder="{{username}}" required="required"/>
+        <input id="email" type="email" formControlName="email" placeholder="{{username}}" required="required" />
         <i-feather name="user"></i-feather>
         <div class="form-text text-danger fw-bold" *ngIf="Email.errors?.['email'] && (Email.dirty || Email.touched)">
           {{ userNameErrorMessage }}
@@ -19,7 +18,8 @@
         </div>
       </div>
       <div class="login-input-group">
-        <input [type]="showPassword ? 'text' : 'password'" id="pwd" formControlName="pwd" placeholder="{{ password }}" required="required" />
+        <input [type]="showPassword ? 'text' : 'password'" id="pwd" formControlName="pwd" placeholder="{{ password }}"
+          required="required" />
         <i-feather name="key"></i-feather>
 
         <button type="button" class="toggle-password" (click)="togglePasswordVisibility()">
@@ -37,9 +37,9 @@
 
       <div class="container-login-button">
         <button class="login-button" type="submit" [disabled]="loading">
-          <div *ngIf="loading" class="spinner-border spinner-border-sm" role="status">
+          <output *ngIf="loading" class="spinner-border spinner-border-sm">
             <span class="sr-only">Loading...</span>
-          </div>
+          </output>
           {{ signin }}
         </button>
       </div>

@@ -6,9 +6,15 @@ import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/core/service/authentication-service/auth.service';
 
-declare var particlesJS: any;
+declare let particlesJS: any;
 
-import { animate, state, style, transition, trigger } from "@angular/animations";
+import {
+  animate,
+  state,
+  style,
+  transition,
+  trigger,
+} from '@angular/animations';
 import { Signin } from '@app/core/models/signin-model/signin.model';
 import { LogoService } from '@app/core/service/logo-service/logo.service';
 import { DeviceDetectorService } from 'ngx-device-detector';
@@ -19,16 +25,22 @@ import { DeviceDetectorService } from 'ngx-device-detector';
   styleUrls: ['./signin.component.scss'],
   animations: [
     trigger('backgroundFade', [
-      state('visible', style({
-        opacity: 1
-      })),
-      state('hidden', style({
-        opacity: 0
-      })),
+      state(
+        'visible',
+        style({
+          opacity: 1,
+        }),
+      ),
+      state(
+        'hidden',
+        style({
+          opacity: 0,
+        }),
+      ),
       transition('visible => hidden', animate('1000ms ease-out')),
-      transition('hidden => visible', animate('1000ms ease-in'))
-    ])
-  ]
+      transition('hidden => visible', animate('1000ms ease-in')),
+    ]),
+  ],
 })
 export class SigninComponent implements OnInit, OnDestroy {
   submitted = false;
@@ -49,7 +61,7 @@ export class SigninComponent implements OnInit, OnDestroy {
   backgroundImages: string[] = [
     '/assets/images/login-option-1.png',
     '/assets/images/login-option-2.png',
-    '/assets/images/login-option-3.png'
+    '/assets/images/login-option-3.png',
   ];
   currentImageIndex = 0;
   private intervalId: any;
@@ -61,9 +73,8 @@ export class SigninComponent implements OnInit, OnDestroy {
     private toastr: ToastrService,
     private logoService: LogoService,
     private translate: TranslateService,
-    private deviceService: DeviceDetectorService
-  ) {
-  }
+    private deviceService: DeviceDetectorService,
+  ) {}
 
   ngOnInit() {
     this.getTheme();
@@ -71,8 +82,7 @@ export class SigninComponent implements OnInit, OnDestroy {
     particlesJS.load(
       'particles-js',
       'assets/particles/particles.json',
-      function () {
-      }
+      function () {},
     );
     this.setLabels();
     this.setErrorMessages();
@@ -108,16 +118,16 @@ export class SigninComponent implements OnInit, OnDestroy {
   setErrorMessages() {
     if (this.translate.currentLang != undefined) {
       this.passwordIsRequerid = this.translate.instant(
-        'SIGNIN.PASS-IS-REQUIRED.TEXT'
+        'SIGNIN.PASS-IS-REQUIRED.TEXT',
       );
       this.userNameIsRequerid = this.translate.instant(
-        'SIGNIN.USER-NAME-IS-REQUIRED.TEXT'
+        'SIGNIN.USER-NAME-IS-REQUIRED.TEXT',
       );
       this.passwordErrorMessage = this.translate.instant(
-        'SIGNIN.PASS-MESSAGE-ERROR.TEXT'
+        'SIGNIN.PASS-MESSAGE-ERROR.TEXT',
       );
       this.userNameErrorMessage = this.translate.instant(
-        'SIGNIN.USER-NAME-MESSAGE-ERROR.TEXT'
+        'SIGNIN.USER-NAME-MESSAGE-ERROR.TEXT',
       );
     }
   }
@@ -132,7 +142,7 @@ export class SigninComponent implements OnInit, OnDestroy {
     signin.browserInfo = this.deviceService.getDeviceInfo().browser;
     signin.operatingSystem = this.deviceService.getDeviceInfo().os;
 
-    this.authService.fetchIpAddress().subscribe((ip) => {
+    this.authService.fetchIpAddress().subscribe(ip => {
       signin.ipAddress = ip;
       console.log(signin);
 
@@ -182,7 +192,8 @@ export class SigninComponent implements OnInit, OnDestroy {
 
   private startBackgroundRotation() {
     this.intervalId = setInterval(() => {
-      this.currentImageIndex = (this.currentImageIndex + 1) % this.backgroundImages.length;
+      this.currentImageIndex =
+        (this.currentImageIndex + 1) % this.backgroundImages.length;
     }, 10000);
   }
 
