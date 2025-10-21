@@ -96,7 +96,7 @@ export class RequestsComponent implements OnInit {
     const val = event.target.value.toLowerCase();
 
     const temp = this.temp.filter(function (d) {
-      return d.observation.toLowerCase().indexOf(val) !== -1 || !val;
+      return d.observation.toLowerCase().includes(val) || !val;
     });
 
     this.rows = temp;

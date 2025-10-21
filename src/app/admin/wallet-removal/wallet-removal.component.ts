@@ -11,7 +11,7 @@ import { WalletWithdrawalsConfiguration } from '@app/core/models/wallet-withdraw
 import { CoinpaymentService } from '@app/core/service/coinpayment-service/coinpayment.service';
 import { ConfigurationService } from '@app/core/service/configuration-service/configuration.service';
 import { WalletRequestService } from '@app/core/service/wallet-request/wallet-request.service';
-import { CoinPaymentWithdrawalResponse } from '@app/core/models/coinpayment-model/coinpayment-withdrawal-response.model'
+import { CoinPaymentWithdrawalResponse } from '@app/core/models/coinpayment-model/coinpayment-withdrawal-response.model';
 import { CoinpayService } from '@app/core/service/coinpay-service/coinpay.service';
 import { CoinPayWithdrawal } from '@app/core/models/coinpay-model/coinpay-withdrawal.model';
 
@@ -36,8 +36,8 @@ export class WalletRemovalComponent implements OnInit {
     private toastr: ToastrService,
     private configurationService: ConfigurationService,
     private coinPaymentService: CoinpaymentService,
-    private coinpayService: CoinpayService
-  ) { }
+    private coinpayService: CoinpayService,
+  ) {}
 
   ngOnInit(): void {
     this.loadData();
@@ -53,10 +53,10 @@ export class WalletRemovalComponent implements OnInit {
   private loadData() {
     forkJoin({
       walletRequests: this.walletRequestService.getAllWallets(),
-      walletConfig: this.configurationService.getWithdrawalsWalletConfiguration()
+      walletConfig:
+        this.configurationService.getWithdrawalsWalletConfiguration(),
     }).subscribe({
       next: ({ walletRequests, walletConfig }) => {
-
         this.walletWithdrawalConfig = walletConfig;
         this.updateTable(walletRequests);
       },
@@ -67,12 +67,12 @@ export class WalletRemovalComponent implements OnInit {
   private updateTable(resp: WalletRequestRequest[]) {
     const filteredData = resp.filter(item => item.status == 0);
 
-    filteredData.forEach(item => {
+    for (const item of filteredData) {
       if (this.walletWithdrawalConfig) {
         item.retention = this.walletWithdrawalConfig.commission_amount;
       }
       item.isSelected = false;
-    });
+    }
 
     this.temp = [...filteredData];
     this.rows = filteredData;
@@ -96,7 +96,7 @@ export class WalletRemovalComponent implements OnInit {
     const val = event.target.value.toLowerCase();
 
     const temp = this.temp.filter(function (d) {
-      return d.adminUserName.toLowerCase().indexOf(val) !== -1 || !val;
+      return d.adminUserName.toLowerCase().includes(val) || !val;
     });
     this.rows = temp.reverse();
     this.table.offset = 0;
@@ -111,12 +111,13 @@ export class WalletRemovalComponent implements OnInit {
 
     try {
       document.execCommand('copy');
-      this.showSuccess('Se ha copiado al portapapeles')
+      this.showSuccess('Se ha copiado al portapapeles');
     } catch (err) {
+      console.error('Error copying to clipboard:', err);
       this.showError('No se pudo copiar');
     }
 
-    document.body.removeChild(textArea);
+    textArea.remove();
   }
 
   clipBoardCopy() {
@@ -129,7 +130,7 @@ export class WalletRemovalComponent implements OnInit {
         'Retención (%)',
         'Total a pagar (USD)',
         'Fecha',
-        'Detalle'
+        'Detalle',
       ];
 
       const data = rows.map(row => [
@@ -139,10 +140,12 @@ export class WalletRemovalComponent implements OnInit {
         row.retention,
         row.amount,
         row.createdAt,
-        '...'
+        '...',
       ]);
 
-      const tableText = [headers, ...data].map(row => row.join('\t')).join('\n');
+      const tableText = [headers, ...data]
+        .map(row => row.join('\t'))
+        .join('\n');
       this.copyTextToClipboard(tableText);
     }
   }
@@ -156,7 +159,7 @@ export class WalletRemovalComponent implements OnInit {
       const pageWidth = 297;
       const imgWidth = pageWidth - 40;
 
-      const imgHeight = canvas.height * imgWidth / canvas.width;
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
       const posX = 20;
       const posY = 30;
@@ -172,27 +175,23 @@ export class WalletRemovalComponent implements OnInit {
 
   selectAllRows(event: any) {
     const isChecked = event.target.checked;
-    this.rows.forEach(row => {
+    for (const row of this.rows) {
       row.isSelected = isChecked;
       const selectedIndex = this.selectedRows.indexOf(row);
       if (isChecked && selectedIndex === -1) {
-
         this.selectedRows.push(row);
       } else if (!isChecked && selectedIndex > -1) {
-
         this.selectedRows.splice(selectedIndex, 1);
       }
-    });
+    }
   }
 
   onRowSelectChange(row: any) {
     if (row.isSelected) {
-
-      if (this.selectedRows.indexOf(row) === -1) {
+      if (!this.selectedRows.includes(row)) {
         this.selectedRows.push(row);
       }
     } else {
-
       const index = this.selectedRows.indexOf(row);
       if (index > -1) {
         this.selectedRows.splice(index, 1);
@@ -228,15 +227,15 @@ export class WalletRemovalComponent implements OnInit {
     const ids: number[] = rows.map(row => row.id);
 
     this.walletRequestService.processOption(1, ids).subscribe({
-      next: (value) => {
+      next: value => {
         if (value) {
           this.showSuccess('The request has been processed correctly.');
           this.resetWalletRequest();
           this.loadData();
-          this.proccessOptionValue = 0
+          this.proccessOptionValue = 0;
         }
       },
-      error: (err) => {
+      error: err => {
         this.showError('Error');
       },
     });
@@ -245,12 +244,12 @@ export class WalletRemovalComponent implements OnInit {
   handleCoinPaymentOption(rows: WalletRequestRequest[]) {
     this.coinPaymentService.createMassWithdrawal(rows).subscribe({
       next: (value: CoinPaymentWithdrawalResponse) => {
-        if (value && value.error === "ok" && value.result) {
+        if (value && value.error === 'ok' && value.result) {
           let successfulPayments: string[] = [];
           let failedPayments: string[] = [];
 
           for (let key in value.result) {
-            if (value.result[key].error === "ok") {
+            if (value.result[key].error === 'ok') {
               successfulPayments.push(key);
             } else {
               failedPayments.push(`${key}: ${value.result[key].error}`);
@@ -258,13 +257,19 @@ export class WalletRemovalComponent implements OnInit {
           }
 
           if (successfulPayments.length > 0) {
-            this.showSuccess(`Pagos realizados correctamente: ${successfulPayments.join(', ')}`);
+            this.showSuccess(
+              `Pagos realizados correctamente: ${successfulPayments.join(
+                ', ',
+              )}`,
+            );
             this.resetWalletRequest();
             this.loadData();
           }
 
           if (failedPayments.length > 0) {
-            this.showError(`Errores en los pagos: ${failedPayments.join('. ')}`);
+            this.showError(
+              `Errores en los pagos: ${failedPayments.join('. ')}`,
+            );
           }
         } else {
           this.showError('No se pudo realizar el pago');
@@ -286,33 +291,31 @@ export class WalletRemovalComponent implements OnInit {
     });
 
     this.coinpayService.sendFunds(filteredRows).subscribe({
-      next: (response) => {
+      next: response => {
         if (response.success) {
-
           let detailsHtml = '<ul>';
-          response.data.successfulResponses.forEach(sr => {
+          for (const sr of response.data.successfulResponses) {
             detailsHtml += `<li>Exitosos: Transaction ID ${sr.transactionId} - ${sr.message}</li>`;
-          });
-          response.data.failedResponses.forEach(fr => {
+          }
+          for (const fr of response.data.failedResponses) {
             detailsHtml += `<li>Fallidos: ${fr.message}</li>`;
-          });
+          }
           detailsHtml += '</ul>';
 
           Swal.fire({
             title: 'Resultados del retiro',
             icon: 'info',
             html: detailsHtml,
-            confirmButtonText: 'Close'
+            confirmButtonText: 'Close',
           });
         }
       },
-      error: (err) => {
-
+      error: err => {
         Swal.fire({
           title: 'Error',
           text: 'Failed to process the request.',
           icon: 'error',
-          confirmButtonText: 'Close'
+          confirmButtonText: 'Close',
         });
         console.error('Error occurred:', err);
       },
@@ -329,7 +332,7 @@ export class WalletRemovalComponent implements OnInit {
       error: () => {
         this.showError('No se pudo realizar el pago');
       },
-    })
+    });
   }
 
   confirmOption() {
@@ -339,10 +342,9 @@ export class WalletRemovalComponent implements OnInit {
         text: 'Debe seleccionar una opción y un retiro antes de continuar.',
         icon: 'error',
         confirmButtonColor: '#dc3545',
-        confirmButtonText: 'OK'
+        confirmButtonText: 'OK',
       });
     } else {
-
       Swal.fire({
         title: 'Está seguro de realizar la operación!',
         text: 'Una vez realizada no se puede revertir',
@@ -351,8 +353,8 @@ export class WalletRemovalComponent implements OnInit {
         confirmButtonColor: '#8963ff',
         cancelButtonColor: '#fb7823',
         cancelButtonText: 'Cancelar',
-        confirmButtonText: 'Sí, estoy seguro.'
-      }).then((result) => {
+        confirmButtonText: 'Sí, estoy seguro.',
+      }).then(result => {
         if (result.isConfirmed) {
           this.onProccessOption();
         }

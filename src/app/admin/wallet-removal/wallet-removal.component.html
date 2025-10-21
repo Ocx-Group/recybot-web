@@ -48,13 +48,13 @@
                           Procesar
                         </button>
                       </li>
-                      <li class="nav-item m-2" (click)="clipBoardCopy()">
+                      <li class="nav-item m-2" (click)="clipBoardCopy()" (keyup)="clipBoardCopy()">
                         <button type="button" class="btn btn-primary">
                           <i class="bi bi-clipboard-check"></i>
                           Copiar
                         </button>
                       </li>
-                      <li class="nav-item m-2" (click)="onPrint()">
+                      <li class="nav-item m-2" (click)="onPrint()" (keyup)="onPrint()" (keyup.enter)="onPrint()">
                         <button type="button" class="btn btn-primary">
                           <i class="bi bi-printer"></i>
                           Imprimir
