@@ -1,21 +1,12 @@
 export class WalletRequestRequest {
   id?: number;
   status?: number;
-  affiliateId: number;
-  affiliateName: string;
-  userPassword: string;
-  verificationCode: string;
-  amount: number;
-  concept: string;
+  affiliateId: number = 0;
+  affiliateName: string = '';
+  userPassword: string = '';
+  verificationCode: string = '';
+  amount: number = 0;
+  concept: string = '';
   retention?: number;
   isSelected?: boolean;
-
-  constructor() {
-    this.affiliateId = 0;
-    this.amount = 0;
-    this.concept = '';
-    this.userPassword = '';
-    this.verificationCode = '';
-    this.affiliateName = '';
-  }
 }

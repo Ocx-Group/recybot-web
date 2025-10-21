@@ -9,11 +9,10 @@ import { WalletRequestRequest } from '@app/core/models/wallet-request-request-mo
 import { WalletRequestRevertTransaction } from '@app/core/models/wallet-request-request-model/wallet-request-revert-transaction.model';
 
 const httpOptions = {
-
   headers: new HttpHeaders({
     'Content-Type': 'application/json',
-    'Authorization': environment.tokens.walletService.toString(),
-    'X-Client-ID': environment.tokens.clientID.toString()
+    Authorization: environment.tokens.walletService.toString(),
+    'X-Client-ID': environment.tokens.clientID.toString(),
   }),
 };
 
@@ -29,78 +28,97 @@ export class WalletRequestService {
     return this.http
       .post<Response>(this.urlApi.concat('/walletRequest'), model, httpOptions)
       .pipe(
-        map((response) => {
-
+        map(response => {
           return response;
-        })
+        }),
       );
   }
 
   getAllWallets() {
     return this.http
-      .get<Response>(this.urlApi.concat('/walletRequest/GetAllWalletsRequests'), httpOptions)
+      .get<Response>(
+        this.urlApi.concat('/walletRequest/GetAllWalletsRequests'),
+        httpOptions,
+      )
       .pipe(
-        map((response) => {
+        map(response => {
           return response.data;
-        })
+        }),
       );
   }
 
   getWalletRequestByAffiliateId(id: number) {
     return this.http
       .get<Response>(
-        this.urlApi.concat('/walletRequest/', id.toString()), httpOptions
+        this.urlApi.concat('/walletRequest/', id.toString()),
+        httpOptions,
       )
       .pipe(
-        map((response) => {
-
+        map(response => {
           return response.data;
-
-        })
+        }),
       );
   }
 
   processOption(option: number, ids: number[]) {
     return this.http
-      .post<Response>(this.urlApi.concat('/walletRequest/processOption?option=', option.toString()), ids, httpOptions)
+      .post<Response>(
+        this.urlApi.concat(
+          '/walletRequest/processOption?option=',
+          option.toString(),
+        ),
+        ids,
+        httpOptions,
+      )
       .pipe(
-        map((response) => {
-
+        map(response => {
           return response;
-        })
+        }),
       );
   }
 
   getAllWalletRequestRevertTransaction() {
     return this.http
-      .get<Response>(this.urlApi.concat('/walletRequest/getAllWalletRequestRevertTransaction'), httpOptions)
+      .get<Response>(
+        this.urlApi.concat(
+          '/walletRequest/getAllWalletRequestRevertTransaction',
+        ),
+        httpOptions,
+      )
       .pipe(
-        map((response) => {
+        map(response => {
           return response.data;
-        })
+        }),
       );
   }
 
-  createWalletRequestRevertDebitTransaction(model: WalletRequestRevertTransaction) {
+  createWalletRequestRevertDebitTransaction(
+    model: WalletRequestRevertTransaction,
+  ) {
     return this.http
-      .post<Response>(this.urlApi.concat('/walletRequest/createWalletRequestRevert'), model, httpOptions)
+      .post<Response>(
+        this.urlApi.concat('/walletRequest/createWalletRequestRevert'),
+        model,
+        httpOptions,
+      )
       .pipe(
-        map((response) => {
-
+        map(response => {
           return response;
-        })
+        }),
       );
   }
 
-  administrativePayment(model: WalletRequestRequest[]) {
+  administrativePayment(ids: number[]) {
     return this.http
-      .post<Response>(this.urlApi.concat('/walletRequest/administrativePaymentAsync'), model, httpOptions)
+      .post<Response>(
+        this.urlApi.concat('/walletRequest/administrativePaymentAsync'),
+        ids,
+        httpOptions,
+      )
       .pipe(
-        map((response) => {
-
+        map(response => {
           return response;
-        })
+        }),
       );
   }
-
 }

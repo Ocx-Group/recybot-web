@@ -323,7 +323,9 @@ export class WalletRemovalComponent implements OnInit {
   }
 
   handlePayItAll(rows: WalletRequestRequest[]) {
-    this.walletRequestService.administrativePayment(rows).subscribe({
+    const ids = rows.map(row => row.id);
+
+    this.walletRequestService.administrativePayment(ids).subscribe({
       next: () => {
         this.showSuccess('Pago realizado correctamente');
         this.resetWalletRequest();
