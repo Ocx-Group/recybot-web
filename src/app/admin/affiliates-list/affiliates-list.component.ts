@@ -1,21 +1,19 @@
-import {Component, HostListener, OnInit, ViewChild} from '@angular/core';
-import {DatatableComponent} from '@swimlane/ngx-datatable';
-import {ClipboardService} from 'ngx-clipboard';
-import {ToastrService} from 'ngx-toastr';
+import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
+import { DatatableComponent } from '@swimlane/ngx-datatable';
+import { ClipboardService } from 'ngx-clipboard';
+import { ToastrService } from 'ngx-toastr';
 
-import {AffiliateService} from '@app/core/service/affiliate-service/affiliate.service';
-import {UserAffiliate} from '@app/core/models/user-affiliate-model/user.affiliate.model';
-import {PrintService} from '@app/core/service/print-service/print.service';
-import {Router} from '@angular/router';
+import { AffiliateService } from '@app/core/service/affiliate-service/affiliate.service';
+import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
+import { PrintService } from '@app/core/service/print-service/print.service';
+import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
-import {WalletService} from '@app/core/service/wallet-service/wallet.service';
-import {CreditTransactionAdminRequest} from '@app/core/models/wallet-model/creditTransactionAdminRequest.mode';
-import {BalanceInformationModalComponent} from './balance-information-modal/balance-information-modal.component';
-import {WalletModel1AService} from '@app/core/service/wallet-model-1a-service/wallet-model-1a.service';
-import {WalletModel1BService} from '@app/core/service/wallet-model-1b-service/wallet-model-1b.service';
-import {
-  MatrixActivationModalComponent
-} from '@app/admin/affiliates-list/matrix-activation/matrix-activation-modal.component';
+import { WalletService } from '@app/core/service/wallet-service/wallet.service';
+import { CreditTransactionAdminRequest } from '@app/core/models/wallet-model/creditTransactionAdminRequest.mode';
+import { BalanceInformationModalComponent } from './balance-information-modal/balance-information-modal.component';
+import { WalletModel1AService } from '@app/core/service/wallet-model-1a-service/wallet-model-1a.service';
+import { WalletModel1BService } from '@app/core/service/wallet-model-1b-service/wallet-model-1b.service';
+import { MatrixActivationModalComponent } from '@app/admin/affiliates-list/matrix-activation/matrix-activation-modal.component';
 
 const header = [
   'Usuario',
@@ -54,9 +52,8 @@ export class AffiliatesListComponent implements OnInit {
     private printService: PrintService,
     private walletService: WalletService,
     private walletModel1AService: WalletModel1AService,
-    private walletModel1BService: WalletModel1BService
-  ) {
-  }
+    private walletModel1BService: WalletModel1BService,
+  ) {}
 
   ngOnInit() {
     this.loadAffiliateList();
@@ -92,7 +89,7 @@ export class AffiliatesListComponent implements OnInit {
     });
   }
 
-  getRowHeight(row: { height: any; }) {
+  getRowHeight(row: { height: any }) {
     return row.height;
   }
 
@@ -101,7 +98,7 @@ export class AffiliatesListComponent implements OnInit {
     const val = target.value.toLowerCase();
 
     this.rows = this.temp.filter(function (d) {
-      return d.user_name.toLowerCase().indexOf(val) !== -1 || !val;
+      return d.user_name.toLowerCase().includes(val) || !val;
     });
     this.table.offset = 0;
   }
@@ -109,10 +106,10 @@ export class AffiliatesListComponent implements OnInit {
   clipBoardCopy() {
     const string = JSON.stringify(this.temp);
     this.clipboardService.copyFromContent(string);
-    if (this.temp != null) {
-      this.toast.info('no data to copy');
+    if (this.temp && this.temp.length > 0) {
+      this.toast.success(`copied ${this.temp.length} rows successfully`);
     } else {
-      this.toast.success(`copied ${this.temp!.length} rows successfully`);
+      this.toast.info('no data to copy');
     }
   }
 
@@ -179,15 +176,15 @@ export class AffiliatesListComponent implements OnInit {
       preConfirm: () => {
         const amount = (
           Swal.getPopup().querySelector(
-            '#swal-input-amount'
+            '#swal-input-amount',
           ) as HTMLInputElement
         ).value;
         const type = (
           Swal.getPopup().querySelector(
-            '#swal-select-type'
+            '#swal-select-type',
           ) as HTMLSelectElement
         ).value;
-        if (!amount || isNaN(Number(amount)) || Number(amount) <= 0) {
+        if (!amount || Number.isNaN(Number(amount)) || Number(amount) <= 0) {
           Swal.showValidationMessage('Por favor ingrese un monto válido.');
           return false;
         }
@@ -196,7 +193,7 @@ export class AffiliatesListComponent implements OnInit {
           type,
         };
       },
-    }).then((result) => {
+    }).then(result => {
       if (result.isConfirmed && result.value !== false) {
         let creditRequest = new CreditTransactionAdminRequest();
         creditRequest.affiliateId = user.id;
@@ -221,7 +218,7 @@ export class AffiliatesListComponent implements OnInit {
 
   createAvailableBalance(request: CreditTransactionAdminRequest) {
     this.walletService.createBalanceAdmin(request).subscribe({
-      next: (value) => {
+      next: value => {
         if (value.success) {
           this.showSuccess('Se ha acreditado el saldo correctamente.');
         } else {
@@ -236,7 +233,7 @@ export class AffiliatesListComponent implements OnInit {
 
   createServiceBalanceModel1A(request: CreditTransactionAdminRequest) {
     this.walletModel1AService.createServiceBalanceAdmin(request).subscribe({
-      next: (value) => {
+      next: value => {
         if (value.success) {
           this.showSuccess('Se ha acreditado el saldo correctamente.');
         } else {
@@ -251,7 +248,7 @@ export class AffiliatesListComponent implements OnInit {
 
   createServiceBalanceModel1B(request: CreditTransactionAdminRequest) {
     this.walletModel1BService.createServiceBalanceAdmin(request).subscribe({
-      next: (value) => {
+      next: value => {
         if (value.success) {
           this.showSuccess('Se ha acreditado el saldo correctamente.');
         } else {
