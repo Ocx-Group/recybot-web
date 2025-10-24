@@ -31,23 +31,14 @@
                         <div class="input-group">
                           <div class="input-group-prepend">
                             <div class="input-group-text">
-                              <i-feather
-                                name="search"
-                                style="color: #96a2b4"
-                              ></i-feather>
+                              <i-feather name="search" style="color: #96a2b4"></i-feather>
                             </div>
                           </div>
-                          <input
-                            style="background-color: white"
-                            type="text"
-                            class="form-control"
-                            id="inlineFormInputGroup"
-                            (keyup)="updateFilter($event)"
-                            aria-label="Search box"
+                          <input style="background-color: white" type="text" class="form-control"
+                            id="inlineFormInputGroup" (keyup)="updateFilter($event)" aria-label="Search box"
                             placeholder="{{
                               'USERS-LIST-PAGE.USERS-SEARCH.TEXT' | translate
-                            }}"
-                          />
+                            }}" />
                         </div>
                       </div>
                     </div>
@@ -55,12 +46,9 @@
                   <div class="col-sm-1">
                     <div class="header-buttons-left">
                       <div class="tbl-btn-style">
-                        <button
-                          class="btn btn-icon icon-left btn-primary rounded-button"
-                          (click)="
+                        <button class="btn btn-icon icon-left btn-primary rounded-button" (click)="
                             createOpenModal(modalChildCreate['userCreateModal'])
-                          "
-                        >
+                          ">
                           <i class="material-icons">add</i>
                         </button>
                       </div>
@@ -69,22 +57,14 @@
                   <div class="col align-self-end">
                     <ul class="nav justify-content-end">
                       <li class="nav-item m-2">
-                        <button
-                          type="button"
-                          class="btn btn-primary"
-                          (click)="clipBoardCopy()"
-                        >
+                        <button type="button" class="btn btn-primary" (click)="clipBoardCopy()">
                           <i class="bi bi-clipboard-check"></i>
                           {{ 'INDUCEMENTS-PAGE.BTN-COPY.TEXT' | translate }}
                         </button>
                       </li>
 
                       <li class="nav-item m-2">
-                        <button
-                          type="button"
-                          class="btn btn-primary"
-                          (click)="onPrint()"
-                        >
+                        <button type="button" class="btn btn-primary" (click)="onPrint()">
                           <i class="bi bi-printer"></i>
                           {{ 'INDUCEMENTS-PAGE.BTN-PRINT.TEXT' | translate }}
                         </button>
@@ -92,129 +72,75 @@
                     </ul>
                   </div>
                 </div>
-                <ngx-datatable
-                  #table
-                  class="material"
-                  [rows]="rows"
-                  [loadingIndicator]="loadingIndicator"
-                  columnMode="force"
-                  [headerHeight]="50"
-                  [footerHeight]="50"
-                  rowHeight="auto"
-                  [limit]="10"
-                  [scrollbarH]="scrollBarHorizontal"
-                  [reorderable]="reorderable"
-                >
-                  <ngx-datatable-column
-                    name="{{ 'USERS-LIST-PAGE.COL-USER.TEXT' | translate }}"
-                  >
+                <ngx-datatable #table class="material" [rows]="rows" [loadingIndicator]="loadingIndicator"
+                  columnMode="force" [headerHeight]="50" [footerHeight]="50" rowHeight="auto" [limit]="10"
+                  [scrollbarH]="scrollBarHorizontal" [reorderable]="reorderable">
+                  <ngx-datatable-column name="{{ 'USERS-LIST-PAGE.COL-USER.TEXT' | translate }}">
                     <ng-template let-row="row" ngx-datatable-cell-template>
                       {{ row.user_name }}
                     </ng-template>
                   </ngx-datatable-column>
-                  <ngx-datatable-column
-                    name="{{ 'USERS-LIST-PAGE.COL-ROL.TEXT' | translate }}"
-                  >
+                  <ngx-datatable-column name="{{ 'USERS-LIST-PAGE.COL-ROL.TEXT' | translate }}">
                     <ng-template let-row="row" ngx-datatable-cell-template>
                       {{ row.rol_name }}
                     </ng-template>
                   </ngx-datatable-column>
-                  <ngx-datatable-column
-                    name="{{ 'USERS-LIST-PAGE.COL-NAME.TEXT' | translate }}"
-                  >
+                  <ngx-datatable-column name="{{ 'USERS-LIST-PAGE.COL-NAME.TEXT' | translate }}">
                     <ng-template let-row="row" ngx-datatable-cell-template>
                       {{ row.name }}
                     </ng-template>
                   </ngx-datatable-column>
-                  <ngx-datatable-column
-                    name="{{
+                  <ngx-datatable-column name="{{
                       'USERS-LIST-PAGE.COL-LAST-NAME.TEXT' | translate
-                    }}"
-                  >
+                    }}">
                     <ng-template let-row="row" ngx-datatable-cell-template>
                       {{ row.last_name }}
                     </ng-template>
                   </ngx-datatable-column>
-                  <ngx-datatable-column
-                    name="{{ 'USERS-LIST-PAGE.COL-EMAIL.TEXT' | translate }}"
-                  >
+                  <ngx-datatable-column name="{{ 'USERS-LIST-PAGE.COL-EMAIL.TEXT' | translate }}">
                     <ng-template let-row="row" ngx-datatable-cell-template>
                       {{ row.email }}
                     </ng-template>
                   </ngx-datatable-column>
-                  <ngx-datatable-column
-                    name="{{ 'USERS-LIST-PAGE.COL-ACTIONS.TEXT' | translate }}"
-                    sortable="false"
-                  >
-                    <ng-template
-                      let-value="value"
-                      let-row="row"
-                      let-rowIndex="rowIndex"
-                      ngx-datatable-cell-template
-                    >
+                  <ngx-datatable-column name="{{ 'USERS-LIST-PAGE.COL-ACTIONS.TEXT' | translate }}" sortable="false">
+                    <ng-template let-value="value" let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
                       <div ngbDropdown container="body">
-                        <button
-                          type="button"
-                          class="btn btn-outline-primary btn-sm"
-                          ngbDropdownToggle
-                        >
+                        <button type="button" class="btn btn-outline-primary btn-sm" ngbDropdownToggle>
                           {{ 'USERS-LIST-PAGE.COL-ACTIONS.TEXT' | translate }}
                         </button>
                         <div ngbDropdownMenu>
-                          <a
-                            ngbDropdownItem
-                            id="btn-edit"
-                            (click)="
+                          <a ngbDropdownItem id="btn-edit" (click)="
                               modalChildEdit.editOpenModal(
                                 modalChildEdit['userEditModal'],
                                 row
                               )
-                            "
-                          >
-                            <i class="fas fa-edit"></i>
-                            <span style="margin-left: 10px">{{
-                              'USERS-LIST-PAGE.BTN-EDIT.TEXT' | translate
-                            }}</span>
+                            ">
+                            <i class="fas fa-edit me-2"></i>
+                            <span>{{ 'USERS-LIST-PAGE.BTN-EDIT.TEXT' | translate }}</span>
                           </a>
-                          <a
-                            ngbDropdownItem
-                            id="btn-delete"
-                            (click)="deleteSingleRow(row.id)"
-                          >
-                            <i class="fas fa-trash-alt"></i>
-                            <span style="margin-left: 10px">Delete</span>
+                          <a ngbDropdownItem id="btn-delete" (click)="deleteSingleRow(row.id)">
+                            <i class="fas fa-trash-alt me-2"></i>
+                            <span>Delete</span>
                           </a>
-                          <a ngbDropdownItem id="btn-detail">
-                            <i class="fas fa-file-import"></i>
-                            <span
-                              style="margin-left: 10px"
-                              (click)="
-                                modalChildDetail.detailOpenModal(
-                                  modalChildDetail['userDetailModal'],
-                                  row
-                                )
-                              "
-                              >Details</span
-                            >
+                          <a ngbDropdownItem id="btn-detail" (click)="
+                              modalChildDetail.detailOpenModal(
+                                modalChildDetail['userDetailModal'],
+                                row
+                              )
+                            ">
+                            <i class="fas fa-file-import me-2"></i>
+                            <span>Details</span>
                           </a>
                         </div>
                       </div>
                     </ng-template>
                   </ngx-datatable-column>
                 </ngx-datatable>
-                <app-users-list-create-modal
-                  [selectItems]="items"
-                  #modalChildCreate
-                  (loadUserList)="loadUserList()"
-                ></app-users-list-create-modal>
-                <app-users-list-edit-modal
-                  [selectRol]="items"
-                  #modalChildEdit
-                  (loadUserList)="loadUserList()"
-                ></app-users-list-edit-modal>
-                <app-users-list-detail-modal
-                  #modalChildDetail
-                ></app-users-list-detail-modal>
+                <app-users-list-create-modal [selectItems]="items" #modalChildCreate
+                  (loadUserList)="loadUserList()"></app-users-list-create-modal>
+                <app-users-list-edit-modal [selectRol]="items" #modalChildEdit
+                  (loadUserList)="loadUserList()"></app-users-list-edit-modal>
+                <app-users-list-detail-modal #modalChildDetail></app-users-list-detail-modal>
               </div>
             </div>
           </div>

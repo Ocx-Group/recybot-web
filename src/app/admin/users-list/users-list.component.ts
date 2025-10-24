@@ -35,7 +35,7 @@ export class UsersListComponent implements OnInit {
     private toastr: ToastrService,
     private clipboardService: ClipboardService,
     private printService: PrintService,
-    private rolService: RolService
+    private rolService: RolService,
   ) {}
 
   ngOnInit(): void {
@@ -71,7 +71,7 @@ export class UsersListComponent implements OnInit {
           this.loadingIndicator = false;
         }, 500);
       },
-      error: (err) => {
+      error: err => {
         this.showError('Error!' + err);
       },
     });
@@ -95,7 +95,7 @@ export class UsersListComponent implements OnInit {
           this.items.push(result);
         }
       },
-      error: (err) => {
+      error: err => {
         this.showError('Error!' + err);
       },
     });
@@ -105,7 +105,7 @@ export class UsersListComponent implements OnInit {
     const val = event.target.value.toLowerCase();
 
     const temp = this.temp.filter(function (d) {
-      return d.name.toLowerCase().indexOf(val) !== -1 || !val;
+      return d.name.toLowerCase().includes(val) || !val;
     });
 
     this.rows = temp;
@@ -119,7 +119,7 @@ export class UsersListComponent implements OnInit {
       confirmButtonColor: '#8963ff',
       cancelButtonColor: '#fb7823',
       confirmButtonText: 'Yes',
-    }).then((result) => {
+    }).then(result => {
       if (result.value) {
         this.deleteRecord(value);
       }
@@ -128,11 +128,11 @@ export class UsersListComponent implements OnInit {
 
   deleteRecord(value) {
     this.userService.deleteUser(value).subscribe({
-      next: (resp) => {
+      next: resp => {
         this.deleteRecordSuccess(1);
         this.loadUserList();
       },
-      error: (err) => {
+      error: err => {
         this.showError('Error!' + err);
       },
     });
@@ -143,8 +143,8 @@ export class UsersListComponent implements OnInit {
   }
 
   clipBoardCopy() {
-    var string = JSON.stringify(this.temp);
-    var result = this.clipboardService.copyFromContent(string);
+    const string = JSON.stringify(this.temp);
+    this.clipboardService.copyFromContent(string);
 
     if (this.temp.length === 0) {
       this.toastr.info('No data to copy');
