@@ -20,6 +20,7 @@ import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affili
 @Component({
   selector: 'app-affiliates-list-edit-modal',
   templateUrl: './affiliates-list-edit-modal.component.html',
+  styleUrls: ['./affiliates-list-edit-modal.component.scss'],
   providers: [ToastrService],
 })
 export class AffiliatesListEditModalComponent implements OnInit {
