@@ -64,30 +64,36 @@
                   </div>
                 </div>
                 <div class="row">
-                  <ul class="nav">
-                    <li class="nav-item m-2">
-                      <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
-                          [(ngModel)]="proccessOptionValue" [value]="1" />
-                        <label class="form-check-label" for="inlineRadio1">Negarlo y devolver a Billetera</label>
-                      </div>
-                      <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2"
-                          [(ngModel)]="proccessOptionValue" [value]="2" />
-                        <label class="form-check-label" for="inlineRadio2">Pagarlo con COINPAYMENTS</label>
-                      </div>
-                      <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3"
-                          [(ngModel)]="proccessOptionValue" [value]="3" />
-                        <label class="form-check-label" for="inlineRadio3">Pagarlo con COINPAY.CR</label>
-                      </div>
-                      <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio4"
-                          [(ngModel)]="proccessOptionValue" [value]="4" />
-                        <label class="form-check-label" for="inlineRadio4">Pagarlo del todo</label>
-                      </div>
-                    </li>
-                  </ul>
+                  <div class="col-sm-12">
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
+                        [(ngModel)]="proccessOptionValue" [value]="1" />
+                      <label class="form-check-label" for="inlineRadio1">
+                        <i class="bi bi-x-circle"></i> Negarlo y devolver a Billetera
+                      </label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2"
+                        [(ngModel)]="proccessOptionValue" [value]="2" />
+                      <label class="form-check-label" for="inlineRadio2">
+                        <i class="bi bi-currency-bitcoin"></i> Pagarlo con COINPAYMENTS
+                      </label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3"
+                        [(ngModel)]="proccessOptionValue" [value]="3" />
+                      <label class="form-check-label" for="inlineRadio3">
+                        <i class="bi bi-credit-card"></i> Pagarlo con COINPAY.CR
+                      </label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio4"
+                        [(ngModel)]="proccessOptionValue" [value]="4" />
+                      <label class="form-check-label" for="inlineRadio4">
+                        <i class="bi bi-check-circle"></i> Pagarlo del todo
+                      </label>
+                    </div>
+                  </div>
                 </div>
                 <ngx-datatable id="htmlTable" #table class="material" [rows]="rows"
                   [loadingIndicator]="loadingIndicator" columnMode="force" [headerHeight]="50" [footerHeight]="50"
