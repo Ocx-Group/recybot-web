@@ -9,7 +9,7 @@
       <div class="login-input-group">
 
         <input id="email" type="email" formControlName="email" placeholder="{{username}}" required="required" />
-        <i-feather name="user"></i-feather>
+        <i class="bi bi-person"></i>
         <div class="form-text text-danger fw-bold" *ngIf="Email.errors?.['email'] && (Email.dirty || Email.touched)">
           {{ userNameErrorMessage }}
         </div>
@@ -20,7 +20,7 @@
       <div class="login-input-group">
         <input [type]="showPassword ? 'text' : 'password'" id="pwd" formControlName="pwd" placeholder="{{ password }}"
           required="required" />
-        <i-feather name="key"></i-feather>
+        <i class="bi bi-key"></i>
 
         <button type="button" class="toggle-password" (click)="togglePasswordVisibility()">
           <i [class]="showPassword ? 'bi bi-eye-slash' : 'bi bi-eye'"></i>

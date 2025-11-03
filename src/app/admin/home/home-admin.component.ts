@@ -17,6 +17,8 @@ import {
 import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
 import { TruncateDecimalsPipe } from '@app/shared/truncate-decimals.pipe';
 import { CommonModule } from '@angular/common';
+import {TranslatePipe} from "@ngx-translate/core";
+import {NgxEchartsDirective} from "ngx-echarts";
 
 export interface ChartOptions {
   series?: ApexNonAxisChartSeries;
@@ -33,7 +35,7 @@ export interface ChartOptions {
     selector: 'app-home-admin',
     templateUrl: './home-admin.component.html',
     standalone: true,
-    imports: [CommonModule, TruncateDecimalsPipe]
+  imports: [CommonModule, TruncateDecimalsPipe, TranslatePipe, ChartComponent, NgxEchartsDirective]
 })
 export class HomeAdminComponent implements OnInit {
   public mapChartOption: EChartsOption;

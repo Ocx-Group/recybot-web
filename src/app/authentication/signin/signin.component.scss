@@ -33,6 +33,7 @@
   );
 }
 
+
 .login-wrapper::before {
   content: '';
   position: absolute;
@@ -89,7 +90,7 @@
 .login-input-group input {
   width: 100%;
   height: 2.8125rem;
-  padding: 0 2.5rem 0 2.5rem;
+  padding: 0 3rem 0 2.5rem;
   border-radius: 25px;
   background-color: #003637 !important;
   border: 1px solid #00bd6b;
@@ -130,7 +131,8 @@
   transition: background-color 5000s ease-in-out 0s;
 }
 
-.login-input-group i-feather {
+.login-input-group i-feather,
+.login-input-group i.bi {
   position: absolute;
   top: 0.75rem;
   left: 0.9375rem;
@@ -139,6 +141,7 @@
   pointer-events: none;
   width: 1.125rem;
   height: 1.125rem;
+  font-size: 1.125rem;
 }
 
 .login-button {
@@ -247,21 +250,28 @@
 
 .toggle-password {
   position: absolute;
-  right: 0.9375rem;
+  right: 1rem;
   top: 0;
   height: 2.8125rem;
   background: none;
   border: none;
-  color: #00bd6b;
+  color: #88d498;
   z-index: 2;
   padding: 0;
   display: flex;
   align-items: center;
+  justify-content: center;
   cursor: pointer;
+  width: 2rem;
+  transition: color 0.3s ease;
+}
+
+.toggle-password:hover {
+  color: #00bd6b;
 }
 
 .toggle-password i {
-  font-size: 1rem;
+  font-size: 1.125rem;
   line-height: 1;
 }
 

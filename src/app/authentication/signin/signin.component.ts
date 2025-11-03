@@ -7,7 +7,6 @@ import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/core/service/authentication-service/auth.service';
 import { CommonModule } from '@angular/common';
 
-declare let particlesJS: any;
 
 import {
   animate,
@@ -19,7 +18,6 @@ import {
 import { Signin } from '@app/core/models/signin-model/signin.model';
 import { LogoService } from '@app/core/service/logo-service/logo.service';
 import { DeviceDetectorService } from 'ngx-device-detector';
-import { FeatherModule } from 'angular-feather';
 
 @Component({
     selector: 'app-signin',
@@ -38,7 +36,7 @@ import { FeatherModule } from 'angular-feather';
         ]),
     ],
     standalone: true,
-    imports: [CommonModule, ReactiveFormsModule, RouterLink, TranslateModule, FeatherModule]
+    imports: [CommonModule, ReactiveFormsModule, RouterLink, TranslateModule]
 })
 export class SigninComponent implements OnInit, OnDestroy {
   submitted = false;
@@ -77,15 +75,11 @@ export class SigninComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.getTheme();
     this.authService.logoutUser();
-    particlesJS.load(
-      'particles-js',
-      'assets/particles/particles.json',
-      function () {},
-    );
     this.setLabels();
     this.setErrorMessages();
     this.startBackgroundRotation();
   }
+
 
   ngOnDestroy() {
     if (this.intervalId) {
