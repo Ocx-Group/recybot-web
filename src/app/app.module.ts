@@ -17,9 +17,6 @@ import { ToastrModule } from 'ngx-toastr';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
-import { SharedModule } from './shared/shared.module';
-
-import { MembershipManagerModule } from "./client/membership-manager/membership-manager.module";
 import { PageLoaderComponent } from './layout/page-loader/page-loader.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -54,10 +51,7 @@ export function initialLanguage(translate: TranslateService) {
         // core & shared
         CoreModule,
         ToastrModule.forRoot(),
-        SharedModule,
-        NgbModule,
         ClipboardModule,
-        MembershipManagerModule,
         NgOptimizedImage,
         PageLoaderComponent], providers: [
         { provide: LocationStrategy, useClass: PathLocationStrategy },

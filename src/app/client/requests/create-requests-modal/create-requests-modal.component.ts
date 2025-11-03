@@ -26,10 +26,6 @@ import { WalletWithdrawalsConfiguration } from '@app/core/models/wallet-withdraw
 import { AffiliateBtcService } from '@app/core/service/affiliate-btc-service/affiliate-btc.service';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
-
-@Component({
-    standalone: true,
-    imports: [CommonModule, ReactiveFormsModule],
 import { AffiliateBtc } from '@app/core/models/affiliate-btc-model/affiliate-btc.model';
 import { Response } from '@app/core/models/response-model/response.model';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -37,7 +33,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 @Component({
     selector: 'app-create-requests-modal',
     templateUrl: './create-requests-modal.component.html',
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, ReactiveFormsModule]
 })
 export class CreateRequestsModalComponent implements OnInit {
   walletRequest: WalletRequestRequest = new WalletRequestRequest();

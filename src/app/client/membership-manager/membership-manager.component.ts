@@ -23,13 +23,17 @@ import { Router } from '@angular/router';
 import { CreatePagaditoTransactionRequest } from '@app/core/models/pagadito-model/create-pagadito-transaction-request.model';
 import { PagaditoTransactionDetailRequest } from '@app/core/models/pagadito-model/pagadito-transaction-detail-request.model';
 import { PagaditoService } from '@app/core/service/pagadito-service/pagadito.service';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { CoinpaymentsComponent } from './coinpayments/coinpayments.component';
 
 
 @Component({
     selector: 'app-membership-manager',
     templateUrl: './membership-manager.component.html',
     styleUrls: ['./membership-manager-component.scss'],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, FormsModule, CoinpaymentsComponent]
 })
 export class MembershipManagerComponent implements OnInit, OnDestroy {
   payMethodSelected: number;

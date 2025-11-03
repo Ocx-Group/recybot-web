@@ -68,7 +68,7 @@ import {
   EducationalProgramsControlComponent
 } from './educational-programs-control/educational-programs-control.component';
 import {ChangeModelModule} from './change-model/change-model.module';
-import {SharedModule} from "../shared/shared.module";
+import { AdminRespondedPipe } from '../shared/admin-responded.pipe';
 import {TicketViewAdminComponent} from './tickets/tick-view/ticket-view-admin.component';
 import {CreateAdminModalComponent} from './tickets/create-admin-modal/create-admin-modal.component';
 import { MatrixListComponent } from './matrix-configuration/matrix-list/matrix-list.component';
@@ -151,9 +151,8 @@ const icons = {
     NgxDropzoneModule,
     CKEditorModule,
     ChangeModelModule,
-    SharedModule,
-    NgOptimizedImage,
     NgApexchartsModule,
+    AdminRespondedPipe,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

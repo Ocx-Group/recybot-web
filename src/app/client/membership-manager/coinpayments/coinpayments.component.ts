@@ -11,12 +11,15 @@ import { CoinpaymentService } from '@app/core/service/coinpayment-service/coinpa
 import { TransactionInfo } from '@app/core/models/coinpayment-model/transaction-info.model'
 import { ConpaymentTransaction } from '@app/core/models/coinpayment-model/conpayment-transaction.model';
 import { MembershipManagerService } from '@app/core/service/membership-manager-service/membership-manager.service';
+import { CommonModule } from '@angular/common';
+import {NgbAlert} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
     selector: 'app-coinpayments',
     templateUrl: './coinpayments.component.html',
     styleUrls: ['./coinpayments.component.scss'],
-    standalone: false
+    standalone: true,
+  imports: [CommonModule, NgbAlert]
 })
 export class CoinpaymentsComponent {
   qrImageUrl: string;

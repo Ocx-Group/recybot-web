@@ -6,7 +6,7 @@ import { UserService } from './../core/service/user-service/user.service';
 
 @Pipe({
     name: 'adminResponded',
-    standalone: false
+    standalone: true
 })
 export class AdminRespondedPipe implements PipeTransform {
   adminIds$: Observable<number[]>;
