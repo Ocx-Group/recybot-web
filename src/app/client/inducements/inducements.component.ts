@@ -1,10 +1,12 @@
 import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
-import { DatatableComponent } from '@swimlane/ngx-datatable';
+import { DatatableComponent, NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'app-inducements',
     templateUrl: './inducements.component.html',
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, NgxDatatableModule]
 })
 export class InducementsComponent implements OnInit {
   rows = [];

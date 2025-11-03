@@ -1,11 +1,13 @@
 import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { InlineShareButtonsConfig } from 'sharethis-angular';
+import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'app-share-modal',
     templateUrl: './share-modal.component.html',
-    standalone: false
+    standalone: true,
+    imports: [CommonModule]
 })
 export class ShareModalComponent {
   inlineShareButtonsConfig: InlineShareButtonsConfig;

@@ -12,7 +12,6 @@ import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ClipboardModule } from 'ngx-clipboard';
-import { NgxDropzoneModule } from 'ngx-dropzone';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { ToastrModule } from 'ngx-toastr';
 import { AppRoutingModule } from './app-routing.module';
@@ -20,7 +19,6 @@ import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 
-import { ClientModule } from './client/client.module';
 import { MembershipManagerModule } from "./client/membership-manager/membership-manager.module";
 import { PageLoaderComponent } from './layout/page-loader/page-loader.component';
 
@@ -60,8 +58,6 @@ export function initialLanguage(translate: TranslateService) {
         NgbModule,
         ClipboardModule,
         MembershipManagerModule,
-        ClientModule,
-        NgxDropzoneModule,
         NgOptimizedImage,
         PageLoaderComponent], providers: [
         { provide: LocationStrategy, useClass: PathLocationStrategy },

@@ -14,11 +14,16 @@ import { Grading } from '@app/core/models/grading-model/grading.model';
 import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
 
 const header = ['Movimientos', 'IP', 'Fecha'];
+import { CommonModule } from '@angular/common';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 @Component({
     selector: 'app-my-profile',
     templateUrl: './my-profile.component.html',
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, NgxDatatableModule],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class MyProfileComponent implements OnInit {
   public user: UserAffiliate = new UserAffiliate();

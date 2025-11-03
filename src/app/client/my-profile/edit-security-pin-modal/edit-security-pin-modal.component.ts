@@ -10,11 +10,14 @@ import { ToastrService } from 'ngx-toastr';
 import { AffiliateService } from '@app/core/service/affiliate-service/affiliate.service';
 import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
 import { UpdatePassword } from '@app/core/models/user-model/update.password.model';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
     selector: 'app-edit-security-pin-modal',
     templateUrl: './edit-security-pin-modal.component.html',
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, ReactiveFormsModule]
 })
 export class EditSecurityPinModalComponent implements OnInit {
   editSecurityPinForm: FormGroup;

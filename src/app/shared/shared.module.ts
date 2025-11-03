@@ -7,11 +7,9 @@ import { PdfViewerModule } from "ng2-pdf-viewer";
 import { AdminRespondedPipe } from './admin-responded.pipe';
 import { BootstrapModule } from './bootstrap.module';
 import { IconsModule } from './feather-icons.module';
-import { TruncateDecimalsPipe } from './truncate-decimals.pipe';
 
 @NgModule({
   declarations: [
-    TruncateDecimalsPipe,
     AdminRespondedPipe,
     PdfViewerComponent,
     PdfViewerComponent
@@ -33,14 +31,11 @@ import { TruncateDecimalsPipe } from './truncate-decimals.pipe';
     RouterModule,
     IconsModule,
     BootstrapModule,
-    TruncateDecimalsPipe,
     AdminRespondedPipe,
     PdfViewerComponent,
     PdfViewerComponent
   ],
-  providers: [
-    TruncateDecimalsPipe
-  ]
+  providers: []
 })
 export class SharedModule {
 }

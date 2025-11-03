@@ -13,12 +13,16 @@ import {AuthService} from '@app/core/service/authentication-service/auth.service
 import {UserAffiliate} from '@app/core/models/user-affiliate-model/user.affiliate.model';
 import {TicketHubService} from '@app/core/service/ticket-service/ticket-hub.service';
 import {TicketImagesRequest} from "@app/core/models/ticket-model/ticket-images-request.model";
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
+import { NgxDropzoneModule } from 'ngx-dropzone';
 
 @Component({
     selector: 'app-create-ticket-modal',
     templateUrl: './create-ticket-modal.component.html',
     styleUrls: ['./create-ticket-modal.component.scss'],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, ReactiveFormsModule, NgxDropzoneModule]
 })
 export class CreateTicketModalComponent implements OnInit {
   createTicketForm: FormGroup;

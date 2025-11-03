@@ -1,9 +1,11 @@
 import { Component, ViewChild, HostListener } from '@angular/core';
-import { DatatableComponent } from '@swimlane/ngx-datatable';
+import { DatatableComponent, NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { CommonModule } from '@angular/common';
 @Component({
     selector: 'app-procurement-ecopool',
     templateUrl: './procurement-ecopool.component.html',
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, NgxDatatableModule]
 })
 export class ProcurementEcopoolComponent  {
   rows = [];
@@ -14,7 +16,7 @@ export class ProcurementEcopoolComponent  {
 
   @ViewChild('table') table: DatatableComponent;
 
-  constructor() { 
+  constructor() {
     this.fetch((data) => {
       this.temp = [...data];
       this.rows = data;

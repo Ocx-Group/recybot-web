@@ -16,10 +16,13 @@ const ALERTS: Alert[] = [
   },
 ];
 
+import { CommonModule } from '@angular/common';
+
 @Component({
     selector: 'app-commissions',
     templateUrl: './commissions.component.html',
-    standalone: false
+    standalone: true,
+    imports: [CommonModule]
 })
 export class CommissionsComponent implements OnInit {
   alerts: Alert[];

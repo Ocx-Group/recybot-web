@@ -12,11 +12,14 @@ import {
 
 import { AffiliateService } from '@app/core/service/affiliate-service/affiliate.service';
 import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
 @Component({
     selector: 'app-my-profile-edit-password-modal',
     templateUrl: './my-profile-edit-password-modal.component.html',
     providers: [ToastrService],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, ReactiveFormsModule]
 })
 export class MyProfileEditPasswordModalComponent implements OnInit {
   @Input() getCurrentUser: any = [];
@@ -55,9 +58,9 @@ export class MyProfileEditPasswordModalComponent implements OnInit {
     this.updatePasswordForm = this.formBuilder.group(
       {
         current_password: ['', [Validators.required]],
-        confirm_password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(15), 
+        confirm_password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(15),
           Validators.pattern(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*#?&^_-]).{8,}/) ]],
-        new_password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(15), 
+        new_password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(15),
           Validators.pattern(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*#?&^_-]).{8,}/) ]],
       },
       {

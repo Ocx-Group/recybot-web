@@ -41,12 +41,19 @@ import { PdfViewerService } from '@app/core/service/pdf-viewer-service/pdf-viewe
 import { WalletModel1AService } from '@app/core/service/wallet-model-1a-service/wallet-model-1a.service';
 import { WalletModel1BService } from '@app/core/service/wallet-model-1b-service/wallet-model-1b.service';
 import { Subscription, switchMap, timer } from 'rxjs';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { QrcodeModule } from 'qrcode-angular';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 @Component({
     selector: 'app-cart',
     templateUrl: './cart.component.html',
     styleUrls: ['./cart.component.scss'],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, ReactiveFormsModule, FormsModule, QrcodeModule, NgbModule],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class CartComponent implements OnInit, OnDestroy {
   today: Date;

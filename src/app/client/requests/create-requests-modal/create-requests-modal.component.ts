@@ -24,6 +24,12 @@ import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affili
 import { BalanceInformation } from '@app/core/models/wallet-model/balance-information.model';
 import { WalletWithdrawalsConfiguration } from '@app/core/models/wallet-withdrawals-configuration-model/wallet-withdrawals-configuration.model';
 import { AffiliateBtcService } from '@app/core/service/affiliate-btc-service/affiliate-btc.service';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
+
+@Component({
+    standalone: true,
+    imports: [CommonModule, ReactiveFormsModule],
 import { AffiliateBtc } from '@app/core/models/affiliate-btc-model/affiliate-btc.model';
 import { Response } from '@app/core/models/response-model/response.model';
 import { HttpErrorResponse } from '@angular/common/http';

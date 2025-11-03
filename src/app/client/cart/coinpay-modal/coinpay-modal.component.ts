@@ -5,14 +5,18 @@ import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affili
 import { CoinpayService } from '@app/core/service/coinpay-service/coinpay.service';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
-import QRCode from 'qrcode';
+import {QRCode} from 'qrcode';
 import { Subscription, switchMap, timer } from 'rxjs';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
+import { QrcodeModule } from 'qrcode-angular';
 
 @Component({
     selector: 'app-coinpay-modal',
     templateUrl: './coinpay-modal.component.html',
     styleUrls: ['./coinpay-modal.component.scss'],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, ReactiveFormsModule, QrcodeModule]
 })
 export class CoinpayModalComponent implements OnInit {
   paymentGroup: FormGroup;

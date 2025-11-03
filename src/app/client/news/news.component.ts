@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'app-news',
     templateUrl: './news.component.html',
-    standalone: false
+    standalone: true,
+    imports: [CommonModule]
 })
 export class NewsComponent implements OnInit {
 

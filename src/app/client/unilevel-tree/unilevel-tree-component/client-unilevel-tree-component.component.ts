@@ -17,7 +17,8 @@ import { MyTreeNodeClient } from '@app/core/models/unilevel-tree-model/tree-node
         '[class.ng13-org-chart-zoom-out]': 'zoomOut',
     },
     encapsulation: ViewEncapsulation.None,
-    standalone: false
+    standalone: true,
+    imports: []
 })
 export class ClientUnilevelTreeComponentComponent {
   @Input('data') data: MyTreeNodeClient | undefined;

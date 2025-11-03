@@ -1,12 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import Swal from 'sweetalert2';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'app-services-and-products',
     templateUrl: './services-and-products.component.html',
     styleUrls: ['./services-and-products.component.sass'],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, TranslateModule, NgbModule]
 })
 export class ServicesAndProductsComponent implements OnInit {
   active: any;

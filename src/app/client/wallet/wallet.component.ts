@@ -15,13 +15,18 @@ import Swal from 'sweetalert2';
 import { BalanceInformation } from '@app/core/models/wallet-model/balance-information.model';
 import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
 import { WalletService } from '@app/core/service/wallet-service/wallet.service';
-import { DatatableComponent } from '@swimlane/ngx-datatable';
+import { DatatableComponent, NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { AuthService } from '@app/core/service/authentication-service/auth.service';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { TruncateDecimalsPipe } from '@app/shared/truncate-decimals.pipe';
+import { FeatherModule } from 'angular-feather';
 
 @Component({
     selector: 'app-wallet',
     templateUrl: './wallet.component.html',
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, NgxDatatableModule, TranslateModule, TruncateDecimalsPipe, FeatherModule]
 })
 export class WalletComponent implements OnInit, OnDestroy {
   private subscription: Subscription;

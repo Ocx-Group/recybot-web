@@ -1,12 +1,14 @@
 import { Component, ViewChild, HostListener } from '@angular/core';
-import { DatatableComponent } from '@swimlane/ngx-datatable';
+import { DatatableComponent, NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { UntypedFormGroup } from '@angular/forms';
+import { UntypedFormGroup, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'app-request-wallet',
     templateUrl: './request-wallet.component.html',
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, NgxDatatableModule, ReactiveFormsModule]
 })
 export class RequestWalletComponent {
   rows = [];

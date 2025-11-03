@@ -10,11 +10,16 @@ import { WalletRequestService } from '@app/core/service/wallet-request/wallet-re
 import { WalletService } from '@app/core/service/wallet-service/wallet.service';
 import { ToastrService } from 'ngx-toastr';
 import { MatrixQualificationService } from '@app/core/service/matrix-qualification-service/matrix-qualification.service';
+import { CommonModule } from '@angular/common';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 @Component({
     selector: 'app-requests',
     templateUrl: './requests.component.html',
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, NgxDatatableModule],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class RequestsComponent implements OnInit {
   user: UserAffiliate = new UserAffiliate();

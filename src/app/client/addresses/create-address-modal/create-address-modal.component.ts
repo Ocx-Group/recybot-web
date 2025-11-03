@@ -6,11 +6,14 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AffiliateAddress } from '@app/core/models/affiliate-address-model/affiliate-address.model'
 import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
 import { AuthService } from '@app/core/service/authentication-service/auth.service';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
     selector: 'app-create-address-modal',
     templateUrl: './create-address-modal.component.html',
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, ReactiveFormsModule]
 })
 export class CreateAddressModalComponent implements OnInit {
   createAddressGroup: FormGroup;

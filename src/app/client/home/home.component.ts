@@ -20,12 +20,17 @@ import { WalletModel1BService } from '@app/core/service/wallet-model-1b-service/
 import { WalletService } from '@app/core/service/wallet-service/wallet.service';
 import { EChartsOption } from 'echarts';
 import { ToastrService } from 'ngx-toastr';
+import { CommonModule } from '@angular/common';
+import { NgApexchartsModule } from 'ng-apexcharts';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 @Component({
     selector: 'app-main',
     templateUrl: './home.component.html',
     styleUrls: ['./home.component.scss'],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, NgApexchartsModule],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class HomeComponent {
   public user: UserAffiliate;

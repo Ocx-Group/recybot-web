@@ -6,11 +6,14 @@ import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affili
 import { UpdateImageProfile } from '@app/core/models/user-affiliate-model/update-image-profile.model';
 import { Storage, ref, uploadBytesResumable, getDownloadURL } from '@angular/fire/storage';
 import { AuthService } from '@app/core/service/authentication-service/auth.service';
+import { CommonModule } from '@angular/common';
+import { NgxDropzoneModule } from 'ngx-dropzone';
 
 @Component({
     selector: 'app-image-profile-modal',
     templateUrl: './image-profile-modal.component.html',
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, NgxDropzoneModule]
 })
 export class ImageProfileModalComponent implements OnInit {
   public userId: number;

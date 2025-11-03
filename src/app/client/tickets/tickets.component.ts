@@ -13,11 +13,17 @@ import {TicketHubService} from '@app/core/service/ticket-service/ticket-hub.serv
 import {AuthService} from '@app/core/service/authentication-service/auth.service';
 import {UserAffiliate} from '@app/core/models/user-affiliate-model/user.affiliate.model';
 import {Ticket} from '@app/core/models/ticket-model/ticket.model';
+import { CommonModule } from '@angular/common';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-tickets',
     templateUrl: './tickets.component.html',
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, NgxDatatableModule, TranslateModule],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class TicketsComponent implements OnInit, AfterViewInit, OnDestroy {
   user: UserAffiliate = new UserAffiliate();

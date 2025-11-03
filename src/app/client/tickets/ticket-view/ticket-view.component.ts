@@ -8,12 +8,15 @@ import {AuthService} from '@app/core/service/authentication-service/auth.service
 import {TicketHubService} from '@app/core/service/ticket-service/ticket-hub.service';
 import {TicketMessageRequest} from '@app/core/models/ticket-model/ticket-message-request.model';
 import {Ticket} from '@app/core/models/ticket-model/ticket.model';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
     selector: 'app-ticket-view',
     templateUrl: './ticket-view.component.html',
     styleUrls: ['./ticket-view.component.scss'],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, FormsModule]
 })
 export class TicketViewComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();

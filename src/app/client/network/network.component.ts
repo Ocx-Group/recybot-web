@@ -34,11 +34,19 @@ import { Product } from '@app/core/models/product-model/product.model';
 import { ProductService } from '@app/core/service/product-service/product.service';
 import { StatisticsInformation } from '@app/core/models/wallet-model/statisticsInformation';
 import { MatrixQualificationService } from '@app/core/service/matrix-qualification-service/matrix-qualification.service';
+import { CommonModule } from '@angular/common';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 @Component({
     selector: 'app-network',
     templateUrl: './network.component.html',
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, NgxDatatableModule, ReactiveFormsModule, FormsModule, TranslateModule, NgbModule],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class NetworkComponent implements OnInit {
   isCollapsed = true;

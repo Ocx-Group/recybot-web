@@ -6,11 +6,13 @@ import {AuthService} from '@app/core/service/authentication-service/auth.service
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ToastrService} from 'ngx-toastr';
 import {Subject, Subscription, takeUntil} from 'rxjs';
+import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'app-billing-purchases-detail-modal',
     templateUrl: './billing-purchases-detail-modal.component.html',
-    standalone: false
+    standalone: true,
+    imports: [CommonModule]
 })
 export class BillingPurchasesDetailModalComponent implements OnInit, OnDestroy {
   protected invoice: Invoice = new Invoice();

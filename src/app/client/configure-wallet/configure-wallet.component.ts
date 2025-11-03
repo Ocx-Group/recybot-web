@@ -9,12 +9,15 @@ import { AuthService } from '@app/core/service/authentication-service/auth.servi
 import { ConfigureWalletService } from '@app/core/service/configure-wallet-service/configure-wallet.service';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
     selector: 'app-configure-wallet',
     templateUrl: './configure-wallet.component.html',
     styleUrls: ['./configure-wallet.component.scss'],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, ReactiveFormsModule]
 })
 export class ConfigureWalletComponent implements OnInit, AfterViewInit, OnDestroy {
   currentStep: number = 1;

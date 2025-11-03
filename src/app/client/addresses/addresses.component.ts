@@ -1,13 +1,17 @@
 import { AffiliateAddressService } from '@app/core/service/affiliate-address-service/affiliate-address.service';
 import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
-import { DatatableComponent } from '@swimlane/ngx-datatable';
+import { DatatableComponent, NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { AuthService } from '@app/core/service/authentication-service/auth.service';
 import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
+import { CommonModule } from '@angular/common';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 @Component({
     selector: 'app-addresses',
     templateUrl: './addresses.component.html',
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, NgxDatatableModule],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AddressesComponent implements OnInit {
   user: UserAffiliate = new UserAffiliate();

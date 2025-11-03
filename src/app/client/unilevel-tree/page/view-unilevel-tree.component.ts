@@ -11,12 +11,18 @@ import { AuthService } from '@app/core/service/authentication-service/auth.servi
 import { MatrixConfigurationService } from '@app/core/service/matrix-configuration/matrix-configuration.service';
 import { MatrixService } from '@app/core/service/matrix-service/matrix.service';
 import { MatrixQualificationService } from '@app/core/service/matrix-qualification-service/matrix-qualification.service';
+import { CommonModule } from '@angular/common';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'app-view-unilevel-tree',
     templateUrl: './view-unilevel-tree.component.html',
     styleUrls: ['./view-unilevel-tree.component.scss'],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, TranslateModule, NgbModule],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class ViewUnilevelTreeComponent {
   userId: number;

@@ -12,10 +12,14 @@ import { AffiliateService } from '@app/core/service/affiliate-service/affiliate.
 import { AuthService } from '@app/core/service/authentication-service/auth.service';
 import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
 import { Subject, takeUntil } from 'rxjs';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
+import { NgxDropzoneModule } from 'ngx-dropzone';
 @Component({
     selector: 'app-edit-user',
     templateUrl: './edit-user.component.html',
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, ReactiveFormsModule, NgxDropzoneModule]
 })
 export class EditUserComponent implements OnInit, OnDestroy {
   public user: UserAffiliate = new UserAffiliate();
