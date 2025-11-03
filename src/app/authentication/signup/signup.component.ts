@@ -8,14 +8,11 @@ import {
   Validators
 } from '@angular/forms';
 import {ActivatedRoute, Router, RouterLink} from '@angular/router';
-import {City} from '@app/core/models/cities-model/cities.model';
 import {Country} from '@app/core/models/country-model/country.model';
-import {State} from '@app/core/models/state-model/state.model';
 import {UserAffiliate} from '@app/core/models/user-affiliate-model/user.affiliate.model';
 import {AffiliateService} from '@app/core/service/affiliate-service/affiliate.service';
 import {LogoService} from '@app/core/service/logo-service/logo.service';
 import {PdfViewerService} from '@app/core/service/pdf-viewer-service/pdf-viewer.service';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ToastrService} from 'ngx-toastr';
 import {CreateAffiliate} from '@app/core/models/user-affiliate-model/create-affiliate.model';
 import { CommonModule } from '@angular/common';
@@ -39,13 +36,9 @@ export class SignupComponent implements OnInit {
   sponsor = '';
   user: UserAffiliate = new UserAffiliate();
   listcountry: Country[] = [];
-  listState: State[] = [];
-  selectedState: string = '';
-  listCity: City[] = [];
   logoUrl = '';
 
   constructor(
-    private modalService: NgbModal,
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private formBuilder: FormBuilder,
@@ -178,14 +171,6 @@ export class SignupComponent implements OnInit {
       } else {
         this.showError(response.message);
       }
-    });
-  }
-
-  openModal(content) {
-    this.modalService.open(content, {
-      ariaLabelledBy: 'modal-basic-title',
-      size: 'xl',
-      scrollable: true
     });
   }
 
