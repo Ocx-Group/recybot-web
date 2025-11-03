@@ -17,9 +17,10 @@ import { ToastrService } from 'ngx-toastr';
 import { PaymentGroupsService } from '@app/core/service/payment-groups-service/payment-groups.service';
 
 @Component({
-  selector: 'app-calculation-groups-edit-modal',
-  templateUrl: './calculation-groups-edit-modal.component.html',
-  providers: [ToastrService],
+    selector: 'app-calculation-groups-edit-modal',
+    templateUrl: './calculation-groups-edit-modal.component.html',
+    providers: [ToastrService],
+    standalone: false
 })
 export class CalculationGroupsEditModalComponent implements OnInit {
   editCalculationForm: FormGroup;

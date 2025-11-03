@@ -9,9 +9,10 @@ import {TicketMessageRequest} from "@app/core/models/ticket-model/ticket-message
 import {Ticket} from "@app/core/models/ticket-model/ticket.model";
 
 @Component({
-  selector: 'app-tick-view',
-  templateUrl: './ticket-view-admin.component.html',
-  styleUrls: ['./ticket-view-admin.component.sass']
+    selector: 'app-tick-view',
+    templateUrl: './ticket-view-admin.component.html',
+    styleUrls: ['./ticket-view-admin.component.sass'],
+    standalone: false
 })
 export class TicketViewAdminComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();

@@ -18,10 +18,11 @@ import { AffiliateService } from '@app/core/service/affiliate-service/affiliate.
 import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
 
 @Component({
-  selector: 'app-affiliates-list-edit-modal',
-  templateUrl: './affiliates-list-edit-modal.component.html',
-  styleUrls: ['./affiliates-list-edit-modal.component.scss'],
-  providers: [ToastrService],
+    selector: 'app-affiliates-list-edit-modal',
+    templateUrl: './affiliates-list-edit-modal.component.html',
+    styleUrls: ['./affiliates-list-edit-modal.component.scss'],
+    providers: [ToastrService],
+    standalone: false
 })
 export class AffiliatesListEditModalComponent implements OnInit {
   editAffiliateForm: FormGroup;

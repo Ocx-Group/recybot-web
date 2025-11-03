@@ -7,14 +7,15 @@ import {
 import { TreeNode } from '@app/core/models/unilevel-tree-model/tree-node';
 
 @Component({
-  selector: 'app-force-genealogical-tree',
-  exportAs: 'orgChart',
-  templateUrl: './force-genealogical-tree.component.html',
-  styleUrls: ['./force-genealogical-tree.component.scss'],
-  host: {
-    '[class.ng13-org-chart-zoom-out]': 'zoomOut',
-  },
-  encapsulation: ViewEncapsulation.None,
+    selector: 'app-force-genealogical-tree',
+    exportAs: 'orgChart',
+    templateUrl: './force-genealogical-tree.component.html',
+    styleUrls: ['./force-genealogical-tree.component.scss'],
+    host: {
+        '[class.ng13-org-chart-zoom-out]': 'zoomOut',
+    },
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class ForceGenealogicalTreeComponent {
   @Input('data') data: TreeNode | undefined;

@@ -24,9 +24,8 @@
               {{ 'BINARY-GENEALOGICAL-TREE-PAGE.TITLE.TEXT' | translate }}
             </h4>
           </div>
-          <div class="card-body" style="max-width: 100% !important" class="media-list position-relative"
-          style="position: relative; max-width: 100% !important"
-          [perfectScrollbar]>
+          <div class="card-body" style="max-width: 100% !important; overflow-y: auto;" class="media-list position-relative"
+          >
             <div *ngIf="showDiv">
               <app-binary-genealogical-tree [nodeTemplate]="nodeTemplate" [data]="tree" #exampleChart="orgChart" (loadFamilyTree)="onloadFamilyTree($event)">
               </app-binary-genealogical-tree>

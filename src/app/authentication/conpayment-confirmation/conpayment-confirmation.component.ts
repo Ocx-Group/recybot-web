@@ -9,8 +9,9 @@ import { ToastrService } from 'ngx-toastr';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-conpayment-confirmation',
-  templateUrl: './conpayment-confirmation.component.html'
+    selector: 'app-conpayment-confirmation',
+    templateUrl: './conpayment-confirmation.component.html',
+    standalone: false
 })
 export class ConpaymentConfirmationComponent implements OnInit {
   walletRequest: WalletRequest = new WalletRequest();

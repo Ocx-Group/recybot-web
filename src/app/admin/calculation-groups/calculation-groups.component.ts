@@ -13,9 +13,10 @@ import { ClipboardService } from 'ngx-clipboard';
 const header = ['Grupo de Calculo', 'Descripción', 'Fecha de Registro'];
 
 @Component({
-  selector: 'app-calculation-groups',
-  templateUrl: './calculation-groups.component.html',
-  providers: [ToastrService],
+    selector: 'app-calculation-groups',
+    templateUrl: './calculation-groups.component.html',
+    providers: [ToastrService],
+    standalone: false
 })
 export class CalculationGroupsComponent implements OnInit {
   createCalculationForm: FormGroup;

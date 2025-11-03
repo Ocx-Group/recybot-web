@@ -29,8 +29,9 @@ const ALERTS: Alert[] = [
   },
 ];
 @Component({
-  selector: 'app-califications-list-edit-modal',
-  templateUrl: './califications-list-edit-modal.component.html',
+    selector: 'app-califications-list-edit-modal',
+    templateUrl: './califications-list-edit-modal.component.html',
+    standalone: false
 })
 export class CalificationsListEditModalComponent implements OnInit {
   editCalificationForm: FormGroup;

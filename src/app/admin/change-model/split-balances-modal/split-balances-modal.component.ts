@@ -7,9 +7,10 @@ import { ModelBalancesInvoices } from '@app/core/models/invoice-model/model-bala
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-split-balances-modal',
-  templateUrl: './split-balances-modal.component.html',
-  styleUrls: ['./split-balances-modal.component.sass']
+    selector: 'app-split-balances-modal',
+    templateUrl: './split-balances-modal.component.html',
+    styleUrls: ['./split-balances-modal.component.sass'],
+    standalone: false
 })
 export class SplitBalancesModalComponent implements OnInit {
   @ViewChild('splitBalancesModal') splitBalancesModal: TemplateRef<any>;

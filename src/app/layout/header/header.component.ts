@@ -23,9 +23,10 @@ import {TicketSummary} from '@app/core/models/ticket-model/ticket-summary.model'
 const document: any = window.document;
 
 @Component({
-  selector: 'app-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss'],
+    selector: 'app-header',
+    templateUrl: './header.component.html',
+    styleUrls: ['./header.component.scss'],
+    standalone: false
 })
 export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   public user: UserAffiliate = new UserAffiliate();

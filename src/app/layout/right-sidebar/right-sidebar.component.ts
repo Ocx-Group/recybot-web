@@ -15,10 +15,11 @@ import { ConfigService } from '../../config/config.service';
 import { LogoService } from '@app/core/service/logo-service/logo.service';
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  selector: 'app-right-sidebar',
-  templateUrl: './right-sidebar.component.html',
-  styleUrls: ['./right-sidebar.component.sass'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'app-right-sidebar',
+    templateUrl: './right-sidebar.component.html',
+    styleUrls: ['./right-sidebar.component.sass'],
+    standalone: false
 })
 export class RightSidebarComponent implements OnInit, AfterViewInit {
   selectedBgColor = 'white';

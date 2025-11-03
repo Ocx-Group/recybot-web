@@ -11,9 +11,10 @@ import { AffiliateService } from '@app/core/service/affiliate-service/affiliate.
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-forgot',
-  templateUrl: './forgot.component.html',
-  styleUrls: ['./forgot.component.scss'],
+    selector: 'app-forgot',
+    templateUrl: './forgot.component.html',
+    styleUrls: ['./forgot.component.scss'],
+    standalone: false
 })
 export class ForgotComponent implements OnInit {
   forgotPassword: FormGroup;

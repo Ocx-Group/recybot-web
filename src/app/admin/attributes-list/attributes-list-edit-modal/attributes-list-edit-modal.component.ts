@@ -13,8 +13,9 @@ import { ProductAttributeService } from '@app/core/service/product-attribute/pro
 
 
 @Component({
-  selector: 'app-attributes-list-edit-modal',
-  templateUrl: './attributes-list-edit-modal.component.html',
+    selector: 'app-attributes-list-edit-modal',
+    templateUrl: './attributes-list-edit-modal.component.html',
+    standalone: false
 })
 export class AttributesListEditModalComponent implements OnInit {
   editAttributeForm!: FormGroup;

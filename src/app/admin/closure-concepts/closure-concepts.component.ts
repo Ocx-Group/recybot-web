@@ -4,9 +4,10 @@ import { ToastrService } from 'ngx-toastr';
 import { ClipboardService } from 'ngx-clipboard';
 
 @Component({
-  selector: 'app-closure-concepts',
-  templateUrl: './closure-concepts.component.html',
-  providers: [ToastrService],
+    selector: 'app-closure-concepts',
+    templateUrl: './closure-concepts.component.html',
+    providers: [ToastrService],
+    standalone: false
 })
 export class ClosureConceptsComponent {
   rows = [];

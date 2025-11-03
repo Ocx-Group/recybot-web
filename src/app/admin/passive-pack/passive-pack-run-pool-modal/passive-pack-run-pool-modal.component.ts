@@ -17,8 +17,9 @@ import { Subject, Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-passive-pack-run-pool-modal',
-  templateUrl: './passive-pack-run-pool-modal.component.html',
+    selector: 'app-passive-pack-run-pool-modal',
+    templateUrl: './passive-pack-run-pool-modal.component.html',
+    standalone: false
 })
 export class PassivePackRunPoolModalComponent implements OnInit, OnDestroy {
   passivePackForm: FormGroup;

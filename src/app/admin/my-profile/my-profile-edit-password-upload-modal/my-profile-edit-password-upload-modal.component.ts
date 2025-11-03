@@ -9,8 +9,9 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-my-profile-edit-password-upload-modal',
-  templateUrl: './my-profile-edit-password-upload-modal.component.html',
+    selector: 'app-my-profile-edit-password-upload-modal',
+    templateUrl: './my-profile-edit-password-upload-modal.component.html',
+    standalone: false
 })
 export class MyProfileEditPasswordUploadModalComponent implements OnInit {
   editPasswordUploadForm: FormGroup;

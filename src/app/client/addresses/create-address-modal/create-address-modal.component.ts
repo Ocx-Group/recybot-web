@@ -8,8 +8,9 @@ import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affili
 import { AuthService } from '@app/core/service/authentication-service/auth.service';
 
 @Component({
-  selector: 'app-create-address-modal',
-  templateUrl: './create-address-modal.component.html'
+    selector: 'app-create-address-modal',
+    templateUrl: './create-address-modal.component.html',
+    standalone: false
 })
 export class CreateAddressModalComponent implements OnInit {
   createAddressGroup: FormGroup;

@@ -3,9 +3,10 @@ import { Product } from '@app/core/models/product-model/product.model';
 import { ProductService } from '@app/core/service/product-service/product.service';
 
 @Component({
-  selector: 'app-products-preview',
-  templateUrl: './products-preview.component.html',
-  styleUrls: ['./products-preview.component.scss']
+    selector: 'app-products-preview',
+    templateUrl: './products-preview.component.html',
+    styleUrls: ['./products-preview.component.scss'],
+    standalone: false
 })
 export class ProductsPreviewComponent implements OnInit {
   public productList: any;

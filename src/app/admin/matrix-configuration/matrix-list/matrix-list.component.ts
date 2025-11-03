@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { MatrixConfigurationService } from '@app/core/service/matrix-configuration/matrix-configuration.service';
 
 @Component({
-  selector: 'app-matrix-list',
-  templateUrl: './matrix-list.component.html',
-  styleUrls: ['./matrix-list.component.sass']
+    selector: 'app-matrix-list',
+    templateUrl: './matrix-list.component.html',
+    styleUrls: ['./matrix-list.component.sass'],
+    standalone: false
 })
 export class MatrixListComponent implements OnInit {
   loadingIndicator: boolean = true;

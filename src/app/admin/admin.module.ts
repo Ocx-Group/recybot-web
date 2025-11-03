@@ -2,7 +2,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 import {CommonModule, NgOptimizedImage} from '@angular/common';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import {PerfectScrollbarModule} from 'ngx-perfect-scrollbar';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 import {AdminRoutingModule} from './admin-routing.module';
 import {NgxEchartsModule} from 'ngx-echarts';
 import {NgApexchartsModule} from 'ng-apexcharts';
@@ -145,7 +145,7 @@ const icons = {
     }),
     FeatherModule.pick(icons),
     NgxDatatableModule,
-    PerfectScrollbarModule,
+    ScrollingModule,
     NgApexchartsModule,
     NgxGaugeModule,
     NgxDropzoneModule,

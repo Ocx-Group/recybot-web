@@ -15,9 +15,10 @@ import { AffiliateService } from '@app/core/service/affiliate-service/affiliate.
 import { RequestResetPassword } from '@app/core/models/user-affiliate-model/request-reset-password-model';
 
 @Component({
-  selector: 'app-reset',
-  templateUrl: './reset.component.html',
-  styleUrls: ['./reset.component.scss'],
+    selector: 'app-reset',
+    templateUrl: './reset.component.html',
+    styleUrls: ['./reset.component.scss'],
+    standalone: false
 })
 export class ResetComponent implements OnInit {
   resetPassword: FormGroup;

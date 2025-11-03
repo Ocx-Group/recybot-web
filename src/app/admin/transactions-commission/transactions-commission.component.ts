@@ -3,8 +3,9 @@ import { DatatableComponent } from '@swimlane/ngx-datatable';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-transactions-commission',
-  templateUrl: './transactions-commission.component.html'
+    selector: 'app-transactions-commission',
+    templateUrl: './transactions-commission.component.html',
+    standalone: false
 })
 export class TransactionsCommissionComponent {
   rows = [];

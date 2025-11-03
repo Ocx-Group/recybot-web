@@ -19,8 +19,9 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-attributes-list-create-modal',
-  templateUrl: './attributes-list-create-modal.component.html',
+    selector: 'app-attributes-list-create-modal',
+    templateUrl: './attributes-list-create-modal.component.html',
+    standalone: false
 })
 export class AttributesListCreateModalComponent implements OnInit {
   createAttributeForm!: FormGroup;

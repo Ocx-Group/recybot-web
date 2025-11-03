@@ -19,7 +19,7 @@
                   {{ 'HOME-PAGE-CLIENT.RECYCOIN-DASHBOARD.RECYCOIN-AMOUNT' | translate }}
                 </h5>
                 <span class="fw-bold mb-0 font-15 text-success notranslate">
-                  {{ ((balanceInformation.totalAcquisitions + balanceInformation.bonusAmount) ?? 0) + ' Tokens' }}
+                  {{ ((balanceInformation.totalAcquisitions || 0) + (balanceInformation.bonusAmount || 0)) + ' Tokens' }}
                 </span>
               </div>
               <i class="fas fa-coins card-icon col-red font-30 col-auto"></i>
@@ -257,8 +257,8 @@
               <div id="chartdiv"></div>
             </div>
             <div class="row">
-              <div id="new-orders" class="media-list position-relative" style="max-height: 170px !important"
-                [perfectScrollbar]>
+              <div id="new-orders" class="media-list position-relative" style="max-height: 170px !important; overflow-y: auto;"
+                >
                 <div class="table">
                   <table id="new-orders-table" class="table table-hover table-xl table-row-border mb-0">
                     <tbody *ngFor="let item of maps">

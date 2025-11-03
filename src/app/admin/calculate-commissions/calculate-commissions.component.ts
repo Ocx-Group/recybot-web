@@ -3,8 +3,9 @@ import { WalletService } from '@app/core/service/wallet-service/wallet.service';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-calculate-commissions',
-  templateUrl: './calculate-commissions.component.html',
+    selector: 'app-calculate-commissions',
+    templateUrl: './calculate-commissions.component.html',
+    standalone: false
 })
 export class CalculateCommissionsComponent implements OnInit {
   // Campos para liquidación

@@ -21,8 +21,9 @@ import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
-  selector: 'app-products-and-services-create-modal',
-  templateUrl: './products-and-services-create-modal.component.html',
+    selector: 'app-products-and-services-create-modal',
+    templateUrl: './products-and-services-create-modal.component.html',
+    standalone: false
 })
 export class ProductsAndServicesCreateModalComponent implements OnInit {
   createProductForm!: FormGroup;

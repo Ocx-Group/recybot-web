@@ -20,8 +20,9 @@ const header = [
   'Existencias',
 ];
 @Component({
-  selector: 'app-products-and-services',
-  templateUrl: './products-and-services.component.html',
+    selector: 'app-products-and-services',
+    templateUrl: './products-and-services.component.html',
+    standalone: false
 })
 export class ProductsAndServicesComponent implements OnInit {
   rows = [];

@@ -13,9 +13,10 @@ import { Rol } from '@app/core/models/rol-model/rol.model';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-rol-list-edit-modal',
-  templateUrl: './rol-list-edit-modal.component.html',
-  providers: [ToastrService],
+    selector: 'app-rol-list-edit-modal',
+    templateUrl: './rol-list-edit-modal.component.html',
+    providers: [ToastrService],
+    standalone: false
 })
 export class RolListEditModalComponent implements OnInit {
   rol = new Rol();

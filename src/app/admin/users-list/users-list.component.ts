@@ -14,9 +14,10 @@ import { Rol } from '@app/core/models/rol-model/rol.model';
 const header = ['Usuario', 'Rol', 'Nombre', 'Apellido', 'Correo'];
 
 @Component({
-  selector: 'app-users-list',
-  templateUrl: './users-list.component.html',
-  providers: [ToastrService],
+    selector: 'app-users-list',
+    templateUrl: './users-list.component.html',
+    providers: [ToastrService],
+    standalone: false
 })
 export class UsersListComponent implements OnInit {
   rows = [];

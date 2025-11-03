@@ -13,8 +13,9 @@ import { AuthService } from '@app/core/service/authentication-service/auth.servi
 import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
 import { Subject, takeUntil } from 'rxjs';
 @Component({
-  selector: 'app-edit-user',
-  templateUrl: './edit-user.component.html',
+    selector: 'app-edit-user',
+    templateUrl: './edit-user.component.html',
+    standalone: false
 })
 export class EditUserComponent implements OnInit, OnDestroy {
   public user: UserAffiliate = new UserAffiliate();

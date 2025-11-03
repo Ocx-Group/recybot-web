@@ -8,8 +8,9 @@ import {ToastrService} from 'ngx-toastr';
 import {Subject, Subscription, takeUntil} from 'rxjs';
 
 @Component({
-  selector: 'app-billing-purchases-detail-modal',
-  templateUrl: './billing-purchases-detail-modal.component.html',
+    selector: 'app-billing-purchases-detail-modal',
+    templateUrl: './billing-purchases-detail-modal.component.html',
+    standalone: false
 })
 export class BillingPurchasesDetailModalComponent implements OnInit, OnDestroy {
   protected invoice: Invoice = new Invoice();

@@ -19,8 +19,9 @@ import { GradingService } from '@app/core/service/grading-service/grading.servic
 import { IncentiveService } from '@app/core/service/incentive-service/incentive.service';
 
 @Component({
-  selector: 'app-incentives-list-create-modal',
-  templateUrl: './incentives-list-create-modal.component.html',
+    selector: 'app-incentives-list-create-modal',
+    templateUrl: './incentives-list-create-modal.component.html',
+    standalone: false
 })
 export class IncentivesListCreateModalComponent implements OnInit {
   createIncentivesForm!: FormGroup;

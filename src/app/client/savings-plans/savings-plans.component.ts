@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-savings-plans',
-  templateUrl: './savings-plans.component.html',
-  styleUrls: ['./savings-plans.component.css']
+    selector: 'app-savings-plans',
+    templateUrl: './savings-plans.component.html',
+    styleUrls: ['./savings-plans.component.css'],
+    standalone: false
 })
 export class SavingsPlansComponent implements OnInit {
   active: number = 9;

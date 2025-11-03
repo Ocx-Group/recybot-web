@@ -15,9 +15,10 @@ import {toArray} from "rxjs/operators";
 import {AffiliateService} from "@app/core/service/affiliate-service/affiliate.service";
 
 @Component({
-  selector: 'app-create-admin-modal',
-  templateUrl: './create-admin-modal.component.html',
-  styleUrls: ['./create-admin-modal.component.scss']
+    selector: 'app-create-admin-modal',
+    templateUrl: './create-admin-modal.component.html',
+    styleUrls: ['./create-admin-modal.component.scss'],
+    standalone: false
 })
 export class CreateAdminModalComponent implements OnInit {
   createTicketForm: FormGroup;

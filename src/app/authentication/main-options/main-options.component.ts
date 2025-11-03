@@ -4,9 +4,10 @@ import { LogoService } from '@app/core/service/logo-service/logo.service';
 declare var particlesJS: any;
 
 @Component({
-  selector: 'app-main-options',
-  templateUrl: './main-options.component.html',
-  styleUrls: ['./main-options.component.scss']
+    selector: 'app-main-options',
+    templateUrl: './main-options.component.html',
+    styleUrls: ['./main-options.component.scss'],
+    standalone: false
 })
 export class MainOptionsComponent implements OnInit {
   userName: string;

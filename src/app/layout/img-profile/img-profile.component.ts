@@ -12,9 +12,10 @@ import { UserService } from '@app/core/service/user-service/user.service';
 
 
 @Component({
-  selector: 'app-img-profile',
-  templateUrl: './img-profile.component.html',
-  styleUrls: ['./img-profile.component.sass']
+    selector: 'app-img-profile',
+    templateUrl: './img-profile.component.html',
+    styleUrls: ['./img-profile.component.sass'],
+    standalone: false
 })
 export class ImgProfileComponent implements OnInit {
   @ViewChild('profileImgModal', { static: true }) private modalContent: TemplateRef<any>;

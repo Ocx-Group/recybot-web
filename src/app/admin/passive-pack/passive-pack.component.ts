@@ -8,8 +8,9 @@ import { Invoice } from '@app/core/models/invoice-model/invoice.model';
 import { InvoiceService } from '@app/core/service/invoice-service/invoice.service';
 
 @Component({
-  selector: 'app-passive-pack',
-  templateUrl: './passive-pack.component.html',
+    selector: 'app-passive-pack',
+    templateUrl: './passive-pack.component.html',
+    standalone: false
 })
 export class PassivePackComponent implements OnInit {
   rows = [];

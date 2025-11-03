@@ -21,8 +21,9 @@ import { WalletWithdrawalsConfiguration } from '@app/core/models/wallet-withdraw
 import { AdditionalParametersConfiguration } from '@app/core/models/additional-parameters-configuration-model/additional-parameters-configuration.model';
 import { WalletRetentionConfigService } from '@app/core/service/wallet-retention-config-service/wallet-retention-config.service';
 @Component({
-  selector: 'app-wallet-parameters',
-  templateUrl: './wallet-parameters.component.html',
+    selector: 'app-wallet-parameters',
+    templateUrl: './wallet-parameters.component.html',
+    standalone: false
 })
 export class WalletParametersComponent implements OnInit {
   myForm: FormGroup;

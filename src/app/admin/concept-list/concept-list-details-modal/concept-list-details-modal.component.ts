@@ -15,8 +15,9 @@ import { ConceptConfigurationService } from '@app/core/service/concept-configura
 import { GradingService } from '@app/core/service/grading-service/grading.service';
 
 @Component({
-  selector: 'app-concept-list-details-modal',
-  templateUrl: './concept-list-details-modal.component.html',
+    selector: 'app-concept-list-details-modal',
+    templateUrl: './concept-list-details-modal.component.html',
+    standalone: false
 })
 export class ConceptListDetailsModalComponent implements OnInit {
   detailsConceptForm: FormGroup;

@@ -13,8 +13,9 @@ interface CommissionData {
 }
 
 @Component({
-  selector: 'app-calculated-commissions',
-  templateUrl: './calculated-commissions.component.html'
+    selector: 'app-calculated-commissions',
+    templateUrl: './calculated-commissions.component.html',
+    standalone: false
 })
 export class CalculatedCommissionsComponent implements OnInit {
   // Campos de filtro

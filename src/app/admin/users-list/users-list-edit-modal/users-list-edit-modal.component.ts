@@ -1,4 +1,4 @@
-import { Rol } from './../../../core/models/rol-model/rol.model';
+import { Rol } from '@app/core/models/rol-model/rol.model';
 import {
   Component,
   EventEmitter,
@@ -17,11 +17,11 @@ import {
 import { ToastrService } from 'ngx-toastr';
 import { User } from '@app/core/models/user-model/user.model';
 import { UserService } from '@app/core/service/user-service/user.service';
-import { _ParseAST } from '@angular/compiler';
 
 @Component({
-  selector: 'app-users-list-edit-modal',
-  templateUrl: './users-list-edit-modal.component.html',
+    selector: 'app-users-list-edit-modal',
+    templateUrl: './users-list-edit-modal.component.html',
+    standalone: false
 })
 export class UsersListEditModalComponent implements OnInit {
   editUserForm: FormGroup;

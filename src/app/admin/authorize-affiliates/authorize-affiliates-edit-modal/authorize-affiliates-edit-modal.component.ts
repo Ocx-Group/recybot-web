@@ -7,23 +7,20 @@ import {
 } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {
-  FormBuilder,
-  FormGroup,
-  Validators,
-  AbstractControl,
+  FormBuilder
 } from '@angular/forms';
 import Swal from 'sweetalert2';
 
 import { ToastrService } from 'ngx-toastr';
-import { _ParseAST } from '@angular/compiler';
 
 import { AffiliateService } from '@app/core/service/affiliate-service/affiliate.service';
 import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
 
 @Component({
-  selector: 'app-authorize-affiliates-edit-modal',
-  templateUrl: './authorize-affiliates-edit-modal.component.html',
-  providers: [ToastrService],
+    selector: 'app-authorize-affiliates-edit-modal',
+    templateUrl: './authorize-affiliates-edit-modal.component.html',
+    providers: [ToastrService],
+    standalone: false
 })
 export class AuthorizeAffiliatesEditModalComponent implements OnInit {
   user = new UserAffiliate();
@@ -72,7 +69,7 @@ export class AuthorizeAffiliatesEditModalComponent implements OnInit {
       if (result.value) {
         let approvedArray = [];
         approvedArray.push(this.user.id);
-        this.selectionProcess(approvedArray, []);     
+        this.selectionProcess(approvedArray, []);
       }
     });
 
@@ -89,7 +86,7 @@ export class AuthorizeAffiliatesEditModalComponent implements OnInit {
       if (result.value) {
         let disApprovedArray = [];
         disApprovedArray.push(this.user.id);
-        this.selectionProcess([], disApprovedArray);      
+        this.selectionProcess([], disApprovedArray);
       }
     });
   }

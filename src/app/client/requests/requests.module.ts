@@ -10,7 +10,7 @@ import { NgApexchartsModule } from 'ng-apexcharts';
 import { ClipboardModule } from 'ngx-clipboard';
 import { NgxEchartsModule } from 'ngx-echarts';
 import { NgxGaugeModule } from 'ngx-gauge';
-import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 import { ToastrModule } from 'ngx-toastr';
 
 import { Search } from 'angular-feather/icons';
@@ -36,7 +36,7 @@ const icons = {
     ToastrModule.forRoot(),
     FeatherModule.pick(icons),
     NgxDatatableModule,
-    PerfectScrollbarModule,
+    ScrollingModule,
     NgApexchartsModule,
     NgxGaugeModule,
     SharedModule,

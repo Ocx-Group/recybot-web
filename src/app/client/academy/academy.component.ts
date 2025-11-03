@@ -6,9 +6,10 @@ import { CartService } from '@app/core/service/cart.service/cart.service';
 import { ProductService } from '@app/core/service/product-service/product.service';
 
 @Component({
-  selector: 'app-academy',
-  templateUrl: './academy.component.html',
-  styleUrls: ['./academy.component.scss'],
+    selector: 'app-academy',
+    templateUrl: './academy.component.html',
+    styleUrls: ['./academy.component.scss'],
+    standalone: false
 })
 export class AcademyComponent implements OnInit {
   products: Product[] = [];

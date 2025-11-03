@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import {CommonModule, NgOptimizedImage} from '@angular/common';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
-import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 import { ClientUnilevelTreeComponentComponent } from './unilevel-tree-component/client-unilevel-tree-component.component';
 import { ViewUnilevelTreeComponent } from './page/view-unilevel-tree.component';
@@ -14,6 +14,6 @@ import {NgxDatatableModule} from "@swimlane/ngx-datatable";
 
 @NgModule({
   declarations: [ClientUnilevelTreeComponentComponent, ViewUnilevelTreeComponent],
-  imports: [CommonModule, PerfectScrollbarModule, NgbModule, TranslateModule, NgbPopoverModule, NgxSpinnerModule, NgxDropzoneModule, ReactiveFormsModule, NgxDatatableModule, NgOptimizedImage],
+  imports: [CommonModule, ScrollingModule, NgbModule, TranslateModule, NgbPopoverModule, NgxSpinnerModule, NgxDropzoneModule, ReactiveFormsModule, NgxDatatableModule, NgOptimizedImage],
 })
 export class ClientUnilevelTreeModule {}

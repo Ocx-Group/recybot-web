@@ -10,13 +10,13 @@ import { AffiliateService } from '@app/core/service/affiliate-service/affiliate.
 import { AuthService } from '@app/core/service/authentication-service/auth.service';
 import { MatrixConfigurationService } from '@app/core/service/matrix-configuration/matrix-configuration.service';
 import { MatrixService } from '@app/core/service/matrix-service/matrix.service';
-import 'perfect-scrollbar';
 import { MatrixQualificationService } from '@app/core/service/matrix-qualification-service/matrix-qualification.service';
 
 @Component({
-  selector: 'app-view-unilevel-tree',
-  templateUrl: './view-unilevel-tree.component.html',
-  styleUrls: ['./view-unilevel-tree.component.scss'],
+    selector: 'app-view-unilevel-tree',
+    templateUrl: './view-unilevel-tree.component.html',
+    styleUrls: ['./view-unilevel-tree.component.scss'],
+    standalone: false
 })
 export class ViewUnilevelTreeComponent {
   userId: number;

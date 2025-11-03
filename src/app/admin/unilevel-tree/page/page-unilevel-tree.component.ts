@@ -4,16 +4,16 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { AffiliateService } from '@app/core/service/affiliate-service/affiliate.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import 'perfect-scrollbar';
 
 @Component({
-  selector: 'app-page-unilevel-tree',
-  templateUrl: './page-unilevel-tree.component.html',
-  styleUrls: ['./page-unilevel-tree.component.scss'],
+    selector: 'app-page-unilevel-tree',
+    templateUrl: './page-unilevel-tree.component.html',
+    styleUrls: ['./page-unilevel-tree.component.scss'],
+    standalone: false
 })
 export class PageUnilevelTreeComponent {
 
-  
+
   userId: number;
   tree: MyTreeNode = {
     id: 0,
@@ -52,14 +52,14 @@ export class PageUnilevelTreeComponent {
       children: [
       ],
     };
-    
+
     this.affiliateService.getUniLevelTree(id).subscribe((users: MyTreeNode) => {
       if (users !== null) {
         this.tree = users;
         setTimeout(() => {
           this.spinnerService.hide();
           this.showDiv = true;
-        }, 500);   
+        }, 500);
       }
     });
   }

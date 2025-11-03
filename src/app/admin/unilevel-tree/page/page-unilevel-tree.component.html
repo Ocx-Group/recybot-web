@@ -25,8 +25,8 @@
             </h4>
           </div>
           <div class="card-body" class="media-list position-relative"
-          style="position: relative; max-width: 100% !important"
-          [perfectScrollbar]>
+          style="position: relative; max-width: 100% !important; overflow-y: auto;"
+          >
             <div *ngIf="showDiv">
               <app-unilevel-tree-component [nodeTemplate]="nodeTemplate" [data]="tree" #exampleChart="orgChart"
                 (loadFamilyTree)="onloadFamilyTree($event)">

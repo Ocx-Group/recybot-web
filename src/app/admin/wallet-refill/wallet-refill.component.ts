@@ -19,8 +19,9 @@ const header = [
 ];
 
 @Component({
-  selector: 'app-wallet-refill',
-  templateUrl: './wallet-refill.component.html',
+    selector: 'app-wallet-refill',
+    templateUrl: './wallet-refill.component.html',
+    standalone: false
 })
 export class WalletRefillComponent implements OnInit {
   rows = [];

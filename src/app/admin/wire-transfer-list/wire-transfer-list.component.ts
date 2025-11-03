@@ -8,8 +8,9 @@ import { ToastrService } from 'ngx-toastr';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-wire-transfer-list',
-  templateUrl: './wire-transfer-list.component.html'
+    selector: 'app-wire-transfer-list',
+    templateUrl: './wire-transfer-list.component.html',
+    standalone: false
 })
 export class WireTransferListComponent implements OnInit {
   rows = [];

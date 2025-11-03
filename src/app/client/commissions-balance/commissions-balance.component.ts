@@ -2,8 +2,9 @@ import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
 
 @Component({
-  selector: 'app-commissions-balance',
-  templateUrl: './commissions-balance.component.html'
+    selector: 'app-commissions-balance',
+    templateUrl: './commissions-balance.component.html',
+    standalone: false
 })
 export class CommissionsBalanceComponent implements OnInit {
   rows = [];

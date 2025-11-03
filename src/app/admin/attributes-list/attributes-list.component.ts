@@ -9,8 +9,9 @@ import { PrintService } from '@app/core/service/print-service/print.service';
 
 const header = ['Nombre', 'Descripción', 'No. Valores', 'Posición'];
 @Component({
-  selector: 'app-attributes-list',
-  templateUrl: './attributes-list.component.html',
+    selector: 'app-attributes-list',
+    templateUrl: './attributes-list.component.html',
+    standalone: false
 })
 export class AttributesListComponent implements OnInit {
   rows = [];

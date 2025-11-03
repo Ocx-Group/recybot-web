@@ -8,8 +8,9 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-categories-create-modal',
-  templateUrl: './categories-create-modal.component.html',
+    selector: 'app-categories-create-modal',
+    templateUrl: './categories-create-modal.component.html',
+    standalone: false
 })
 export class CategoriesCreateModalComponent implements OnInit {
   createCategorieForm!: FormGroup;

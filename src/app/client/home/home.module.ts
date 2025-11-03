@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 import { NgxEchartsModule } from 'ngx-echarts';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { NgxGaugeModule } from 'ngx-gauge';
@@ -16,7 +16,7 @@ import { HomeComponent } from './home.component';
 import { MembershipManagerModule } from '../membership-manager/membership-manager.module';
 import { SharethisAngularModule } from 'sharethis-angular';
 import { ShareModalComponent } from './share-modal/share-modal.component';
-import { SharedModule } from "../../shared/shared.module";
+import { SharedModule } from "@app/shared/shared.module";
 
 
 const icons = {
@@ -27,7 +27,7 @@ const icons = {
     declarations: [HomeComponent, ShareModalComponent],
     imports: [
         CommonModule,
-        PerfectScrollbarModule,
+        ScrollingModule,
         NgbModule,
         FormsModule,
         ClipboardModule,
@@ -40,7 +40,6 @@ const icons = {
         ToastrModule.forRoot(),
         FeatherModule.pick(icons),
         NgxDatatableModule,
-        PerfectScrollbarModule,
         NgApexchartsModule,
         NgxGaugeModule,
         MembershipManagerModule,

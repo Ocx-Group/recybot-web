@@ -3,9 +3,10 @@ import { ToastrService } from 'ngx-toastr';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-services-and-products',
-  templateUrl: './services-and-products.component.html',
-  styleUrls: ['./services-and-products.component.sass']
+    selector: 'app-services-and-products',
+    templateUrl: './services-and-products.component.html',
+    styleUrls: ['./services-and-products.component.sass'],
+    standalone: false
 })
 export class ServicesAndProductsComponent implements OnInit {
   active: any;

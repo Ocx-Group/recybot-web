@@ -10,8 +10,9 @@ import { PrintService } from '@app/core/service/print-service/print.service';
 
 const header = ['Nombre de Categoría', 'Descripción', 'Categoría Padre'];
 @Component({
-  selector: 'app-categories',
-  templateUrl: './categories.component.html',
+    selector: 'app-categories',
+    templateUrl: './categories.component.html',
+    standalone: false
 })
 export class CategoriesComponent implements OnInit {
   rows = [];

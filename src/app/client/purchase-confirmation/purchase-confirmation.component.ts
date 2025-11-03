@@ -6,9 +6,10 @@ import { delay, retryWhen, take } from 'rxjs';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-purchase-confirm',
-  templateUrl: './purchase-confirmation.component.html',
-  styleUrls: ['./purchase-confirmation.component.sass']
+    selector: 'app-purchase-confirm',
+    templateUrl: './purchase-confirmation.component.html',
+    styleUrls: ['./purchase-confirmation.component.sass'],
+    standalone: false
 })
 export class PurchaseConfirmationComponent {
   private invoiceDownloaded = false;

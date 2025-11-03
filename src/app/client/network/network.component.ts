@@ -36,8 +36,9 @@ import { StatisticsInformation } from '@app/core/models/wallet-model/statisticsI
 import { MatrixQualificationService } from '@app/core/service/matrix-qualification-service/matrix-qualification.service';
 
 @Component({
-  selector: 'app-network',
-  templateUrl: './network.component.html',
+    selector: 'app-network',
+    templateUrl: './network.component.html',
+    standalone: false
 })
 export class NetworkComponent implements OnInit {
   isCollapsed = true;

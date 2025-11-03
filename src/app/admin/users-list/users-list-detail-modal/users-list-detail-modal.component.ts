@@ -7,9 +7,10 @@ import { ToastrService } from 'ngx-toastr';
 import { User } from '@app/core/models/user-model/user.model';
 
 @Component({
-  selector: 'app-users-list-detail-modal',
-  templateUrl: './users-list-detail-modal.component.html',
-  providers: [ToastrService],
+    selector: 'app-users-list-detail-modal',
+    templateUrl: './users-list-detail-modal.component.html',
+    providers: [ToastrService],
+    standalone: false
 })
 export class UsersListDetailModalComponent {
   rows = [];

@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 
 
 @Component({
-  selector: 'app-billing-purchase',
-  templateUrl: './billing-purchase.component.html',
-  styleUrls: ['./billing-purchase.component.scss'],
+    selector: 'app-billing-purchase',
+    templateUrl: './billing-purchase.component.html',
+    styleUrls: ['./billing-purchase.component.scss'],
+    standalone: false
 })
 export class BillingPurchaseComponent implements OnInit {
   public searchTerm!: string;

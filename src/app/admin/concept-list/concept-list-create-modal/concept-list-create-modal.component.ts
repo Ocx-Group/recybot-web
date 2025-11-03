@@ -21,8 +21,9 @@ import { PayConcept } from '@app/core/models/concept-model/pay-concept.model';
 import { ConceptService } from '@app/core/service/concept-service/concept.service';
 
 @Component({
-  selector: 'app-concept-list-create-modal',
-  templateUrl: './concept-list-create-modal.component.html',
+    selector: 'app-concept-list-create-modal',
+    templateUrl: './concept-list-create-modal.component.html',
+    standalone: false
 })
 export class ConceptListCreateModalComponent implements OnInit {
   createConceptForm: FormGroup;

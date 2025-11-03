@@ -2,8 +2,9 @@ import { Component, OnInit,ViewChild, HostListener  } from '@angular/core';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
 
 @Component({
-  selector: 'app-billing-orders',
-  templateUrl: './billing-orders.component.html'
+    selector: 'app-billing-orders',
+    templateUrl: './billing-orders.component.html',
+    standalone: false
 })
 export class BillingOrdersComponent implements OnInit {
 

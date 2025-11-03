@@ -8,9 +8,10 @@ interface MyTreeNode extends TreeNode {
   children: MyTreeNode[];
 }
 @Component({
-  selector: 'app-page-force-genealogical-tree',
-  templateUrl: './page-force-genealogical-tree.component.html',
-  styleUrls: ['./page-force-genealogical-tree.component.scss'],
+    selector: 'app-page-force-genealogical-tree',
+    templateUrl: './page-force-genealogical-tree.component.html',
+    styleUrls: ['./page-force-genealogical-tree.component.scss'],
+    standalone: false
 })
 export class PageForceGenealogicalTreeComponent {
   tree: MyTreeNode = {

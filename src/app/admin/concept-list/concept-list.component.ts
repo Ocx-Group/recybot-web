@@ -22,9 +22,10 @@ const header = [
   'Igualación',
 ];
 @Component({
-  selector: 'app-concept-list',
-  templateUrl: './concept-list.component.html',
-  providers: [ToastrService],
+    selector: 'app-concept-list',
+    templateUrl: './concept-list.component.html',
+    providers: [ToastrService],
+    standalone: false
 })
 export class ConceptListComponent implements OnInit {
   rows = [];

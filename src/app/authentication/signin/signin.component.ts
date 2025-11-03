@@ -20,27 +20,22 @@ import { LogoService } from '@app/core/service/logo-service/logo.service';
 import { DeviceDetectorService } from 'ngx-device-detector';
 
 @Component({
-  selector: 'app-signin',
-  templateUrl: './signin.component.html',
-  styleUrls: ['./signin.component.scss'],
-  animations: [
-    trigger('backgroundFade', [
-      state(
-        'visible',
-        style({
-          opacity: 1,
-        }),
-      ),
-      state(
-        'hidden',
-        style({
-          opacity: 0,
-        }),
-      ),
-      transition('visible => hidden', animate('1000ms ease-out')),
-      transition('hidden => visible', animate('1000ms ease-in')),
-    ]),
-  ],
+    selector: 'app-signin',
+    templateUrl: './signin.component.html',
+    styleUrls: ['./signin.component.scss'],
+    animations: [
+        trigger('backgroundFade', [
+            state('visible', style({
+                opacity: 1,
+            })),
+            state('hidden', style({
+                opacity: 0,
+            })),
+            transition('visible => hidden', animate('1000ms ease-out')),
+            transition('hidden => visible', animate('1000ms ease-in')),
+        ]),
+    ],
+    standalone: false
 })
 export class SigninComponent implements OnInit, OnDestroy {
   submitted = false;

@@ -1,6 +1,6 @@
 import {CreditTransactionAdminRequest} from '@app/core/models/wallet-model/creditTransactionAdminRequest.mode';
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {map} from 'rxjs/operators';
 
 import {Response} from '@app/core/models/response-model/response.model';

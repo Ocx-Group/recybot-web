@@ -18,9 +18,10 @@ import { RolService } from '@app/core/service/rol-service/rol.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-rol-list-create-modal',
-  templateUrl: './rol-list-create-modal.component.html',
-  providers: [ToastrService],
+    selector: 'app-rol-list-create-modal',
+    templateUrl: './rol-list-create-modal.component.html',
+    providers: [ToastrService],
+    standalone: false
 })
 export class RolListCreateModalComponent implements OnInit {
   createRolForm: FormGroup;

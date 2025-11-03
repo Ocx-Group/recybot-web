@@ -29,8 +29,9 @@ import { Response } from '@app/core/models/response-model/response.model';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
-  selector: 'app-create-requests-modal',
-  templateUrl: './create-requests-modal.component.html',
+    selector: 'app-create-requests-modal',
+    templateUrl: './create-requests-modal.component.html',
+    standalone: false
 })
 export class CreateRequestsModalComponent implements OnInit {
   walletRequest: WalletRequestRequest = new WalletRequestRequest();

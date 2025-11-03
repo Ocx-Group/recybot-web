@@ -29,9 +29,10 @@ import { MatrixQualificationService } from '@app/core/service/matrix-qualificati
 import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
-  selector: 'app-third-party-purchase',
-  templateUrl: './third-party-purchase.component.html',
-  styleUrls: ['./third-party-purchase.component.scss'],
+    selector: 'app-third-party-purchase',
+    templateUrl: './third-party-purchase.component.html',
+    styleUrls: ['./third-party-purchase.component.scss'],
+    standalone: false
 })
 export class ThirdPartyPurchaseComponent implements OnInit, OnDestroy {
   @ViewChild('thirdPartyPurchaseModal')

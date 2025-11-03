@@ -5,7 +5,7 @@ import { PageBinaryGenealogicalTreeComponent } from './page/page-binary-genealog
 import { TranslateModule } from '@ngx-translate/core';
 import { NgbPopoverModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerModule } from 'ngx-spinner';
-import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 
 
@@ -17,7 +17,7 @@ import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
     NgbPopoverModule,
     NgxSpinnerModule,
     TranslateModule,
-    PerfectScrollbarModule
+    ScrollingModule
   ]
 })
 export class BinaryGenealogicalTreeModule { }

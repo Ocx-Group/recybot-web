@@ -25,9 +25,10 @@ import { PrivilegeService } from '@app/core/service/privilege-service/privilege.
 const header = ['Id', 'Rol', 'Descripción', 'Usuarios Asociados', 'Permisos'];
 
 @Component({
-  selector: 'app-rol-list',
-  templateUrl: './rol-list.component.html',
-  providers: [ToastrService],
+    selector: 'app-rol-list',
+    templateUrl: './rol-list.component.html',
+    providers: [ToastrService],
+    standalone: false
 })
 export class RolListComponent implements OnInit {
   countUsers = [];

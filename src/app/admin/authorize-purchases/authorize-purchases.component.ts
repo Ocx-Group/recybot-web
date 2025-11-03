@@ -27,9 +27,10 @@ const header = [
 ];
 
 @Component({
-  selector: 'app-authorize-purchases',
-  templateUrl: './authorize-purchases.component.html',
-  providers: [ToastrService],
+    selector: 'app-authorize-purchases',
+    templateUrl: './authorize-purchases.component.html',
+    providers: [ToastrService],
+    standalone: false
 })
 export class AuthorizePurchasesComponent {
   alerts: Alert[];

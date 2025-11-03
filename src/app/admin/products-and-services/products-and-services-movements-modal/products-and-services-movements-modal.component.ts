@@ -8,8 +8,9 @@ import { ProductInventory } from '@app/core/models/product-inventory-model/produ
 
 const header = ['Ingreso', 'Egreso', 'Soporte', 'Nota', 'Tipo', 'Fecha'];
 @Component({
-  selector: 'app-products-and-services-movements-modal',
-  templateUrl: './products-and-services-movements-modal.component.html',
+    selector: 'app-products-and-services-movements-modal',
+    templateUrl: './products-and-services-movements-modal.component.html',
+    standalone: false
 })
 export class ProductsAndServicesMovementsModalComponent implements OnInit {
   rows = [];

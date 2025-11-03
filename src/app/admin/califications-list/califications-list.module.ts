@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 import { NgxEchartsModule } from 'ngx-echarts';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { NgxGaugeModule } from 'ngx-gauge';
@@ -26,7 +26,7 @@ const icons = {
   declarations: [CalificationsListComponent, CalificationsListCreateModalComponent, CalificationsListEditModalComponent, CalificationsListDetailsModalComponent],
   imports: [
     CommonModule,
-    PerfectScrollbarModule,
+    ScrollingModule,
     NgbModule,
     FormsModule,
     ClipboardModule,
@@ -39,7 +39,7 @@ const icons = {
     ToastrModule.forRoot(),
     FeatherModule.pick(icons),
     NgxDatatableModule,
-    PerfectScrollbarModule,
+    ScrollingModule,
     NgApexchartsModule,
     NgxGaugeModule,
   ],

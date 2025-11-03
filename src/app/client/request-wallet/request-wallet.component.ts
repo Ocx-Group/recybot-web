@@ -4,8 +4,9 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UntypedFormGroup } from '@angular/forms';
 
 @Component({
-  selector: 'app-request-wallet',
-  templateUrl: './request-wallet.component.html',
+    selector: 'app-request-wallet',
+    templateUrl: './request-wallet.component.html',
+    standalone: false
 })
 export class RequestWalletComponent {
   rows = [];

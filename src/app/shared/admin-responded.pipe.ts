@@ -5,7 +5,8 @@ import { Ticket } from '../core/models/ticket-model/ticket.model';
 import { UserService } from './../core/service/user-service/user.service';
 
 @Pipe({
-  name: 'adminResponded'
+    name: 'adminResponded',
+    standalone: false
 })
 export class AdminRespondedPipe implements PipeTransform {
   adminIds$: Observable<number[]>;

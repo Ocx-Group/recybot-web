@@ -14,8 +14,9 @@ import Swal from 'sweetalert2';
 import {CreateAdminModalComponent} from "@app/admin/tickets/create-admin-modal/create-admin-modal.component";
 
 @Component({
-  selector: 'app-tickets-admin',
-  templateUrl: './tickets-admin.component.html',
+    selector: 'app-tickets-admin',
+    templateUrl: './tickets-admin.component.html',
+    standalone: false
 })
 export class TicketsAdminComponent implements OnInit {
   tickets: Ticket[] = [];

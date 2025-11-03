@@ -12,6 +12,7 @@
     "node_modules/@types/webgl2"
   ],
   "compilerOptions": {
+    "esModuleInterop": true,
     "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true
   }

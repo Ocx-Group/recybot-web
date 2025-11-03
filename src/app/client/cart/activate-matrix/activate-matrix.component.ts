@@ -12,9 +12,10 @@ import { ToastrService } from 'ngx-toastr';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-activate-matrix',
-  templateUrl: './activate-matrix.component.html',
-  styleUrls: ['./activate-matrix.component.scss'],
+    selector: 'app-activate-matrix',
+    templateUrl: './activate-matrix.component.html',
+    styleUrls: ['./activate-matrix.component.scss'],
+    standalone: false
 })
 export class ActivateMatrixComponent implements OnInit {
   matrixConfigurations: any[] = [];

@@ -7,8 +7,9 @@ import { ProductCategoryService } from '@app/core/service/product-category-servi
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-categories-edit-modal',
-  templateUrl: './categories-edit-modal.component.html',
+    selector: 'app-categories-edit-modal',
+    templateUrl: './categories-edit-modal.component.html',
+    standalone: false
 })
 export class CategoriesEditModalComponent implements OnInit {
   editCategorieForm!: FormGroup;

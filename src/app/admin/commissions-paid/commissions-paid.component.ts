@@ -5,9 +5,10 @@ import { ClipboardService } from 'ngx-clipboard';
 
 
 @Component({
-  selector: 'app-commissions-paid',
-  templateUrl: './commissions-paid.component.html',
-  providers: [ToastrService],
+    selector: 'app-commissions-paid',
+    templateUrl: './commissions-paid.component.html',
+    providers: [ToastrService],
+    standalone: false
 })
 export class CommissionsPaidComponent {
   rows = [];

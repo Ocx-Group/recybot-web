@@ -13,9 +13,10 @@ import {
 import { User } from '@app/core/models/user-model/user.model';
 import { UserService } from '@app/core/service/user-service/user.service';
 @Component({
-  selector: 'app-my-profile-edit-password-modal',
-  templateUrl: './my-profile-edit-password-modal.component.html',
-  providers: [ToastrService],
+    selector: 'app-my-profile-edit-password-modal',
+    templateUrl: './my-profile-edit-password-modal.component.html',
+    providers: [ToastrService],
+    standalone: false
 })
 export class MyProfileEditPasswordModalComponent implements OnInit {
   @Input() getCurrentUser: any = [];

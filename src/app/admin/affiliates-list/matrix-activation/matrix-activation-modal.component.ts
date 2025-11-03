@@ -8,9 +8,10 @@ import { MatrixRequest } from '@app/core/interfaces/matrix-request';
 import {MatrixConfigurationService} from "@app/core/service/matrix-configuration/matrix-configuration.service";
 
 @Component({
-  selector: 'app-matrix-activation-modal',
-  templateUrl: './matrix-activation-modal.component.html',
-  providers: [ToastrService]
+    selector: 'app-matrix-activation-modal',
+    templateUrl: './matrix-activation-modal.component.html',
+    providers: [ToastrService],
+    standalone: false
 })
 export class MatrixActivationModalComponent implements OnInit {
   @Output() matrixActivated = new EventEmitter<boolean>();

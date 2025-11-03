@@ -5,8 +5,9 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-compensation-plans',
-  templateUrl: './compensation-plans.component.html',
+    selector: 'app-compensation-plans',
+    templateUrl: './compensation-plans.component.html',
+    standalone: false
 })
 export class CompensationPlansComponent implements OnInit {
   compesationPlansForm!: FormGroup;

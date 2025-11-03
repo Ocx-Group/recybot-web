@@ -9,9 +9,10 @@ import QRCode from 'qrcode';
 import { Subscription, switchMap, timer } from 'rxjs';
 
 @Component({
-  selector: 'app-coinpay-modal',
-  templateUrl: './coinpay-modal.component.html',
-  styleUrls: ['./coinpay-modal.component.scss']
+    selector: 'app-coinpay-modal',
+    templateUrl: './coinpay-modal.component.html',
+    styleUrls: ['./coinpay-modal.component.scss'],
+    standalone: false
 })
 export class CoinpayModalComponent implements OnInit {
   paymentGroup: FormGroup;

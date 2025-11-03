@@ -8,8 +8,9 @@ import { User } from '@app/core/models/user-model/user.model';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-rol-list-summary-modal',
-  templateUrl: './rol-list-summary-modal.component.html',
+    selector: 'app-rol-list-summary-modal',
+    templateUrl: './rol-list-summary-modal.component.html',
+    standalone: false
 })
 export class RolListSummaryModalComponent {
   rolData = new Rol();

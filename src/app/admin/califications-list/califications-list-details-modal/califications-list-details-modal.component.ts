@@ -5,8 +5,9 @@ import { Grading } from '@app/core/models/grading-model/grading.model';
 import { GradingService } from '@app/core/service/grading-service/grading.service';
 
 @Component({
-  selector: 'app-califications-list-details-modal',
-  templateUrl: './califications-list-details-modal.component.html',
+    selector: 'app-califications-list-details-modal',
+    templateUrl: './califications-list-details-modal.component.html',
+    standalone: false
 })
 export class CalificationsListDetailsModalComponent implements OnInit {
   active = 1;

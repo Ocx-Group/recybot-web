@@ -6,8 +6,9 @@ import Swal from 'sweetalert2';
 import { WalletRequestService } from '@app/core/service/wallet-request/wallet-request.service';
 import { WalletService } from '@app/core/service/wallet-service/wallet.service';
 @Component({
-  selector: 'app-authorize-returns',
-  templateUrl: './authorize-returns.component.html'
+    selector: 'app-authorize-returns',
+    templateUrl: './authorize-returns.component.html',
+    standalone: false
 })
 export class AuthorizeReturnsComponent implements OnInit {
   rows = [];

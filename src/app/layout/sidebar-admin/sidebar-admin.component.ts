@@ -17,9 +17,10 @@ import { Subject, takeUntil } from 'rxjs';
 import { RouteInfo } from './sidebar-admin.metadata';
 
 @Component({
-  selector: 'app-sidebar-admin',
-  templateUrl: './sidebar-admin.component.html',
-  styleUrls: ['./sidebar-admin.component.sass'],
+    selector: 'app-sidebar-admin',
+    templateUrl: './sidebar-admin.component.html',
+    styleUrls: ['./sidebar-admin.component.sass'],
+    standalone: false
 })
 export class SidebarAdminComponent implements OnInit, OnDestroy {
   public user: User = new User();

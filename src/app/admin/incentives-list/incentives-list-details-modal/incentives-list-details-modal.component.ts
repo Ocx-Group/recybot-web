@@ -4,8 +4,9 @@ import { GradingService } from '@app/core/service/grading-service/grading.servic
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-  selector: 'app-incentives-list-details-modal',
-  templateUrl: './incentives-list-details-modal.component.html',
+    selector: 'app-incentives-list-details-modal',
+    templateUrl: './incentives-list-details-modal.component.html',
+    standalone: false
 })
 export class IncentivesListDetailsModalComponent implements OnInit {
   incentive: Incentive = new Incentive();

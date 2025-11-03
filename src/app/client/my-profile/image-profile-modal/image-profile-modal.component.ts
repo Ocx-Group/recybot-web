@@ -8,8 +8,9 @@ import { Storage, ref, uploadBytesResumable, getDownloadURL } from '@angular/fir
 import { AuthService } from '@app/core/service/authentication-service/auth.service';
 
 @Component({
-  selector: 'app-image-profile-modal',
-  templateUrl: './image-profile-modal.component.html',
+    selector: 'app-image-profile-modal',
+    templateUrl: './image-profile-modal.component.html',
+    standalone: false
 })
 export class ImageProfileModalComponent implements OnInit {
   public userId: number;

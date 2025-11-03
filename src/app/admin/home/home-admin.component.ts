@@ -1,9 +1,6 @@
 import { AuthService } from 'src/app/core/service/authentication-service/auth.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import * as am4core from '@amcharts/amcharts4/core';
-import * as am4maps from '@amcharts/amcharts4/maps';
-import am4geodata_worldLow from '@amcharts/amcharts4-geodata/worldLow';
-import am5themes_Animated from '@amcharts/amcharts4/themes/animated';
+import * as echarts from 'echarts';
 import { EChartsOption } from 'echarts';
 import { WalletService } from '@app/core/service/wallet-service/wallet.service';
 import { AffiliateService } from '@app/core/service/affiliate-service/affiliate.service';
@@ -30,14 +27,14 @@ export interface ChartOptions {
   plotOptions?: ApexPlotOptions;
 }
 
-am4core.useTheme(am5themes_Animated);
 
 @Component({
-  selector: 'app-home-admin',
-  templateUrl: './home-admin.component.html',
+    selector: 'app-home-admin',
+    templateUrl: './home-admin.component.html',
+    standalone: false
 })
 export class HomeAdminComponent implements OnInit {
-  private chart: am4maps.MapChart;
+  public mapChartOption: EChartsOption;
   public pieChartOptions: Partial<ChartOptions>;
   public avgLecChartOptions: any;
   totalMembers: number;
@@ -337,47 +334,77 @@ export class HomeAdminComponent implements OnInit {
   }
 
   setMapInfo() {
-    this.chart = am4core.create('chartdiv', am4maps.MapChart);
-    this.chart.geodata = am4geodata_worldLow;
-    this.chart.projection = new am4maps.projections.Miller();
+    // Preparar datos para ECharts
+    const scatterData = this.maps.map(item => ({
+      name: item.title,
+      value: [item.lng, item.lat, item.value],
+      itemStyle: {
+        color: '#765cbf'
+      }
+    }));
 
-    let polygonSeries = this.chart.series.push(new am4maps.MapPolygonSeries());
-    polygonSeries.exclude = ['AQ'];
-    polygonSeries.useGeodata = true;
-
-    const imageSeries = this.chart.series.push(new am4maps.MapImageSeries());
-    const imageSeriesTemplate = imageSeries.mapImages.template;
-    const circle = imageSeriesTemplate.createChild(am4core.Circle);
-
-    circle.radius = 14;
-    circle.fill = am4core.color('#765cbf');
-    circle.stroke = am4core.color('#B27799');
-    circle.strokeWidth = 1;
-    circle.nonScaling = true;
-
-    circle.tooltipText = '[bold]{title}[/]\nCantidad: {value}';
-
-    imageSeriesTemplate.propertyFields.latitude = 'lat';
-    imageSeriesTemplate.propertyFields.longitude = 'lng';
-
-    const centerLabel = imageSeriesTemplate.createChild(am4core.Label);
-    centerLabel.text = '{value}';
-    centerLabel.horizontalCenter = 'middle';
-    centerLabel.verticalCenter = 'middle';
-    centerLabel.fill = am4core.color('#55555');
-    centerLabel.nonScaling = true;
-
-    const data = this.maps.map(item => item);
-    imageSeries.addData(data);
-
-    let polygonTemplate = polygonSeries.mapPolygons.template;
-    polygonTemplate.tooltipText = '{name}';
-    polygonTemplate.fill = am4core.color('#96a2b4');
-    let hs = polygonTemplate.states.create('hover');
-    hs.properties.fill = am4core.color('#74X999');
+    this.mapChartOption = {
+      tooltip: {
+        trigger: 'item',
+        formatter: (params: any) => {
+          if (params.data) {
+            return `<strong>${params.data.name}</strong><br/>Cantidad: ${params.data.value[2]}`;
+          }
+          return params.name;
+        }
+      },
+      geo: {
+        map: 'world',
+        roam: true,
+        itemStyle: {
+          areaColor: '#96a2b4',
+          borderColor: '#fff'
+        },
+        emphasis: {
+          itemStyle: {
+            areaColor: '#74a999'
+          }
+        }
+      },
+      series: [
+        {
+          name: 'Afiliados por País',
+          type: 'scatter',
+          coordinateSystem: 'geo',
+          data: scatterData,
+          symbolSize: (val: any) => {
+            return Math.max(Math.sqrt(val[2]) * 2, 10);
+          },
+          label: {
+            show: true,
+            formatter: (params: any) => params.data.value[2],
+            position: 'inside',
+            color: '#fff'
+          },
+          itemStyle: {
+            color: '#765cbf',
+            borderColor: '#B27799',
+            borderWidth: 1
+          },
+          emphasis: {
+            itemStyle: {
+              color: '#B27799'
+            }
+          }
+        }
+      ]
+    };
   }
 
-  loadLocations() {
+  async loadLocations() {
+    // Registrar el mapa mundial para ECharts
+    try {
+      const worldJson = await fetch('https://cdn.jsdelivr.net/npm/echarts@5/map/json/world.json').then(res => res.json());
+      echarts.registerMap('world', worldJson);
+    } catch (error) {
+      console.error('Error loading world map:', error);
+    }
+
     this.affiliateService.getTotalAffiliatesByCountries().subscribe({
       next: value => {
         this.maps = value.data.map(item => ({

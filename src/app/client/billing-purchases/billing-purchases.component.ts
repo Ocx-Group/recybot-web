@@ -22,8 +22,9 @@ import jsPDF from 'jspdf';
 import {TranslateService} from '@ngx-translate/core';
 
 @Component({
-  selector: 'app-filter',
-  templateUrl: './billing-purchases.component.html',
+    selector: 'app-filter',
+    templateUrl: './billing-purchases.component.html',
+    standalone: false
 })
 export class BillingPurchasesComponent implements OnInit, OnDestroy {
   private user: UserAffiliate = new UserAffiliate();

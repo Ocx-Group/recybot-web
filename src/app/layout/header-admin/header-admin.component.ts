@@ -20,9 +20,10 @@ import {TicketSummary} from "@app/core/models/ticket-model/ticket-summary.model"
 const document: any = window.document;
 
 @Component({
-  selector: 'app-header-admin',
-  templateUrl: './header-admin.component.html',
-  styleUrls: ['./header-admin.component.sass'],
+    selector: 'app-header-admin',
+    templateUrl: './header-admin.component.html',
+    styleUrls: ['./header-admin.component.sass'],
+    standalone: false
 })
 export class HeaderAdminComponent implements OnInit, AfterViewInit {
   public user: User = new User();

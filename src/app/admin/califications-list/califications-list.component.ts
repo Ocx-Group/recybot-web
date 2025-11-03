@@ -17,9 +17,10 @@ const header = [
 ];
 
 @Component({
-  selector: 'app-califications-list',
-  templateUrl: './califications-list.component.html',
-  providers: [ToastrService],
+    selector: 'app-califications-list',
+    templateUrl: './califications-list.component.html',
+    providers: [ToastrService],
+    standalone: false
 })
 export class CalificationsListComponent implements OnInit {
   rows = [];

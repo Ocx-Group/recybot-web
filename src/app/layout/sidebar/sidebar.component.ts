@@ -19,9 +19,10 @@ import {GradingService} from '@app/core/service/grading-service/grading.service'
 import {Grading} from '@app/core/models/grading-model/grading.model';
 
 @Component({
-  selector: 'app-sidebar',
-  templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.sass'],
+    selector: 'app-sidebar',
+    templateUrl: './sidebar.component.html',
+    styleUrls: ['./sidebar.component.sass'],
+    standalone: false
 })
 export class SidebarComponent implements OnInit, OnDestroy {
   public user: UserAffiliate = new UserAffiliate();

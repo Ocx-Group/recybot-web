@@ -8,8 +8,9 @@ import { ClipboardService } from 'ngx-clipboard';
 import { PrintService } from '@app/core/service/print-service/print.service';
 
 @Component({
-  selector:'app-news-admin',
-  templateUrl:'./walkways-benches.component.html'
+    selector: 'app-news-admin',
+    templateUrl: './walkways-benches.component.html',
+    standalone: false
 })
 export class WalkwaysBenchesComponent {
   rows = [];

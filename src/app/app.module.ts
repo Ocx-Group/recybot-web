@@ -1,6 +1,6 @@
 
 import { LocationStrategy, NgOptimizedImage, PathLocationStrategy } from '@angular/common';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getStorage, provideStorage } from '@angular/fire/storage';
@@ -14,10 +14,7 @@ import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-transla
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ClipboardModule } from 'ngx-clipboard';
 import { NgxDropzoneModule } from 'ngx-dropzone';
-import {
-  PerfectScrollbarConfigInterface, PerfectScrollbarModule,
-  PERFECT_SCROLLBAR_CONFIG
-} from 'ngx-perfect-scrollbar';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 import { ToastrModule } from 'ngx-toastr';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -40,12 +37,9 @@ import { SidebarAdminComponent } from './layout/sidebar-admin/sidebar-admin.comp
 import { SidebarComponent } from './layout/sidebar/sidebar.component';
 import { TermsConditionsModalComponent } from './layout/terms-conditions-modal/terms-conditions-modal.component';
 
-const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
-  wheelPropagation: false,
-};
 
-export function createTranslateLoader(http: HttpClient): any {
-  return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
 export function initialLanguage(translate: TranslateService) {
@@ -57,65 +51,55 @@ export function initialLanguage(translate: TranslateService) {
   };
 }
 
-@NgModule({
-  declarations: [
-    AppComponent,
-    HeaderComponent,
-    HeaderAdminComponent,
-    PageLoaderComponent,
-    SidebarComponent,
-    SidebarAdminComponent,
-    RightSidebarComponent,
-    AuthLayoutComponent,
-    MainLayoutComponent,
-    AdminLayoutComponent,
-    FooterComponent,
-    LogoComponent,
-    ImgProfileComponent,
-    TermsConditionsModalComponent
-  ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    AppRoutingModule,
-    HttpClientModule,
-    ReactiveFormsModule,
-    PerfectScrollbarModule,
-    LoadingBarRouterModule,
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: createTranslateLoader,
-        deps: [HttpClient],
-      },
-    }),
-    // core & shared
-    CoreModule,
-    ToastrModule.forRoot(),
-    SharedModule,
-    NgbModule,
-    ClipboardModule,
-    MembershipManagerModule,
-    provideFirebaseApp(() => initializeApp(firebaseConfig)),
-    provideStorage(() => getStorage()),
-    ClientModule,
-    NgxDropzoneModule,
-    NgOptimizedImage,
-  ],
-  providers: [
-    { provide: LocationStrategy, useClass: PathLocationStrategy },
-    {
-      provide: PERFECT_SCROLLBAR_CONFIG,
-      useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG,
-    },
-    {
-      provide: APP_INITIALIZER,
-      useFactory: initialLanguage,
-      deps: [TranslateService],
-      multi: true
-    }
-  ],
-  exports: [LogoComponent, ImgProfileComponent],
-  bootstrap: [AppComponent],
-})
+@NgModule({ declarations: [
+        AppComponent,
+        HeaderComponent,
+        HeaderAdminComponent,
+        PageLoaderComponent,
+        SidebarComponent,
+        SidebarAdminComponent,
+        RightSidebarComponent,
+        AuthLayoutComponent,
+        MainLayoutComponent,
+        AdminLayoutComponent,
+        FooterComponent,
+        LogoComponent,
+        ImgProfileComponent,
+        TermsConditionsModalComponent
+    ],
+    exports: [LogoComponent, ImgProfileComponent],
+    bootstrap: [AppComponent], imports: [BrowserModule,
+        BrowserAnimationsModule,
+        AppRoutingModule,
+        ReactiveFormsModule,
+        ScrollingModule,
+        LoadingBarRouterModule,
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: HttpLoaderFactory,
+                deps: [HttpClient],
+            },
+        }),
+        // core & shared
+        CoreModule,
+        ToastrModule.forRoot(),
+        SharedModule,
+        NgbModule,
+        ClipboardModule,
+        MembershipManagerModule,
+        ClientModule,
+        NgxDropzoneModule,
+        NgOptimizedImage], providers: [
+        { provide: LocationStrategy, useClass: PathLocationStrategy },
+        {
+            provide: APP_INITIALIZER,
+            useFactory: initialLanguage,
+            deps: [TranslateService],
+            multi: true
+        },
+        provideFirebaseApp(() => initializeApp(firebaseConfig)),
+        provideStorage(() => getStorage()),
+        provideHttpClient(withInterceptorsFromDi())
+    ] })
 export class AppModule { }

@@ -11,8 +11,9 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-califications-list-create-modal',
-  templateUrl: './califications-list-create-modal.component.html',
+    selector: 'app-califications-list-create-modal',
+    templateUrl: './califications-list-create-modal.component.html',
+    standalone: false
 })
 export class CalificationsListCreateModalComponent implements OnInit {
   createCalificationForm!: FormGroup;

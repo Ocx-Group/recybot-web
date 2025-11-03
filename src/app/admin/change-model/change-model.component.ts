@@ -10,9 +10,10 @@ import Swal from 'sweetalert2';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-change-model',
-  templateUrl: './change-model.component.html',
-  styleUrls: ['./change-model.component.css']
+    selector: 'app-change-model',
+    templateUrl: './change-model.component.html',
+    styleUrls: ['./change-model.component.css'],
+    standalone: false
 })
 export class ChangeModelComponent implements OnInit, AfterViewInit {
   rows = [];

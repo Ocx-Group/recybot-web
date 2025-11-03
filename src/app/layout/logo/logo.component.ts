@@ -3,10 +3,11 @@ import { Component, Input, OnDestroy, OnInit, ViewEncapsulation } from '@angular
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-logo',
-  templateUrl: './logo.component.html',
-  styleUrls: ['./logo.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'app-logo',
+    templateUrl: './logo.component.html',
+    styleUrls: ['./logo.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class LogoComponent implements OnInit, OnDestroy {
   logoSrc: string;

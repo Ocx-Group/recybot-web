@@ -6,9 +6,10 @@ import jsPDF from 'jspdf';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-educational-programs-control',
-  templateUrl: './educational-programs-control.component.html',
-  styleUrls: ['./educational-programs-control.component.css']
+    selector: 'app-educational-programs-control',
+    templateUrl: './educational-programs-control.component.html',
+    styleUrls: ['./educational-programs-control.component.css'],
+    standalone: false
 })
 export class EducationalProgramsControlComponent implements OnInit {
   rows = [];

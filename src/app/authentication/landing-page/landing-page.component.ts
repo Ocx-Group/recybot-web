@@ -23,29 +23,24 @@ import { PdfViewerService } from '@app/core/service/pdf-viewer-service/pdf-viewe
 import { PdfViewerComponent } from '@app/shared/components/pdf-viewer/pdf-viewer.component';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './landing-page.component.html',
-  styleUrls: ['./landing-page.component.scss'],
-  animations: [
-    trigger('slideInOut', [
-      state(
-        'in',
-        style({
-          transform: 'translateX(0)',
-        }),
-      ),
-      state(
-        'out',
-        style({
-          transform: 'translateX(100%)',
-        }),
-      ),
-      transition('in => out', animate('300ms ease-in-out')),
-      transition('out => in', animate('300ms ease-in-out')),
-    ]),
-  ],
-  encapsulation: ViewEncapsulation.ShadowDom,
-  providers: [ToastrService],
+    selector: 'app-home',
+    templateUrl: './landing-page.component.html',
+    styleUrls: ['./landing-page.component.scss'],
+    animations: [
+        trigger('slideInOut', [
+            state('in', style({
+                transform: 'translateX(0)',
+            })),
+            state('out', style({
+                transform: 'translateX(100%)',
+            })),
+            transition('in => out', animate('300ms ease-in-out')),
+            transition('out => in', animate('300ms ease-in-out')),
+        ]),
+    ],
+    encapsulation: ViewEncapsulation.ShadowDom,
+    providers: [ToastrService],
+    standalone: false
 })
 export class LandingPageComponent implements OnInit, OnDestroy {
   isNavbarVisible = false;

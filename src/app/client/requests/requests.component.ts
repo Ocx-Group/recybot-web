@@ -12,8 +12,9 @@ import { ToastrService } from 'ngx-toastr';
 import { MatrixQualificationService } from '@app/core/service/matrix-qualification-service/matrix-qualification.service';
 
 @Component({
-  selector: 'app-requests',
-  templateUrl: './requests.component.html',
+    selector: 'app-requests',
+    templateUrl: './requests.component.html',
+    standalone: false
 })
 export class RequestsComponent implements OnInit {
   user: UserAffiliate = new UserAffiliate();

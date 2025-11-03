@@ -15,8 +15,9 @@ import { ProductAttributeValueService } from '@app/core/service/product-attribut
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-attributes-list-details-modal',
-  templateUrl: './attributes-list-details-modal.component.html',
+    selector: 'app-attributes-list-details-modal',
+    templateUrl: './attributes-list-details-modal.component.html',
+    standalone: false
 })
 export class AttributesListDetailsModalComponent implements OnInit {
   active = 1;

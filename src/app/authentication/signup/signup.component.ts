@@ -19,9 +19,10 @@ import {ToastrService} from 'ngx-toastr';
 import {CreateAffiliate} from '@app/core/models/user-affiliate-model/create-affiliate.model';
 
 @Component({
-  selector: 'app-signup',
-  templateUrl: './signup.component.html',
-  styleUrls: ['./signup.component.scss'],
+    selector: 'app-signup',
+    templateUrl: './signup.component.html',
+    styleUrls: ['./signup.component.scss'],
+    standalone: false
 })
 export class SignupComponent implements OnInit {
   registerForm: FormGroup;

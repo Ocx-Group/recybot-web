@@ -33,9 +33,10 @@ const header = [
 ];
 
 @Component({
-  selector: 'app-authorize-affiliates',
-  templateUrl: './authorize-affiliates.component.html',
-  providers: [ToastrService],
+    selector: 'app-authorize-affiliates',
+    templateUrl: './authorize-affiliates.component.html',
+    providers: [ToastrService],
+    standalone: false
 })
 export class AuthorizeAffiliatesComponent implements OnInit {
   alerts: Alert[];

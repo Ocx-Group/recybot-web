@@ -8,8 +8,9 @@ import { ConfigurationService } from '@app/core/service/configuration-service/co
 import { ProductConfiguration } from '@app/core/models/product-configuration-model/product-configuration.model';
 
 @Component({
-  selector: 'app-products-services-configurations',
-  templateUrl: './products-services-configurations.component.html',
+    selector: 'app-products-services-configurations',
+    templateUrl: './products-services-configurations.component.html',
+    standalone: false
 })
 export class ProductsServicesConfigurationsComponent implements OnInit {
   productConfigurationForm!: FormGroup;

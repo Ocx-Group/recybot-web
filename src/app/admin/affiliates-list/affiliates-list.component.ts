@@ -28,9 +28,10 @@ const header = [
 ];
 
 @Component({
-  selector: 'app-affiliates-list',
-  templateUrl: './affiliates-list.component.html',
-  providers: [ToastrService],
+    selector: 'app-affiliates-list',
+    templateUrl: './affiliates-list.component.html',
+    providers: [ToastrService],
+    standalone: false
 })
 export class AffiliatesListComponent implements OnInit {
   rows = [];

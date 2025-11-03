@@ -10,8 +10,9 @@ import { ToastrService } from 'ngx-toastr';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-concept-list-configuration-modal',
-  templateUrl: './concept-list-configuration-modal.component.html',
+    selector: 'app-concept-list-configuration-modal',
+    templateUrl: './concept-list-configuration-modal.component.html',
+    standalone: false
 })
 export class ConceptListConfigurationModalComponent implements OnInit {
   // conceptConfigurationForm!: FormGroup;

@@ -1,4 +1,3 @@
-import { MatSelectCountryModule } from '@angular-material-extensions/select-country';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -12,7 +11,7 @@ import {
   Facebook, Github,
   Gitlab, Key, Mail, Twitter, User, UserCheck
 } from 'angular-feather/icons';
-import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 import { AuthenticationRoutingModule } from './authentication-routing.module';
 import { ConpaymentConfirmationComponent } from './conpayment-confirmation/conpayment-confirmation.component';
 import { ContactComponent } from './contact/contact.component';
@@ -64,10 +63,9 @@ const icons = {
     FormsModule,
     ReactiveFormsModule,
     AuthenticationRoutingModule,
-    PerfectScrollbarModule,
+    ScrollingModule,
     TranslateModule,
     FeatherModule.pick(icons),
-    MatSelectCountryModule.forRoot('en'),
     MatSelectModule,
     FontAwesomeModule,
     NgbCollapse,

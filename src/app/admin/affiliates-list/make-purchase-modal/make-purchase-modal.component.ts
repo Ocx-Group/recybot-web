@@ -10,9 +10,10 @@ import {ToastrService} from 'ngx-toastr';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-make-purchase-modal',
-  templateUrl: './make-purchase-modal.component.html',
-  styleUrls: ['./make-purchase-modal.component.sass'],
+    selector: 'app-make-purchase-modal',
+    templateUrl: './make-purchase-modal.component.html',
+    styleUrls: ['./make-purchase-modal.component.sass'],
+    standalone: false
 })
 export class MakePurchaseModalComponent implements OnInit {
   makePurchaseForm: FormGroup;

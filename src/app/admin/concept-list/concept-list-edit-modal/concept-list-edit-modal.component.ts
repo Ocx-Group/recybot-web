@@ -21,8 +21,9 @@ import { PaymentGroupsService } from '@app/core/service/payment-groups-service/p
 import { ConceptService } from '@app/core/service/concept-service/concept.service';
 
 @Component({
-  selector: 'app-concept-list-edit-modal',
-  templateUrl: './concept-list-edit-modal.component.html',
+    selector: 'app-concept-list-edit-modal',
+    templateUrl: './concept-list-edit-modal.component.html',
+    standalone: false
 })
 export class ConceptListEditModalComponent implements OnInit {
   editConceptForm: FormGroup;

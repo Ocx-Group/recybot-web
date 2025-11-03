@@ -9,14 +9,15 @@ import {
 import { MyTreeNodeClient } from '@app/core/models/unilevel-tree-model/tree-node';
 
 @Component({
-  selector: 'app-client-unilevel-tree-component',
-  exportAs: 'orgChart',
-  templateUrl: './client-unilevel-tree-component.component.html',
-  styleUrls: ['./client-unilevel-tree-component.component.scss'],
-  host: {
-    '[class.ng13-org-chart-zoom-out]': 'zoomOut',
-  },
-  encapsulation: ViewEncapsulation.None,
+    selector: 'app-client-unilevel-tree-component',
+    exportAs: 'orgChart',
+    templateUrl: './client-unilevel-tree-component.component.html',
+    styleUrls: ['./client-unilevel-tree-component.component.scss'],
+    host: {
+        '[class.ng13-org-chart-zoom-out]': 'zoomOut',
+    },
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class ClientUnilevelTreeComponentComponent {
   @Input('data') data: MyTreeNodeClient | undefined;

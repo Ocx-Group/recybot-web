@@ -15,9 +15,10 @@ import {TicketHubService} from '@app/core/service/ticket-service/ticket-hub.serv
 import {TicketImagesRequest} from "@app/core/models/ticket-model/ticket-images-request.model";
 
 @Component({
-  selector: 'app-create-ticket-modal',
-  templateUrl: './create-ticket-modal.component.html',
-  styleUrls: ['./create-ticket-modal.component.scss']
+    selector: 'app-create-ticket-modal',
+    templateUrl: './create-ticket-modal.component.html',
+    styleUrls: ['./create-ticket-modal.component.scss'],
+    standalone: false
 })
 export class CreateTicketModalComponent implements OnInit {
   createTicketForm: FormGroup;

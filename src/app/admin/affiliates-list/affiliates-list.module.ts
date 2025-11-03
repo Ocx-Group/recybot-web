@@ -2,7 +2,7 @@ import { AffiliatesListComponent } from './affiliates-list.component';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { TranslateModule } from '@ngx-translate/core';
 import { FeatherModule } from 'angular-feather';
@@ -34,7 +34,7 @@ const icons = {
   ],
   imports: [
     CommonModule,
-    PerfectScrollbarModule,
+    ScrollingModule,
     FormsModule,
     ClipboardModule,
     ReactiveFormsModule,
@@ -43,7 +43,6 @@ const icons = {
     ToastrModule.forRoot(),
     FeatherModule.pick(icons),
     NgxDatatableModule,
-    PerfectScrollbarModule,
     SharedModule,
     NgApexchartsModule,
   ],

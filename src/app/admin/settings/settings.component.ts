@@ -5,8 +5,9 @@ import { GeneralConfiguration } from '@app/core/models/general-configuration/gen
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-settings',
-  templateUrl: './settings.component.html',
+    selector: 'app-settings',
+    templateUrl: './settings.component.html',
+    standalone: false
 })
 export class SettingsComponent implements OnInit {
   generalConfigurationForm: FormGroup

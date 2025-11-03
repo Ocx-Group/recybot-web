@@ -14,9 +14,10 @@ const header = [
   'Estado',
 ];
 @Component({
-  selector: 'app-purchase-order-list',
-  templateUrl: './purchase-order-list.component.html',
-  providers: [ToastrService],
+    selector: 'app-purchase-order-list',
+    templateUrl: './purchase-order-list.component.html',
+    providers: [ToastrService],
+    standalone: false
 })
 export class PurchaseOrderListComponent {
   rows = [];

@@ -15,9 +15,10 @@ const ALERTS: Alert[] = [
   },]
 
 @Component({
-  selector: 'app-period-closing',
-  templateUrl: './period-closing.component.html',
-  providers: [ToastrService]
+    selector: 'app-period-closing',
+    templateUrl: './period-closing.component.html',
+    providers: [ToastrService],
+    standalone: false
 })
 export class PeriodClosingComponent {
   alerts: Alert[];

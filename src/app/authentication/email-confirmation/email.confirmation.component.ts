@@ -5,8 +5,9 @@ import Swal from 'sweetalert2';
 import { AuthService } from 'src/app/core/service/authentication-service/auth.service';
 
 @Component({
-  selector: 'app-email-confirmation',
-  templateUrl: './email.confirmation.component.html'
+    selector: 'app-email-confirmation',
+    templateUrl: './email.confirmation.component.html',
+    standalone: false
 })
 export class EmailConfirmationComponent {
 

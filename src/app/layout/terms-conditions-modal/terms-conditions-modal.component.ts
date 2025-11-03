@@ -9,9 +9,10 @@ import { Subject, takeUntil } from 'rxjs';
 
 
 @Component({
-  selector: 'app-terms-conditions-modal',
-  templateUrl: './terms-conditions-modal.component.html',
-  styleUrls: ['./terms-conditions-modal.component.scss']
+    selector: 'app-terms-conditions-modal',
+    templateUrl: './terms-conditions-modal.component.html',
+    styleUrls: ['./terms-conditions-modal.component.scss'],
+    standalone: false
 })
 export class TermsConditionsModalComponent implements OnInit, OnDestroy {
   @ViewChild('termsModal', { static: true }) termsModal: TemplateRef<any>;

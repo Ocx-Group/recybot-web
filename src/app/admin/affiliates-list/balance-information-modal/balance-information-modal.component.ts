@@ -12,9 +12,10 @@ import { use } from 'echarts';
 
 
 @Component({
-  selector: 'app-balance-information-modal',
-  templateUrl: './balance-information-modal.component.html',
-  styleUrls: ['./balance-information-modal.component.sass']
+    selector: 'app-balance-information-modal',
+    templateUrl: './balance-information-modal.component.html',
+    styleUrls: ['./balance-information-modal.component.sass'],
+    standalone: false
 })
 export class BalanceInformationModalComponent implements OnInit, AfterViewInit {
   withdrawalBalance: number = 0;

@@ -22,9 +22,10 @@ const ALERTS: Alert[] = [
   },
 ];
 @Component({
-  selector: 'app-arrays-configurations',
-  templateUrl: './arrays-configurations.component.html',
-  providers: [ToastrService],
+    selector: 'app-arrays-configurations',
+    templateUrl: './arrays-configurations.component.html',
+    providers: [ToastrService],
+    standalone: false
 })
 export class ArraysConfigurationsComponent implements OnInit {
   alerts: Alert[];

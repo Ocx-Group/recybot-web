@@ -68,7 +68,7 @@
           Messages
         </div>
         <div class="dropdown-list-content dropdown-list-icons"
-             style="position: relative; max-width: 600px; max-height: 250px" [perfectScrollbar]>
+             style="position: relative; max-width: 600px; max-height: 250px; overflow-y: auto;">
           <ng-container *ngIf="ticketSummaries$ | async as ticketSummaries">
             <a *ngFor="let summary of ticketSummaries" href="#"
                (click)="$event.preventDefault(); onTicketClick(summary.ticketId)" class="dropdown-item"

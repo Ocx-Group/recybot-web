@@ -10,8 +10,9 @@ import Swal from 'sweetalert2';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
-  selector: 'app-balance-of-wallet',
-  templateUrl: './balance-of-wallet.component.html',
+    selector: 'app-balance-of-wallet',
+    templateUrl: './balance-of-wallet.component.html',
+    standalone: false
 })
 export class BalanceOfWalletComponent implements OnInit {
   rows = [];

@@ -13,9 +13,10 @@ import { ConpaymentTransaction } from '@app/core/models/coinpayment-model/conpay
 import { MembershipManagerService } from '@app/core/service/membership-manager-service/membership-manager.service';
 
 @Component({
-  selector: 'app-coinpayments',
-  templateUrl: './coinpayments.component.html',
-  styleUrls: ['./coinpayments.component.scss']
+    selector: 'app-coinpayments',
+    templateUrl: './coinpayments.component.html',
+    styleUrls: ['./coinpayments.component.scss'],
+    standalone: false
 })
 export class CoinpaymentsComponent {
   qrImageUrl: string;

@@ -1,6 +1,9 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-@Pipe({ name: 'truncateDecimals' })
+@Pipe({
+    name: 'truncateDecimals',
+    standalone: false
+})
 
 export class TruncateDecimalsPipe implements PipeTransform {
 

@@ -6,9 +6,10 @@ import { AffiliateService } from '@app/core/service/affiliate-service/affiliate.
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
-  selector: 'app-page-binary-genealogical-tree',
-  templateUrl: './page-binary-genealogical-tree.component.html',
-  styleUrls: ['./page-binary-genealogical-tree.component.scss'],
+    selector: 'app-page-binary-genealogical-tree',
+    templateUrl: './page-binary-genealogical-tree.component.html',
+    styleUrls: ['./page-binary-genealogical-tree.component.scss'],
+    standalone: false
 })
 export class PageBinaryGenealogicalTreeComponent implements OnInit {
 

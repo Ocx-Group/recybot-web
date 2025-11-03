@@ -4,8 +4,9 @@ import { ResultsEcoPoolService } from '@app/core/service/results-ecopool-service
 import { DatatableComponent } from '@swimlane/ngx-datatable';
 
 @Component({
-  selector: 'app-results-ecopool',
-  templateUrl: './results-ecopool.component.html'
+    selector: 'app-results-ecopool',
+    templateUrl: './results-ecopool.component.html',
+    standalone: false
 })
 export class ResultsEcopoolComponent implements OnInit {
   temp = [];

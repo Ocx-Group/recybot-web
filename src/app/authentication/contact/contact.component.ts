@@ -5,9 +5,10 @@ import {ToastrService} from "ngx-toastr";
 import {ContactUsRequest} from "@app/core/models/user-affiliate-model/contactUsRequest.model";
 
 @Component({
-  selector: 'app-contact',
-  templateUrl: './contact.component.html',
-  styleUrls: ['./contact.component.scss']
+    selector: 'app-contact',
+    templateUrl: './contact.component.html',
+    styleUrls: ['./contact.component.scss'],
+    standalone: false
 })
 export class ContactComponent {
   contactForm: FormGroup;

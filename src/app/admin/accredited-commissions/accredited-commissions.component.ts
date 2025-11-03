@@ -4,9 +4,10 @@ import { ToastrService } from 'ngx-toastr';
 import { ClipboardService } from 'ngx-clipboard';
 
 @Component({
-  selector: 'app-accredited-commissions',
-  templateUrl: './accredited-commissions.component.html',
-  providers: [ToastrService],
+    selector: 'app-accredited-commissions',
+    templateUrl: './accredited-commissions.component.html',
+    providers: [ToastrService],
+    standalone: false
 })
 export class AccreditedCommissionsComponent {
   rows = [];

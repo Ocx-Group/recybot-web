@@ -20,8 +20,9 @@ import { RolService } from '@app/core/service/rol-service/rol.service';
 import { Rol } from '@app/core/models/rol-model/rol.model';
 
 @Component({
-  selector: 'app-users-list-create-modal',
-  templateUrl: './users-list-create-modal.component.html',
+    selector: 'app-users-list-create-modal',
+    templateUrl: './users-list-create-modal.component.html',
+    standalone: false
 })
 export class UsersListCreateModalComponent implements OnInit {
   createUserForm: FormGroup;

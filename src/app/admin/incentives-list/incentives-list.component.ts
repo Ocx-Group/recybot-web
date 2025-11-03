@@ -11,9 +11,10 @@ import { ToastrService } from 'ngx-toastr';
 const header = ['Nombre del Incentivo', 'Descripción', 'Estado de Incentivo','Fecha de Registro'];
 
 @Component({
-  selector: 'app-incentives-list',
-  templateUrl: './incentives-list.component.html',
-  providers: [ToastrService],
+    selector: 'app-incentives-list',
+    templateUrl: './incentives-list.component.html',
+    providers: [ToastrService],
+    standalone: false
 })
 export class IncentivesListComponent implements OnInit {
   rows = [];

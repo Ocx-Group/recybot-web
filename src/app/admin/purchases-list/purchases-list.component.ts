@@ -22,9 +22,10 @@ const header = [
   'Pagado',
 ];
 @Component({
-  selector: 'app-purchases-list',
-  templateUrl: './purchases-list.component.html',
-  providers: [ToastrService],
+    selector: 'app-purchases-list',
+    templateUrl: './purchases-list.component.html',
+    providers: [ToastrService],
+    standalone: false
 })
 export class PurchasesListComponent implements OnInit {
   rows = [];

@@ -5,8 +5,9 @@ import { AuthService } from '@app/core/service/authentication-service/auth.servi
 import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
 
 @Component({
-  selector: 'app-addresses',
-  templateUrl: './addresses.component.html',
+    selector: 'app-addresses',
+    templateUrl: './addresses.component.html',
+    standalone: false
 })
 export class AddressesComponent implements OnInit {
   user: UserAffiliate = new UserAffiliate();

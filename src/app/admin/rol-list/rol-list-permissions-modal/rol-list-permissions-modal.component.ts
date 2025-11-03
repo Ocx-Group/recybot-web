@@ -23,9 +23,10 @@ import { MenuConfiguration } from '@app/core/models/menu-configuration-model/men
 import { Privilege } from '@app/core/models/privilege-model/privilege.model';
 
 @Component({
-  selector: 'app-rol-list-permissions-modal',
-  templateUrl: './rol-list-permissions-modal.component.html',
-  providers: [ToastrService],
+    selector: 'app-rol-list-permissions-modal',
+    templateUrl: './rol-list-permissions-modal.component.html',
+    providers: [ToastrService],
+    standalone: false
 })
 export class RolListPermissionsModalComponent implements OnInit {
   public idRole: number;

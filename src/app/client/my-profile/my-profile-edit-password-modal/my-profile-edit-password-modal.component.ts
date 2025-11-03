@@ -13,9 +13,10 @@ import {
 import { AffiliateService } from '@app/core/service/affiliate-service/affiliate.service';
 import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
 @Component({
-  selector: 'app-my-profile-edit-password-modal',
-  templateUrl: './my-profile-edit-password-modal.component.html',
-  providers: [ToastrService],
+    selector: 'app-my-profile-edit-password-modal',
+    templateUrl: './my-profile-edit-password-modal.component.html',
+    providers: [ToastrService],
+    standalone: false
 })
 export class MyProfileEditPasswordModalComponent implements OnInit {
   @Input() getCurrentUser: any = [];

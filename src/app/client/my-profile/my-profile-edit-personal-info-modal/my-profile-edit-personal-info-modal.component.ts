@@ -11,8 +11,9 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { User } from '@app/core/models/user-model/user.model';
 
 @Component({
-  selector: 'app-my-profile-edit-personal-info-modal',
-  templateUrl: './my-profile-edit-personal-info-modal.component.html',
+    selector: 'app-my-profile-edit-personal-info-modal',
+    templateUrl: './my-profile-edit-personal-info-modal.component.html',
+    standalone: false
 })
 export class MyProfileEditPersonalInfoModalComponent implements OnInit {
   editPersonalInfoForm: FormGroup;

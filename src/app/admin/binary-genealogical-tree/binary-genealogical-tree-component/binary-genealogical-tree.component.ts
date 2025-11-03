@@ -9,14 +9,15 @@ import {
 import { MyTreeNode } from '@app/core/models/unilevel-tree-model/tree-node';
 
 @Component({
-  selector: 'app-binary-genealogical-tree',
-  exportAs: 'orgChart',
-  templateUrl: './binary-genealogical-tree.component.html',
-  styleUrls: ['./binary-genealogical-tree.component.scss'],
-  host: {
-    '[class.ng13-org-chart-zoom-out]': 'zoomOut',
-  },
-  encapsulation: ViewEncapsulation.None,
+    selector: 'app-binary-genealogical-tree',
+    exportAs: 'orgChart',
+    templateUrl: './binary-genealogical-tree.component.html',
+    styleUrls: ['./binary-genealogical-tree.component.scss'],
+    host: {
+        '[class.ng13-org-chart-zoom-out]': 'zoomOut',
+    },
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class BinaryGenealogicalTreeComponent {
   @Input('data') data: MyTreeNode | undefined;

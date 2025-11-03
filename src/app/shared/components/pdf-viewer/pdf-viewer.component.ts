@@ -4,9 +4,10 @@ import {PdfDocument} from "@app/core/interfaces/pdf-document.interface";
 import {PdfViewerService} from "@app/core/service/pdf-viewer-service/pdf-viewer.service";
 
 @Component({
-  selector: 'app-pdf-viewer',
-  templateUrl: './pdf-viewer.component.html',
-  styleUrls: ['./pdf-viewer.component.scss'],
+    selector: 'app-pdf-viewer',
+    templateUrl: './pdf-viewer.component.html',
+    styleUrls: ['./pdf-viewer.component.scss'],
+    standalone: false
 })
 export class PdfViewerComponent implements OnInit, OnDestroy {
   isVisible: boolean = false;

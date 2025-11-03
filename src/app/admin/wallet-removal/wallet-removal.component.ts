@@ -16,8 +16,9 @@ import { CoinpayService } from '@app/core/service/coinpay-service/coinpay.servic
 import { CoinPayWithdrawal } from '@app/core/models/coinpay-model/coinpay-withdrawal.model';
 
 @Component({
-  selector: 'app-wallet-removal',
-  templateUrl: './wallet-removal.component.html',
+    selector: 'app-wallet-removal',
+    templateUrl: './wallet-removal.component.html',
+    standalone: false
 })
 export class WalletRemovalComponent implements OnInit {
   rows = [];

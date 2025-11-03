@@ -4,9 +4,10 @@ import { ToastrService } from 'ngx-toastr';
 import { ClipboardService } from 'ngx-clipboard';
 
 @Component({
-  selector: 'app-incentives-for-delivering',
-  templateUrl: './incentives-for-delivering.component.html',
-  providers: [ToastrService]
+    selector: 'app-incentives-for-delivering',
+    templateUrl: './incentives-for-delivering.component.html',
+    providers: [ToastrService],
+    standalone: false
 })
 export class IncentivesForDeliveringComponent {
   rows = [];

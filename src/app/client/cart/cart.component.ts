@@ -43,9 +43,10 @@ import { WalletModel1BService } from '@app/core/service/wallet-model-1b-service/
 import { Subscription, switchMap, timer } from 'rxjs';
 
 @Component({
-  selector: 'app-cart',
-  templateUrl: './cart.component.html',
-  styleUrls: ['./cart.component.scss'],
+    selector: 'app-cart',
+    templateUrl: './cart.component.html',
+    styleUrls: ['./cart.component.scss'],
+    standalone: false
 })
 export class CartComponent implements OnInit, OnDestroy {
   today: Date;

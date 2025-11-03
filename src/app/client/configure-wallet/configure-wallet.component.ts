@@ -11,9 +11,10 @@ import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-configure-wallet',
-  templateUrl: './configure-wallet.component.html',
-  styleUrls: ['./configure-wallet.component.scss']
+    selector: 'app-configure-wallet',
+    templateUrl: './configure-wallet.component.html',
+    styleUrls: ['./configure-wallet.component.scss'],
+    standalone: false
 })
 export class ConfigureWalletComponent implements OnInit, AfterViewInit, OnDestroy {
   currentStep: number = 1;

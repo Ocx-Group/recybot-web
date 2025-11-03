@@ -17,8 +17,9 @@ const ALERTS: Alert[] = [
 ];
 
 @Component({
-  selector: 'app-commissions',
-  templateUrl: './commissions.component.html',
+    selector: 'app-commissions',
+    templateUrl: './commissions.component.html',
+    standalone: false
 })
 export class CommissionsComponent implements OnInit {
   alerts: Alert[];
