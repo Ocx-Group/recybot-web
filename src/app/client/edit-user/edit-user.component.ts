@@ -3,8 +3,7 @@ import { Component, ViewChild, OnInit, OnDestroy } from '@angular/core';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
 import { Storage, ref, uploadBytesResumable, getDownloadURL } from '@angular/fire/storage';
 import { ToastrService } from 'ngx-toastr';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import Swal from 'sweetalert2';
+import { FormBuilder, FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 
 import { Country } from '@app/core/models/country-model/country.model';
 import { UpdateImageIdPath } from '@app/core/models/user-affiliate-model/update-image-id-path.model';
@@ -13,13 +12,15 @@ import { AuthService } from '@app/core/service/authentication-service/auth.servi
 import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
 import { Subject, takeUntil } from 'rxjs';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
 import { NgxDropzoneModule } from 'ngx-dropzone';
+import { TranslateModule } from '@ngx-translate/core';
+import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
+
 @Component({
     selector: 'app-edit-user',
     templateUrl: './edit-user.component.html',
     standalone: true,
-    imports: [CommonModule, ReactiveFormsModule, NgxDropzoneModule]
+    imports: [CommonModule, ReactiveFormsModule, NgxDropzoneModule, TranslateModule, NgbNavModule]
 })
 export class EditUserComponent implements OnInit, OnDestroy {
   public user: UserAffiliate = new UserAffiliate();

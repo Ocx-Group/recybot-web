@@ -1,14 +1,17 @@
-import { Component, ViewChild, HostListener } from '@angular/core';
+import { Component, ViewChild, HostListener, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { DatatableComponent, NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UntypedFormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { FeatherModule } from 'angular-feather';
 
 @Component({
     selector: 'app-request-wallet',
     templateUrl: './request-wallet.component.html',
     standalone: true,
-    imports: [CommonModule, NgxDatatableModule, ReactiveFormsModule]
+    imports: [CommonModule, NgxDatatableModule, ReactiveFormsModule, TranslateModule, FeatherModule],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class RequestWalletComponent {
   rows = [];
@@ -32,7 +35,7 @@ export class RequestWalletComponent {
   }
 
   @HostListener('window:resize', ['$event'])
-  onResize(event) {
+  onResize(_event: any) {
     this.scrollBarHorizontal = window.innerWidth < 1200;
     this.table.recalculate();
     this.table.recalculateColumns();
@@ -55,13 +58,11 @@ export class RequestWalletComponent {
   updateFilter(event) {
     const val = event.target.value.toLowerCase();
 
-    // filter our data
-    const temp = this.temp.filter(function (d) {
+    // filter our data and update the rows
+    this.rows = this.temp.filter(function (d) {
       return d.name.toLowerCase().indexOf(val) !== -1 || !val;
     });
 
-    // update the rows
-    this.rows = temp;
     // Whenever the filter changes, always go back to the first page
     this.table.offset = 0;
   }

@@ -15,6 +15,8 @@ import {
   ChartComponent,
 } from 'ng-apexcharts';
 import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
+import { TruncateDecimalsPipe } from '@app/shared/truncate-decimals.pipe';
+import { CommonModule } from '@angular/common';
 
 export interface ChartOptions {
   series?: ApexNonAxisChartSeries;
@@ -27,11 +29,11 @@ export interface ChartOptions {
   plotOptions?: ApexPlotOptions;
 }
 
-
 @Component({
     selector: 'app-home-admin',
     templateUrl: './home-admin.component.html',
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, TruncateDecimalsPipe]
 })
 export class HomeAdminComponent implements OnInit {
   public mapChartOption: EChartsOption;

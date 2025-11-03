@@ -81,7 +81,6 @@ const icons = {
 @NgModule({
   declarations: [
     VirtualWalletComponent,
-    HomeAdminComponent,
     CompensationPlansComponent,
     GeneralReportsComponent,
     CalculateCommissionsComponent,
@@ -153,6 +152,7 @@ const icons = {
     ChangeModelModule,
     NgApexchartsModule,
     AdminRespondedPipe,
+    HomeAdminComponent,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

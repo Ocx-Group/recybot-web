@@ -4,14 +4,15 @@ import { DatatableComponent, NgxDatatableModule } from '@swimlane/ngx-datatable'
 import { AuthService } from '@app/core/service/authentication-service/auth.service';
 import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
 import { CommonModule } from '@angular/common';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
+import {CreateAddressModalComponent} from "@app/client/addresses/create-address-modal/create-address-modal.component";
+import {FeatherModule} from "angular-feather";
 
 @Component({
     selector: 'app-addresses',
     templateUrl: './addresses.component.html',
     standalone: true,
-    imports: [CommonModule, NgxDatatableModule],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  imports: [CommonModule, NgxDatatableModule, TranslateModule, CreateAddressModalComponent, FeatherModule]
 })
 export class AddressesComponent implements OnInit {
   user: UserAffiliate = new UserAffiliate();

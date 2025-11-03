@@ -6,7 +6,7 @@ import {
   Output,
   EventEmitter,
 } from '@angular/core';
-import { MyTreeNodeClient } from '@app/core/models/unilevel-tree-model/tree-node';
+import { MyTreeNodeClient } from '../../../core/models/unilevel-tree-model/tree-node';
 
 @Component({
     selector: 'app-client-unilevel-tree-component',

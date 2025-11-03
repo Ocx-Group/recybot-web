@@ -1,11 +1,11 @@
 import { Component, ViewChild, OnInit, Output, EventEmitter } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
-import { AffiliateService } from '@app/core/service/affiliate-service/affiliate.service';
-import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
-import { UpdateImageProfile } from '@app/core/models/user-affiliate-model/update-image-profile.model';
+import { AffiliateService } from '../../../core/service/affiliate-service/affiliate.service';
+import { UserAffiliate } from '../../../core/models/user-affiliate-model/user.affiliate.model';
+import { UpdateImageProfile } from '../../../core/models/user-affiliate-model/update-image-profile.model';
 import { Storage, ref, uploadBytesResumable, getDownloadURL } from '@angular/fire/storage';
-import { AuthService } from '@app/core/service/authentication-service/auth.service';
+import { AuthService } from '../../../core/service/authentication-service/auth.service';
 import { CommonModule } from '@angular/common';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 

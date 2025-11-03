@@ -19,17 +19,19 @@ import {
 } from '@app/core/models/wallet-withdrawals-configuration-model/wallet-withdrawals-configuration.model';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
-import {TranslateService} from '@ngx-translate/core';
+import {TranslateService, TranslateModule} from '@ngx-translate/core';
 import { CommonModule } from '@angular/common';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import {
+  BillingPurchasesDetailModalComponent
+} from "@app/client/billing-purchases/billing-purchases-detail-modal/billing-purchases-detail-modal.component";
+import {FeatherModule} from "angular-feather";
 
 @Component({
     selector: 'app-filter',
     templateUrl: './billing-purchases.component.html',
     standalone: true,
-    imports: [CommonModule, NgxDatatableModule],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  imports: [CommonModule, NgxDatatableModule, TranslateModule, BillingPurchasesDetailModalComponent, FeatherModule]
 })
 export class BillingPurchasesComponent implements OnInit, OnDestroy {
   private user: UserAffiliate = new UserAffiliate();

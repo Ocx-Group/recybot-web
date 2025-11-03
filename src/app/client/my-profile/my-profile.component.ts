@@ -1,7 +1,7 @@
 import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
-import { LoginMovements } from './../../core/models/signin-model/login-movements.model';
+import { LoginMovements } from '@app/core/models/signin-model/login-movements.model';
 
 import { AffiliateService } from '@app/core/service/affiliate-service/affiliate.service';
 import { AuthService } from '@app/core/service/authentication-service/auth.service';
@@ -16,14 +16,27 @@ import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affili
 const header = ['Movimientos', 'IP', 'Fecha'];
 import { CommonModule } from '@angular/common';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
+import { MyProfileEditPasswordModalComponent } from './my-profile-edit-password-modal/my-profile-edit-password-modal.component';
+import { MyProfileEditPersonalInfoModalComponent } from './my-profile-edit-personal-info-modal/my-profile-edit-personal-info-modal.component';
+import { EditSecurityPinModalComponent } from './edit-security-pin-modal/edit-security-pin-modal.component';
+import { SecretQuestionModalComponent } from './secret-question-modal/secret-question-modal.component';
+import { ImageProfileModalComponent } from './image-profile-modal/image-profile-modal.component';
 
 @Component({
     selector: 'app-my-profile',
     templateUrl: './my-profile.component.html',
     standalone: true,
-    imports: [CommonModule, NgxDatatableModule],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA]
+    imports: [
+      CommonModule,
+      NgxDatatableModule,
+      TranslateModule,
+      MyProfileEditPasswordModalComponent,
+      MyProfileEditPersonalInfoModalComponent,
+      EditSecurityPinModalComponent,
+      SecretQuestionModalComponent,
+      ImageProfileModalComponent
+    ]
 })
 export class MyProfileComponent implements OnInit {
   public user: UserAffiliate = new UserAffiliate();

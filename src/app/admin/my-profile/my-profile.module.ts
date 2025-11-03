@@ -43,5 +43,8 @@ const icons = {
     NgApexchartsModule,
     NgxGaugeModule,
   ],
+  exports: [
+    MyProfileEditPasswordModalComponent
+  ]
 })
 export class MyProfileModule {}

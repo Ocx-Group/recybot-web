@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, NgZone, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, CUSTOM_ELEMENTS_SCHEMA, NgZone, ViewChild } from '@angular/core';
 import * as echarts from 'echarts';
 import { AffiliateBtcService } from '@app/core/service/affiliate-btc-service/affiliate-btc.service';
 import { ChartComponent } from 'ng-apexcharts';
@@ -22,14 +22,16 @@ import { EChartsOption } from 'echarts';
 import { ToastrService } from 'ngx-toastr';
 import { CommonModule } from '@angular/common';
 import { NgApexchartsModule } from 'ng-apexcharts';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
+import { TruncateDecimalsPipe } from '@app/shared/truncate-decimals.pipe';
+import { NgxEchartsModule } from 'ngx-echarts';
 
 @Component({
     selector: 'app-main',
     templateUrl: './home.component.html',
     styleUrls: ['./home.component.scss'],
     standalone: true,
-    imports: [CommonModule, NgApexchartsModule],
+    imports: [CommonModule, NgApexchartsModule, TranslateModule, TruncateDecimalsPipe, NgxEchartsModule],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class HomeComponent {

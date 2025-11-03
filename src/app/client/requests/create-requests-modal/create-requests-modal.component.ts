@@ -16,18 +16,18 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
 import { DateTime } from 'luxon';
 
-import { WalletRequestService } from '@app/core/service/wallet-request/wallet-request.service';
+import { WalletRequestService } from '../../../core/service/wallet-request/wallet-request.service';
 import { ToastrService } from 'ngx-toastr';
-import { WalletRequestRequest } from '@app/core/models/wallet-request-request-model/wallet-request-request.model';
-import { AffiliateService } from '@app/core/service/affiliate-service/affiliate.service';
-import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
-import { BalanceInformation } from '@app/core/models/wallet-model/balance-information.model';
-import { WalletWithdrawalsConfiguration } from '@app/core/models/wallet-withdrawals-configuration-model/wallet-withdrawals-configuration.model';
-import { AffiliateBtcService } from '@app/core/service/affiliate-btc-service/affiliate-btc.service';
+import { WalletRequestRequest } from '../../../core/models/wallet-request-request-model/wallet-request-request.model';
+import { AffiliateService } from '../../../core/service/affiliate-service/affiliate.service';
+import { UserAffiliate } from '../../../core/models/user-affiliate-model/user.affiliate.model';
+import { BalanceInformation } from '../../../core/models/wallet-model/balance-information.model';
+import { WalletWithdrawalsConfiguration } from '../../../core/models/wallet-withdrawals-configuration-model/wallet-withdrawals-configuration.model';
+import { AffiliateBtcService } from '../../../core/service/affiliate-btc-service/affiliate-btc.service';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
-import { AffiliateBtc } from '@app/core/models/affiliate-btc-model/affiliate-btc.model';
-import { Response } from '@app/core/models/response-model/response.model';
+import { AffiliateBtc } from '../../../core/models/affiliate-btc-model/affiliate-btc.model';
+import { Response } from '../../../core/models/response-model/response.model';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({

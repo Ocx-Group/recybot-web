@@ -1,8 +1,8 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {Invoice} from '@app/core/models/invoice-model/invoice.model';
-import {UserAffiliate} from '@app/core/models/user-affiliate-model/user.affiliate.model';
-import {AffiliateService} from '@app/core/service/affiliate-service/affiliate.service';
-import {AuthService} from '@app/core/service/authentication-service/auth.service';
+import {Invoice} from '../../../core/models/invoice-model/invoice.model';
+import {UserAffiliate} from '../../../core/models/user-affiliate-model/user.affiliate.model';
+import {AffiliateService} from '../../../core/service/affiliate-service/affiliate.service';
+import {AuthService} from '../../../core/service/authentication-service/auth.service';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ToastrService} from 'ngx-toastr';
 import {Subject, Subscription, takeUntil} from 'rxjs';

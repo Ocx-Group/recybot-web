@@ -14,7 +14,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AffiliatesListEditModalComponent } from './affiliates-list-edit-modal/affiliates-list-edit-modal.component';
 import { MakePurchaseModalComponent } from './make-purchase-modal/make-purchase-modal.component';
 import { BalanceInformationModalComponent } from './balance-information-modal/balance-information-modal.component';
-import { NgApexchartsModule } from 'ng-apexcharts';
+
 import {
   MatrixActivationModalComponent
 } from "@app/admin/affiliates-list/matrix-activation/matrix-activation-modal.component";
@@ -42,7 +42,6 @@ const icons = {
     ToastrModule.forRoot(),
     FeatherModule.pick(icons),
     NgxDatatableModule,
-    SharedModule,
   ],
 })
 export class AffiliatesListModule { }

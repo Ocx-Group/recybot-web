@@ -7,9 +7,9 @@ import {
 } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
-import { AffiliateService } from '@app/core/service/affiliate-service/affiliate.service';
-import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
-import { UpdatePassword } from '@app/core/models/user-model/update.password.model';
+import { AffiliateService } from '../../../core/service/affiliate-service/affiliate.service';
+import { UserAffiliate } from '../../../core/models/user-affiliate-model/user.affiliate.model';
+import { UpdatePassword } from '../../../core/models/user-model/update.password.model';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 

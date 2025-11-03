@@ -45,15 +45,16 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { QrcodeModule } from 'qrcode-angular';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
+import {CoinpayModalComponent} from "@app/client/cart/coinpay-modal/coinpay-modal.component";
+import {PdfViewerComponent} from "@app/shared/components/pdf-viewer/pdf-viewer.component";
 
 @Component({
     selector: 'app-cart',
     templateUrl: './cart.component.html',
     styleUrls: ['./cart.component.scss'],
     standalone: true,
-    imports: [CommonModule, ReactiveFormsModule, FormsModule, QrcodeModule, NgbModule],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, QrcodeModule, NgbModule, TranslateModule, CoinpayModalComponent, PdfViewerComponent]
 })
 export class CartComponent implements OnInit, OnDestroy {
   today: Date;

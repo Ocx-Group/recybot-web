@@ -15,7 +15,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 export class ServicesAndProductsComponent implements OnInit {
   active: any;
 
-  constructor(private toast: ToastrService) {
+  constructor() {
 
   }
 

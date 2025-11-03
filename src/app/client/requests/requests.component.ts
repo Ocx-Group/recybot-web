@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, HostListener, OnInit, ViewChild } from '@angular/core';
 import { BalanceInformation } from '@app/core/models/wallet-model/balance-information.model';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
 
@@ -12,13 +12,14 @@ import { ToastrService } from 'ngx-toastr';
 import { MatrixQualificationService } from '@app/core/service/matrix-qualification-service/matrix-qualification.service';
 import { CommonModule } from '@angular/common';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
+import { TruncateDecimalsPipe } from '@app/shared/truncate-decimals.pipe';
 
 @Component({
     selector: 'app-requests',
     templateUrl: './requests.component.html',
     standalone: true,
-    imports: [CommonModule, NgxDatatableModule],
+    imports: [CommonModule, NgxDatatableModule, TranslateModule, TruncateDecimalsPipe],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class RequestsComponent implements OnInit {
@@ -81,7 +82,7 @@ export class RequestsComponent implements OnInit {
         this.walletWithdrawalsConfig.minimum_amount = resp.minimum_amount;
         this.walletWithdrawalsConfig.maximum_amount = resp.maximum_amount;
       },
-      error: err => {
+      error: _err => {
         this.showError('Error');
       },
     });
