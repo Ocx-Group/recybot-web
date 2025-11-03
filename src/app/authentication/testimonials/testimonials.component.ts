@@ -1,4 +1,5 @@
 import {Component, OnInit, ViewChild, ElementRef, AfterViewInit} from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 interface Testimonial {
   id: number;
@@ -13,7 +14,8 @@ interface Testimonial {
     selector: 'app-testimonials',
     templateUrl: './testimonials.component.html',
     styleUrls: ['./testimonials.component.scss'],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule]
 })
 export class TestimonialsComponent implements OnInit, AfterViewInit {
   @ViewChild('videoPlayer') videoPlayer!: ElementRef<HTMLVideoElement>;

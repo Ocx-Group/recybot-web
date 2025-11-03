@@ -1,12 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { Product } from '@app/core/models/product-model/product.model';
 import { ProductService } from '@app/core/service/product-service/product.service';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-products-preview',
     templateUrl: './products-preview.component.html',
     styleUrls: ['./products-preview.component.scss'],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, TranslateModule]
 })
 export class ProductsPreviewComponent implements OnInit {
   public productList: any;

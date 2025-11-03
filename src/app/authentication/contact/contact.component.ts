@@ -1,14 +1,16 @@
 import {Component} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {AffiliateService} from "@app/core/service/affiliate-service/affiliate.service";
 import {ToastrService} from "ngx-toastr";
 import {ContactUsRequest} from "@app/core/models/user-affiliate-model/contactUsRequest.model";
+import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'app-contact',
     templateUrl: './contact.component.html',
     styleUrls: ['./contact.component.scss'],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, ReactiveFormsModule]
 })
 export class ContactComponent {
   contactForm: FormGroup;

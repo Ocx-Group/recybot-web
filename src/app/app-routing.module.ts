@@ -37,8 +37,8 @@ const routes: Routes = [
     path: '',
     component: AuthLayoutComponent,
     loadChildren: () =>
-      import('./authentication/authentication.module').then(
-        (m) => m.AuthenticationModule
+      import('./authentication/authentication.routes').then(
+        (m) => m.AUTHENTICATION_ROUTES
       ),
   }
 ];

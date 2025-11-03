@@ -3,10 +3,11 @@ import {
   AbstractControl,
   FormBuilder,
   FormGroup,
+  ReactiveFormsModule,
   ValidationErrors,
   Validators
 } from '@angular/forms';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import {City} from '@app/core/models/cities-model/cities.model';
 import {Country} from '@app/core/models/country-model/country.model';
 import {State} from '@app/core/models/state-model/state.model';
@@ -17,12 +18,17 @@ import {PdfViewerService} from '@app/core/service/pdf-viewer-service/pdf-viewer.
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ToastrService} from 'ngx-toastr';
 import {CreateAffiliate} from '@app/core/models/user-affiliate-model/create-affiliate.model';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 @Component({
     selector: 'app-signup',
     templateUrl: './signup.component.html',
     styleUrls: ['./signup.component.scss'],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, ReactiveFormsModule, RouterLink, TranslateModule],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class SignupComponent implements OnInit {
   registerForm: FormGroup;

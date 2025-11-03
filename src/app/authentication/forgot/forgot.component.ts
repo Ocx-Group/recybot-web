@@ -3,9 +3,11 @@ import {
   AbstractControl,
   FormControl,
   FormGroup,
+  ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
 import Swal from 'sweetalert2';
+import { CommonModule } from '@angular/common';
 
 import { AffiliateService } from '@app/core/service/affiliate-service/affiliate.service';
 import { ToastrService } from 'ngx-toastr';
@@ -14,7 +16,8 @@ import { ToastrService } from 'ngx-toastr';
     selector: 'app-forgot',
     templateUrl: './forgot.component.html',
     styleUrls: ['./forgot.component.scss'],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, ReactiveFormsModule]
 })
 export class ForgotComponent implements OnInit {
   forgotPassword: FormGroup;

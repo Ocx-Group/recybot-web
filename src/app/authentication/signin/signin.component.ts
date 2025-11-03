@@ -1,10 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router, RouterLink } from '@angular/router';
 import { Response } from '@app/core/models/response-model/response.model';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/core/service/authentication-service/auth.service';
+import { CommonModule } from '@angular/common';
 
 declare let particlesJS: any;
 
@@ -18,6 +19,7 @@ import {
 import { Signin } from '@app/core/models/signin-model/signin.model';
 import { LogoService } from '@app/core/service/logo-service/logo.service';
 import { DeviceDetectorService } from 'ngx-device-detector';
+import { FeatherModule } from 'angular-feather';
 
 @Component({
     selector: 'app-signin',
@@ -35,7 +37,8 @@ import { DeviceDetectorService } from 'ngx-device-detector';
             transition('hidden => visible', animate('1000ms ease-in')),
         ]),
     ],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, ReactiveFormsModule, RouterLink, TranslateModule, FeatherModule]
 })
 export class SigninComponent implements OnInit, OnDestroy {
   submitted = false;

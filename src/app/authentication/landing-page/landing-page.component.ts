@@ -10,17 +10,19 @@ import {
   HostListener,
   OnDestroy,
   OnInit,
-  ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
+import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { ActivatedRoute } from '@angular/router';
 import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
 import { AffiliateService } from '@app/core/service/affiliate-service/affiliate.service';
 import { PdfViewerService } from '@app/core/service/pdf-viewer-service/pdf-viewer.service';
-import { PdfViewerComponent } from '@app/shared/components/pdf-viewer/pdf-viewer.component';
+import { SafePipe } from '@app/shared/safe.pipe';
 
 @Component({
     selector: 'app-home',
@@ -40,7 +42,9 @@ import { PdfViewerComponent } from '@app/shared/components/pdf-viewer/pdf-viewer
     ],
     encapsulation: ViewEncapsulation.ShadowDom,
     providers: [ToastrService],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, RouterLink, TranslateModule, SafePipe],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class LandingPageComponent implements OnInit, OnDestroy {
   isNavbarVisible = false;
@@ -58,8 +62,6 @@ export class LandingPageComponent implements OnInit, OnDestroy {
       title: 'Proyecto RecyCoin',
     },
   };
-  @ViewChild('whitePaperModal') whitePaperModal!: PdfViewerComponent;
-  @ViewChild('legalDocsModal') legalDocsModal!: PdfViewerComponent;
   showVideoModal: boolean = false;
   currentVideoUrl: string = '';
   currentLang: string = 'en';
