@@ -1,5 +1,5 @@
-import {Router, NavigationEnd} from '@angular/router';
-import {DOCUMENT} from '@angular/common';
+import {Router, NavigationEnd, RouterLink} from '@angular/router';
+import {DOCUMENT, CommonModule} from '@angular/common';
 import {
   Component,
   Inject,
@@ -17,12 +17,15 @@ import {UserAffiliate} from '@app/core/models/user-affiliate-model/user.affiliat
 import {AffiliateService} from '@app/core/service/affiliate-service/affiliate.service';
 import {GradingService} from '@app/core/service/grading-service/grading.service';
 import {Grading} from '@app/core/models/grading-model/grading.model';
+import { LogoComponent } from '../logo/logo.component';
+import { ImgProfileComponent } from '../img-profile/img-profile.component';
 
 @Component({
     selector: 'app-sidebar',
     templateUrl: './sidebar.component.html',
     styleUrls: ['./sidebar.component.sass'],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, RouterLink, LogoComponent, ImgProfileComponent]
 })
 export class SidebarComponent implements OnInit, OnDestroy {
   public user: UserAffiliate = new UserAffiliate();

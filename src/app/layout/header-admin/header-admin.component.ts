@@ -1,6 +1,6 @@
 import {RightSidebarService} from 'src/app/core/service/rightsidebar-service/rightsidebar.service';
 import {AuthService} from 'src/app/core/service/authentication-service/auth.service';
-import {DOCUMENT} from '@angular/common';
+import {DOCUMENT, CommonModule} from '@angular/common';
 import {
   Component,
   Inject,
@@ -9,13 +9,15 @@ import {
   Renderer2,
   AfterViewInit,
 } from '@angular/core';
-import {Router} from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
 import {ConfigService} from 'src/app/config/config.service';
 import {LanguageService} from 'src/app/core/service/language-service/language.service';
 import {User} from '@app/core/models/user-model/user.model';
 import {TicketHubService} from "@app/core/service/ticket-service/ticket-hub.service";
 import {map, Observable} from "rxjs";
 import {TicketSummary} from "@app/core/models/ticket-model/ticket-summary.model";
+import { FeatherModule } from 'angular-feather';
+import { TranslateModule } from '@ngx-translate/core';
 
 const document: any = window.document;
 
@@ -23,7 +25,8 @@ const document: any = window.document;
     selector: 'app-header-admin',
     templateUrl: './header-admin.component.html',
     styleUrls: ['./header-admin.component.sass'],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, RouterLink, FeatherModule, TranslateModule]
 })
 export class HeaderAdminComponent implements OnInit, AfterViewInit {
   public user: User = new User();

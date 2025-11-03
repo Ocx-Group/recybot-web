@@ -1,4 +1,3 @@
-
 import { LocationStrategy, NgOptimizedImage, PathLocationStrategy } from '@angular/common';
 import { HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { APP_INITIALIZER, NgModule } from '@angular/core';
@@ -23,20 +22,7 @@ import { SharedModule } from './shared/shared.module';
 
 import { ClientModule } from './client/client.module';
 import { MembershipManagerModule } from "./client/membership-manager/membership-manager.module";
-import { AdminLayoutComponent } from './layout/app-layout/admin-layout/admin-layout.component';
-import { AuthLayoutComponent } from './layout/app-layout/auth-layout/auth-layout.component';
-import { MainLayoutComponent } from './layout/app-layout/main-layout/main-layout.component';
-import { FooterComponent } from './layout/footer/footer.component';
-import { HeaderAdminComponent } from './layout/header-admin/header-admin.component';
-import { HeaderComponent } from './layout/header/header.component';
-import { ImgProfileComponent } from './layout/img-profile/img-profile.component';
-import { LogoComponent } from './layout/logo/logo.component';
 import { PageLoaderComponent } from './layout/page-loader/page-loader.component';
-import { RightSidebarComponent } from './layout/right-sidebar/right-sidebar.component';
-import { SidebarAdminComponent } from './layout/sidebar-admin/sidebar-admin.component';
-import { SidebarComponent } from './layout/sidebar/sidebar.component';
-import { TermsConditionsModalComponent } from './layout/terms-conditions-modal/terms-conditions-modal.component';
-
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -52,22 +38,8 @@ export function initialLanguage(translate: TranslateService) {
 }
 
 @NgModule({ declarations: [
-        AppComponent,
-        HeaderComponent,
-        HeaderAdminComponent,
-        PageLoaderComponent,
-        SidebarComponent,
-        SidebarAdminComponent,
-        RightSidebarComponent,
-        AuthLayoutComponent,
-        MainLayoutComponent,
-        AdminLayoutComponent,
-        FooterComponent,
-        LogoComponent,
-        ImgProfileComponent,
-        TermsConditionsModalComponent
+        AppComponent
     ],
-    exports: [LogoComponent, ImgProfileComponent],
     bootstrap: [AppComponent], imports: [BrowserModule,
         BrowserAnimationsModule,
         AppRoutingModule,
@@ -90,7 +62,8 @@ export function initialLanguage(translate: TranslateService) {
         MembershipManagerModule,
         ClientModule,
         NgxDropzoneModule,
-        NgOptimizedImage], providers: [
+        NgOptimizedImage,
+        PageLoaderComponent], providers: [
         { provide: LocationStrategy, useClass: PathLocationStrategy },
         {
             provide: APP_INITIALIZER,

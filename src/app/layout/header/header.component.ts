@@ -1,15 +1,15 @@
 import {RightSidebarService} from 'src/app/core/service/rightsidebar-service/rightsidebar.service';
 import {AuthService} from 'src/app/core/service/authentication-service/auth.service';
-import {DOCUMENT} from '@angular/common';
+import {DOCUMENT, CommonModule} from '@angular/common';
 import {
   Component,
   Inject,
   ElementRef,
   OnInit,
   Renderer2,
-  AfterViewInit, OnDestroy,
+  AfterViewInit, OnDestroy, CUSTOM_ELEMENTS_SCHEMA,
 } from '@angular/core';
-import {Router} from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
 import {ConfigService} from 'src/app/config/config.service';
 import {LanguageService} from 'src/app/core/service/language-service/language.service';
 import {map, Observable, Subscription} from 'rxjs';
@@ -19,6 +19,8 @@ import {ConfigureWalletService} from '@app/core/service/configure-wallet-service
 import {CartService} from '@app/core/service/cart.service/cart.service';
 import {TicketHubService} from '@app/core/service/ticket-service/ticket-hub.service';
 import {TicketSummary} from '@app/core/models/ticket-model/ticket-summary.model';
+import { FeatherModule } from 'angular-feather';
+import { TranslateModule } from '@ngx-translate/core';
 
 const document: any = window.document;
 
@@ -26,7 +28,9 @@ const document: any = window.document;
     selector: 'app-header',
     templateUrl: './header.component.html',
     styleUrls: ['./header.component.scss'],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, RouterLink, FeatherModule, TranslateModule],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   public user: UserAffiliate = new UserAffiliate();

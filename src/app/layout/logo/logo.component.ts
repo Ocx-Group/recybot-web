@@ -1,13 +1,15 @@
 import { LogoService } from '@app/core/service/logo-service/logo.service';
 import { Component, Input, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'app-logo',
     templateUrl: './logo.component.html',
     styleUrls: ['./logo.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    standalone: false
+    standalone: true,
+    imports: [CommonModule]
 })
 export class LogoComponent implements OnInit, OnDestroy {
   logoSrc: string;
