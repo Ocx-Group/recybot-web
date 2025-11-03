@@ -19,7 +19,7 @@ import {ConfigureWalletService} from '@app/core/service/configure-wallet-service
 import {CartService} from '@app/core/service/cart.service/cart.service';
 import {TicketHubService} from '@app/core/service/ticket-service/ticket-hub.service';
 import {TicketSummary} from '@app/core/models/ticket-model/ticket-summary.model';
-import { FeatherModule } from 'angular-feather';
+import { IconsModule } from '@app/shared';
 import { TranslateModule } from '@ngx-translate/core';
 
 const document: any = window.document;
@@ -29,7 +29,7 @@ const document: any = window.document;
     templateUrl: './header.component.html',
     styleUrls: ['./header.component.scss'],
     standalone: true,
-    imports: [CommonModule, RouterLink, FeatherModule, TranslateModule],
+    imports: [CommonModule, RouterLink, IconsModule, TranslateModule],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {

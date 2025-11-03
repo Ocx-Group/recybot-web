@@ -4,13 +4,13 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UntypedFormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
-import { FeatherModule } from 'angular-feather';
+import { IconsModule } from '@app/shared';
 
 @Component({
     selector: 'app-request-wallet',
     templateUrl: './request-wallet.component.html',
     standalone: true,
-    imports: [CommonModule, NgxDatatableModule, ReactiveFormsModule, TranslateModule, FeatherModule],
+    imports: [CommonModule, NgxDatatableModule, ReactiveFormsModule, TranslateModule, IconsModule],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class RequestWalletComponent {

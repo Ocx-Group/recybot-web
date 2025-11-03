@@ -20,13 +20,13 @@ import { AuthService } from '@app/core/service/authentication-service/auth.servi
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { TruncateDecimalsPipe } from '@app/shared/truncate-decimals.pipe';
-import { FeatherModule } from 'angular-feather';
+import { IconsModule } from '@app/shared';
 
 @Component({
     selector: 'app-wallet',
     templateUrl: './wallet.component.html',
     standalone: true,
-    imports: [CommonModule, NgxDatatableModule, TranslateModule, TruncateDecimalsPipe, FeatherModule]
+    imports: [CommonModule, NgxDatatableModule, TranslateModule, TruncateDecimalsPipe, IconsModule]
 })
 export class WalletComponent implements OnInit, OnDestroy {
   private subscription: Subscription;

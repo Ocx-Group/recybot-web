@@ -14,12 +14,15 @@ import { CommonModule } from '@angular/common';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { TranslateModule } from '@ngx-translate/core';
 import { TruncateDecimalsPipe } from '@app/shared/truncate-decimals.pipe';
+import { IconsModule } from '@app/shared';
+import {NgbAlert} from "@ng-bootstrap/ng-bootstrap";
+import {CreateRequestsModalComponent} from "@app/client/requests/create-requests-modal/create-requests-modal.component";
 
 @Component({
     selector: 'app-requests',
     templateUrl: './requests.component.html',
     standalone: true,
-    imports: [CommonModule, NgxDatatableModule, TranslateModule, TruncateDecimalsPipe],
+  imports: [CommonModule, NgxDatatableModule, TranslateModule, TruncateDecimalsPipe, IconsModule, NgbAlert, CreateRequestsModalComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class RequestsComponent implements OnInit {

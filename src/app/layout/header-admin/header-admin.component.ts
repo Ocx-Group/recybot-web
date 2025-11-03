@@ -16,7 +16,7 @@ import {User} from '@app/core/models/user-model/user.model';
 import {TicketHubService} from "@app/core/service/ticket-service/ticket-hub.service";
 import {map, Observable} from "rxjs";
 import {TicketSummary} from "@app/core/models/ticket-model/ticket-summary.model";
-import { FeatherModule } from 'angular-feather';
+import { IconsModule } from '@app/shared';
 import { TranslateModule } from '@ngx-translate/core';
 
 const document: any = window.document;
@@ -26,7 +26,7 @@ const document: any = window.document;
     templateUrl: './header-admin.component.html',
     styleUrls: ['./header-admin.component.sass'],
     standalone: true,
-    imports: [CommonModule, RouterLink, FeatherModule, TranslateModule]
+    imports: [CommonModule, RouterLink, IconsModule, TranslateModule]
 })
 export class HeaderAdminComponent implements OnInit, AfterViewInit {
   public user: User = new User();

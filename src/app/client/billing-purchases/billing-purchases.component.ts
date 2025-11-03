@@ -25,13 +25,13 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import {
   BillingPurchasesDetailModalComponent
 } from "@app/client/billing-purchases/billing-purchases-detail-modal/billing-purchases-detail-modal.component";
-import {FeatherModule} from "angular-feather";
+import { IconsModule } from '@app/shared';
 
 @Component({
     selector: 'app-filter',
     templateUrl: './billing-purchases.component.html',
     standalone: true,
-  imports: [CommonModule, NgxDatatableModule, TranslateModule, BillingPurchasesDetailModalComponent, FeatherModule]
+  imports: [CommonModule, NgxDatatableModule, TranslateModule, BillingPurchasesDetailModalComponent, IconsModule]
 })
 export class BillingPurchasesComponent implements OnInit, OnDestroy {
   private user: UserAffiliate = new UserAffiliate();

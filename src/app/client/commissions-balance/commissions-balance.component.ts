@@ -2,13 +2,13 @@ import { Component, OnInit, ViewChild, HostListener, CUSTOM_ELEMENTS_SCHEMA } fr
 import { DatatableComponent, NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
-import { FeatherModule } from 'angular-feather';
+import { IconsModule } from '@app/shared';
 
 @Component({
     selector: 'app-commissions-balance',
     templateUrl: './commissions-balance.component.html',
     standalone: true,
-    imports: [CommonModule, NgxDatatableModule, TranslateModule, FeatherModule],
+    imports: [CommonModule, NgxDatatableModule, TranslateModule, IconsModule],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class CommissionsBalanceComponent implements OnInit {

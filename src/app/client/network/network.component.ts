@@ -40,12 +40,13 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { IconsModule } from '@app/shared';
 
 @Component({
     selector: 'app-network',
     templateUrl: './network.component.html',
     standalone: true,
-    imports: [CommonModule, NgxDatatableModule, ReactiveFormsModule, FormsModule, TranslateModule, NgbModule],
+    imports: [CommonModule, NgxDatatableModule, ReactiveFormsModule, FormsModule, TranslateModule, NgbModule, IconsModule],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class NetworkComponent implements OnInit {

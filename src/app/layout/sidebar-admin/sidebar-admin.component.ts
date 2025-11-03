@@ -1,5 +1,5 @@
 import { UserService } from '@app/core/service/user-service/user.service';
-import { NavigationEnd, Router, RouterLink } from '@angular/router';
+import {NavigationEnd, Router, RouterLink, RouterLinkActive} from '@angular/router';
 import { DOCUMENT, CommonModule } from '@angular/common';
 import {
   Component,
@@ -16,13 +16,15 @@ import { User } from '@app/core/models/user-model/user.model';
 import { Subject, takeUntil } from 'rxjs';
 import { RouteInfo } from './sidebar-admin.metadata';
 import { ImgProfileComponent } from '../img-profile/img-profile.component';
+import { IconsModule } from '@app/shared';
+import {TranslatePipe} from "@ngx-translate/core";
 
 @Component({
     selector: 'app-sidebar-admin',
     templateUrl: './sidebar-admin.component.html',
     styleUrls: ['./sidebar-admin.component.sass'],
     standalone: true,
-    imports: [CommonModule, RouterLink, ImgProfileComponent]
+  imports: [CommonModule, RouterLink, ImgProfileComponent, IconsModule, TranslatePipe, RouterLinkActive]
 })
 export class SidebarAdminComponent implements OnInit, OnDestroy {
   public user: User = new User();

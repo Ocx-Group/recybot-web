@@ -6,13 +6,13 @@ import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affili
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import {CreateAddressModalComponent} from "@app/client/addresses/create-address-modal/create-address-modal.component";
-import {FeatherModule} from "angular-feather";
+import { IconsModule } from '@app/shared';
 
 @Component({
     selector: 'app-addresses',
     templateUrl: './addresses.component.html',
     standalone: true,
-  imports: [CommonModule, NgxDatatableModule, TranslateModule, CreateAddressModalComponent, FeatherModule]
+  imports: [CommonModule, NgxDatatableModule, TranslateModule, CreateAddressModalComponent, IconsModule]
 })
 export class AddressesComponent implements OnInit {
   user: UserAffiliate = new UserAffiliate();
