@@ -192,12 +192,10 @@
         </div>
       </div>
 
-      <!-- Balance Information Table -->
-      <div *ngIf="balanceInformation && isBalanceInformationValid(balanceInformation)" [ngClass]="{
-             'col-xl-6 col-lg-12 col-md-12 col-sm-12': canSeePaymentModels,
-             'col-xl-6 col-lg-12 col-md-12 col-sm-12': !canSeePaymentModels
-           }" class="col-lg-6 col-md-12 col-sm-12">
-        <div class="card">
+          <!-- Balance Information Table -->
+          <div *ngIf="balanceInformation && isBalanceInformationValid(balanceInformation)"
+               class="col-xl-6 col-lg-12 col-md-12 col-sm-12">
+            <div class="card">
           <div class="card-header">
             <h4 class="badge-outline col-green">{{ 'HOME-PAGE-CLIENT.INFORMATION-2.TEXT' | translate }}</h4>
           </div>

@@ -24,14 +24,20 @@ import { CommonModule } from '@angular/common';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { TranslateModule } from '@ngx-translate/core';
 import { TruncateDecimalsPipe } from '@app/shared/truncate-decimals.pipe';
-import { NgxEchartsModule } from 'ngx-echarts';
+import { NgxEchartsModule, provideEchartsCore } from 'ngx-echarts';
+import {ShareModalComponent} from "@app/client/home/share-modal/share-modal.component";
 
 @Component({
     selector: 'app-main',
     templateUrl: './home.component.html',
     styleUrls: ['./home.component.scss'],
     standalone: true,
-    imports: [CommonModule, NgApexchartsModule, TranslateModule, TruncateDecimalsPipe, NgxEchartsModule],
+    imports: [CommonModule, NgApexchartsModule, TranslateModule, TruncateDecimalsPipe, NgxEchartsModule, ShareModalComponent],
+    providers: [
+      provideEchartsCore({
+        echarts: () => import('echarts')
+      })
+    ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class HomeComponent {
@@ -370,11 +376,11 @@ export class HomeComponent {
               enabled: true,
               formatter: function (val: any) {
                 return val + "%"
-              },
-              plotOptions: {
-                pie: {
-                  expandOnClick: false
-                }
+              }
+            },
+            plotOptions: {
+              pie: {
+                expandOnClick: false
               }
             }
           },
