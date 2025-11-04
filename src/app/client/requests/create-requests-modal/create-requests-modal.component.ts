@@ -1,17 +1,5 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-  ViewChild,
-} from '@angular/core';
-import {
-  AbstractControl,
-  FormControl,
-  FormGroup, ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild,} from '@angular/core';
+import {AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators,} from '@angular/forms';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
 import {DateTime} from 'luxon';
@@ -179,8 +167,7 @@ export class CreateRequestsModalComponent implements OnInit {
   }
 
   private checkMinimumAmount(): number {
-    let amount = this.balanceInfo.availableBalance;
-    return amount;
+    return this.balanceInfo.availableBalance;
   }
 
   onGenerateVerificationCode() {
@@ -216,21 +203,26 @@ export class CreateRequestsModalComponent implements OnInit {
       .getAffiliateBtcByAffiliateId(this.user.id)
       .subscribe({
         next: (value: Response & { data: AffiliateBtc[] }) => {
-          if (value.success) {
+          if (value.success && value.data && value.data.length > 0) {
             const address = value.data.reduce(
               (acc: AffiliateBtc, item: AffiliateBtc) => {
-                acc.trc20Address = item.trc20Address;
-
+                if (item && item.trc20Address) {
+                  acc.trc20Address = item.trc20Address;
+                }
                 return acc;
               },
               {trc20Address: ''},
             );
 
-            this.affiliateBtc.trc20Address = address.trc20Address;
+            this.affiliateBtc.trc20Address = address.trc20Address || '';
+          } else {
+            // No hay datos, inicializar con string vacío
+            this.affiliateBtc.trc20Address = '';
           }
         },
         error: () => {
           this.showError('Error');
+          this.affiliateBtc.trc20Address = '';
         },
       });
   }
