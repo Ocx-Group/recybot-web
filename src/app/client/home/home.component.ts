@@ -46,10 +46,7 @@ export class HomeComponent {
   balanceInformation: BalanceInformation = new BalanceInformation();
   balanceInformationModel1A: BalanceInformationModel1A = new BalanceInformationModel1A();
   balanceInformationModel1B: BalanceInformationModel1B = new BalanceInformationModel1B();
-  withdrawalBalance: number = 0;
-  totalPaid: number = 0;
   maps: any[] = [];
-  circles = [];
   currentYearPurchases: PurchasePerMonthDto[] = [];
   previousYearPurchases: PurchasePerMonthDto[] = [];
   area_line_chart: EChartsOption;
@@ -67,7 +64,7 @@ export class HomeComponent {
   };
 
   information: StatisticsInformation = new StatisticsInformation();
-  public mapChartOption: EChartsOption;
+  public mapChartOption: EChartsOption = {};
   public pieChartOptions: any;
   public pieChartOptionsModel1A: any;
   public pieChartOptionsModel1B: any;
@@ -111,7 +108,7 @@ export class HomeComponent {
       this.loadUserData(user.id);
     });
 
-    this.loadLocations();
+    this.loadLocations().then();
     this.getPurchasesInMyNetwork();
     this.loadInformation();
     this.loadBnbAddress();
@@ -392,7 +389,7 @@ export class HomeComponent {
   async loadLocations() {
     // Registrar el mapa mundial para ECharts
     try {
-      const worldJson = await fetch('https://cdn.jsdelivr.net/npm/echarts@5/map/json/world.json').then(res => res.json());
+      const worldJson = await fetch('assets/data/world.json').then(res => res.json());
       echarts.registerMap('world', worldJson);
     } catch (error) {
       console.error('Error loading world map:', error);
