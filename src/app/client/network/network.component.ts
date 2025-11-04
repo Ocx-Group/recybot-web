@@ -27,7 +27,6 @@ import {ConfigurationService} from '@app/core/service/configuration-service/conf
 import {
   WalletWithdrawalsConfiguration
 } from '@app/core/models/wallet-withdrawals-configuration-model/wallet-withdrawals-configuration.model';
-import {TruncateDecimalsPipe} from '@app/shared/truncate-decimals.pipe';
 import {
   PagaditoTransactionDetailRequest
 } from '@app/core/models/pagadito-model/pagadito-transaction-detail-request.model';
@@ -100,7 +99,6 @@ export class NetworkComponent implements OnInit {
     private route: Router,
     private translateService: TranslateService,
     private configurationService: ConfigurationService,
-    private truncatedDecimals: TruncateDecimalsPipe,
     private pagaditoService: PagaditoService,
     private productService: ProductService,
     private matrixQualificationService: MatrixQualificationService,
@@ -257,10 +255,7 @@ export class NetworkComponent implements OnInit {
   showConfirmationTransferBalance(row) {
     this.generateVerificationCode();
 
-    let formattedBalance = this.truncatedDecimals.transform(
-      this.userBalance,
-      2,
-    );
+    let formattedBalance = Math.floor(this.userBalance * 100) / 100;
 
     Swal.fire({
       title:
