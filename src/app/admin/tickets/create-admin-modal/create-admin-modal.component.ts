@@ -126,7 +126,7 @@ export class CreateAdminModalComponent implements OnInit {
               (downloadURL) => {
                 let imageRequest = new TicketImagesRequest();
                 imageRequest.imagePath = downloadURL;
-                subscriber.next(imageRequest);
+                subscriber.next();
                 subscriber.complete();
               },
               (error) => {

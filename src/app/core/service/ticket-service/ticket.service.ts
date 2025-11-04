@@ -50,7 +50,7 @@ export class TicketService {
   }
 
   setTicket(ticket: any) {
-    this.currentTicket.next(ticket);
+    this.currentTicket.next();
   }
 
   getTicket() {

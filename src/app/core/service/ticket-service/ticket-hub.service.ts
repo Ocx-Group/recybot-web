@@ -33,7 +33,7 @@ export class TicketHubService {
   }
 
   public setTicket(ticketId: number) {
-    this.ticketSave.next(ticketId);
+    this.ticketSave.next();
     localStorage.setItem('ticket', JSON.stringify(ticketId));
   }
 
@@ -50,42 +50,42 @@ export class TicketHubService {
     try {
       await this.hubConnection.start();
       this.addMessageListener();
-      this.connectionEstablished.next(true);
+      this.connectionEstablished.next();
     } catch (error) {
       console.error(`Error al iniciar la conexión: ${error}`);
-      this.connectionEstablished.next(false);
-      this.connectionError.next(`Error al iniciar la conexión: ${error}`);
+      this.connectionEstablished.next();
+      this.connectionError.next();
       throw error;
     }
   }
 
   private addMessageListener(): void {
     this.hubConnection.on('ReceiveMessage', (message: TicketMessageRequest) => {
-      this.messageReceived.next(message);
+      this.messageReceived.next();
     });
 
     this.hubConnection.on('TicketCreated', (ticket: Ticket) => {
-      this.ticketCreated.next(ticket);
+      this.ticketCreated.next();
     });
 
     this.hubConnection.on('ReceiveTickets', (tickets: Ticket[]) => {
-      this.ticketsReceived.next(tickets);
+      this.ticketsReceived.next();
     });
 
     this.hubConnection.on('ReceiveTicketsForAdmin', (tickets: Ticket[]) => {
-      this.ticketsReceived.next(tickets);
+      this.ticketsReceived.next();
     });
 
     this.hubConnection.on('DeleteTicket', (ticket: Ticket) => {
-      this.ticketCreated.next(ticket);
+      this.ticketCreated.next();
     })
 
     this.hubConnection.on('GetTicketById', (ticket: Ticket) => {
-      this.ticketCreated.next(ticket);
+      this.ticketCreated.next();
     })
 
     this.hubConnection.on('ReceiveTicketSummaries', (ticketSummaries: TicketSummary[]) => {
-      this.ticketSummaries.next(ticketSummaries);
+      this.ticketSummaries.next();
     })
   }
 
@@ -96,7 +96,7 @@ export class TicketHubService {
       return true;
     } catch (error) {
       console.error(`Error al unirse a la sala: ${error}`);
-      this.connectionError.next(`Error al unirse a la sala: ${error}`);
+      this.connectionError.next();
 
       return false;
     }
@@ -177,15 +177,15 @@ export class TicketHubService {
       this.hubConnection.invoke<Ticket>('GetTicketById', ticketId)
         .then(ticket => {
           if (ticket) {
-            this.ticketCreated.next(ticket);
+            this.ticketCreated.next();
           } else {
             console.error('No ticket received');
-            this.ticketCreated.next(null);
+            this.ticketCreated.next();
           }
         })
         .catch(error => {
           console.error(`Error retrieving ticket: ${error}`);
-          this.ticketCreated.next(null);
+          this.ticketCreated.next();
         });
     } else {
       console.error('Connection is not in the \'Connected\' State.');

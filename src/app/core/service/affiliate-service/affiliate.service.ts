@@ -36,7 +36,7 @@ export class AffiliateService {
   }
 
   changeId(id: number) {
-    this.idSource.next(id);
+    this.idSource.next();
   }
 
   getAll() {

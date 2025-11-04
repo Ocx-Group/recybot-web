@@ -262,7 +262,7 @@ export class PrintService {
     return new Observable<string>(observer => {
       reader.onloadend = () => {
         if (typeof reader.result === 'string') {
-          observer.next(reader.result);
+          observer.next();
           observer.complete();
         } else {
           observer.error(

@@ -1,11 +1,15 @@
-import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
-import { WalletWait } from '@app/core/models/wallet-wait-model/wallet-wait.model';
-import { PrintService } from '@app/core/service/print-service/print.service';
-import { WalletWaitService } from '@app/core/service/wallet-wait-service/wallet-wait.service';
-import { DatatableComponent } from '@swimlane/ngx-datatable';
-import { ClipboardService } from 'ngx-clipboard';
-import { ToastrService } from 'ngx-toastr';
+import {Component, HostListener, OnInit, ViewChild} from '@angular/core';
+
+import {DataTableColumnCellDirective, DataTableColumnDirective, DatatableComponent} from '@swimlane/ngx-datatable';
+import {ClipboardService} from 'ngx-clipboard';
+import {ToastrService} from 'ngx-toastr';
 import Swal from 'sweetalert2';
+import {WalletWaitService} from "../../core/service/wallet-wait-service/wallet-wait.service";
+import {PrintService} from "../../core/service/print-service/print.service";
+import {WalletWait} from "../../core/models/wallet-wait-model/wallet-wait.model";
+import {TranslatePipe} from "@ngx-translate/core";
+import {RouterLink} from "@angular/router";
+import {IconsModule} from "../../shared";
 
 const header = [
   'Orden',
@@ -19,9 +23,17 @@ const header = [
 ];
 
 @Component({
-    selector: 'app-wallet-refill',
-    templateUrl: './wallet-refill.component.html',
-    standalone: false
+  selector: 'app-wallet-refill',
+  templateUrl: './wallet-refill.component.html',
+  standalone: true,
+  imports: [
+    TranslatePipe,
+    RouterLink,
+    IconsModule,
+    DatatableComponent,
+    DataTableColumnDirective,
+    DataTableColumnCellDirective
+  ]
 })
 export class WalletRefillComponent implements OnInit {
   rows = [];
@@ -36,7 +48,8 @@ export class WalletRefillComponent implements OnInit {
     private clipboardService: ClipboardService,
     private printService: PrintService,
     private toastr: ToastrService
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.loadWalletWait();
@@ -56,7 +69,7 @@ export class WalletRefillComponent implements OnInit {
         this.rows = resp;
         this.loadingIndicator = false;
       },
-      error: (err) => {
+      error: () => {
         this.showError('Error!');
       },
     });
@@ -66,25 +79,25 @@ export class WalletRefillComponent implements OnInit {
     return row.height;
   }
 
-  showError(message) {
+  showError(message: string) {
     this.toastr.error(message, 'Error!');
   }
 
   updateFilter(event) {
     const val = event.target.value.toLowerCase();
 
-    const temp = this.temp.filter(function (d) {
+    this.rows = this.temp.filter(function (d) {
       return d.name.toLowerCase().indexOf(val) !== -1 || !val;
     });
-    this.rows = temp;
     this.table.offset = 0;
   }
 
-  clipBoardCopy() {}
+  clipBoardCopy() {
+  }
 
   onPrint() {
     const body = this.temp.map((items: WalletWait) => {
-      const data = [
+      return [
         items.order,
         items.affiliateId,
         items.credit,
@@ -94,7 +107,6 @@ export class WalletRefillComponent implements OnInit {
         items.depositDate,
         items.date,
       ];
-      return data;
     });
 
     this.printService.print(header, body, 'Recarga de billetera', false);
@@ -110,7 +122,7 @@ export class WalletRefillComponent implements OnInit {
       confirmButtonText: 'Yes',
     }).then((result) => {
       if (result.isConfirmed) {
-        const text = result.value;
+        result.value;
       }
     });
   }

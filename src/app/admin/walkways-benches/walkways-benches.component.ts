@@ -1,16 +1,23 @@
-import { Component, ViewChild, HostListener, OnInit } from '@angular/core';
-import { DatatableComponent } from '@swimlane/ngx-datatable';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ToastrService } from 'ngx-toastr';
-import Swal from 'sweetalert2';
-import { ClipboardService } from 'ngx-clipboard';
-
-import { PrintService } from '@app/core/service/print-service/print.service';
+import {Component, ViewChild, HostListener} from '@angular/core';
+import {DataTableColumnCellDirective, DataTableColumnDirective, DatatableComponent} from '@swimlane/ngx-datatable';
+import {RouterLink} from "@angular/router";
+import {TranslatePipe} from "@ngx-translate/core";
+import {NgbDropdown, NgbDropdownMenu, NgbDropdownToggle} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
-    selector: 'app-news-admin',
-    templateUrl: './walkways-benches.component.html',
-    standalone: false
+  selector: 'app-news-admin',
+  templateUrl: './walkways-benches.component.html',
+  standalone: true,
+  imports: [
+    RouterLink,
+    DatatableComponent,
+    DataTableColumnDirective,
+    DataTableColumnCellDirective,
+    TranslatePipe,
+    NgbDropdown,
+    NgbDropdownToggle,
+    NgbDropdownMenu
+  ]
 })
 export class WalkwaysBenchesComponent {
   rows = [];
@@ -20,12 +27,10 @@ export class WalkwaysBenchesComponent {
   scrollBarHorizontal = window.innerWidth < 1200;
   @ViewChild('table') table: DatatableComponent;
 
-
   @HostListener('window:resize', ['$event'])
   onResize(event) {
     this.scrollBarHorizontal = window.innerWidth < 1200;
     this.table.recalculate();
     this.table.recalculateColumns();
   }
-
 }

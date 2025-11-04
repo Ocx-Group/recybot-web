@@ -1,38 +1,55 @@
-import { forkJoin } from 'rxjs';
-import { Component, OnInit } from '@angular/core';
-import { formatDate } from '@angular/common';
+import {forkJoin} from 'rxjs';
+import {Component, OnInit} from '@angular/core';
+import {formatDate} from '@angular/common';
 import {
   FormBuilder,
   FormGroup,
   FormArray,
-  AbstractControl,
+  AbstractControl, ReactiveFormsModule,
 } from '@angular/forms';
 import {
   NgbDateStruct,
-  NgbDateParserFormatter,
+  NgbDateParserFormatter, NgbNav, NgbNavItem, NgbNavLink, NgbNavContent, NgbInputDatepicker, NgbNavOutlet, NgbTooltip,
 } from '@ng-bootstrap/ng-bootstrap';
-import { ToastrService } from 'ngx-toastr';
+import {ToastrService} from 'ngx-toastr';
+import {WalletPeriodService} from "../../core/service/wallet-period-service/wallet-period.service";
+import {WalletPeriod} from "../../core/models/wallet-period-model/wallet-period.model";
+import {
+  WalletRetentionConfigService
+} from "../../core/service/wallet-retention-config-service/wallet-retention-config.service";
+import {ConfigurationService} from "../../core/service/configuration-service/configuration.service";
+import {
+  WalletWithdrawalsConfiguration
+} from "../../core/models/wallet-withdrawals-configuration-model/wallet-withdrawals-configuration.model";
+import {WalletRetentionConfig} from "../../core/models/wallet-retention-config-model/wallet-retention-config.model";
+import {
+  AdditionalParametersConfiguration
+} from "../../core/models/additional-parameters-configuration-model/additional-parameters-configuration.model";
+import {TranslatePipe} from "@ngx-translate/core";
+import {RouterLink} from "@angular/router";
 
-import { WalletPeriodService } from '@app/core/service/wallet-period-service/wallet-period.service';
-import { WalletPeriod } from '@app/core/models/wallet-period-model/wallet-period.model';
-import { WalletRetentionConfig } from '@app/core/models/wallet-retention-config-model/wallet-retention-config.model';
-import { ConfigurationService } from '@app/core/service/configuration-service/configuration.service';
-import { WalletWithdrawalsConfiguration } from '@app/core/models/wallet-withdrawals-configuration-model/wallet-withdrawals-configuration.model';
-import { AdditionalParametersConfiguration } from '@app/core/models/additional-parameters-configuration-model/additional-parameters-configuration.model';
-import { WalletRetentionConfigService } from '@app/core/service/wallet-retention-config-service/wallet-retention-config.service';
 @Component({
-    selector: 'app-wallet-parameters',
-    templateUrl: './wallet-parameters.component.html',
-    standalone: false
+  selector: 'app-wallet-parameters',
+  templateUrl: './wallet-parameters.component.html',
+  standalone: true,
+  imports: [
+    TranslatePipe,
+    RouterLink,
+    NgbNav,
+    NgbNavItem,
+    NgbNavLink,
+    NgbNavContent,
+    ReactiveFormsModule,
+    NgbInputDatepicker,
+    NgbNavOutlet,
+    NgbTooltip
+  ]
 })
 export class WalletParametersComponent implements OnInit {
   myForm: FormGroup;
   additionalParameters: FormGroup;
   active = 1;
   model: NgbDateStruct;
-  walletPeriod: WalletPeriod = new WalletPeriod();
-  WalletRetentionConfig: WalletRetentionConfig = new WalletRetentionConfig();
-
 
   constructor(
     private formBuilder: FormBuilder,
@@ -41,7 +58,8 @@ export class WalletParametersComponent implements OnInit {
     private ngbDateParserFormatter: NgbDateParserFormatter,
     private toastr: ToastrService,
     private configurationService: ConfigurationService
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     this.loadValidation();
@@ -52,11 +70,11 @@ export class WalletParametersComponent implements OnInit {
   }
 
 
-  showSuccess(message) {
+  showSuccess(message: string) {
     this.toastr.success(message, 'Success!');
   }
 
-  showError(message) {
+  showError(message: string) {
     this.toastr.error(message, 'Error!');
   }
 
@@ -95,7 +113,7 @@ export class WalletParametersComponent implements OnInit {
           concept_wallet_withdrawal: resp.concept_wallet_withdrawal
         })
       },
-      error: (err) => {
+      error: () => {
         this.showError('Error!');
       },
     })
@@ -111,7 +129,7 @@ export class WalletParametersComponent implements OnInit {
           activate_invoice_cancellation: resp.activate_invoice_cancellation
         });
       },
-      error: (err) => {
+      error: () => {
         this.showError('Error!');
       },
     });
@@ -137,7 +155,7 @@ export class WalletParametersComponent implements OnInit {
           });
         }
       },
-      error: (error) => {
+      error: () => {
         this.showError('Error!');
       },
     });
@@ -161,7 +179,7 @@ export class WalletParametersComponent implements OnInit {
           });
         }
       },
-      error: (error) => {
+      error: () => {
         this.showError('Error!');
       },
     });
@@ -205,12 +223,12 @@ export class WalletParametersComponent implements OnInit {
       this.walletRetentionConfigService.createWalletRetentionConfig(walletRetentionConfig),
       this.configurationService.createWithdrawalsWalletConfiguration(walletWithdrawalsConfig)
     ]).subscribe({
-      next: ([walletPeriodResponse, walletRetentionResponse]) => {
+      next: () => {
         this.showSuccess('The wallet period and wallet retention were updated successfully!');
         this.loadWalletPeriod();
         this.loadWalletRetentionConf();
       },
-      error: (error) => {
+      error: () => {
         this.showError('Error!');
       },
     });
@@ -220,11 +238,11 @@ export class WalletParametersComponent implements OnInit {
     const additionalParametersConfig: AdditionalParametersConfiguration = this.buildAdditionalParametersConfig();
 
     this.configurationService.createAdditionalParametersWalletConfiguration(additionalParametersConfig).subscribe({
-      next: (value) => {
+      next: () => {
         this.showSuccess('The wallet parameters was updated successfully!');
         this.loadAdditionalParametersConfiguration();
       },
-      error: (err) => {
+      error: () => {
         this.showError('Error!');
       },
     })
@@ -240,7 +258,7 @@ export class WalletParametersComponent implements OnInit {
             this.loadWalletPeriod();
           }
         },
-        error: (error) => {
+        error: () => {
           this.showError('Error!');
         },
       });
@@ -251,11 +269,11 @@ export class WalletParametersComponent implements OnInit {
     this.ranges.removeAt(index);
     if (index != null) {
       this.walletRetentionConfigService.delete(index).subscribe({
-        next: (resp) => {
+        next: () => {
           this.showSuccess('The wallet retention was deleted successfully!');
           this.loadWalletRetentionConf();
         },
-        error: (err) => {
+        error: () => {
           this.showError('Error!');
         },
       });

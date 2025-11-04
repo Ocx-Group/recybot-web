@@ -11,6 +11,6 @@ export class DirectionService {
   }
 
   updateDirection(item: string) {
-    this.data.next(item);
+    this.data.next();
   }
 }

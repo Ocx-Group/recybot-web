@@ -60,9 +60,6 @@
                     sortable="false"
                   >
                     <ng-template
-                      let-value="value"
-                      let-row="row"
-                      let-rowIndex="rowIndex"
                       ngx-datatable-cell-template
                     >
                       <div ngbDropdown container="body">
@@ -74,42 +71,42 @@
                           {{ 'USERS-LIST-PAGE.COL-ACTIONS.TEXT' | translate }}
                         </button>
                         <div ngbDropdownMenu>
-<!--                          <a
-                            ngbDropdownItem
-                            id="btn-edit"
-                            (click)="
-                              modalChildEdit.editOpenModal(
-                                modalChildEdit['userEditModal'],
-                                row
-                              )
-                            "
-                          >
-                            <i class="fas fa-edit"></i>
-                            <span style="margin-left: 10px">{{
-                              'USERS-LIST-PAGE.BTN-EDIT.TEXT' | translate
-                              }}</span>
-                          </a>
-                          <a
-                            ngbDropdownItem
-                            id="btn-delete"
-                            (click)="deleteSingleRow(row.id)"
-                          >
-                            <i class="fas fa-trash-alt"></i>
-                            <span style="margin-left: 10px">Delete</span>
-                          </a>
-                          <a ngbDropdownItem id="btn-detail">
-                            <i class="fas fa-file-import"></i>
-                            <span
-                              style="margin-left: 10px"
-                              (click)="
-                                modalChildDetail.detailOpenModal(
-                                  modalChildDetail['userDetailModal'],
-                                  row
-                                )
-                              "
-                            >Details</span
-                            >
-                          </a>-->
+                          <!--                          <a
+                                                      ngbDropdownItem
+                                                      id="btn-edit"
+                                                      (click)="
+                                                        modalChildEdit.editOpenModal(
+                                                          modalChildEdit['userEditModal'],
+                                                          row
+                                                        )
+                                                      "
+                                                    >
+                                                      <i class="fas fa-edit"></i>
+                                                      <span style="margin-left: 10px">{{
+                                                        'USERS-LIST-PAGE.BTN-EDIT.TEXT' | translate
+                                                        }}</span>
+                                                    </a>
+                                                    <a
+                                                      ngbDropdownItem
+                                                      id="btn-delete"
+                                                      (click)="deleteSingleRow(row.id)"
+                                                    >
+                                                      <i class="fas fa-trash-alt"></i>
+                                                      <span style="margin-left: 10px">Delete</span>
+                                                    </a>
+                                                    <a ngbDropdownItem id="btn-detail">
+                                                      <i class="fas fa-file-import"></i>
+                                                      <span
+                                                        style="margin-left: 10px"
+                                                        (click)="
+                                                          modalChildDetail.detailOpenModal(
+                                                            modalChildDetail['userDetailModal'],
+                                                            row
+                                                          )
+                                                        "
+                                                      >Details</span
+                                                      >
+                                                    </a>-->
                         </div>
                       </div>
                     </ng-template>

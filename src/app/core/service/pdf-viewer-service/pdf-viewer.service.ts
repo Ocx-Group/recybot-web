@@ -14,18 +14,18 @@ export class PdfViewerService {
   currentDocument$ = this.currentDocumentSource.asObservable();
 
   showPdf(document: PdfDocument) {
-    this.currentDocumentSource.next(document);
-    this.isVisibleSource.next(true);
+    this.currentDocumentSource.next();
+    this.isVisibleSource.next();
   }
 
   hidePdf() {
-    this.isVisibleSource.next(false);
-    this.currentDocumentSource.next(null);
+    this.isVisibleSource.next();
+    this.currentDocumentSource.next();
   }
 
   savePdf(document: PdfDocument) {
     const currentSavedDocs = this.savedDocumentsSource.getValue();
     currentSavedDocs.push(document);
-    this.savedDocumentsSource.next(currentSavedDocs);
+    this.savedDocumentsSource.next();
   }
 }

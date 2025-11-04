@@ -1,16 +1,31 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { DatatableComponent } from '@swimlane/ngx-datatable';
-
-import { PaymentTransaction } from '@app/core/models/payment-transaction-model/payment-transaction-request.model';
-import { PaymentTransactionService } from '@app/core/service/payment-transaction-service/payment-transaction.service';
-import { ConfirmPaymentTransaction } from '@app/core/models/payment-transaction-model/confirm-payment-transaction';
-import { ToastrService } from 'ngx-toastr';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {DataTableColumnCellDirective, DataTableColumnDirective, DatatableComponent} from '@swimlane/ngx-datatable';
+import {ToastrService} from 'ngx-toastr';
 import Swal from 'sweetalert2';
+import {PaymentTransactionService} from "../../core/service/payment-transaction-service/payment-transaction.service";
+import {PaymentTransaction} from "../../core/models/payment-transaction-model/payment-transaction";
+import {ConfirmPaymentTransaction} from "../../core/models/payment-transaction-model/confirm-payment-transaction";
+import {IconsModule} from "../../shared";
+import {TranslatePipe} from "@ngx-translate/core";
+import {RouterLink} from "@angular/router";
+import {NgbDropdown, NgbDropdownItem, NgbDropdownMenu, NgbDropdownToggle} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
-    selector: 'app-wire-transfer-list',
-    templateUrl: './wire-transfer-list.component.html',
-    standalone: false
+  selector: 'app-wire-transfer-list',
+  templateUrl: './wire-transfer-list.component.html',
+  standalone: true,
+  imports: [
+    IconsModule,
+    TranslatePipe,
+    DatatableComponent,
+    DataTableColumnDirective,
+    DataTableColumnCellDirective,
+    RouterLink,
+    NgbDropdown,
+    NgbDropdownToggle,
+    NgbDropdownMenu,
+    NgbDropdownItem
+  ]
 })
 export class WireTransferListComponent implements OnInit {
   rows = [];
@@ -19,7 +34,10 @@ export class WireTransferListComponent implements OnInit {
   reorderable = true;
   scrollBarHorizontal = window.innerWidth < 1200;
   @ViewChild('table') table: DatatableComponent;
-  constructor(private paymentTransactionService: PaymentTransactionService, private toast: ToastrService) { }
+
+  constructor(private paymentTransactionService: PaymentTransactionService,
+              private toast: ToastrService) {
+  }
 
   ngOnInit() {
     this.loadAllWireTransactions();
@@ -36,11 +54,9 @@ export class WireTransferListComponent implements OnInit {
   updateFilter(event) {
     const val = event.target.value.toLowerCase();
 
-    const temp = this.temp.filter(function (d) {
+    this.rows = this.temp.filter(function (d) {
       return d.userName.toLowerCase().indexOf(val) !== -1 || !val;
     });
-
-    this.rows = temp;
     this.table.offset = 0;
   }
 
@@ -68,7 +84,7 @@ export class WireTransferListComponent implements OnInit {
         payment.userName = row.userName;
 
         this.paymentTransactionService.confirmPayment(payment).subscribe({
-          next: (value) => {
+          next: () => {
             this.showSuccess('Pago confirmado');
             this.loadAllWireTransactions();
           },

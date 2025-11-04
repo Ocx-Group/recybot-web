@@ -35,10 +35,10 @@
                             </div>
                           </div>
                           <input style="background-color: white" type="text" class="form-control"
-                            id="inlineFormInputGroup" (keyup)="updateFilter($event)" aria-label="Search box"
-                            placeholder="{{
+                                 id="inlineFormInputGroup" (keyup)="updateFilter($event)" aria-label="Search box"
+                                 placeholder="{{
                               'USERS-LIST-PAGE.USERS-SEARCH.TEXT' | translate
-                            }}" />
+                            }}"/>
                         </div>
                       </div>
                     </div>
@@ -62,8 +62,8 @@
                   </div>
                 </div>
                 <ngx-datatable #table class="material" [rows]="rows" [loadingIndicator]="loadingIndicator"
-                  columnMode="force" [headerHeight]="50" [footerHeight]="50" rowHeight="auto" [limit]="10"
-                  [scrollbarH]="scrollBarHorizontal" [reorderable]="reorderable">
+                               columnMode="force" [headerHeight]="50" [footerHeight]="50" rowHeight="auto" [limit]="10"
+                               [scrollbarH]="scrollBarHorizontal" [reorderable]="reorderable">
                   <ngx-datatable-column name="Usuario">
                     <ng-template let-row="row" ngx-datatable-cell-template>
                       {{ row.userName }}
@@ -95,7 +95,7 @@
                     </ng-template>
                   </ngx-datatable-column>
                   <ngx-datatable-column name="{{ 'USERS-LIST-PAGE.COL-ACTIONS.TEXT' | translate }}" sortable="false">
-                    <ng-template let-value="value" let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+                    <ng-template let-row="row" ngx-datatable-cell-template>
                       <div ngbDropdown container="body">
                         <button type="button" class="btn btn-outline-primary btn-sm" ngbDropdownToggle>
                           {{ 'USERS-LIST-PAGE.COL-ACTIONS.TEXT' | translate }}
