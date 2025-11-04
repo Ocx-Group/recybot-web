@@ -1,15 +1,11 @@
-import { AuthLayoutComponent } from './layout/app-layout/auth-layout/auth-layout.component';
-import { MainLayoutComponent } from './layout/app-layout/main-layout/main-layout.component';
-import { AdminLayoutComponent } from './layout/app-layout/admin-layout/admin-layout.component';
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { Routes } from '@angular/router';
 import { AuthGuard } from './core/guard/auth.guard';
 import { AuthGuardAdmin } from './core/guard/auth.guard.admin';
 
-const routes: Routes = [
+export const routes: Routes = [
   {
     path: '',
-    component: MainLayoutComponent,
+    loadComponent: () => import('./layout/app-layout/main-layout/main-layout.component').then(m => m.MainLayoutComponent),
     canActivate: [AuthGuard],
     children: [
       { path: '', redirectTo: '/welcome', pathMatch: 'full' },
@@ -22,7 +18,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    component: AdminLayoutComponent,
+    loadComponent: () => import('./layout/app-layout/admin-layout/admin-layout.component').then(m => m.AdminLayoutComponent),
     canActivate: [AuthGuardAdmin],
     children: [
       { path: '', redirectTo: '/welcome', pathMatch: 'full' },
@@ -35,15 +31,11 @@ const routes: Routes = [
   },
   {
     path: '',
-    component: AuthLayoutComponent,
+    loadComponent: () => import('./layout/app-layout/auth-layout/auth-layout.component').then(m => m.AuthLayoutComponent),
     loadChildren: () =>
       import('./authentication/authentication.routes').then(
         (m) => m.AUTHENTICATION_ROUTES
       ),
   }
 ];
-@NgModule({
-  imports: [RouterModule.forRoot(routes, {})],
-  exports: [RouterModule]
-})
-export class AppRoutingModule { }
+
