@@ -1,4 +1,3 @@
-import { UserService } from '@app/core/service/user-service/user.service';
 import { Component, ViewChild, OnInit, Input } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import {
@@ -9,9 +8,11 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { User } from '@app/core/models/user-model/user.model';
+
 import { CommonModule } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
+import {User} from "../../../core/models/user-model/user.model";
+import {UserService} from "../../../core/service/user-service/user.service";
 
 @Component({
     selector: 'app-my-profile-edit-personal-info-modal',

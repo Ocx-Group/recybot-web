@@ -1,4 +1,4 @@
-import { UpdatePassword } from './../../../core/models/user-model/update.password.model';
+import { UpdatePassword } from '../../../core/models/user-model/update.password.model';
 import { ToastrService } from 'ngx-toastr';
 import { Component, Input, ViewChild, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -12,9 +12,9 @@ import {
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
+import {User} from "../../../core/models/user-model/user.model";
+import {UserService} from "../../../core/service/user-service/user.service";
 
-import { User } from '@app/core/models/user-model/user.model';
-import { UserService } from '@app/core/service/user-service/user.service';
 @Component({
     selector: 'app-my-profile-edit-password-modal',
     templateUrl: './my-profile-edit-password-modal.component.html',
