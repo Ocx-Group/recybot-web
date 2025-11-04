@@ -2,7 +2,9 @@ import { Injectable, TemplateRef } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subject } from 'rxjs';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class ConfigureWalletService {
   configureWalletModal: TemplateRef<any>;
   activeModal: any;

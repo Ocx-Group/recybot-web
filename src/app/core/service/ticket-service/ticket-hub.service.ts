@@ -3,11 +3,11 @@ import * as signalR from '@microsoft/signalr';
 import {BehaviorSubject, Observable, Subject} from 'rxjs';
 import {HubConnectionState} from "@microsoft/signalr";
 
-import {TicketRequest} from '@app/core/models/ticket-model/ticketRequest.model';
-import {TicketMessageRequest} from '@app/core/models/ticket-model/ticket-message-request.model';
-import {Ticket} from '@app/core/models/ticket-model/ticket.model';
+import {TicketRequest} from '../../models/ticket-model/ticketRequest.model';
+import {TicketMessageRequest} from '../../models/ticket-model/ticket-message-request.model';
+import {Ticket} from '../../models/ticket-model/ticket.model';
 import {environment} from '@environments/environment';
-import {TicketSummary} from '@app/core/models/ticket-model/ticket-summary.model'
+import {TicketSummary} from '../../models/ticket-model/ticket-summary.model'
 
 @Injectable({
   providedIn: 'root'
