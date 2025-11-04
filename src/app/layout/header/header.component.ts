@@ -21,6 +21,7 @@ import {TicketHubService} from '@app/core/service/ticket-service/ticket-hub.serv
 import {TicketSummary} from '@app/core/models/ticket-model/ticket-summary.model';
 import { IconsModule } from '@app/shared';
 import { TranslateModule } from '@ngx-translate/core';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 const document: any = window.document;
 
@@ -29,7 +30,7 @@ const document: any = window.document;
     templateUrl: './header.component.html',
     styleUrls: ['./header.component.scss'],
     standalone: true,
-    imports: [CommonModule, RouterLink, IconsModule, TranslateModule],
+    imports: [CommonModule, RouterLink, IconsModule, TranslateModule, NgbModule],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
