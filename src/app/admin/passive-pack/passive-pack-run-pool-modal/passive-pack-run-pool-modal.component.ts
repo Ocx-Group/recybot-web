@@ -1,25 +1,32 @@
-import { ProcessGradingService } from './../../../core/service/process-grading-service/process-grading.service';
-import { LevelEcoPoolRequest, PassivePack } from './../../../core/models/passive-pack-model/passive-pack.model';
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ToastrService } from 'ngx-toastr';
+import {ProcessGradingService} from '../../../core/service/process-grading-service/process-grading.service';
+import {LevelEcoPoolRequest, PassivePack} from '../../../core/models/passive-pack-model/passive-pack.model';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {NgbAlert, NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {ToastrService} from 'ngx-toastr';
 import Swal from 'sweetalert2';
-import { Circle } from 'progressbar.js';
+import {Circle} from 'progressbar.js';
 import {
   AbstractControl,
   FormArray,
   FormBuilder,
-  FormGroup,
+  FormGroup, ReactiveFormsModule,
   Validators
 } from '@angular/forms';
-import { DatePipe } from '@angular/common';
-import { Subject, Subscription } from 'rxjs';
-import { Router } from '@angular/router';
+import {DatePipe, NgClass} from '@angular/common';
+import {Subscription} from 'rxjs';
+import {Router} from '@angular/router';
+import {TranslatePipe} from "@ngx-translate/core";
 
 @Component({
-    selector: 'app-passive-pack-run-pool-modal',
-    templateUrl: './passive-pack-run-pool-modal.component.html',
-    standalone: false
+  selector: 'app-passive-pack-run-pool-modal',
+  templateUrl: './passive-pack-run-pool-modal.component.html',
+  standalone: true,
+  imports: [
+    NgbAlert,
+    ReactiveFormsModule,
+    TranslatePipe,
+    NgClass
+  ]
 })
 export class PassivePackRunPoolModalComponent implements OnInit, OnDestroy {
   passivePackForm: FormGroup;
@@ -37,7 +44,6 @@ export class PassivePackRunPoolModalComponent implements OnInit, OnDestroy {
   private finalDateSubscription: Subscription;
   private progressSubscription: Subscription;
   private processSubscription: Subscription;
-  private destroy$ = new Subject<void>();
   public configurationId = 0;
   public existConfigurationComplete = false;
 
@@ -48,7 +54,8 @@ export class PassivePackRunPoolModalComponent implements OnInit, OnDestroy {
     private processGradingService: ProcessGradingService,
     private router: Router,
     private modalService: NgbModal
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     this.loadEcoPoolConfiguration();
@@ -119,9 +126,8 @@ export class PassivePackRunPoolModalComponent implements OnInit, OnDestroy {
       final_date: [null, [Validators.required]],
       case: ['', Validators.required],
       company_percentage_levels: ['', Validators.required],
-      period_date: [{ disabled: true }],
-      levels: this.formBuilder.array([
-      ]),
+      period_date: [{disabled: true}],
+      levels: this.formBuilder.array([]),
     });
   }
 
@@ -165,8 +171,8 @@ export class PassivePackRunPoolModalComponent implements OnInit, OnDestroy {
         const end = new Date(finalDate);
 
         if (end <= start) {
-          this.passivePackForm.get('final_date').setErrors({ invalidFinalDate: true });
-          this.passivePackForm.get('start_date').setErrors({ invalidStartDate: true });
+          this.passivePackForm.get('final_date').setErrors({invalidFinalDate: true});
+          this.passivePackForm.get('start_date').setErrors({invalidStartDate: true});
         } else {
           this.passivePackForm.get('final_date').setErrors(null);
           this.passivePackForm.get('start_date').setErrors(null);
@@ -209,10 +215,6 @@ export class PassivePackRunPoolModalComponent implements OnInit, OnDestroy {
 
   }
 
-  deleteRecordSuccess(count) {
-    this.toastr.success(count + ' Records Deleted Successfully', '');
-  }
-
   addForm() {
     const levelsFormGroup = this.formBuilder.group({
       level: [this.setLevelCounter()],
@@ -226,11 +228,11 @@ export class PassivePackRunPoolModalComponent implements OnInit, OnDestroy {
   runPoolPaid() {
     this.processSubscription = this.processGradingService.execEcoPoolProcess().subscribe({
       next: (value) => {
-        if (value.success){
+        if (value.success) {
           this.showProgress();
         }
       },
-      error: (err) => {
+      error: () => {
         this.showError('Error');
       },
     });
@@ -246,7 +248,7 @@ export class PassivePackRunPoolModalComponent implements OnInit, OnDestroy {
         this.closeModals();
 
         this.processGradingService.stopFetchingProgress();
-        this.router.navigate(['/admin/results-ecopool']);
+        this.router.navigate(['/admin/results-ecopool']).then();
       }
     });
   }
@@ -269,15 +271,15 @@ export class PassivePackRunPoolModalComponent implements OnInit, OnDestroy {
       color: '#FFEA82',
       trailColor: '#eee',
       trailWidth: 1,
-      svgStyle: { width: '35%', height: '35%' },
+      svgStyle: {width: '35%', height: '35%'},
       text: {
         style: {
           color: '#999',
         },
         autoStyleContainer: false
       },
-      from: { color: '#FFEA82' },
-      to: { color: '#ED6A5A' },
+      from: {color: '#FFEA82'},
+      to: {color: '#ED6A5A'},
       step: (state, circle) => {
         circle.setText(Math.round(circle.value() * 100) + ' %');
       }
@@ -290,10 +292,6 @@ export class PassivePackRunPoolModalComponent implements OnInit, OnDestroy {
     }
   }
 
-  onProcessComplete() {
-    this.showSuccess('Proceso realizado correctamente');
-  }
-
   onSaveConfiguration() {
     this.submitted = true;
     if (this.passivePackForm.invalid) {
@@ -303,10 +301,10 @@ export class PassivePackRunPoolModalComponent implements OnInit, OnDestroy {
     const configuration = this.setValues();
 
     this.processGradingService.createEcoPoolConfiguration(configuration).subscribe({
-      next: (value) => {
+      next: () => {
         this.showSuccess('La configuración se guardó correctamente.');
       },
-      error: (err) => {
+      error: () => {
         this.showError('Error');
       },
     });

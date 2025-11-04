@@ -23,7 +23,7 @@
               <form [formGroup]="generalParameters" id="msform">
                 <!-- progressbar -->
                 <ul id="progressbar">
-                  <li [ngClass]="step>=1 ? 'active ' : 'inactive'">Parametros Generales</li>
+                  <li [ngClass]="step>=1 ? 'active' : 'inactive'">Parametros Generales</li>
                   <li [ngClass]="step>=2 ? 'active' : 'inactive'">Lugar y gastos de envío</li>
                   <li [ngClass]="step==3 ? 'active' : 'inactive'">Resumen</li>
                 </ul>
@@ -39,9 +39,9 @@
                       <input class="form-control" type="text" formControlName="carrier_name" [ngClass]="{
                         'is-invalid':
                         general_parameters_step && general_parameters_controls.carrier_name.errors
-                      }" placeholder="Nombre" />
+                      }" placeholder="Nombre"/>
                       <div *ngIf="general_parameters_step && general_parameters_controls.carrier_name.errors"
-                        class="invalid-feedback">
+                           class="invalid-feedback">
                         <div *ngIf="general_parameters_controls.carrier_name.errors.required">
                           El nombre es requerido.
                         </div>
@@ -52,12 +52,12 @@
                         Tiempo de entrega
                         <span class="text-danger">*</span></label>
                       <input class="form-control" type="text" formControlName="delivery_time" name="delivery_time"
-                        [ngClass]="{
+                             [ngClass]="{
                         'is-invalid':
                         general_parameters_step && general_parameters_controls.delivery_time.errors
-                      }" placeholder="Tiempo" />
+                      }" placeholder="Tiempo"/>
                       <div *ngIf="general_parameters_step && general_parameters_controls.delivery_time.errors"
-                        class="invalid-feedback">
+                           class="invalid-feedback">
                         <div *ngIf="general_parameters_controls.delivery_time.errors.required">
                           El tiempo de entrega es requerido.
                         </div>
@@ -66,8 +66,7 @@
                   </div>
 
 
-
-                  <input (click)="next()" type="button" name="next" class="next action-button" value="Next" />
+                  <input (click)="next()" type="button" name="next" class="next action-button" value="Next"/>
                 </fieldset>
               </form>
               <form [formGroup]="placeShippingCosts" id="msform">
@@ -78,7 +77,7 @@
                         Comisión por envio
                         <span class="text-danger">*</span></label>
                       <input class="form-control" type="number" min="0" formControlName="commission_shipment"
-                        name="delivery_time" placeholder="%" />
+                             name="delivery_time" placeholder="%"/>
 
                     </div>
                     <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
@@ -95,7 +94,7 @@
                   <div class="row">
                     <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 mt-4">
                       <input class="form-check-input ms-2 me-2" type="checkbox" name="free_delivery"
-                        formControlName="free_delivery" id="free_delivery" value="" />
+                             formControlName="free_delivery" id="free_delivery" value=""/>
                       <label for="free_delivery" placement="bottom" ngbTooltip="">
                         Envío gratis
                         <span class="text-danger">*</span></label>
@@ -103,7 +102,7 @@
                     </div>
                     <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 mt-4">
                       <input class="form-check-input ms-2 me-2" type="checkbox" name="include_maintenance_costs"
-                        formControlName="include_maintenance_costs" id="include_maintenance_costs" value="" />
+                             formControlName="include_maintenance_costs" id="include_maintenance_costs" value=""/>
                       <label for="include_maintenance_costs" placement="bottom" ngbTooltip="">
                         Incluir gastos de mantenimiento
                         <span class="text-danger">*</span></label>
@@ -116,12 +115,12 @@
                     </div>
                     <div class="form-group col-xl-1 col-lg-1 col-md-12 col-sm-12 mt-4">
                       <input class="form-check-input ms-2 me-2" type="radio" name="billing" id="billing"
-                        formControlName="billing" value="0" />
+                             formControlName="billing" value="0"/>
                       <label for="price"> De acuerdo con el precio total. </label>
                     </div>
                     <div class="form-group col-xl-1 col-lg-1 col-md-12 col-sm-12 mt-4">
                       <input class="form-check-input ms-2 me-2" type="radio" name="billing" formControlName="billing"
-                        id="billing" value="1" />
+                             id="billing" value="1"/>
                       <label for="weight">De acuerdo con el peso total </label>
                     </div>
                   </div>
@@ -136,9 +135,9 @@
                       <input class="form-control" type="text" formControlName="range_1" [ngClass]="{
                         'is-invalid':
                         place_shipping_costs_step && place_shipping_costs_controls.range_1.errors
-                      }" placeholder="0.00" required="required" />
+                      }" placeholder="0.00" required="required"/>
                       <div *ngIf="place_shipping_costs_step && place_shipping_costs_controls.range_1.errors"
-                        class="invalid-feedback">
+                           class="invalid-feedback">
                         <div *ngIf="place_shipping_costs_controls.range_1.errors.required">
                           El valor es requerido.
                         </div>
@@ -150,9 +149,9 @@
                       <input class="form-control" type="text" formControlName="range_2" [ngClass]="{
                         'is-invalid':
                         place_shipping_costs_step && place_shipping_costs_controls.range_2.errors
-                      }" placeholder="0.00" required="required" />
+                      }" placeholder="0.00" required="required"/>
                       <div *ngIf="place_shipping_costs_step && place_shipping_costs_controls.range_2.errors"
-                        class="invalid-feedback">
+                           class="invalid-feedback">
                         <div *ngIf="place_shipping_costs_controls.range_2.errors.required">
                           El valor es requerido.
                         </div>
@@ -162,14 +161,15 @@
                       <label for="zone">
                         Zona
                         <span class="text-danger">*</span></label>
-                      <select class="form-select form-control form-control-sm" type="text" formControlName="zone" [ngClass]="{
+                      <select class="form-select form-control form-control-sm" type="text" formControlName="zone"
+                              [ngClass]="{
                         'is-invalid':
                         place_shipping_costs_step && place_shipping_costs_controls.zone.errors
                       }" placeholder="0.00" required="required">
                         <option value="">Seleccione una opción</option>
                       </select>
                       <div *ngIf="place_shipping_costs_step && place_shipping_costs_controls.zone.errors"
-                        class="invalid-feedback">
+                           class="invalid-feedback">
                         <div *ngIf="place_shipping_costs_controls.zone.errors.required">
                           El valor es requerido.
                         </div>
@@ -182,9 +182,9 @@
                       <input class="form-control" type="text" formControlName="cost" [ngClass]="{
                         'is-invalid':
                         place_shipping_costs_step && place_shipping_costs_controls.cost.errors
-                      }" placeholder="0.00" required="required" />
+                      }" placeholder="0.00" required="required"/>
                       <div *ngIf="place_shipping_costs_step && place_shipping_costs_controls.cost.errors"
-                        class="invalid-feedback">
+                           class="invalid-feedback">
                         <div *ngIf="place_shipping_costs_controls.cost.errors.required">
                           El valor es requerido.
                         </div>
@@ -194,16 +194,16 @@
 
 
                   <input (click)="previous()" type="button" name="previous" class="previous action-button-previous"
-                    value="Previous" />
-                  <input (click)="next()" type="button" name="next" class="next action-button" value="Next" />
+                         value="Previous"/>
+                  <input (click)="next()" type="button" name="next" class="next action-button" value="Next"/>
                 </fieldset>
               </form>
               <form [formGroup]="summary" id="msform">
                 <fieldset *ngIf="step == 3">
 
                   <input (click)="previous()" type="button" name="previous" class="previous action-button-previous"
-                    value="Previous" />
-                  <input (click)="submit()" type="submit" name="submit" class="submit action-button" value="Submit" />
+                         value="Previous"/>
+                  <input (click)="submit()" type="submit" name="submit" class="submit action-button" value="Submit"/>
                 </fieldset>
               </form>
 

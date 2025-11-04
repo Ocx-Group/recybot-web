@@ -1,51 +1,55 @@
-import { Component, ViewChild, HostListener, OnInit } from '@angular/core';
-import {
-  DatatableComponent,
-  ColumnMode,
-  SelectionType,
-} from '@swimlane/ngx-datatable';
-import {
-  FormBuilder,
-  FormGroup,
-  Validators,
-  AbstractControl,
-} from '@angular/forms';
-import { ToastrService } from 'ngx-toastr';
+import {Component, HostListener, OnInit, ViewChild} from '@angular/core';
+import {DataTableColumnCellDirective, DataTableColumnDirective, DatatableComponent} from '@swimlane/ngx-datatable';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {ToastrService} from 'ngx-toastr';
 import Swal from 'sweetalert2';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ClipboardService } from 'ngx-clipboard';
-
-import { RolService } from '@app/core/service/rol-service/rol.service';
-import { Rol } from '@app/core/models/rol-model/rol.model';
-import { PrintService } from '@app/core/service/print-service/print.service';
-import { User } from '@app/core/models/user-model/user.model';
-import { UserService } from '@app/core/service/user-service/user.service';
-import { PrivilegeService } from '@app/core/service/privilege-service/privilege.service';
+import {NgbDropdown, NgbDropdownItem, NgbDropdownMenu, NgbDropdownToggle, NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {ClipboardService} from 'ngx-clipboard';
+import {Rol} from "../../core/models/rol-model/rol.model";
+import {RolService} from "../../core/service/rol-service/rol.service";
+import {PrintService} from "../../core/service/print-service/print.service";
+import {TranslatePipe} from "@ngx-translate/core";
+import {RouterLink} from "@angular/router";
+import {IconsModule} from "../../shared";
+import {RolListCreateModalComponent} from "./rol-list-create-modal/rol-list-create-modal.component";
+import {RolListEditModalComponent} from "./rol-list-edit-modal/rol-list-edit-modal.component";
+import {RolListPermissionsModalComponent} from "./rol-list-permissions-modal/rol-list-permissions-modal.component";
+import {RolListSummaryModalComponent} from "./rol-list-summary-modal/rol-list-summary-modal.component";
 
 const header = ['Id', 'Rol', 'Descripción', 'Usuarios Asociados', 'Permisos'];
 
 @Component({
-    selector: 'app-rol-list',
-    templateUrl: './rol-list.component.html',
-    providers: [ToastrService],
-    standalone: false
+  selector: 'app-rol-list',
+  templateUrl: './rol-list.component.html',
+  providers: [ToastrService],
+  standalone: true,
+  imports: [
+    TranslatePipe,
+    RouterLink,
+    IconsModule,
+    DatatableComponent,
+    DataTableColumnDirective,
+    DataTableColumnCellDirective,
+    RolListCreateModalComponent,
+    RolListEditModalComponent,
+    RolListPermissionsModalComponent,
+    RolListSummaryModalComponent,
+    NgbDropdown,
+    NgbDropdownToggle,
+    NgbDropdownMenu,
+    NgbDropdownItem
+  ]
 })
 export class RolListComponent implements OnInit {
-  countUsers = [];
   rows = [];
   temp = [];
   loadingIndicator = true;
   reorderable = true;
   scrollBarHorizontal = window.innerWidth < 1200;
   selected = [];
-  columns: any[] = [{ prop: 'name' }, { name: 'Company' }, { name: 'Gender' }];
-  ColumnMode = ColumnMode;
-  SelectionType = SelectionType;
-
+  columns: any[] = [{prop: 'name'}, {name: 'Company'}, {name: 'Gender'}];
   createRolForm: FormGroup;
-  updateRolForm: FormGroup;
   submitted = false;
-  rolGlobal: Rol = new Rol();
 
   @ViewChild('table') table: DatatableComponent;
 
@@ -55,18 +59,13 @@ export class RolListComponent implements OnInit {
     private formBuilder: FormBuilder,
     private toastr: ToastrService,
     private clipboardService: ClipboardService,
-    private printService: PrintService,
-    private privilegeService: PrivilegeService,
-    private userService: UserService
-  ) {}
+    private printService: PrintService
+  ) {
+  }
 
   ngOnInit() {
     this.loadRolList();
     this.loadValidations();
-  }
-
-  showSuccess(message) {
-    this.toastr.success(message, 'Success!');
   }
 
   loadValidations() {
@@ -108,59 +107,11 @@ export class RolListComponent implements OnInit {
     });
   }
 
-  permissionsOpenModal(content) {
-    this.modalService.open(content, {
-      ariaLabelledBy: 'modal-basic-title',
-      size: 'xl',
-    });
-  }
-
   createOpenModal(content) {
     this.modalService.open(content, {
       ariaLabelledBy: 'modal-basic-title',
       size: 'lg',
     });
-  }
-
-  updateOpenModal(content) {
-    this.modalService.open(content, {
-      ariaLabelledBy: 'modal-basic-title',
-      size: 'lg',
-    });
-  }
-
-  closeModals() {
-    this.modalService.dismissAll();
-  }
-
-  onAddRowSave() {
-    this.submitted = true;
-    if (this.createRolForm.invalid) {
-      return;
-    }
-    let rol = new Rol();
-    rol.name = this.createRolForm.value.rol_name;
-    rol.description = this.createRolForm.value.description;
-
-    this.rolService.createRol(rol).subscribe({
-      next: (value) => {
-        this.showSuccess('The rol was created successfully!');
-        this.closeModals();
-        this.loadRolList();
-      },
-      error: (err) => {
-        this.showError('Error!' + err);
-      },
-    });
-  }
-
-  get create_rol_controls(): { [key: string]: AbstractControl } {
-    return this.createRolForm.controls;
-  }
-
-  onReset() {
-    this.submitted = false;
-    this.createRolForm.reset();
   }
 
   deleteSingleRow(value) {
@@ -196,18 +147,15 @@ export class RolListComponent implements OnInit {
   updateFilter(event) {
     const val = event.target.value.toLowerCase();
 
-    const temp = this.temp.filter(function (d) {
+    this.rows = this.temp.filter(function (d) {
       return d.name.toLowerCase().indexOf(val) !== -1 || !val;
     });
-
-    this.rows = temp;
     this.table.offset = 0;
   }
 
   clipBoardCopy() {
-    var string = JSON.stringify(this.temp);
-    var result = this.clipboardService.copyFromContent(string);
-
+    const string = JSON.stringify(this.temp);
+    this.clipboardService.copyFromContent(string);
     if (this.temp.length === 0) {
       this.toastr.info('no data to copy');
     } else {
@@ -217,20 +165,14 @@ export class RolListComponent implements OnInit {
 
   onPrint() {
     const body = this.temp.map((items: any) => {
-      const data = [
+      return [
         items.id,
         items.name,
         items.description,
         items.associated_users,
         items.permissions,
       ];
-      return data;
     });
-
     this.printService.print(header, body, 'Lista de Roles', false);
-  }
-
-  onCountPermissions() {
-    this.privilegeService.getAllPrivileges().subscribe((result) => {});
   }
 }

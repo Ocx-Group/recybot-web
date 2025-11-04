@@ -9,32 +9,35 @@ import {
 import {
   AbstractControl,
   FormControl,
-  FormGroup,
+  FormGroup, ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
-import { DateTime } from 'luxon';
+import {DateTime} from 'luxon';
 
-import { WalletRequestService } from '../../../core/service/wallet-request/wallet-request.service';
-import { ToastrService } from 'ngx-toastr';
-import { WalletRequestRequest } from '../../../core/models/wallet-request-request-model/wallet-request-request.model';
-import { AffiliateService } from '../../../core/service/affiliate-service/affiliate.service';
-import { UserAffiliate } from '../../../core/models/user-affiliate-model/user.affiliate.model';
-import { BalanceInformation } from '../../../core/models/wallet-model/balance-information.model';
-import { WalletWithdrawalsConfiguration } from '../../../core/models/wallet-withdrawals-configuration-model/wallet-withdrawals-configuration.model';
-import { AffiliateBtcService } from '../../../core/service/affiliate-btc-service/affiliate-btc.service';
-import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
-import { AffiliateBtc } from '../../../core/models/affiliate-btc-model/affiliate-btc.model';
-import { Response } from '../../../core/models/response-model/response.model';
-import { HttpErrorResponse } from '@angular/common/http';
+import {WalletRequestService} from '@app/core/service/wallet-request/wallet-request.service';
+import {ToastrService} from 'ngx-toastr';
+import {WalletRequestRequest} from '@app/core/models/wallet-request-request-model/wallet-request-request.model';
+import {AffiliateService} from '@app/core/service/affiliate-service/affiliate.service';
+import {UserAffiliate} from '@app/core/models/user-affiliate-model/user.affiliate.model';
+import {BalanceInformation} from '@app/core/models/wallet-model/balance-information.model';
+import {
+  WalletWithdrawalsConfiguration
+} from '@app/core/models/wallet-withdrawals-configuration-model/wallet-withdrawals-configuration.model';
+import {AffiliateBtcService} from '@app/core/service/affiliate-btc-service/affiliate-btc.service';
+import {CommonModule} from '@angular/common';
+import {AffiliateBtc} from '@app/core/models/affiliate-btc-model/affiliate-btc.model';
+import {Response} from '@app/core/models/response-model/response.model';
+import {HttpErrorResponse} from '@angular/common/http';
+import {TranslatePipe} from "@ngx-translate/core";
+import {off} from "@angular/fire/database";
 
 @Component({
-    selector: 'app-create-requests-modal',
-    templateUrl: './create-requests-modal.component.html',
-    standalone: true,
-    imports: [CommonModule, ReactiveFormsModule]
+  selector: 'app-create-requests-modal',
+  templateUrl: './create-requests-modal.component.html',
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule, TranslatePipe]
 })
 export class CreateRequestsModalComponent implements OnInit {
   walletRequest: WalletRequestRequest = new WalletRequestRequest();
@@ -60,7 +63,8 @@ export class CreateRequestsModalComponent implements OnInit {
     private toastr: ToastrService,
     private affiliateService: AffiliateService,
     private affiliateBtcService: AffiliateBtcService,
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.getUtcToday();
@@ -219,7 +223,7 @@ export class CreateRequestsModalComponent implements OnInit {
 
                 return acc;
               },
-              { trc20Address: '' },
+              {trc20Address: ''},
             );
 
             this.affiliateBtc.trc20Address = address.trc20Address;
@@ -234,4 +238,6 @@ export class CreateRequestsModalComponent implements OnInit {
   togglePasswordVisibility(): void {
     this.showPassword = !this.showPassword;
   }
+
+  protected readonly off = off;
 }

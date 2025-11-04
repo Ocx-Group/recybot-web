@@ -1,12 +1,19 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { Incentive } from '@app/core/models/incentive-model/incentive.model';
-import { GradingService } from '@app/core/service/grading-service/grading.service';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {NgbModal, NgbNav, NgbNavContent, NgbNavItem, NgbNavLink, NgbNavOutlet} from '@ng-bootstrap/ng-bootstrap';
+import {Incentive} from "../../../core/models/incentive-model/incentive.model";
+import {GradingService} from "../../../core/service/grading-service/grading.service";
 
 @Component({
-    selector: 'app-incentives-list-details-modal',
-    templateUrl: './incentives-list-details-modal.component.html',
-    standalone: false
+  selector: 'app-incentives-list-details-modal',
+  templateUrl: './incentives-list-details-modal.component.html',
+  standalone: true,
+  imports: [
+    NgbNav,
+    NgbNavItem,
+    NgbNavContent,
+    NgbNavLink,
+    NgbNavOutlet
+  ]
 })
 export class IncentivesListDetailsModalComponent implements OnInit {
   incentive: Incentive = new Incentive();
@@ -20,20 +27,13 @@ export class IncentivesListDetailsModalComponent implements OnInit {
   constructor(
     private modalService: NgbModal,
     private gradingService: GradingService
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.fetchCalificationList();
     this.fetchMembership();
     this.fetchProductList();
-  }
-
-  detailsOpenModal(content, incentive: Incentive) {
-    this.incentive = incentive;
-    this.modalService.open(content, {
-      ariaLabelledBy: 'modal-basic-title',
-      size: 'xl',
-    });
   }
 
   fetchCalificationList() {

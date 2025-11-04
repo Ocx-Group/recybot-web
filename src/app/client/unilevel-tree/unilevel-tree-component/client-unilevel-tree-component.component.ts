@@ -7,6 +7,7 @@ import {
   EventEmitter,
 } from '@angular/core';
 import { MyTreeNodeClient } from '../../../core/models/unilevel-tree-model/tree-node';
+import {NgbPopover} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
     selector: 'app-client-unilevel-tree-component',
@@ -18,7 +19,9 @@ import { MyTreeNodeClient } from '../../../core/models/unilevel-tree-model/tree-
     },
     encapsulation: ViewEncapsulation.None,
     standalone: true,
-    imports: []
+  imports: [
+    NgbPopover
+  ]
 })
 export class ClientUnilevelTreeComponentComponent {
   @Input('data') data: MyTreeNodeClient | undefined;

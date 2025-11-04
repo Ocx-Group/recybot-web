@@ -24,9 +24,9 @@
               <i class="fas fa-user float-start"></i>
               <span>
                 {{
-                (information.amountUsersDirectModel123 ?? 0) +
-                ' ' +
-                ('NETWORK-PAGE.DIRECT-CUSTOMERS.TEXT' | translate)
+                  (information.amountUsersDirectModel123 ?? 0) +
+                  ' ' +
+                  ('NETWORK-PAGE.DIRECT-CUSTOMERS.TEXT' | translate)
                 }}
               </span>
             </h6>
@@ -37,9 +37,9 @@
               <i class="fas fa-users float-start"></i>
               <span>
                 {{
-                (information.amountUsersNetworkModel123 ?? 0) +
-                ' ' +
-                ('NETWORK-PAGE.DIRECT-CUSTOMERS.TEXT' | translate)
+                  (information.amountUsersNetworkModel123 ?? 0) +
+                  ' ' +
+                  ('NETWORK-PAGE.DIRECT-CUSTOMERS.TEXT' | translate)
                 }}
               </span>
             </h6>
@@ -59,7 +59,7 @@
               </div>
               <div class="col-xl-2 text-right">
                 <span class="btn btn-outline-primary btn-sm" (click)="isCollapsed = !isCollapsed"
-                  [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
+                      [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
                   <i class="bi bi-arrows-collapse"></i>
                 </span>
               </div>
@@ -67,7 +67,7 @@
           </div>
           <div class="card-body">
             <div id="collapseExample" [ngbCollapse]="isCollapsed">
-              <br />
+              <br/>
               <div class="row">
                 <div class="col-sm-3">
                   <div class="table-search-area">
@@ -76,15 +76,15 @@
                         <div class="input-group mb-2">
                           <div class="input-group-prepend">
                             <div role="button" class="input-group-text" title="Search"
-                              (click)="getUserAffiliateByUserName()">
+                                 (click)="getUserAffiliateByUserName()">
                               <i-feather name="search" style="color: #96a2b4"></i-feather>
                             </div>
                           </div>
                           <input style="background-color: white" type="text" class="form-control"
-                            id="inlineFormInputGroup2" (keyup)="setUserAffiliateByUserName($event)"
-                            aria-label="Search box" placeholder="{{
+                                 id="inlineFormInputGroup2" (keyup)="setUserAffiliateByUserName($event)"
+                                 aria-label="Search box" placeholder="{{
                               'NETWORK-PAGE.SEARCH.TEXT' | translate
-                            }}" />
+                            }}"/>
                         </div>
                       </div>
                     </div>
@@ -93,8 +93,10 @@
               </div>
               <div class="row" *ngIf="rowsGlobal && rowsGlobal.length > 0">
                 <ngx-datatable #tableRef class="material" [rows]="rowsGlobal"
-                  [loadingIndicator]="loadingIndicatorGlobal" columnMode="force" [headerHeight]="50" [footerHeight]="50"
-                  rowHeight="auto" [limit]="10" [scrollbarH]="scrollBarHorizontal" [reorderable]="reorderable">
+                               [loadingIndicator]="loadingIndicatorGlobal" columnMode="force" [headerHeight]="50"
+                               [footerHeight]="50"
+                               rowHeight="auto" [limit]="10" [scrollbarH]="scrollBarHorizontal"
+                               [reorderable]="reorderable">
                   <ngx-datatable-column name="{{ 'NETWORK-PAGE.ROW-USER.TEXT' | translate }}">
                     <ng-template let-row="row" ngx-datatable-cell-template>
                       {{ row.user_name }}
@@ -132,14 +134,14 @@
                           <a ngbDropdownItem *ngIf="isNewUser" (click)="createPagaditoTransaction(row)">
                             <i class="bi bi-credit-card"></i>
                             <span style="margin-left: 10px">{{
-                              'NETWORK-PAGE.ACTIVATE-MEMBERSHIP.CARD.TEXT'
-                              | translate
+                                'NETWORK-PAGE.ACTIVATE-MEMBERSHIP.CARD.TEXT'
+                                  | translate
                               }}</span>
                           </a>
-                          <a ngbDropdownItem id="btn-purchase" (click)="purchaseModal.openModal(row)">
+                          <a ngbDropdownItem id="btn-purchase" (click)="openPurchaseModal(row)">
                             <i class="bi bi-currency-exchange me-1"></i>
                             <span>{{
-                              'NETWORK-PAGE.THIRD-PURCHASE.TEXT' | translate
+                                'NETWORK-PAGE.THIRD-PURCHASE.TEXT' | translate
                               }}</span>
                           </a>
                         </div>
@@ -176,10 +178,10 @@
                               </div>
                             </div>
                             <input style="background-color: white" type="text" class="form-control"
-                              id="inlineFormInputGroup" (keyup)="updateFilter($event)" aria-label="Search box"
-                              placeholder="{{
+                                   id="inlineFormInputGroup" (keyup)="updateFilter($event)" aria-label="Search box"
+                                   placeholder="{{
                                 'NETWORK-PAGE.SEARCH.TEXT' | translate
-                              }}" />
+                              }}"/>
                           </div>
                         </div>
                       </div>
@@ -210,8 +212,10 @@
                   </div>
                 </div>
                 <ngx-datatable id="htmlTable" #tableRefGlobal class="material" [rows]="rows"
-                  [loadingIndicator]="loadingIndicator" columnMode="force" [headerHeight]="50" [footerHeight]="50"
-                  rowHeight="auto" [limit]="10" [scrollbarH]="scrollBarHorizontal" [reorderable]="reorderable">
+                               [loadingIndicator]="loadingIndicator" columnMode="force" [headerHeight]="50"
+                               [footerHeight]="50"
+                               rowHeight="auto" [limit]="10" [scrollbarH]="scrollBarHorizontal"
+                               [reorderable]="reorderable">
                   <ngx-datatable-column name="{{ 'NETWORK-PAGE.ROW-USER.TEXT' | translate }}">
                     <ng-template let-row="row" ngx-datatable-cell-template>
                       {{ row.userName }}
@@ -246,10 +250,10 @@
                           {{ 'NETWORK-PAGE.BTN-ACTIONS.TEXT' | translate }}
                         </button>
                         <div ngbDropdownMenu>
-                          <a ngbDropdownItem id="btn-purchase" (click)="purchaseModal.openModal(row)">
+                          <a ngbDropdownItem id="btn-purchase" (click)="openPurchaseModal(row)">
                             <i class="bi bi-currency-exchange me-1"></i>
                             <span>{{
-                              'NETWORK-PAGE.THIRD-PURCHASE.TEXT' | translate
+                                'NETWORK-PAGE.THIRD-PURCHASE.TEXT' | translate
                               }}</span>
                           </a>
                         </div>
@@ -266,5 +270,5 @@
   </div>
 </section>
 <app-third-party-purchase #purchaseModal [recycoins]="recycoins$ | async"
-  [isReachedWithdrawalLimit]="isReachedWithdrawalLimit">
+                          [isReachedWithdrawalLimit]="isReachedWithdrawalLimit">
 </app-third-party-purchase>

@@ -1,53 +1,67 @@
-import { ThirdPartyPurchaseComponent } from './third-party-purchase/third-party-purchase.component';
-import { TranslateService } from '@ngx-translate/core';
+import {ThirdPartyPurchaseComponent} from './third-party-purchase/third-party-purchase.component';
+import {TranslateModule, TranslateService} from '@ngx-translate/core';
 import Swal from 'sweetalert2';
 import {
   Component,
   HostListener,
   OnInit,
-  Output,
   ViewChild,
 } from '@angular/core';
-import { DatatableComponent } from '@swimlane/ngx-datatable';
-import { Observable, Subject, takeUntil } from 'rxjs';
-import { Router } from '@angular/router';
+import {DatatableComponent} from '@swimlane/ngx-datatable';
+import {Observable, Subject, takeUntil} from 'rxjs';
+import {Router, RouterLink} from '@angular/router';
 import html2canvas from 'html2canvas';
 import JSPDF from 'jspdf';
 
-import { NetworkAffiliate } from '@app/core/models/network-affiliate/network.affiliate.model';
-import { AffiliateService } from '@app/core/service/affiliate-service/affiliate.service';
-import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
-import { Grading } from '@app/core/models/grading-model/grading.model';
-import { GradingService } from '@app/core/service/grading-service/grading.service';
-import { AuthService } from '@app/core/service/authentication-service/auth.service';
-import { WalletService } from '@app/core/service/wallet-service/wallet.service';
-import { ToastrService } from 'ngx-toastr';
-import { TransferBalance } from '@app/core/models/wallet-model/transfer-balance.model';
-import { EncryptService } from '@app/core/service/encrypt-service/encrypt.service';
-import { ConfigurationService } from '@app/core/service/configuration-service/configuration.service';
-import { WalletWithdrawalsConfiguration } from '@app/core/models/wallet-withdrawals-configuration-model/wallet-withdrawals-configuration.model';
-import { TruncateDecimalsPipe } from '@app/shared/truncate-decimals.pipe';
-import { PagaditoTransactionDetailRequest } from '@app/core/models/pagadito-model/pagadito-transaction-detail-request.model';
-import { CreatePagaditoTransactionRequest } from '@app/core/models/pagadito-model/create-pagadito-transaction-request.model';
-import { PagaditoService } from '@app/core/service/pagadito-service/pagadito.service';
-import { Product } from '@app/core/models/product-model/product.model';
-import { ProductService } from '@app/core/service/product-service/product.service';
-import { StatisticsInformation } from '@app/core/models/wallet-model/statisticsInformation';
-import { MatrixQualificationService } from '@app/core/service/matrix-qualification-service/matrix-qualification.service';
-import { CommonModule } from '@angular/common';
-import { NgxDatatableModule } from '@swimlane/ngx-datatable';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { TranslateModule } from '@ngx-translate/core';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { IconsModule } from '@app/shared';
+import {NetworkAffiliate} from '@app/core/models/network-affiliate/network.affiliate.model';
+import {AffiliateService} from '@app/core/service/affiliate-service/affiliate.service';
+import {UserAffiliate} from '@app/core/models/user-affiliate-model/user.affiliate.model';
+import {Grading} from '@app/core/models/grading-model/grading.model';
+import {GradingService} from '@app/core/service/grading-service/grading.service';
+import {AuthService} from '@app/core/service/authentication-service/auth.service';
+import {WalletService} from '@app/core/service/wallet-service/wallet.service';
+import {ToastrService} from 'ngx-toastr';
+import {TransferBalance} from '@app/core/models/wallet-model/transfer-balance.model';
+import {EncryptService} from '@app/core/service/encrypt-service/encrypt.service';
+import {ConfigurationService} from '@app/core/service/configuration-service/configuration.service';
+import {
+  WalletWithdrawalsConfiguration
+} from '@app/core/models/wallet-withdrawals-configuration-model/wallet-withdrawals-configuration.model';
+import {TruncateDecimalsPipe} from '@app/shared/truncate-decimals.pipe';
+import {
+  PagaditoTransactionDetailRequest
+} from '@app/core/models/pagadito-model/pagadito-transaction-detail-request.model';
+import {
+  CreatePagaditoTransactionRequest
+} from '@app/core/models/pagadito-model/create-pagadito-transaction-request.model';
+import {PagaditoService} from '@app/core/service/pagadito-service/pagadito.service';
+import {Product} from '@app/core/models/product-model/product.model';
+import {ProductService} from '@app/core/service/product-service/product.service';
+import {StatisticsInformation} from '@app/core/models/wallet-model/statisticsInformation';
+import {MatrixQualificationService} from '@app/core/service/matrix-qualification-service/matrix-qualification.service';
+import {CommonModule} from '@angular/common';
+import {NgxDatatableModule} from '@swimlane/ngx-datatable';
+import {ReactiveFormsModule, FormsModule} from '@angular/forms';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import {IconsModule} from '@app/shared';
 
 @Component({
-    selector: 'app-network',
-    templateUrl: './network.component.html',
-    standalone: true,
-    imports: [CommonModule, NgxDatatableModule, ReactiveFormsModule, FormsModule, TranslateModule, NgbModule, IconsModule],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  selector: 'app-network',
+  templateUrl: './network.component.html',
+  standalone: true,
+  imports: [
+    CommonModule,
+    NgxDatatableModule,
+    ReactiveFormsModule,
+    FormsModule,
+    TranslateModule,
+    NgbModule,
+    IconsModule,
+    RouterLink,
+    ThirdPartyPurchaseComponent
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class NetworkComponent implements OnInit {
   isCollapsed = true;
@@ -70,7 +84,7 @@ export class NetworkComponent implements OnInit {
   pagaditoRequest = new CreatePagaditoTransactionRequest();
   currentMembership: Product = new Product();
   information: StatisticsInformation = new StatisticsInformation();
-  @ViewChild('purchaseModal') purchaseModal: ThirdPartyPurchaseComponent;
+  @ViewChild('purchaseModal', {static: false}) purchaseModal!: ThirdPartyPurchaseComponent;
   @ViewChild('tableRef') table: DatatableComponent;
   @ViewChild('tableRefGlobal') tableRefGlobal: DatatableComponent;
   recycoins$: Observable<Product[]>;
@@ -90,7 +104,8 @@ export class NetworkComponent implements OnInit {
     private pagaditoService: PagaditoService,
     private productService: ProductService,
     private matrixQualificationService: MatrixQualificationService,
-  ) {}
+  ) {
+  }
 
   ngOnInit() {
     this.loadingIndicatorGlobal = false;
@@ -156,7 +171,8 @@ export class NetworkComponent implements OnInit {
       next: resp => {
         this.currentMembership = resp[0];
       },
-      error: () => {},
+      error: () => {
+      },
     });
   }
 
@@ -251,8 +267,8 @@ export class NetworkComponent implements OnInit {
         'Ingrese el código de verificación que ha sido enviado a su correo electrónico.',
       html: `
     <span style="font-size: 18px;">Transferencia para <span style="color: #ff5733;">${
-      row.userName || row.user_name
-    }</span></span><br>
+        row.userName || row.user_name
+      }</span></span><br>
     <span style="font-size: 18px;">Saldo Disponible <span style="color: #ff5733;">${formattedBalance}</span></span>
       <input id="swal-input-amount" type="number" placeholder="Monto" min="0" step="0.01" class="swal2-input">
       <input id="swal-input-code" type="text" placeholder="Código de verificación" class="swal2-input">
@@ -403,7 +419,7 @@ export class NetworkComponent implements OnInit {
       const posY = 30;
 
       pdf.setFontSize(18);
-      pdf.text('Mi red', pageWidth / 2, 20, { align: 'center' });
+      pdf.text('Mi red', pageWidth / 2, 20, {align: 'center'});
 
       const contentDataURL = canvas.toDataURL('image/png');
       pdf.addImage(contentDataURL, 'PNG', posX, posY, imgWidth, imgHeight);
@@ -581,5 +597,14 @@ export class NetworkComponent implements OnInit {
           console.error(err);
         },
       });
+  }
+
+  openPurchaseModal(row: any): void {
+    if (this.purchaseModal) {
+      this.purchaseModal.openModal(row);
+    } else {
+      console.error('Purchase modal component is not initialized');
+      this.showError('Error al abrir el modal de compra');
+    }
   }
 }

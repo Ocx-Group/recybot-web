@@ -35,10 +35,10 @@
                             </div>
                           </div>
                           <input style="background-color: white" type="text" class="form-control"
-                            id="inlineFormInputGroup" (keyup)="updateFilter($event)" aria-label="Search box"
-                            placeholder="{{
+                                 id="inlineFormInputGroup" (keyup)="updateFilter($event)" aria-label="Search box"
+                                 placeholder="{{
                               'USERS-LIST-PAGE.USERS-SEARCH.TEXT' | translate
-                            }}" />
+                            }}"/>
                         </div>
                       </div>
                     </div>
@@ -73,8 +73,8 @@
                   </div>
                 </div>
                 <ngx-datatable #table class="material" [rows]="rows" [loadingIndicator]="loadingIndicator"
-                  columnMode="force" [headerHeight]="50" [footerHeight]="50" rowHeight="auto" [limit]="10"
-                  [scrollbarH]="scrollBarHorizontal" [reorderable]="reorderable">
+                               columnMode="force" [headerHeight]="50" [footerHeight]="50" rowHeight="auto" [limit]="10"
+                               [scrollbarH]="scrollBarHorizontal" [reorderable]="reorderable">
                   <ngx-datatable-column name="{{ 'USERS-LIST-PAGE.COL-USER.TEXT' | translate }}">
                     <ng-template let-row="row" ngx-datatable-cell-template>
                       {{ row.user_name }}
@@ -137,9 +137,9 @@
                   </ngx-datatable-column>
                 </ngx-datatable>
                 <app-users-list-create-modal [selectItems]="items" #modalChildCreate
-                  (loadUserList)="loadUserList()"></app-users-list-create-modal>
+                                             (loadUserList)="loadUserList()"></app-users-list-create-modal>
                 <app-users-list-edit-modal [selectRol]="items" #modalChildEdit
-                  (loadUserList)="loadUserList()"></app-users-list-edit-modal>
+                                           (loadUserList)="loadUserList()"></app-users-list-edit-modal>
                 <app-users-list-detail-modal #modalChildDetail></app-users-list-detail-modal>
               </div>
             </div>

@@ -1,19 +1,44 @@
-import { Component, HostListener, ViewChild, OnInit } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { DatatableComponent } from '@swimlane/ngx-datatable';
+import {Component, HostListener, OnInit, ViewChild} from '@angular/core';
+import {NgbDropdown, NgbDropdownItem, NgbDropdownMenu, NgbDropdownToggle, NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {DataTableColumnCellDirective, DataTableColumnDirective, DatatableComponent} from '@swimlane/ngx-datatable';
 
-import { User } from '@app/core/models/user-model/user.model';
-import { UserService } from '@app/core/service/user-service/user.service';
-import { PrintService } from '@app/core/service/print-service/print.service';
-import { ClipboardService } from 'ngx-clipboard';
-import { ToastrService } from 'ngx-toastr';
+import {ClipboardService} from 'ngx-clipboard';
+import {ToastrService} from 'ngx-toastr';
+import {User} from "../../core/models/user-model/user.model";
+import {UserService} from "../../core/service/user-service/user.service";
+import {PrintService} from "../../core/service/print-service/print.service";
+import {TranslatePipe} from "@ngx-translate/core";
+import {
+  MyProfileEditPasswordModalComponent
+} from "../../client/my-profile/my-profile-edit-password-modal/my-profile-edit-password-modal.component";
+import {
+  MyProfileEditPersonalInfoModalComponent
+} from "../../client/my-profile/my-profile-edit-personal-info-modal/my-profile-edit-personal-info-modal.component";
+import {
+  MyProfileEditPasswordUploadModalComponent
+} from "./my-profile-edit-password-upload-modal/my-profile-edit-password-upload-modal.component";
+import {RouterLink} from "@angular/router";
 
 const header = ['Movimientos', 'IP', 'Fecha'];
 
 @Component({
-    selector: 'app-my-profile',
-    templateUrl: './my-profile.component.html',
-    standalone: false
+  selector: 'app-my-profile',
+  templateUrl: './my-profile.component.html',
+  standalone: true,
+  imports: [
+    TranslatePipe,
+    NgbDropdown,
+    NgbDropdownToggle,
+    NgbDropdownMenu,
+    NgbDropdownItem,
+    DatatableComponent,
+    DataTableColumnDirective,
+    MyProfileEditPasswordModalComponent,
+    MyProfileEditPersonalInfoModalComponent,
+    MyProfileEditPasswordUploadModalComponent,
+    DataTableColumnCellDirective,
+    RouterLink
+  ]
 })
 export class MyProfileComponent implements OnInit {
   public user: User = new User();
@@ -30,7 +55,8 @@ export class MyProfileComponent implements OnInit {
     private printService: PrintService,
     private clipboardService: ClipboardService,
     private toastr: ToastrService,
-  ) {}
+  ) {
+  }
 
   @ViewChild('table') table: DatatableComponent;
 
@@ -50,24 +76,9 @@ export class MyProfileComponent implements OnInit {
     return row.height;
   }
 
-  updateFilter(event) {
-    const val = event.target.value.toLowerCase();
-
-    // filter our data
-    const temp = this.temp.filter(function (d) {
-      return d.name.toLowerCase().indexOf(val) !== -1 || !val;
-    });
-
-    // update the rows
-    this.rows = temp;
-    // Whenever the filter changes, always go back to the first page
-    this.table.offset = 0;
-  }
-
   getCurrentUser() {
     let result = localStorage.getItem('currentUserAdmin');
-    let object = JSON.parse(result);
-    this.userCookie = object;
+    this.userCookie = JSON.parse(result);
   }
 
   getUserInfo() {
@@ -87,17 +98,15 @@ export class MyProfileComponent implements OnInit {
 
   onPrintPdf() {
     const body = this.temp.map((items: any) => {
-      const data = [items.movements, items.ip, items.date];
-      return data;
+      return [items.movements, items.ip, items.date];
     });
 
     this.printService.print(header, body, 'Últimos Movimientos', false);
   }
 
   clipBoardCopy() {
-    var string = JSON.stringify(this.temp);
-    var result = this.clipboardService.copyFromContent(string);
-
+    const string = JSON.stringify(this.temp);
+    this.clipboardService.copyFromContent(string);
     if (this.temp.length === 0) {
       this.toastr.info('No data to copy');
     } else {

@@ -8,34 +8,42 @@ import {
 import {
   AbstractControl,
   FormBuilder,
-  FormGroup,
+  FormGroup, ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
 
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Rol } from '@app/core/models/rol-model/rol.model';
-import { RolService } from '@app/core/service/rol-service/rol.service';
-import { ToastrService } from 'ngx-toastr';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {ToastrService} from 'ngx-toastr';
+import {Rol} from "../../../core/models/rol-model/rol.model";
+import {RolService} from "../../../core/service/rol-service/rol.service";
+import {TranslatePipe} from "@ngx-translate/core";
+import {NgClass} from "@angular/common";
 
 @Component({
-    selector: 'app-rol-list-create-modal',
-    templateUrl: './rol-list-create-modal.component.html',
-    providers: [ToastrService],
-    standalone: false
+  selector: 'app-rol-list-create-modal',
+  templateUrl: './rol-list-create-modal.component.html',
+  providers: [ToastrService],
+  standalone: true,
+  imports: [
+    TranslatePipe,
+    ReactiveFormsModule,
+    NgClass
+  ]
 })
 export class RolListCreateModalComponent implements OnInit {
   createRolForm: FormGroup;
   submitted = false;
-  rolGlobal: Rol = new Rol();
 
   @ViewChild('rolCreateModal') rolCreateModal: NgbModal;
   @Output('loadRolList') loadRolList: EventEmitter<any> = new EventEmitter();
+
   constructor(
     private modalService: NgbModal,
     private rolService: RolService,
     private formBuilder: FormBuilder,
     private toastr: ToastrService
-  ) {}
+  ) {
+  }
 
   get create_rol_controls(): { [key: string]: AbstractControl } {
     return this.createRolForm.controls;

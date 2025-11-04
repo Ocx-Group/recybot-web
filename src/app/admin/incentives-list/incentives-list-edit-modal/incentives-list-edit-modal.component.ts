@@ -11,17 +11,18 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ToastrService } from 'ngx-toastr';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {ToastrService} from 'ngx-toastr';
+import {GradingService} from "../../../core/service/grading-service/grading.service";
+import {IncentiveService} from "../../../core/service/incentive-service/incentive.service";
+import {Incentive} from "../../../core/models/incentive-model/incentive.model";
 
-import { Incentive } from '@app/core/models/incentive-model/incentive.model';
-import { GradingService } from '@app/core/service/grading-service/grading.service';
-import { IncentiveService } from '@app/core/service/incentive-service/incentive.service';
 
 @Component({
-    selector: 'app-incentives-list-edit-modal',
-    templateUrl: './incentives-list-edit-modal.component.html',
-    standalone: false
+  selector: 'app-incentives-list-edit-modal',
+  templateUrl: './incentives-list-edit-modal.component.html',
+  standalone: true,
+  imports: []
 })
 export class IncentivesListEditModalComponent implements OnInit {
   editIncentivesForm!: FormGroup;
@@ -42,7 +43,8 @@ export class IncentivesListEditModalComponent implements OnInit {
     private incentiveService: IncentiveService,
     private modalService: NgbModal,
     private toastr: ToastrService
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.fetchCalificationList();
@@ -93,7 +95,7 @@ export class IncentivesListEditModalComponent implements OnInit {
     });
   }
 
-  showSuccess(message) {
+  showSuccess(message: string) {
     this.toastr.success(message, 'Success!');
   }
 
@@ -216,7 +218,7 @@ export class IncentivesListEditModalComponent implements OnInit {
     this.incentive.network_leaders_qualifier =
       this.editIncentivesForm.value.network_leaders_qualifier;
 
-    this.incentiveService.updateIncentive(this.incentive).subscribe((resp) => {
+    this.incentiveService.updateIncentive(this.incentive).subscribe(() => {
       this.showSuccess('The incentive was update successfully!');
       this.closeModals();
       this.loadIncentiveList.emit();

@@ -1,16 +1,45 @@
-import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { DatatableComponent } from '@swimlane/ngx-datatable';
-import { ToastrService } from 'ngx-toastr';
-import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
-
-import { ConfigurationService } from '@app/core/service/configuration-service/configuration.service';
-import { ProductConfiguration } from '@app/core/models/product-configuration-model/product-configuration.model';
+import {Component, HostListener, OnInit, ViewChild} from '@angular/core';
+import {
+  NgbModal,
+  NgbNav,
+  NgbNavContent,
+  NgbNavItem,
+  NgbNavLink,
+  NgbNavOutlet,
+  NgbTooltip
+} from '@ng-bootstrap/ng-bootstrap';
+import {DataTableColumnCellDirective, DataTableColumnDirective, DatatableComponent} from '@swimlane/ngx-datatable';
+import {ToastrService} from 'ngx-toastr';
+import {FormBuilder, FormGroup, ReactiveFormsModule} from '@angular/forms';
+import {ProductConfiguration} from "../../core/models/product-configuration-model/product-configuration.model";
+import {ConfigurationService} from "../../core/service/configuration-service/configuration.service";
+import {RouterLink} from "@angular/router";
+import {TranslatePipe} from "@ngx-translate/core";
+import {IconsModule} from "../../shared";
+import {
+  ProductsServicesConfigurationsCreateCarrierModalComponent
+} from "./products-services-configurations-create-carrier-modal/products-services-configurations-create-carrier-modal.component";
 
 @Component({
-    selector: 'app-products-services-configurations',
-    templateUrl: './products-services-configurations.component.html',
-    standalone: false
+  selector: 'app-products-services-configurations',
+  templateUrl: './products-services-configurations.component.html',
+  standalone: true,
+  imports: [
+    RouterLink,
+    TranslatePipe,
+    NgbNav,
+    NgbNavItem,
+    ReactiveFormsModule,
+    NgbNavLink,
+    NgbNavContent,
+    NgbTooltip,
+    IconsModule,
+    DatatableComponent,
+    DataTableColumnDirective,
+    DataTableColumnCellDirective,
+    NgbNavOutlet,
+    ProductsServicesConfigurationsCreateCarrierModalComponent
+  ]
 })
 export class ProductsServicesConfigurationsComponent implements OnInit {
   productConfigurationForm!: FormGroup;
@@ -31,7 +60,8 @@ export class ProductsServicesConfigurationsComponent implements OnInit {
     private configurationService: ConfigurationService,
     private toastr: ToastrService,
     private formBuilder: FormBuilder,
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     this.loadValidations();
@@ -64,21 +94,15 @@ export class ProductsServicesConfigurationsComponent implements OnInit {
     })
   }
 
-  showSuccess(message) {
+  showSuccess(message: string) {
     this.toastr.success(message, 'Success!');
-  }
-
-  get product__configuration_controls(): { [key: string]: AbstractControl } {
-    return this.productConfigurationForm.controls;
   }
 
   updateFilter(event) {
     const val = event.target.value.toLowerCase();
-    const temp = this.temp.filter(function (d) {
+    this.rows = this.temp.filter(function (d) {
       return d.name.toLowerCase().indexOf(val) !== -1 || !val;
     });
-
-    this.rows = temp;
     this.table.offset = 0;
   }
 
@@ -120,11 +144,11 @@ export class ProductsServicesConfigurationsComponent implements OnInit {
     this.productConfiguration.symbol_points_qualify = this.productConfigurationForm.value.points_symbol_qualify;
     this.productConfiguration.binary_points_symbol = this.productConfigurationForm.value.binary_points_symbol;
 
-     this.configurationService.createProductConfiguration(this.productConfiguration).subscribe((resp)=>{
-          if(resp.success){
-           this.showSuccess('The product configuration was update successfully!');
-           this.loadProductConfiguration();
-          }
-     });
+    this.configurationService.createProductConfiguration(this.productConfiguration).subscribe((resp) => {
+      if (resp.success) {
+        this.showSuccess('The product configuration was update successfully!');
+        this.loadProductConfiguration();
+      }
+    });
   }
 }

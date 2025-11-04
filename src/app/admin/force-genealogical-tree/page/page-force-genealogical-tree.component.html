@@ -34,22 +34,24 @@
             </app-force-genealogical-tree>
             <ng-template #nodeTemplate let-node>
               <div class="chart-node">
-                <img [src]="node?.image" />
+                <img [src]="node?.image" alt="node"/>
                 <div class="name">{{ node?.name }}</div>
                 <div class="description">{{ node?.description }}</div>
                 <!-- An ugly button to fold/unfold -->
-                <div
-                  *ngIf="node.children.length"
-                  (click)="node.hideChildren = !node.hideChildren"
-                  class="tree-fold-btn"
-                >
-                  {{ node.hideChildren ? '+' : '-' }}
-                </div>
+                <button
+                      *ngIf="node.children.length"
+                      (click)="node.hideChildren = !node.hideChildren"
+                      class="tree-fold-btn"
+                      type="button"
+                      [attr.aria-label]="node.hideChildren ? 'Expand node' : 'Collapse node'"
+                    >
+                      {{ node.hideChildren ? '+' : '-' }}
+                    </button>
+                  </div>
+                </ng-template>
               </div>
-            </ng-template>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
-</section>
+    </section>

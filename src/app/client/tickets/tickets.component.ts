@@ -1,8 +1,16 @@
-import {AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {Router} from '@angular/router';
+import {
+  AfterViewInit,
+  Component,
+  CUSTOM_ELEMENTS_SCHEMA,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  ViewChild
+} from '@angular/core';
+import {Router, RouterLink} from '@angular/router';
 import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {NgbCarousel, NgbModal, NgbSlide} from "@ng-bootstrap/ng-bootstrap";
 import {ToastrService} from 'ngx-toastr';
 import Swal from 'sweetalert2';
 import {DatatableComponent, SelectionType} from '@swimlane/ngx-datatable';
@@ -13,17 +21,16 @@ import {TicketHubService} from '@app/core/service/ticket-service/ticket-hub.serv
 import {AuthService} from '@app/core/service/authentication-service/auth.service';
 import {UserAffiliate} from '@app/core/models/user-affiliate-model/user.affiliate.model';
 import {Ticket} from '@app/core/models/ticket-model/ticket.model';
-import { CommonModule } from '@angular/common';
-import { NgxDatatableModule } from '@swimlane/ngx-datatable';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { TranslateModule } from '@ngx-translate/core';
+import {CommonModule} from '@angular/common';
+import {NgxDatatableModule} from '@swimlane/ngx-datatable';
+import {TranslateModule} from '@ngx-translate/core';
 
 @Component({
-    selector: 'app-tickets',
-    templateUrl: './tickets.component.html',
-    standalone: true,
-    imports: [CommonModule, NgxDatatableModule, TranslateModule],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  selector: 'app-tickets',
+  templateUrl: './tickets.component.html',
+  standalone: true,
+  imports: [CommonModule, NgxDatatableModule, TranslateModule, RouterLink, NgbCarousel, CreateTicketModalComponent, NgbSlide],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class TicketsComponent implements OnInit, AfterViewInit, OnDestroy {
   user: UserAffiliate = new UserAffiliate();

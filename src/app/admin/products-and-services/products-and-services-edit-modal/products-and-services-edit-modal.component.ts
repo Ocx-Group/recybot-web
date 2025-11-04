@@ -1,4 +1,3 @@
-
 import {
   Component,
   ElementRef,
@@ -13,35 +12,65 @@ import {
   FormGroup,
   FormBuilder,
   Validators,
-  AbstractControl,
+  AbstractControl, ReactiveFormsModule, FormsModule,
 } from '@angular/forms';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ToastrService } from 'ngx-toastr';
-import { DatatableComponent } from '@swimlane/ngx-datatable';
+import {
+  NgbModal,
+  NgbNav,
+  NgbNavContent,
+  NgbNavItem,
+  NgbNavLink,
+  NgbNavOutlet,
+  NgbTooltip
+} from '@ng-bootstrap/ng-bootstrap';
+import {ToastrService} from 'ngx-toastr';
+import {DataTableColumnCellDirective, DataTableColumnDirective, DatatableComponent} from '@swimlane/ngx-datatable';
 import Swal from 'sweetalert2';
-import { Storage, ref, uploadBytesResumable, getDownloadURL } from '@angular/fire/storage';
+import {Storage, ref, uploadBytesResumable, getDownloadURL} from '@angular/fire/storage';
 
+import {ProductAttributeService} from '../../../core/service/product-attribute/product-attribute.service';
+import {Product} from "../../../core/models/product-model/product.model";
+import {ProductCombination} from "../../../core/models/product-combination-model/product-combination.model";
+import {ProductDiscount} from "../../../core/models/product-discount-model/product-discount.model";
+import {ProductInventory} from "../../../core/models/product-inventory-model/product-inventory.model";
+import {ProductAttribute} from "../../../core/models/product-attribute-model/product-attribute.model";
+import {ProductAttributeValue} from "../../../core/models/product-attribute-value-model/product-attribute-value.model";
+import {ProductService} from "../../../core/service/product-service/product.service";
+import {ProductDiscountService} from "../../../core/service/product-discount-service/product-discount.service";
+import {GradingService} from "../../../core/service/grading-service/grading.service";
+import {ProductCategoryService} from "../../../core/service/product-category-service/product-category.service";
+import {
+  ProductAttributeValueService
+} from "../../../core/service/product-attribute-value/product-attribute-value.service";
+import {ProductCombinationService} from "../../../core/service/product-combination-service/product-combination.service";
+import {ProductInventoryService} from "../../../core/service/product-inventory-service/product-inventory.service";
+import {NgClass} from "@angular/common";
+import {CKEditorModule} from "@ckeditor/ckeditor5-angular";
+import {NgxDropzoneModule} from "ngx-dropzone";
+import {TranslatePipe} from "@ngx-translate/core";
 
-import { ProductDiscountService } from '@app/core/service/product-discount-service/product-discount.service';
-import { ProductDiscount } from '@app/core/models/product-discount-model/product-discount.model';
-import { GradingService } from '@app/core/service/grading-service/grading.service';
-import { ProductCategoryService } from '@app/core/service/product-category-service/product-category.service';
-import { Product } from '@app/core/models/product-model/product.model';
-import { ProductService } from '@app/core/service/product-service/product.service';
-import { ProductAttribute } from '@app/core/models/product-attribute-model/product-attribute.model';
-import { ProductAttributeValueService } from '@app/core/service/product-attribute-value/product-attribute-value.service';
-import { ProductAttributeService } from './../../../core/service/product-attribute/product-attribute.service';
-import { ProductAttributeValue } from '@app/core/models/product-attribute-value-model/product-attribute-value.model';
-import { ProductCombination } from '@app/core/models/product-combination-model/product-combination.model';
-import { ProductCombinationService } from '@app/core/service/product-combination-service/product-combination.service';
-import { ProductInventory } from '@app/core/models/product-inventory-model/product-inventory.model';
-import { ProductInventoryService } from '@app/core/service/product-inventory-service/product-inventory.service';
-import { HttpClient } from '@angular/common/http';
 
 @Component({
-    selector: 'app-products-and-services-edit-modal',
-    templateUrl: './products-and-services-edit-modal.component.html',
-    standalone: false
+  selector: 'app-products-and-services-edit-modal',
+  templateUrl: './products-and-services-edit-modal.component.html',
+  standalone: true,
+  imports: [
+    NgbNavItem,
+    NgbNav,
+    ReactiveFormsModule,
+    NgClass,
+    NgbNavLink,
+    NgbNavContent,
+    FormsModule,
+    DatatableComponent,
+    DataTableColumnDirective,
+    DataTableColumnCellDirective,
+    CKEditorModule,
+    NgxDropzoneModule,
+    TranslatePipe,
+    NgbNavOutlet,
+    NgbTooltip
+  ]
 })
 export class ProductsAndServicesEditModalComponent implements OnInit {
   public Editor = ClassicEditor;
@@ -54,7 +83,6 @@ export class ProductsAndServicesEditModalComponent implements OnInit {
   editProductInventoryForm!: FormGroup;
   submittedProduct = false;
   submittedAttribute = false;
-  submittedContentHtml = false;
   submittedDiscount = false;
   submittedInventory = false;
   active = 1;
@@ -97,9 +125,9 @@ export class ProductsAndServicesEditModalComponent implements OnInit {
     private productAttributeService: ProductAttributeService,
     private productCombinationService: ProductCombinationService,
     private productInventoryService: ProductInventoryService,
-    private storage: Storage,
-    private http: HttpClient
-  ) { }
+    private storage: Storage
+  ) {
+  }
 
   ngOnInit(): void {
     this.productValidation();
@@ -110,10 +138,6 @@ export class ProductsAndServicesEditModalComponent implements OnInit {
     this.loadCalificationList();
     this.loadCategoryList();
     this.getAttributesList();
-
-  }
-
-  ngAfterViewInit(): void {
 
   }
 
@@ -136,10 +160,6 @@ export class ProductsAndServicesEditModalComponent implements OnInit {
 
   get edit_product_attributes_controls(): { [key: string]: AbstractControl } {
     return this.editProductAttributesForm.controls;
-  }
-
-  get edit_product_contentHtml_controls(): { [key: string]: AbstractControl } {
-    return this.editProductContentHtmlForm.controls;
   }
 
   get edit_product_discount_controls(): { [key: string]: AbstractControl } {
@@ -238,7 +258,7 @@ export class ProductsAndServicesEditModalComponent implements OnInit {
     this.editProductAttributesForm = this.formBuilder.group({
       attribute_name: [''],
       attribute_value: [''],
-      attribute_combination: [{ value: '', disabled: true }],
+      attribute_combination: [{value: '', disabled: true}],
       attribute_reference: [],
     });
   }
@@ -618,9 +638,7 @@ export class ProductsAndServicesEditModalComponent implements OnInit {
   }
 
   deleteImage() {
-    const filePath = 'products/' + `${this.product.id}` + '.jpg';
     this.product.image = null;
-
     this.productService.updateProduct(this.product).subscribe({
       next: () => {
         this.showSuccess('Image deleted successfully');

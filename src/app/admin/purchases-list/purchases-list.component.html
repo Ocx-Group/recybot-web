@@ -24,7 +24,7 @@
               <div class="col-12 col-md-4 mb-3 mb-md-0">
                 <div class="input-group">
                   <span class="input-group-text bg-light border-end-0">
-                    <i-feather name="search" class="text-muted" [size]="18"></i-feather>
+                    <i-feather name="search" class="text-muted"></i-feather>
                   </span>
                   <input type="text" class="form-control border-start-0" (keyup)="updateFilter($event)"
                     placeholder="{{ 'USERS-LIST-PAGE.USERS-SEARCH.TEXT' | translate }}" aria-label="Search" />
@@ -36,7 +36,7 @@
                   <div class="col-6 col-sm-5">
                     <div class="input-group">
                       <span class="input-group-text bg-light border-end-0">
-                        <i-feather name="calendar" class="text-muted" [size]="18"></i-feather>
+                        <i-feather name="calendar" class="text-muted"></i-feather>
                       </span>
                       <input type="date" class="form-control border-start-0" [(ngModel)]="startDate"
                         (ngModelChange)="onDateFilterChange()" placeholder="Fecha inicio" />
@@ -45,7 +45,7 @@
                   <div class="col-6 col-sm-5">
                     <div class="input-group">
                       <span class="input-group-text bg-light border-end-0">
-                        <i-feather name="calendar" class="text-muted" [size]="18"></i-feather>
+                        <i-feather name="calendar" class="text-muted"></i-feather>
                       </span>
                       <input type="date" class="form-control border-start-0" [(ngModel)]="endDate"
                         (ngModelChange)="onDateFilterChange()" placeholder="Fecha fin" />
@@ -54,7 +54,7 @@
                   <div class="col-12 col-sm-2">
                     <button class="btn btn-outline-secondary w-100" (click)="clearDateFilters()"
                       title="Limpiar filtros">
-                      <i-feather name="x" [size]="18"></i-feather>
+                      <i-feather name="x"></i-feather>
                     </button>
                   </div>
                 </div>

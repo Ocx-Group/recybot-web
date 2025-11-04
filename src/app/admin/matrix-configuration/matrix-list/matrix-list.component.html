@@ -31,7 +31,7 @@
                         </div>
                       </div>
                       <input type="text" class="form-control bg-white" (keyup)="updateFilter($event)"
-                        aria-label="Search box" placeholder="Búsqueda" />
+                             aria-label="Search box" placeholder="Búsqueda"/>
                     </div>
                   </div>
                 </div>
@@ -65,8 +65,8 @@
             <div class="row">
               <div class="col-12">
                 <ngx-datatable #table class="material" [rows]="rows" [loadingIndicator]="loadingIndicator"
-                  columnMode="force" [headerHeight]="50" [footerHeight]="50" rowHeight="auto" [limit]="10"
-                  [scrollbarH]="scrollBarHorizontal" [reorderable]="reorderable">
+                               columnMode="force" [headerHeight]="50" [footerHeight]="50" rowHeight="auto" [limit]="10"
+                               [scrollbarH]="scrollBarHorizontal" [reorderable]="reorderable">
                   <ngx-datatable-column name="Tipo matrix">
                     <ng-template let-row="row" ngx-datatable-cell-template>
                       {{ row.matrixType }}
@@ -118,7 +118,7 @@
                     </ng-template>
                   </ngx-datatable-column>
                   <ngx-datatable-column name="Acciones">
-                    <ng-template let-row="row" ngx-datatable-cell-template>
+                    <ng-template ngx-datatable-cell-template>
                       <div ngbDropdown container="body">
                         <button type="button" class="btn btn-outline-primary btn-sm" ngbDropdownToggle>
                           Acciones

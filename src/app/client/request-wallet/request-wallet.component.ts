@@ -1,17 +1,23 @@
-import { Component, ViewChild, HostListener, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { DatatableComponent, NgxDatatableModule } from '@swimlane/ngx-datatable';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { UntypedFormGroup, ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
-import { IconsModule } from '@app/shared';
+import {Component, ViewChild, HostListener, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import {DatatableComponent, NgxDatatableModule} from '@swimlane/ngx-datatable';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {UntypedFormGroup, ReactiveFormsModule} from '@angular/forms';
+import {CommonModule} from '@angular/common';
+import {TranslateModule} from '@ngx-translate/core';
+import {IconsModule} from '@app/shared';
+import {RouterLink} from "@angular/router";
 
 @Component({
-    selector: 'app-request-wallet',
-    templateUrl: './request-wallet.component.html',
-    standalone: true,
-    imports: [CommonModule, NgxDatatableModule, ReactiveFormsModule, TranslateModule, IconsModule],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  selector: 'app-request-wallet',
+  templateUrl: './request-wallet.component.html',
+  standalone: true,
+  imports: [CommonModule,
+    NgxDatatableModule,
+    ReactiveFormsModule,
+    TranslateModule,
+    IconsModule,
+    RouterLink],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class RequestWalletComponent {
   rows = [];
@@ -44,6 +50,7 @@ export class RequestWalletComponent {
   getRowHeight(row) {
     return row.height;
   }
+
   fetch(cb) {
     const req = new XMLHttpRequest();
     req.open('GET', `assets/data/datatable-wallet-data.json`);

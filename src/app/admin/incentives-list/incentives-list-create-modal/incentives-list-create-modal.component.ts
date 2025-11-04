@@ -8,20 +8,39 @@ import {
 import {
   AbstractControl,
   FormBuilder,
-  FormGroup,
+  FormGroup, ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ToastrService } from 'ngx-toastr';
+import {
+  NgbModal,
+  NgbNav,
+  NgbNavContent,
+  NgbNavItem,
+  NgbNavLink,
+  NgbNavOutlet,
+  NgbTooltip
+} from '@ng-bootstrap/ng-bootstrap';
+import {ToastrService} from 'ngx-toastr';
+import {Incentive} from "../../../core/models/incentive-model/incentive.model";
+import {GradingService} from "../../../core/service/grading-service/grading.service";
+import {IncentiveService} from "../../../core/service/incentive-service/incentive.service";
+import {NgClass} from "@angular/common";
 
-import { Incentive } from '@app/core/models/incentive-model/incentive.model';
-import { GradingService } from '@app/core/service/grading-service/grading.service';
-import { IncentiveService } from '@app/core/service/incentive-service/incentive.service';
 
 @Component({
-    selector: 'app-incentives-list-create-modal',
-    templateUrl: './incentives-list-create-modal.component.html',
-    standalone: false
+  selector: 'app-incentives-list-create-modal',
+  templateUrl: './incentives-list-create-modal.component.html',
+  standalone: true,
+  imports: [
+    ReactiveFormsModule,
+    NgClass,
+    NgbTooltip,
+    NgbNav,
+    NgbNavItem,
+    NgbNavContent,
+    NgbNavLink,
+    NgbNavOutlet
+  ]
 })
 export class IncentivesListCreateModalComponent implements OnInit {
   createIncentivesForm!: FormGroup;
@@ -42,7 +61,8 @@ export class IncentivesListCreateModalComponent implements OnInit {
     private incentiveService: IncentiveService,
     private modalService: NgbModal,
     private toastr: ToastrService
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.incentiveValidations();
@@ -86,6 +106,7 @@ export class IncentivesListCreateModalComponent implements OnInit {
       leader_by_matrix: [0],
     });
   }
+
   fetchProductList() {
     this.gradingService.getProductList().subscribe((resp) => {
       this.productListData = resp;
@@ -110,7 +131,7 @@ export class IncentivesListCreateModalComponent implements OnInit {
     this.modalService.dismissAll();
   }
 
-  showSuccess(message) {
+  showSuccess(message: string) {
     this.toastr.success(message, 'Success!');
   }
 
@@ -175,7 +196,7 @@ export class IncentivesListCreateModalComponent implements OnInit {
     this.incentive.network_leaders_qualifier =
       this.createIncentivesForm.value.network_leaders_qualifier;
 
-    this.incentiveService.createGrading(this.incentive).subscribe((resp) => {
+    this.incentiveService.createGrading(this.incentive).subscribe(() => {
       this.showSuccess('The incentive was created successfully!');
       this.closeModals();
       this.loadIncentiveList.emit();

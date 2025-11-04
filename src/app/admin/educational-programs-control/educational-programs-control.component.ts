@@ -1,15 +1,17 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { InvoiceService } from '@app/core/service/invoice-service/invoice.service';
-import { DatatableComponent } from '@swimlane/ngx-datatable';
+import {Component, OnInit, ViewChild} from '@angular/core';
+
+import {DatatableComponent} from '@swimlane/ngx-datatable';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import Swal from 'sweetalert2';
+import {InvoiceService} from "../../core/service/invoice-service/invoice.service";
 
 @Component({
-    selector: 'app-educational-programs-control',
-    templateUrl: './educational-programs-control.component.html',
-    styleUrls: ['./educational-programs-control.component.css'],
-    standalone: false
+  selector: 'app-educational-programs-control',
+  templateUrl: './educational-programs-control.component.html',
+  styleUrls: ['./educational-programs-control.component.css'],
+  standalone: true,
+  imports: []
 })
 export class EducationalProgramsControlComponent implements OnInit {
   rows = [];
@@ -22,7 +24,8 @@ export class EducationalProgramsControlComponent implements OnInit {
 
   @ViewChild('table') table: DatatableComponent;
 
-  constructor(private invoiceService: InvoiceService) { }
+  constructor(private invoiceService: InvoiceService) {
+  }
 
   ngOnInit() {
     this.getAllTradingAcademyPurchases();
@@ -31,14 +34,12 @@ export class EducationalProgramsControlComponent implements OnInit {
   updateFilter(event) {
     const val = event.target.value.toLowerCase();
 
-    const temp = this.temp.filter(d => {
+    this.rows = this.temp.filter(d => {
       if (d[this.searchField]) {
         return d[this.searchField].toString().toLowerCase().indexOf(val) !== -1;
       }
       return false;
     });
-
-    this.rows = temp;
     this.table.offset = 0;
   }
 
@@ -82,7 +83,7 @@ export class EducationalProgramsControlComponent implements OnInit {
       preConfirm: () => {
         const zoomLink = (document.getElementById('zoom-link') as HTMLInputElement).value;
         const securityCode = (document.getElementById('security-code') as HTMLInputElement).value;
-        return { zoomLink, securityCode };
+        return {zoomLink, securityCode};
       },
       showCancelButton: true,
       confirmButtonText: 'Enviar',
@@ -113,7 +114,7 @@ export class EducationalProgramsControlComponent implements OnInit {
         text: 'No se enviaron invitaciones.',
         showConfirmButton: false,
         timer: 1500
-      });
+      }).then();
     }
   }
 
@@ -124,7 +125,7 @@ export class EducationalProgramsControlComponent implements OnInit {
       text: 'Ha ocurrido un error al enviar las invitaciones',
       showConfirmButton: false,
       timer: 1500
-    });
+    }).then();
   }
 
   captureAndDownload(invitedUsersList) {
@@ -138,7 +139,7 @@ export class EducationalProgramsControlComponent implements OnInit {
 
     document.body.appendChild(content);
 
-    html2canvas(content, { scale: 2 }).then((canvas) => {
+    html2canvas(content, {scale: 2}).then((canvas) => {
       const imgData = canvas.toDataURL('image/png');
       const pdf = new jsPDF('p', 'mm', 'a4');
       const pageHeight = 277;

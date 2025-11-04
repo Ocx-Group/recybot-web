@@ -21,12 +21,13 @@ import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { TruncateDecimalsPipe } from '@app/shared/truncate-decimals.pipe';
 import { IconsModule } from '@app/shared';
+import {RouterLink} from "@angular/router";
 
 @Component({
     selector: 'app-wallet',
     templateUrl: './wallet.component.html',
     standalone: true,
-    imports: [CommonModule, NgxDatatableModule, TranslateModule, TruncateDecimalsPipe, IconsModule]
+  imports: [CommonModule, NgxDatatableModule, TranslateModule, TruncateDecimalsPipe, IconsModule, RouterLink]
 })
 export class WalletComponent implements OnInit, OnDestroy {
   private subscription: Subscription;

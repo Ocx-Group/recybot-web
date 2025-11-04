@@ -6,23 +6,28 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {
   FormBuilder,
   FormGroup,
   Validators,
-  AbstractControl,
+  AbstractControl, ReactiveFormsModule,
 } from '@angular/forms';
-import { ToastrService } from 'ngx-toastr';
-import { User } from '@app/core/models/user-model/user.model';
-import { UserService } from '@app/core/service/user-service/user.service';
-import { RolService } from '@app/core/service/rol-service/rol.service';
-import { Rol } from '@app/core/models/rol-model/rol.model';
+import {ToastrService} from 'ngx-toastr';
+import {UserService} from "../../../core/service/user-service/user.service";
+import {User} from "../../../core/models/user-model/user.model";
+import {TranslatePipe} from "@ngx-translate/core";
+import {NgClass} from "@angular/common";
 
 @Component({
-    selector: 'app-users-list-create-modal',
-    templateUrl: './users-list-create-modal.component.html',
-    standalone: false
+  selector: 'app-users-list-create-modal',
+  templateUrl: './users-list-create-modal.component.html',
+  standalone: true,
+  imports: [
+    TranslatePipe,
+    ReactiveFormsModule,
+    NgClass
+  ]
 })
 export class UsersListCreateModalComponent implements OnInit {
   createUserForm: FormGroup;
@@ -36,9 +41,9 @@ export class UsersListCreateModalComponent implements OnInit {
     private modalService: NgbModal,
     private formBuilder: FormBuilder,
     private toastr: ToastrService,
-    private userService: UserService,
-    private rolService: RolService
-  ) {}
+    private userService: UserService
+  ) {
+  }
 
   get create_user_controls(): { [key: string]: AbstractControl } {
     return this.createUserForm.controls;
@@ -95,13 +100,13 @@ export class UsersListCreateModalComponent implements OnInit {
     user.status = this.createUserForm.value.status ?? false;
 
     this.userService.createUser(user).subscribe({
-      next: (value) => {
+      next: () => {
         this.showSuccess('The user was created successfully!');
         this.closeModals();
         this.loadUserList.emit();
       },
       error: (err) => {
-        this.showError('Error!'+ err);
+        this.showError('Error!' + err);
       },
     });
   }
@@ -125,7 +130,7 @@ export function MustMatch(controlName: string, matchingControlName: string) {
     }
 
     if (control.value !== matchingControl.value) {
-      matchingControl.setErrors({ mustMatch: true });
+      matchingControl.setErrors({mustMatch: true});
     } else {
       matchingControl.setErrors(null);
     }

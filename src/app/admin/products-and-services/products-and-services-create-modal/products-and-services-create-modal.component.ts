@@ -8,22 +8,28 @@ import {
 import {
   AbstractControl,
   FormBuilder,
-  FormGroup,
+  FormGroup, ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { PaymentGroup } from '@app/core/models/payment-group-model/payment.group.model';
-import { Product } from '@app/core/models/product-model/product.model';
-import { ProductCategoryService } from '@app/core/service/product-category-service/product-category.service';
-import { PaymentGroupsService } from '@app/core/service/payment-groups-service/payment-groups.service';
-import { ProductService } from '@app/core/service/product-service/product.service';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ToastrService } from 'ngx-toastr';
+import {NgbModal, NgbTooltip} from '@ng-bootstrap/ng-bootstrap';
+import {ToastrService} from 'ngx-toastr';
+import {Product} from "../../../core/models/product-model/product.model";
+import {PaymentGroupsService} from "../../../core/service/payment-groups-service/payment-groups.service";
+import {ProductCategoryService} from "../../../core/service/product-category-service/product-category.service";
+import {ProductService} from "../../../core/service/product-service/product.service";
+import {PaymentGroup} from "../../../core/models/payment-group-model/payment.group.model";
+import {NgClass} from "@angular/common";
 
 
 @Component({
-    selector: 'app-products-and-services-create-modal',
-    templateUrl: './products-and-services-create-modal.component.html',
-    standalone: false
+  selector: 'app-products-and-services-create-modal',
+  templateUrl: './products-and-services-create-modal.component.html',
+  standalone: true,
+  imports: [
+    ReactiveFormsModule,
+    NgClass,
+    NgbTooltip
+  ]
 })
 export class ProductsAndServicesCreateModalComponent implements OnInit {
   createProductForm!: FormGroup;
@@ -43,7 +49,8 @@ export class ProductsAndServicesCreateModalComponent implements OnInit {
     private paymentGroupService: PaymentGroupsService,
     private productCategoryService: ProductCategoryService,
     private productService: ProductService
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     this.productValidation();
@@ -101,9 +108,9 @@ export class ProductsAndServicesCreateModalComponent implements OnInit {
     this.product.name = this.createProductForm.value.name;
     this.product.productCode = this.createProductForm.value.bar_code;
     this.product.description = this.createProductForm.value.description;
-    this.product.categoryId = parseInt( this.createProductForm.value.category);
+    this.product.categoryId = parseInt(this.createProductForm.value.category);
     this.product.keyWord = this.createProductForm.value.keyword;
-    this.product.paymentGroup =  parseInt(this.createProductForm.value.calculate_group);
+    this.product.paymentGroup = parseInt(this.createProductForm.value.calculate_group);
     this.product.salePrice = this.createProductForm.value.sale_price;
     this.product.tax = this.createProductForm.value.taxes;
     this.product.commissionableValue = this.createProductForm.value.commissionable_value;
@@ -150,5 +157,4 @@ export class ProductsAndServicesCreateModalComponent implements OnInit {
       this.categoriesList = resp;
     });
   }
-
 }

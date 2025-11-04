@@ -1,11 +1,21 @@
-import { Component, HostListener, ViewChild } from '@angular/core';
-import { DatatableComponent } from '@swimlane/ngx-datatable';
-import Swal from 'sweetalert2';
+import {Component, HostListener, ViewChild} from '@angular/core';
+import {DataTableColumnCellDirective, DataTableColumnDirective, DatatableComponent} from '@swimlane/ngx-datatable';
+import {TranslatePipe} from "@ngx-translate/core";
+import {RouterLink} from "@angular/router";
+import {IconsModule} from "../../shared";
 
 @Component({
-    selector: 'app-transactions-commission',
-    templateUrl: './transactions-commission.component.html',
-    standalone: false
+  selector: 'app-transactions-commission',
+  templateUrl: './transactions-commission.component.html',
+  standalone: true,
+  imports: [
+    TranslatePipe,
+    RouterLink,
+    IconsModule,
+    DatatableComponent,
+    DataTableColumnDirective,
+    DataTableColumnCellDirective
+  ]
 })
 export class TransactionsCommissionComponent {
   rows = [];
@@ -29,14 +39,15 @@ export class TransactionsCommissionComponent {
   updateFilter(event) {
     const val = event.target.value.toLowerCase();
 
-    const temp = this.temp.filter(function (d) {
+    this.rows = this.temp.filter(function (d) {
       return d.name.toLowerCase().indexOf(val) !== -1 || !val;
     });
-    this.rows = temp;
     this.table.offset = 0;
   }
 
-  clipBoardCopy() {}
+  clipBoardCopy() {
+  }
 
-  onPrint() {}
+  onPrint() {
+  }
 }

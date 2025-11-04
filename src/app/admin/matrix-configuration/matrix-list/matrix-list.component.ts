@@ -1,11 +1,26 @@
-import { Component, OnInit } from '@angular/core';
-import { MatrixConfigurationService } from '@app/core/service/matrix-configuration/matrix-configuration.service';
+import {Component, OnInit} from '@angular/core';
+import {MatrixConfigurationService} from "../../../core/service/matrix-configuration/matrix-configuration.service";
+import {RouterLink} from "@angular/router";
+import {IconsModule} from "../../../shared";
+import {DataTableColumnCellDirective, DataTableColumnDirective, DatatableComponent} from "@swimlane/ngx-datatable";
+import {NgbDropdown, NgbDropdownItem, NgbDropdownMenu, NgbDropdownToggle} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
-    selector: 'app-matrix-list',
-    templateUrl: './matrix-list.component.html',
-    styleUrls: ['./matrix-list.component.sass'],
-    standalone: false
+  selector: 'app-matrix-list',
+  templateUrl: './matrix-list.component.html',
+  styleUrls: ['./matrix-list.component.sass'],
+  standalone: true,
+  imports: [
+    RouterLink,
+    IconsModule,
+    DatatableComponent,
+    DataTableColumnDirective,
+    DataTableColumnCellDirective,
+    NgbDropdown,
+    NgbDropdownToggle,
+    NgbDropdownMenu,
+    NgbDropdownItem
+  ]
 })
 export class MatrixListComponent implements OnInit {
   loadingIndicator: boolean = true;

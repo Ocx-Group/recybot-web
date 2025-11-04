@@ -3,12 +3,13 @@ import { DatatableComponent, NgxDatatableModule } from '@swimlane/ngx-datatable'
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { IconsModule } from '@app/shared';
+import {RouterLink} from "@angular/router";
 
 @Component({
     selector: 'app-procurement-ecopool',
     templateUrl: './procurement-ecopool.component.html',
     standalone: true,
-    imports: [CommonModule, NgxDatatableModule, TranslateModule, IconsModule],
+  imports: [CommonModule, NgxDatatableModule, TranslateModule, IconsModule, RouterLink],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class ProcurementEcopoolComponent  {

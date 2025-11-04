@@ -8,13 +8,14 @@ import { WalletService } from '@app/core/service/wallet-service/wallet.service';
 import {StatisticsInformation} from "@app/core/models/wallet-model/statisticsInformation";
 import { CommonModule } from '@angular/common';
 import { TruncateDecimalsPipe } from '@app/shared/truncate-decimals.pipe';
+import {RouterLink} from "@angular/router";
 
 @Component({
     selector: 'app-network-details',
     templateUrl: './network-details.component.html',
     styleUrls: ['./network-details.component.scss'],
     standalone: true,
-    imports: [CommonModule, TruncateDecimalsPipe]
+  imports: [CommonModule, TruncateDecimalsPipe, RouterLink]
 })
 export class NetworkDetailsComponent implements OnInit, OnDestroy {
   user: UserAffiliate = new UserAffiliate();

@@ -1,22 +1,25 @@
-import { UserService } from '../../../core/service/user-service/user.service';
-import { Component, ViewChild, OnInit, Input } from '@angular/core';
-import { ToastrService } from 'ngx-toastr';
+import {UserService} from '@app/core/service/user-service/user.service';
+import {Component, ViewChild, OnInit, Input} from '@angular/core';
+import {ToastrService} from 'ngx-toastr';
 import {
   AbstractControl,
   FormBuilder,
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { User } from '../../../core/models/user-model/user.model';
-import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {User} from '@app/core/models/user-model/user.model';
+import {CommonModule} from '@angular/common';
+import {ReactiveFormsModule} from '@angular/forms';
+import {TranslatePipe} from "@ngx-translate/core";
+import {off} from "@angular/fire/database";
+import {UserAffiliate} from "@app/core/models/user-affiliate-model/user.affiliate.model";
 
 @Component({
-    selector: 'app-my-profile-edit-personal-info-modal',
-    templateUrl: './my-profile-edit-personal-info-modal.component.html',
-    standalone: true,
-    imports: [CommonModule, ReactiveFormsModule]
+  selector: 'app-my-profile-edit-personal-info-modal',
+  templateUrl: './my-profile-edit-personal-info-modal.component.html',
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule, TranslatePipe]
 })
 export class MyProfileEditPersonalInfoModalComponent implements OnInit {
   editPersonalInfoForm: FormGroup;
@@ -30,7 +33,8 @@ export class MyProfileEditPersonalInfoModalComponent implements OnInit {
     private formBuilder: FormBuilder,
     private toastr: ToastrService,
     private userService: UserService
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.loadValidations();
@@ -46,7 +50,7 @@ export class MyProfileEditPersonalInfoModalComponent implements OnInit {
     });
   }
 
-  openEditPersonalInfoModal(content, user: User) {
+  openEditPersonalInfoModal(content, user: UserAffiliate) {
     this.modalService.open(content, {
       ariaLabelledBy: 'modal-basic-title',
       size: 'lg',
@@ -58,7 +62,7 @@ export class MyProfileEditPersonalInfoModalComponent implements OnInit {
     return this.editPersonalInfoForm.controls;
   }
 
-  showSuccess(message) {
+  showSuccess(message: string) {
     this.toastr.success(message, 'Success!');
   }
 
@@ -66,7 +70,7 @@ export class MyProfileEditPersonalInfoModalComponent implements OnInit {
     this.modalService.dismissAll();
   }
 
-  onSetValuesPersonalInfo(user: User) {
+  onSetValuesPersonalInfo(user: UserAffiliate) {
     this.editPersonalInfoForm.setValue({
       user_name: user.name,
       last_name: user.last_name,
@@ -95,4 +99,6 @@ export class MyProfileEditPersonalInfoModalComponent implements OnInit {
       }
     });
   }
+
+  protected readonly off = off;
 }

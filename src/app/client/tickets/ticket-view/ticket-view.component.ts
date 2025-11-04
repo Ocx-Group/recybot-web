@@ -10,13 +10,14 @@ import {TicketMessageRequest} from '@app/core/models/ticket-model/ticket-message
 import {Ticket} from '@app/core/models/ticket-model/ticket.model';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import {RouterLink} from "@angular/router";
 
 @Component({
     selector: 'app-ticket-view',
     templateUrl: './ticket-view.component.html',
     styleUrls: ['./ticket-view.component.scss'],
     standalone: true,
-    imports: [CommonModule, FormsModule]
+  imports: [CommonModule, FormsModule, RouterLink]
 })
 export class TicketViewComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();

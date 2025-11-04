@@ -11,17 +11,20 @@ import { AuthService } from '@app/core/service/authentication-service/auth.servi
 import { MatrixConfigurationService } from '@app/core/service/matrix-configuration/matrix-configuration.service';
 import { MatrixService } from '@app/core/service/matrix-service/matrix.service';
 import { MatrixQualificationService } from '@app/core/service/matrix-qualification-service/matrix-qualification.service';
-import { CommonModule } from '@angular/common';
+import {CommonModule, NgOptimizedImage} from '@angular/common';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {
+  ClientUnilevelTreeComponentComponent
+} from "@app/client/unilevel-tree/unilevel-tree-component/client-unilevel-tree-component.component";
 
 @Component({
     selector: 'app-view-unilevel-tree',
     templateUrl: './view-unilevel-tree.component.html',
     styleUrls: ['./view-unilevel-tree.component.scss'],
     standalone: true,
-    imports: [CommonModule, TranslateModule, NgbModule],
+  imports: [CommonModule, TranslateModule, NgbModule, ClientUnilevelTreeComponentComponent, NgOptimizedImage],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class ViewUnilevelTreeComponent {

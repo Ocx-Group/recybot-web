@@ -1,29 +1,41 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, HostListener, OnInit, ViewChild } from '@angular/core';
-import { BalanceInformation } from '@app/core/models/wallet-model/balance-information.model';
-import { DatatableComponent } from '@swimlane/ngx-datatable';
+import {Component, CUSTOM_ELEMENTS_SCHEMA, HostListener, OnInit, ViewChild} from '@angular/core';
+import {BalanceInformation} from '@app/core/models/wallet-model/balance-information.model';
+import {DatatableComponent} from '@swimlane/ngx-datatable';
 
-import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
-import { WalletWithdrawalsConfiguration } from '@app/core/models/wallet-withdrawals-configuration-model/wallet-withdrawals-configuration.model';
-import { AuthService } from '@app/core/service/authentication-service/auth.service';
-import { ConfigurationService } from '@app/core/service/configuration-service/configuration.service';
-import { WalletRequestService } from '@app/core/service/wallet-request/wallet-request.service';
-import { WalletService } from '@app/core/service/wallet-service/wallet.service';
-import { ToastrService } from 'ngx-toastr';
-import { MatrixQualificationService } from '@app/core/service/matrix-qualification-service/matrix-qualification.service';
-import { CommonModule } from '@angular/common';
-import { NgxDatatableModule } from '@swimlane/ngx-datatable';
-import { TranslateModule } from '@ngx-translate/core';
-import { TruncateDecimalsPipe } from '@app/shared/truncate-decimals.pipe';
-import { IconsModule } from '@app/shared';
+import {UserAffiliate} from '@app/core/models/user-affiliate-model/user.affiliate.model';
+import {
+  WalletWithdrawalsConfiguration
+} from '@app/core/models/wallet-withdrawals-configuration-model/wallet-withdrawals-configuration.model';
+import {AuthService} from '@app/core/service/authentication-service/auth.service';
+import {ConfigurationService} from '@app/core/service/configuration-service/configuration.service';
+import {WalletRequestService} from '@app/core/service/wallet-request/wallet-request.service';
+import {WalletService} from '@app/core/service/wallet-service/wallet.service';
+import {ToastrService} from 'ngx-toastr';
+import {MatrixQualificationService} from '@app/core/service/matrix-qualification-service/matrix-qualification.service';
+import {CommonModule} from '@angular/common';
+import {NgxDatatableModule} from '@swimlane/ngx-datatable';
+import {TranslateModule} from '@ngx-translate/core';
+import {TruncateDecimalsPipe} from '@app/shared/truncate-decimals.pipe';
+import {IconsModule} from '@app/shared';
 import {NgbAlert} from "@ng-bootstrap/ng-bootstrap";
 import {CreateRequestsModalComponent} from "@app/client/requests/create-requests-modal/create-requests-modal.component";
+import {RouterLink} from "@angular/router";
 
 @Component({
-    selector: 'app-requests',
-    templateUrl: './requests.component.html',
-    standalone: true,
-  imports: [CommonModule, NgxDatatableModule, TranslateModule, TruncateDecimalsPipe, IconsModule, NgbAlert, CreateRequestsModalComponent],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  selector: 'app-requests',
+  templateUrl: './requests.component.html',
+  standalone: true,
+  imports: [
+    CommonModule,
+    NgxDatatableModule,
+    TranslateModule,
+    TruncateDecimalsPipe,
+    IconsModule,
+    NgbAlert,
+    CreateRequestsModalComponent,
+    RouterLink
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class RequestsComponent implements OnInit {
   user: UserAffiliate = new UserAffiliate();
@@ -45,7 +57,8 @@ export class RequestsComponent implements OnInit {
     private configurationService: ConfigurationService,
     private walletService: WalletService,
     private matrixQualificationService: MatrixQualificationService,
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.getUserInfo();

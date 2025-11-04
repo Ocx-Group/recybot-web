@@ -1,8 +1,12 @@
-import { Component, ViewChild, HostListener } from '@angular/core';
-import { DatatableComponent } from '@swimlane/ngx-datatable';
-import { ToastrService } from 'ngx-toastr';
-import { ClipboardService } from 'ngx-clipboard';
-import { PrintService } from '@app/core/service/print-service/print.service';
+import {Component, HostListener, ViewChild} from '@angular/core';
+import {DataTableColumnCellDirective, DataTableColumnDirective, DatatableComponent} from '@swimlane/ngx-datatable';
+import {ToastrService} from 'ngx-toastr';
+import {ClipboardService} from 'ngx-clipboard';
+import {PrintService} from "../../core/service/print-service/print.service";
+import {TranslatePipe} from "@ngx-translate/core";
+import {RouterLink} from "@angular/router";
+import {IconsModule} from "../../shared";
+
 
 const header = [
   'Afiliado',
@@ -13,11 +17,13 @@ const header = [
   'Estatus',
   'Estado',
 ];
+
 @Component({
-    selector: 'app-purchase-order-list',
-    templateUrl: './purchase-order-list.component.html',
-    providers: [ToastrService],
-    standalone: false
+  selector: 'app-purchase-order-list',
+  templateUrl: './purchase-order-list.component.html',
+  providers: [ToastrService],
+  standalone: true,
+  imports: [DatatableComponent, TranslatePipe, RouterLink, IconsModule, DataTableColumnDirective, DataTableColumnCellDirective]
 })
 export class PurchaseOrderListComponent {
   rows = [];
@@ -52,6 +58,7 @@ export class PurchaseOrderListComponent {
   getRowHeight(row) {
     return row.height;
   }
+
   fetch(cb) {
     const req = new XMLHttpRequest();
     req.open('GET', `assets/data/admin/purchase-order-data.json`);
@@ -67,20 +74,17 @@ export class PurchaseOrderListComponent {
     const val = event.target.value.toLowerCase();
 
     // filter our data
-    const temp = this.temp.filter(function (d) {
+    // update the rows
+    this.rows = this.temp.filter(function (d) {
       return d.name.toLowerCase().indexOf(val) !== -1 || !val;
     });
-
-    // update the rows
-    this.rows = temp;
     // Whenever the filter changes, always go back to the first page
     this.table.offset = 0;
   }
 
   clipBoardCopy() {
-    var string = JSON.stringify(this.temp);
-    var result = this.clipboardService.copyFromContent(string);
-
+    const string = JSON.stringify(this.temp);
+    this.clipboardService.copyFromContent(string);
     if (this.temp.length === 0) {
       this.toastr.info('no data to copy');
     } else {
@@ -90,7 +94,7 @@ export class PurchaseOrderListComponent {
 
   onPrint() {
     const body = this.temp.map((items: any) => {
-      const data = [
+      return [
         items.affiliate,
         items.order,
         items.date,
@@ -99,7 +103,6 @@ export class PurchaseOrderListComponent {
         items.status,
         items.state
       ];
-      return data;
     });
 
     this.printService.print(

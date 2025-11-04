@@ -1,14 +1,26 @@
-import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
-import { DatatableComponent } from '@swimlane/ngx-datatable';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import {Component, HostListener, OnInit, ViewChild} from '@angular/core';
+import {DataTableColumnCellDirective, DataTableColumnDirective, DatatableComponent} from '@swimlane/ngx-datatable';
+import {NgbDropdown, NgbDropdownItem, NgbDropdownMenu, NgbDropdownToggle, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
 
-import { ProductService } from '@app/core/service/product-service/product.service';
-import { Product } from '@app/core/models/product-model/product.model';
-import { PrintService } from '@app/core/service/print-service/print.service';
-import { ToastrService } from 'ngx-toastr';
-import { ConfigurationService } from '@app/core/service/configuration-service/configuration.service';
-import { ProductConfiguration } from '@app/core/models/product-configuration-model/product-configuration.model';
+import {ToastrService} from 'ngx-toastr';
+import {ProductConfiguration} from "../../core/models/product-configuration-model/product-configuration.model";
+import {ProductService} from "../../core/service/product-service/product.service";
+import {PrintService} from "../../core/service/print-service/print.service";
+import {ConfigurationService} from "../../core/service/configuration-service/configuration.service";
+import {Product} from "../../core/models/product-model/product.model";
+import {TranslatePipe} from "@ngx-translate/core";
+import {RouterLink} from "@angular/router";
+import {IconsModule} from "../../shared";
+import {
+  ProductsAndServicesCreateModalComponent
+} from "./products-and-services-create-modal/products-and-services-create-modal.component";
+import {
+  ProductsAndServicesMovementsModalComponent
+} from "./products-and-services-movements-modal/products-and-services-movements-modal.component";
+import {
+  ProductsAndServicesEditModalComponent
+} from "./products-and-services-edit-modal/products-and-services-edit-modal.component";
 
 const header = [
   'Código del Producto',
@@ -19,10 +31,26 @@ const header = [
   'Precio de Venta',
   'Existencias',
 ];
+
 @Component({
-    selector: 'app-products-and-services',
-    templateUrl: './products-and-services.component.html',
-    standalone: false
+  selector: 'app-products-and-services',
+  templateUrl: './products-and-services.component.html',
+  standalone: true,
+  imports: [
+    TranslatePipe,
+    RouterLink,
+    IconsModule,
+    DatatableComponent,
+    DataTableColumnDirective,
+    DataTableColumnCellDirective,
+    ProductsAndServicesCreateModalComponent,
+    ProductsAndServicesMovementsModalComponent,
+    ProductsAndServicesEditModalComponent,
+    NgbDropdownItem,
+    NgbDropdown,
+    NgbDropdownToggle,
+    NgbDropdownMenu
+  ]
 })
 export class ProductsAndServicesComponent implements OnInit {
   rows = [];
@@ -41,7 +69,8 @@ export class ProductsAndServicesComponent implements OnInit {
     private printService: PrintService,
     private toastr: ToastrService,
     private configurationService: ConfigurationService
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     this.loadProductList();
@@ -80,11 +109,9 @@ export class ProductsAndServicesComponent implements OnInit {
   updateFilter(event) {
     const val = event.target.value.toLowerCase();
 
-    const temp = this.temp.filter(function (d) {
+    this.rows = this.temp.filter(function (d) {
       return d.name.toLowerCase().indexOf(val) !== -1 || !val;
     });
-
-    this.rows = temp;
     this.table.offset = 0;
   }
 
@@ -97,7 +124,7 @@ export class ProductsAndServicesComponent implements OnInit {
 
   onPrint() {
     const body = this.temp.map((items: any) => {
-      const data = [
+      return [
         items.productCode,
         items.name,
         items.productType ? 'Afiliación' : 'Producto',
@@ -106,8 +133,6 @@ export class ProductsAndServicesComponent implements OnInit {
         'USD ' + items.salePrice,
         items.inventory ? '∞' : '0',
       ];
-
-      return data;
     });
 
     this.printService.print(header, body, 'Lista de Productos', false);

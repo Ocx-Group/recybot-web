@@ -1,5 +1,5 @@
 import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import {NgbDropdown, NgbDropdownItem, NgbDropdownMenu, NgbDropdownToggle, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
 import { LoginMovements } from '@app/core/models/signin-model/login-movements.model';
 
@@ -22,21 +22,27 @@ import { MyProfileEditPersonalInfoModalComponent } from './my-profile-edit-perso
 import { EditSecurityPinModalComponent } from './edit-security-pin-modal/edit-security-pin-modal.component';
 import { SecretQuestionModalComponent } from './secret-question-modal/secret-question-modal.component';
 import { ImageProfileModalComponent } from './image-profile-modal/image-profile-modal.component';
+import {RouterLink} from "@angular/router";
 
 @Component({
     selector: 'app-my-profile',
     templateUrl: './my-profile.component.html',
     standalone: true,
-    imports: [
-      CommonModule,
-      NgxDatatableModule,
-      TranslateModule,
-      MyProfileEditPasswordModalComponent,
-      MyProfileEditPersonalInfoModalComponent,
-      EditSecurityPinModalComponent,
-      SecretQuestionModalComponent,
-      ImageProfileModalComponent
-    ]
+  imports: [
+    CommonModule,
+    NgxDatatableModule,
+    TranslateModule,
+    MyProfileEditPasswordModalComponent,
+    MyProfileEditPersonalInfoModalComponent,
+    EditSecurityPinModalComponent,
+    SecretQuestionModalComponent,
+    ImageProfileModalComponent,
+    RouterLink,
+    NgbDropdownItem,
+    NgbDropdown,
+    NgbDropdownToggle,
+    NgbDropdownMenu
+  ]
 })
 export class MyProfileComponent implements OnInit {
   public user: UserAffiliate = new UserAffiliate();

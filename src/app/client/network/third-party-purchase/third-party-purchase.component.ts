@@ -19,7 +19,7 @@ import { RequestPayment } from '@app/core/models/coinpay-model/request-payment.m
 import { Product } from '@app/core/models/product-model/product.model';
 import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
 import { WalletRequest } from '@app/core/models/wallet-model/wallet-request.model';
-import { CommonModule } from '@angular/common';
+import {CommonModule, NgOptimizedImage} from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { QrcodeModule } from 'qrcode-angular';
 import { CoinpayService } from '@app/core/service/coinpay-service/coinpay.service';
@@ -30,13 +30,14 @@ import { MatrixRequest } from '@app/core/interfaces/matrix-request';
 import Swal from 'sweetalert2';
 import { MatrixQualificationService } from '@app/core/service/matrix-qualification-service/matrix-qualification.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import {TranslatePipe} from "@ngx-translate/core";
 
 @Component({
     selector: 'app-third-party-purchase',
     templateUrl: './third-party-purchase.component.html',
     styleUrls: ['./third-party-purchase.component.scss'],
     standalone: true,
-    imports: [CommonModule, ReactiveFormsModule, FormsModule, QrcodeModule]
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, QrcodeModule, TranslatePipe, NgOptimizedImage]
 })
 export class ThirdPartyPurchaseComponent implements OnInit, OnDestroy {
   @ViewChild('thirdPartyPurchaseModal')
@@ -384,12 +385,12 @@ export class ThirdPartyPurchaseComponent implements OnInit, OnDestroy {
     }).then(result => {
       if (!result.isConfirmed) return;
 
-      this.spinnerService.show();
+      this.spinnerService.show().then();
       this.matrixQualificationService
         .processDirectPaymentMatrixActivation(request)
         .subscribe({
           next: response => {
-            this.spinnerService.hide();
+            this.spinnerService.hide().then();
             if (response) {
               this.successMessage('Matriz activada con éxito.');
               this.cleanAndCloseModal();
@@ -398,7 +399,7 @@ export class ThirdPartyPurchaseComponent implements OnInit, OnDestroy {
             }
           },
           error: error => {
-            this.spinnerService.hide();
+            this.spinnerService.hide().then();
             console.error('Error en la activación:', error);
             this.errorMessage('Error en la activación de la matriz.');
           },
