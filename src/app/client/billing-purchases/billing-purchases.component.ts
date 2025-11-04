@@ -20,18 +20,29 @@ import {
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import {TranslateService, TranslateModule} from '@ngx-translate/core';
-import { CommonModule } from '@angular/common';
-import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import {CommonModule} from '@angular/common';
+import {NgxDatatableModule} from '@swimlane/ngx-datatable';
 import {
   BillingPurchasesDetailModalComponent
 } from "@app/client/billing-purchases/billing-purchases-detail-modal/billing-purchases-detail-modal.component";
-import { IconsModule } from '@app/shared';
+import {IconsModule} from '@app/shared';
+import {RouterLink} from "@angular/router";
+import {NgbDropdown, NgbDropdownItem, NgbDropdownMenu, NgbDropdownToggle} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
-    selector: 'app-filter',
-    templateUrl: './billing-purchases.component.html',
-    standalone: true,
-  imports: [CommonModule, NgxDatatableModule, TranslateModule, BillingPurchasesDetailModalComponent, IconsModule]
+  selector: 'app-filter',
+  templateUrl: './billing-purchases.component.html',
+  standalone: true,
+  imports: [CommonModule,
+    NgxDatatableModule,
+    TranslateModule,
+    BillingPurchasesDetailModalComponent,
+    IconsModule,
+    RouterLink,
+    NgbDropdown,
+    NgbDropdownToggle,
+    NgbDropdownMenu,
+    NgbDropdownItem]
 })
 export class BillingPurchasesComponent implements OnInit, OnDestroy {
   private user: UserAffiliate = new UserAffiliate();
