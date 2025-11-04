@@ -118,7 +118,7 @@ export class CreateTicketModalComponent implements OnInit {
               (downloadURL) => {
                 let imageRequest = new TicketImagesRequest();
                 imageRequest.imagePath = downloadURL;
-                subscriber.next();
+                subscriber.next(imageRequest);
                 subscriber.complete();
               },
               (error) => {

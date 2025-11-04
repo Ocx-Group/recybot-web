@@ -1,14 +1,24 @@
 import {Component, HostListener, ViewChild} from '@angular/core';
-import {DatatableComponent} from '@swimlane/ngx-datatable';
+import {DataTableColumnCellDirective, DataTableColumnDirective, DatatableComponent} from '@swimlane/ngx-datatable';
 import {ToastrService} from 'ngx-toastr';
 import {ClipboardService} from 'ngx-clipboard';
+import {TranslatePipe} from "@ngx-translate/core";
+import {IconsModule} from "@app/shared";
+import {RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-closure-concepts',
   templateUrl: './closure-concepts.component.html',
   providers: [ToastrService],
   standalone: true,
-  imports: []
+  imports: [
+    DataTableColumnDirective,
+    TranslatePipe,
+    DataTableColumnCellDirective,
+    DatatableComponent,
+    IconsModule,
+    RouterLink
+  ]
 })
 export class ClosureConceptsComponent {
   rows = [];

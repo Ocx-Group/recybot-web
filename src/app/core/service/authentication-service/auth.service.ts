@@ -104,8 +104,8 @@ export class AuthService {
     this.cartService.removeAllCart();
     localStorage.removeItem('currentUserAdmin');
     localStorage.removeItem('currentUserAffiliate');
-    this.currentUserAffiliateSubject.next();
-    this.currentUserAdminSubject.next();
+    this.currentUserAffiliateSubject.next(null);
+    this.currentUserAdminSubject.next(null);
 
     this.toastr.clear();
 
@@ -114,12 +114,12 @@ export class AuthService {
 
   public setUserAffiliateValue(user: UserAffiliate) {
     localStorage.setItem('currentUserAffiliate', JSON.stringify(user));
-    this.currentUserAffiliateSubject.next();
+    this.currentUserAffiliateSubject.next(user);
   }
 
   public setUserAdminValue(user: User) {
     localStorage.setItem('currentUserAdmin', JSON.stringify(user));
-    this.currentUserAdminSubject.next();
+    this.currentUserAdminSubject.next(user);
   }
 
   getLoginMovementsByAffiliatedId(affiliateId: number) {

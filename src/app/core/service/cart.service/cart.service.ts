@@ -44,7 +44,7 @@ export class CartService {
 
   setProduct(product: any) {
     this.cartItemList.push(...product);
-    this.productList.next();
+    this.productList.next(this.cartItemList);
   }
 
   addtoCart(product: any) {
@@ -71,8 +71,8 @@ export class CartService {
     this.cartItemList.push({ ...product, quantity: 1 });
 
     let grandTotal = this.getTotalPrice();
-    this.productList.next();
-    this.totalPrice.next();
+    this.productList.next(this.cartItemList);
+    this.totalPrice.next(grandTotal);
   }
 
   getTotalPrice(): number {
@@ -89,17 +89,17 @@ export class CartService {
     );
     if (index !== -1) {
       this.cartItemList.splice(index, 1);
-      this.productList.next();
+      this.productList.next(this.cartItemList);
     }
   }
 
   removeAllCart() {
     this.cartItemList = [];
-    this.productList.next();
+    this.productList.next(this.cartItemList);
   }
 
   setPurchaseFromThirdParty(user: UserAffiliate) {
-    this.userReceivesPurchase.next();
+    this.userReceivesPurchase.next(user);
   }
 
   getPurchaseFromThirdParty() {
@@ -107,6 +107,6 @@ export class CartService {
   }
 
   clearPurchaseFromThirdParty() {
-    this.userReceivesPurchase.next();
+    this.userReceivesPurchase.next(new UserAffiliate());
   }
 }

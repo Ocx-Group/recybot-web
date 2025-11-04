@@ -80,7 +80,7 @@ export class ProcessGradingService {
       switchMap(() => this.getProgressPercentage(configurationId))
     ).subscribe(
       progress => {
-        this.progressSource.next();
+        this.progressSource.next(progress);
       },
       error => console.error(error)
     );

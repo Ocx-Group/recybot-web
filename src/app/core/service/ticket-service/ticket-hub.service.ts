@@ -1,13 +1,13 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import * as signalR from '@microsoft/signalr';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { HubConnectionState } from "@microsoft/signalr";
+import {BehaviorSubject, Observable, Subject} from 'rxjs';
+import {HubConnectionState} from "@microsoft/signalr";
 
-import { TicketRequest } from '@app/core/models/ticket-model/ticketRequest.model';
-import { TicketMessageRequest } from '@app/core/models/ticket-model/ticket-message-request.model';
-import { Ticket } from '@app/core/models/ticket-model/ticket.model';
-import { environment } from '@environments/environment';
-import { TicketSummary } from '@app/core/models/ticket-model/ticket-summary.model'
+import {TicketRequest} from '@app/core/models/ticket-model/ticketRequest.model';
+import {TicketMessageRequest} from '@app/core/models/ticket-model/ticket-message-request.model';
+import {Ticket} from '@app/core/models/ticket-model/ticket.model';
+import {environment} from '@environments/environment';
+import {TicketSummary} from '@app/core/models/ticket-model/ticket-summary.model'
 
 @Injectable({
   providedIn: 'root'
@@ -33,7 +33,7 @@ export class TicketHubService {
   }
 
   public setTicket(ticketId: number) {
-    this.ticketSave.next();
+    this.ticketSave.next(ticketId);
     localStorage.setItem('ticket', JSON.stringify(ticketId));
   }
 
@@ -43,49 +43,49 @@ export class TicketHubService {
 
   public async startConnection(): Promise<void> {
     this.hubConnection = new signalR.HubConnectionBuilder()
-      .withUrl(this.urlApi, { withCredentials: true })
+      .withUrl(this.urlApi, {withCredentials: true})
       .withAutomaticReconnect()
       .build();
 
     try {
       await this.hubConnection.start();
       this.addMessageListener();
-      this.connectionEstablished.next();
+      this.connectionEstablished.next(true);
     } catch (error) {
       console.error(`Error al iniciar la conexión: ${error}`);
-      this.connectionEstablished.next();
-      this.connectionError.next();
+      this.connectionEstablished.next(false);
+      this.connectionError.next(`Error al iniciar la conexión: ${error}`);
       throw error;
     }
   }
 
   private addMessageListener(): void {
     this.hubConnection.on('ReceiveMessage', (message: TicketMessageRequest) => {
-      this.messageReceived.next();
+      this.messageReceived.next(message);
     });
 
     this.hubConnection.on('TicketCreated', (ticket: Ticket) => {
-      this.ticketCreated.next();
+      this.ticketCreated.next(ticket);
     });
 
     this.hubConnection.on('ReceiveTickets', (tickets: Ticket[]) => {
-      this.ticketsReceived.next();
+      this.ticketsReceived.next(tickets);
     });
 
     this.hubConnection.on('ReceiveTicketsForAdmin', (tickets: Ticket[]) => {
-      this.ticketsReceived.next();
+      this.ticketsReceived.next(tickets);
     });
 
     this.hubConnection.on('DeleteTicket', (ticket: Ticket) => {
-      this.ticketCreated.next();
+      this.ticketCreated.next(ticket);
     })
 
     this.hubConnection.on('GetTicketById', (ticket: Ticket) => {
-      this.ticketCreated.next();
+      this.ticketCreated.next(ticket);
     })
 
     this.hubConnection.on('ReceiveTicketSummaries', (ticketSummaries: TicketSummary[]) => {
-      this.ticketSummaries.next();
+      this.ticketSummaries.next(ticketSummaries);
     })
   }
 
@@ -96,7 +96,7 @@ export class TicketHubService {
       return true;
     } catch (error) {
       console.error(`Error al unirse a la sala: ${error}`);
-      this.connectionError.next();
+      this.connectionError.next(`Error al unirse a la sala: ${error}`);
 
       return false;
     }
@@ -177,15 +177,15 @@ export class TicketHubService {
       this.hubConnection.invoke<Ticket>('GetTicketById', ticketId)
         .then(ticket => {
           if (ticket) {
-            this.ticketCreated.next();
+            this.ticketCreated.next(ticket);
           } else {
             console.error('No ticket received');
-            this.ticketCreated.next();
+            this.ticketCreated.next(null);
           }
         })
         .catch(error => {
           console.error(`Error retrieving ticket: ${error}`);
-          this.ticketCreated.next();
+          this.ticketCreated.next(null);
         });
     } else {
       console.error('Connection is not in the \'Connected\' State.');

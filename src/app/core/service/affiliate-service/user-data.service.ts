@@ -9,7 +9,7 @@ export class UserDataService {
   }
 
   setUser(user: any) {
-    this.userSubject.next();
+    this.userSubject.next(user);
   }
 
   getUser(): Observable<any> {

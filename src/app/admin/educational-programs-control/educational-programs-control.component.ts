@@ -1,17 +1,32 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 
-import {DatatableComponent} from '@swimlane/ngx-datatable';
+import {DataTableColumnCellDirective, DataTableColumnDirective, DatatableComponent} from '@swimlane/ngx-datatable';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import Swal from 'sweetalert2';
 import {InvoiceService} from "../../core/service/invoice-service/invoice.service";
+import {TranslatePipe} from "@ngx-translate/core";
+import {NgbDropdown, NgbDropdownItem, NgbDropdownMenu, NgbDropdownToggle} from "@ng-bootstrap/ng-bootstrap";
+import {FormsModule} from "@angular/forms";
+import {IconsModule} from "@app/shared";
 
 @Component({
   selector: 'app-educational-programs-control',
   templateUrl: './educational-programs-control.component.html',
   styleUrls: ['./educational-programs-control.component.css'],
   standalone: true,
-  imports: []
+  imports: [
+    DataTableColumnDirective,
+    TranslatePipe,
+    NgbDropdownMenu,
+    NgbDropdown,
+    DataTableColumnCellDirective,
+    NgbDropdownItem,
+    NgbDropdownToggle,
+    DatatableComponent,
+    FormsModule,
+    IconsModule
+  ]
 })
 export class EducationalProgramsControlComponent implements OnInit {
   rows = [];
@@ -158,5 +173,7 @@ export class EducationalProgramsControlComponent implements OnInit {
       document.body.removeChild(content);
     });
   }
+
+  deleteSingleRow(id) {}
 }
 

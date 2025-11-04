@@ -28,7 +28,7 @@ export class CoinpaymentService {
   }
 
   changeStatus(status: number) {
-    this.transactionStatus.next();
+    this.transactionStatus.next(status);
   }
 
   createTransaction(transactionRequest: CreatePayment) {

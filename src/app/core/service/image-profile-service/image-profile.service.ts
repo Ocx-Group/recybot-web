@@ -17,6 +17,6 @@ export class ImageProfileService {
   }
 
   setImageURL(url: string | null) {
-    this.imageURLSubject.next();
+    this.imageURLSubject.next(url);
   }
 }

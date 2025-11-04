@@ -10,11 +10,11 @@ export class LogoService {
 
   constructor() {
     const savedTheme = localStorage.getItem('isDarkTheme') === 'true';
-    this.isDarkTheme.next();
+    this.isDarkTheme.next(savedTheme);
   }
 
   toggleTheme(isDark: boolean): void {
-    this.isDarkTheme.next();
+    this.isDarkTheme.next(isDark);
     localStorage.setItem('isDarkTheme', String(isDark));
   }
 

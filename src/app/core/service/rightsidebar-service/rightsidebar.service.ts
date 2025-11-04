@@ -6,7 +6,7 @@ export class RightSidebarService {
   sidebarState = this.sidebarSubject.asObservable();
 
   setRightSidebar = (value: boolean) => {
-    this.sidebarSubject.next();
+    this.sidebarSubject.next(value);
   };
 
   constructor() {}
