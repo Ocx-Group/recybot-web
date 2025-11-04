@@ -1,13 +1,25 @@
-import { map } from 'rxjs/operators';
-import { Component, ViewChild, HostListener, OnInit } from '@angular/core';
-import { DatatableComponent } from '@swimlane/ngx-datatable';
-import { ToastrService } from 'ngx-toastr';
-import { ClipboardService } from 'ngx-clipboard';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import {Component, ViewChild, HostListener, OnInit} from '@angular/core';
+import {DataTableColumnCellDirective, DataTableColumnDirective, DatatableComponent} from '@swimlane/ngx-datatable';
+import {ToastrService} from 'ngx-toastr';
+import {ClipboardService} from 'ngx-clipboard';
+import {
+  NgbAlert,
+  NgbDropdown,
+  NgbDropdownItem,
+  NgbDropdownMenu,
+  NgbDropdownToggle,
+  NgbModal
+} from '@ng-bootstrap/ng-bootstrap';
+import {TranslatePipe} from "@ngx-translate/core";
+import {RouterLink} from "@angular/router";
+import {IconsModule} from "../../shared";
+import {PrintService} from "../../core/service/print-service/print.service";
+import {AffiliateService} from "../../core/service/affiliate-service/affiliate.service";
+import {UserAffiliate} from "../../core/models/user-affiliate-model/user.affiliate.model";
+import {
+  AuthorizeAffiliatesEditModalComponent
+} from "./authorize-affiliates-edit-modal/authorize-affiliates-edit-modal.component";
 
-import { PrintService } from '@app/core/service/print-service/print.service';
-import { AffiliateService } from '@app/core/service/affiliate-service/affiliate.service';
-import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
 
 interface Alert {
   type: string;
@@ -33,10 +45,24 @@ const header = [
 ];
 
 @Component({
-    selector: 'app-authorize-affiliates',
-    templateUrl: './authorize-affiliates.component.html',
-    providers: [ToastrService],
-    standalone: false
+  selector: 'app-authorize-affiliates',
+  templateUrl: './authorize-affiliates.component.html',
+  providers: [ToastrService],
+  standalone: true,
+  imports: [
+    TranslatePipe,
+    RouterLink,
+    IconsModule,
+    NgbAlert,
+    DatatableComponent,
+    DataTableColumnDirective,
+    DataTableColumnCellDirective,
+    NgbDropdown,
+    NgbDropdownToggle,
+    NgbDropdownMenu,
+    NgbDropdownItem,
+    AuthorizeAffiliatesEditModalComponent
+  ]
 })
 export class AuthorizeAffiliatesComponent implements OnInit {
   alerts: Alert[];
@@ -116,20 +142,20 @@ export class AuthorizeAffiliatesComponent implements OnInit {
   }
 
   selectionProcess() {
-    if(this.approvedArray.length === 0 && this.disapprovedArray.length === 0){
+    if (this.approvedArray.length === 0 && this.disapprovedArray.length === 0) {
       this.showError('You must select at least one user to be processed!');
     }
 
     this.affiliateService
-    .authorizationAffiliates(this.approvedArray, this.disapprovedArray)
-    .subscribe((response) => {
-      if (response.success) {
-        this.showSuccess('The affiliations have been processed successfully!');
-        this.loadAffiliateList();
-      } else {
-        this.showError('Error!');
-      }
-    });
+      .authorizationAffiliates(this.approvedArray, this.disapprovedArray)
+      .subscribe((response) => {
+        if (response.success) {
+          this.showSuccess('The affiliations have been processed successfully!');
+          this.loadAffiliateList();
+        } else {
+          this.showError('Error!');
+        }
+      });
   }
 
   showSuccess(message) {

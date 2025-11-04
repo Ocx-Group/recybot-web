@@ -35,10 +35,10 @@
                             </div>
                           </div>
                           <input style="background-color: white" type="text" class="form-control"
-                            id="inlineFormInputGroup" (keyup)="updateFilter($event)" aria-label="Search box"
-                            placeholder="{{
+                                 id="inlineFormInputGroup" (keyup)="updateFilter($event)" aria-label="Search box"
+                                 placeholder="{{
                               'AUTHORIZE-AFFILIATES.SEARCH.TEXT' | translate
-                            }}" />
+                            }}"/>
                         </div>
                       </div>
                     </div>
@@ -62,9 +62,9 @@
                   </div>
                 </div>
                 <ngx-datatable #table class="material" [rows]="rows" [loadingIndicator]="loadingIndicator"
-                  columnMode="force" [headerHeight]="50" [footerHeight]="50" rowHeight="auto"
-                  [selectionType]="'checkbox'" [limit]="10" [scrollbarH]="scrollBarHorizontal"
-                  [reorderable]="reorderable">
+                               columnMode="force" [headerHeight]="50" [footerHeight]="50" rowHeight="auto"
+                               [selectionType]="'checkbox'" [limit]="10" [scrollbarH]="scrollBarHorizontal"
+                               [reorderable]="reorderable">
 
                   <ngx-datatable-column name="Afiliado">
                     <ng-template let-row="row" ngx-datatable-cell-template>

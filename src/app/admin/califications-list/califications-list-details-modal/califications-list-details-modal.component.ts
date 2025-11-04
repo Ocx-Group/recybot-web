@@ -1,13 +1,13 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-
-import { Grading } from '@app/core/models/grading-model/grading.model';
-import { GradingService } from '@app/core/service/grading-service/grading.service';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {Grading} from "../../../core/models/grading-model/grading.model";
+import {GradingService} from "../../../core/service/grading-service/grading.service";
 
 @Component({
-    selector: 'app-califications-list-details-modal',
-    templateUrl: './califications-list-details-modal.component.html',
-    standalone: false
+  selector: 'app-califications-list-details-modal',
+  templateUrl: './califications-list-details-modal.component.html',
+  standalone: true,
+  imports: []
 })
 export class CalificationsListDetailsModalComponent implements OnInit {
   active = 1;
@@ -20,13 +20,15 @@ export class CalificationsListDetailsModalComponent implements OnInit {
   constructor(
     private modalService: NgbModal,
     private gradingService: GradingService
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.fetchCalificationList();
     this.fetchMembership();
     this.fetchProductList();
   }
+
   detailsOpenModal(content, grading: Grading) {
     this.gradingData = grading;
     this.modalService.open(content, {

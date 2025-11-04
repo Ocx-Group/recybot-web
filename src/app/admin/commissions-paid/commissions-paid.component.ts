@@ -1,14 +1,24 @@
-import { Component, ViewChild, HostListener } from '@angular/core';
-import { DatatableComponent } from '@swimlane/ngx-datatable';
-import { ToastrService } from 'ngx-toastr';
-import { ClipboardService } from 'ngx-clipboard';
-
+import {Component, ViewChild, HostListener} from '@angular/core';
+import {DataTableColumnCellDirective, DataTableColumnDirective, DatatableComponent} from '@swimlane/ngx-datatable';
+import {ToastrService} from 'ngx-toastr';
+import {ClipboardService} from 'ngx-clipboard';
+import {TranslatePipe} from "@ngx-translate/core";
+import {IconsModule} from "../../shared";
+import {RouterLink} from "@angular/router";
 
 @Component({
-    selector: 'app-commissions-paid',
-    templateUrl: './commissions-paid.component.html',
-    providers: [ToastrService],
-    standalone: false
+  selector: 'app-commissions-paid',
+  templateUrl: './commissions-paid.component.html',
+  providers: [ToastrService],
+  standalone: true,
+  imports: [
+    TranslatePipe,
+    IconsModule,
+    RouterLink,
+    DatatableComponent,
+    DataTableColumnDirective,
+    DataTableColumnCellDirective
+  ]
 })
 export class CommissionsPaidComponent {
   rows = [];
@@ -39,6 +49,7 @@ export class CommissionsPaidComponent {
   getRowHeight(row) {
     return row.height;
   }
+
   fetch(cb) {
     const req = new XMLHttpRequest();
     req.open('GET', `assets/data/admin/commissions-paid-data.json`);

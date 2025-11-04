@@ -1,23 +1,26 @@
-import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
+import {Component, HostListener, OnInit, ViewChild} from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
   AbstractControl,
-  Validators,
+  Validators, ReactiveFormsModule,
 } from '@angular/forms';
-import { ProductAttributeService } from '@app/core/service/product-attribute/product-attribute.service';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { DatatableComponent } from '@swimlane/ngx-datatable';
+import {NgbModal, NgbNav, NgbNavContent, NgbNavItem, NgbNavLink, NgbNavOutlet} from '@ng-bootstrap/ng-bootstrap';
+import {DataTableColumnCellDirective, DataTableColumnDirective, DatatableComponent} from '@swimlane/ngx-datatable';
 import Swal from 'sweetalert2';
-
-import { ProductAttributeValue } from '@app/core/models/product-attribute-value-model/product-attribute-value.model';
-import { ProductAttributeValueService } from '@app/core/service/product-attribute-value/product-attribute-value.service';
-import { ToastrService } from 'ngx-toastr';
+import {ToastrService} from 'ngx-toastr';
+import {ProductAttributeValue} from "../../../core/models/product-attribute-value-model/product-attribute-value.model";
+import {ProductAttributeService} from "../../../core/service/product-attribute/product-attribute.service";
+import {
+  ProductAttributeValueService
+} from "../../../core/service/product-attribute-value/product-attribute-value.service";
+import {NgClass} from "@angular/common";
 
 @Component({
-    selector: 'app-attributes-list-details-modal',
-    templateUrl: './attributes-list-details-modal.component.html',
-    standalone: false
+  selector: 'app-attributes-list-details-modal',
+  templateUrl: './attributes-list-details-modal.component.html',
+  standalone: true,
+  imports: [DatatableComponent, ReactiveFormsModule, NgbNav, NgbNavItem, NgbNavContent, NgbNavLink, DataTableColumnDirective, DataTableColumnCellDirective, NgClass, NgbNavOutlet],
 })
 export class AttributesListDetailsModalComponent implements OnInit {
   active = 1;
@@ -39,8 +42,9 @@ export class AttributesListDetailsModalComponent implements OnInit {
     private formBuilder: FormBuilder,
     private productAttributeService: ProductAttributeService,
     private productAttributeValueService: ProductAttributeValueService,
-    private toastr:ToastrService
-  ) {}
+    private toastr: ToastrService
+  ) {
+  }
 
   ngOnInit(): void {
     this.loadValidation();
@@ -78,7 +82,7 @@ export class AttributesListDetailsModalComponent implements OnInit {
     });
   }
 
-  loadAttributesValuesList(id:number) {
+  loadAttributesValuesList(id: number) {
     this.productAttributeValueService
       .getAttributeValueByAttributeId(id)
       .subscribe((resp: ProductAttributeValue[]) => {
@@ -102,8 +106,8 @@ export class AttributesListDetailsModalComponent implements OnInit {
     this.toastr.success(message, 'Success!');
   }
 
-  detailsOpenModal(content,row) {
-    this.productAttributeValue.idAttribute=row;
+  detailsOpenModal(content, row) {
+    this.productAttributeValue.idAttribute = row;
     this.loadAttributesValuesList(row);
     this.modalService.open(content, {
       ariaLabelledBy: 'modal-basic-title',
@@ -121,12 +125,12 @@ export class AttributesListDetailsModalComponent implements OnInit {
     this.productAttributeValue.position = this.detailsAttributesForm.value.position;
     this.productAttributeValue.attributeValue = this.detailsAttributesForm.value.value;
 
-    this.productAttributeValueService.createProductAttributeValue(this.productAttributeValue).subscribe((resp)=>{
-       if(resp.success){
+    this.productAttributeValueService.createProductAttributeValue(this.productAttributeValue).subscribe((resp) => {
+      if (resp.success) {
         this.showSuccess('The attribute value was created successfully!');
         this.loadAttributesValuesList(this.productAttributeValue.idAttribute);
         this.detailsAttributesForm.reset();
-       }
+      }
     });
   }
 

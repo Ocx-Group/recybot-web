@@ -1,17 +1,21 @@
-import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { ToastrService } from 'ngx-toastr';
+import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
+import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
+import {ToastrService} from 'ngx-toastr';
 
-import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
-import { MatrixQualificationService } from '@app/core/service/matrix-qualification-service/matrix-qualification.service';
-import { MatrixRequest } from '@app/core/interfaces/matrix-request';
+import {UserAffiliate} from '@app/core/models/user-affiliate-model/user.affiliate.model';
+import {MatrixQualificationService} from '@app/core/service/matrix-qualification-service/matrix-qualification.service';
+import {MatrixRequest} from '@app/core/interfaces/matrix-request';
 import {MatrixConfigurationService} from "@app/core/service/matrix-configuration/matrix-configuration.service";
+import {CurrencyPipe} from "@angular/common";
 
 @Component({
-    selector: 'app-matrix-activation-modal',
-    templateUrl: './matrix-activation-modal.component.html',
-    providers: [ToastrService],
-    standalone: false
+  selector: 'app-matrix-activation-modal',
+  templateUrl: './matrix-activation-modal.component.html',
+  providers: [ToastrService],
+  standalone: true,
+  imports: [
+    CurrencyPipe
+  ]
 })
 export class MatrixActivationModalComponent implements OnInit {
   @Output() matrixActivated = new EventEmitter<boolean>();
@@ -28,7 +32,8 @@ export class MatrixActivationModalComponent implements OnInit {
     private toast: ToastrService,
     private matrixQualificationService: MatrixQualificationService,
     private matrixConfigurationService: MatrixConfigurationService
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     this.loadMatrixConfigurations();

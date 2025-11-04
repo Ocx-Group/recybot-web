@@ -1,13 +1,14 @@
-import { Component, ViewChild, HostListener } from '@angular/core';
-import { DatatableComponent } from '@swimlane/ngx-datatable';
-import { ToastrService } from 'ngx-toastr';
-import { ClipboardService } from 'ngx-clipboard';
+import {Component, HostListener, ViewChild} from '@angular/core';
+import {DatatableComponent} from '@swimlane/ngx-datatable';
+import {ToastrService} from 'ngx-toastr';
+import {ClipboardService} from 'ngx-clipboard';
 
 @Component({
-    selector: 'app-closure-concepts',
-    templateUrl: './closure-concepts.component.html',
-    providers: [ToastrService],
-    standalone: false
+  selector: 'app-closure-concepts',
+  templateUrl: './closure-concepts.component.html',
+  providers: [ToastrService],
+  standalone: true,
+  imports: []
 })
 export class ClosureConceptsComponent {
   rows = [];
@@ -38,6 +39,7 @@ export class ClosureConceptsComponent {
   getRowHeight(row) {
     return row.height;
   }
+
   fetch(cb) {
     const req = new XMLHttpRequest();
     req.open('GET', `assets/data/list-affiliates.json`);
@@ -53,19 +55,17 @@ export class ClosureConceptsComponent {
     const val = event.target.value.toLowerCase();
 
     // filter our data
-    const temp = this.temp.filter(function (d) {
+    // update the rows
+    this.rows = this.temp.filter(function (d) {
       return d.name.toLowerCase().indexOf(val) !== -1 || !val;
     });
-
-    // update the rows
-    this.rows = temp;
     // Whenever the filter changes, always go back to the first page
     this.table.offset = 0;
   }
 
   clipBoardCopy() {
-    var string = JSON.stringify(this.temp);
-    var result = this.clipboardService.copyFromContent(string);
+    const string = JSON.stringify(this.temp);
+    this.clipboardService.copyFromContent(string);
 
     if (this.temp.length === 0) {
       this.toastr.info('no data to copy');

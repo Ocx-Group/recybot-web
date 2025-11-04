@@ -47,7 +47,7 @@
         </div>
         <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mt-2 ml-2">
           <input class="form-check-input" type="checkbox" value="" formControlName="activate_small_banner"
-            id="activate_small_banner" (ngModel)="(checkboxSmallBanner)" (change)="onChangeSmallBanner()" />
+            id="activate_small_banner" [ngModel]="(checkboxSmallBanner)" (change)="onChangeSmallBanner()" />
           <label class="form-check-label ms-2" for="activate_small_banner">
             Activar banner pequeño</label>
           <div class="mb-3">
@@ -57,7 +57,7 @@
         </div>
         <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mt-2 ml-2">
           <input class="form-check-input" type="checkbox" value="" formControlName="activate_big_banner"
-            id="activate_big_banner" (ngModel)="(checkboxBigBanner)" (change)="onChangeBigBanner()" />
+            id="activate_big_banner" [ngModel]="(checkboxBigBanner)" (change)="onChangeBigBanner()" />
           <label class="form-check-label ms-2" for="activate_big_banner">
             Activar banner grande</label>
           <div class="mb-3">

@@ -1,18 +1,23 @@
-import { ConceptConfigurationService } from '@app/core/service/concept-configuration-service/concept-configuration.service';
-import { Component, ViewChild, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import {Component, ViewChild, OnInit} from '@angular/core';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
-import { ConceptLevel } from '@app/core/models/concept-configuration-model/concept-level.model';
-import { ConceptList } from '@app/core/models/concept-model/concept-list.model';
-import { GradingService } from '@app/core/service/grading-service/grading.service';
-import { ToastrService } from 'ngx-toastr';
+import {ToastrService} from 'ngx-toastr';
 import Swal from 'sweetalert2';
+import {ConceptLevel} from "../../../core/models/concept-configuration-model/concept-level.model";
+import {ConceptList} from "../../../core/models/concept-model/concept-list.model";
+import {GradingService} from "../../../core/service/grading-service/grading.service";
+import {
+  ConceptConfigurationService
+} from "../../../core/service/concept-configuration-service/concept-configuration.service";
+import {FormsModule} from "@angular/forms";
 
 @Component({
-    selector: 'app-concept-list-configuration-modal',
-    templateUrl: './concept-list-configuration-modal.component.html',
-    standalone: false
+  selector: 'app-concept-list-configuration-modal',
+  templateUrl: './concept-list-configuration-modal.component.html',
+  standalone: true,
+  imports: [
+    FormsModule
+  ]
 })
 export class ConceptListConfigurationModalComponent implements OnInit {
   // conceptConfigurationForm!: FormGroup;
@@ -25,12 +30,11 @@ export class ConceptListConfigurationModalComponent implements OnInit {
   @ViewChild('configurationModal') configurationModal: NgbModal;
 
   constructor(
-    private formBuilder: FormBuilder,
-    private modalService: NgbModal,
     private gradingService: GradingService,
     private conceptConfigurationService: ConceptConfigurationService,
     private toastr: ToastrService
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.fetchCalificationList();
@@ -39,29 +43,11 @@ export class ConceptListConfigurationModalComponent implements OnInit {
   addForm() {
     this.conceptLevel = new ConceptLevel();
     this.dataObject.push(this.conceptLevel);
-    this.dataObject.forEach((resp, index) => {});
-  }
-
-  removeForm(index) {
-    this.dataObject.splice(index, 1);
-  }
-
-  configurationOpenModal(content, value) {
-    this.modalService.open(content, {
-      ariaLabelledBy: 'modal-basic-title',
-      size: 'xl',
+    this.dataObject.forEach(() => {
     });
-    this.concept = value;
-    this.conceptConfigurationService
-      .getConceptConfigurationByConceptId(this.concept.id)
-      .subscribe((resp) => {
-        if (resp !== null) {
-          this.dataObject = resp;
-        }
-      });
   }
 
-  showSuccess(message) {
+  showSuccess(message: string) {
     this.toastr.success(message, 'Success!');
   }
 
@@ -70,7 +56,7 @@ export class ConceptListConfigurationModalComponent implements OnInit {
     if (conceptLevel.id === 0) {
       this.conceptConfigurationService
         .createConceptLevel(conceptLevel)
-        .subscribe((resp) => {
+        .subscribe(() => {
           this.showSuccess('The concept level was created successfully!');
           this.loadConceptConfiguration();
         });

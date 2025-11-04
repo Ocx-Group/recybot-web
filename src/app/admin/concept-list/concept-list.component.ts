@@ -1,16 +1,25 @@
-import { Component, ViewChild, HostListener, OnInit } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { DatatableComponent } from '@swimlane/ngx-datatable';
+import {Component, ViewChild, HostListener, OnInit} from '@angular/core';
+import {NgbDropdown, NgbDropdownItem, NgbDropdownMenu, NgbDropdownToggle, NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {DataTableColumnCellDirective, DataTableColumnDirective, DatatableComponent} from '@swimlane/ngx-datatable';
 
-import { ConceptService } from '@app/core/service/concept-service/concept.service';
-import { ConceptList } from '@app/core/models/concept-model/concept-list.model';
-import { PaymentGroupsService } from '@app/core/service/payment-groups-service/payment-groups.service';
-import { PaymentGroup } from '@app/core/models/payment-group-model/payment.group.model';
-import { PayConcept } from '@app/core/models/concept-model/pay-concept.model';
-import { PrintService } from '@app/core/service/print-service/print.service';
-import { ClipboardService } from 'ngx-clipboard';
-import { ToastrService } from 'ngx-toastr';
+import {ClipboardService} from 'ngx-clipboard';
+import {ToastrService} from 'ngx-toastr';
 import Swal from 'sweetalert2';
+import {ConceptService} from "../../core/service/concept-service/concept.service";
+import {PrintService} from "../../core/service/print-service/print.service";
+import {ConceptList} from "../../core/models/concept-model/concept-list.model";
+import {TranslatePipe} from "@ngx-translate/core";
+import {RouterLink} from "@angular/router";
+import {IconsModule} from "../../shared";
+import {ConceptListCreateModalComponent} from "./concept-list-create-modal/concept-list-create-modal.component";
+import {ConceptListEditModalComponent} from "./concept-list-edit-modal/concept-list-edit-modal.component";
+import {ConceptListDetailsModalComponent} from "./concept-list-details-modal/concept-list-details-modal.component";
+import {
+  ConceptListBinaryConfigurationModalComponent
+} from "./concept-list-binary-configuration-modal/concept-list-binary-configuration-modal.component";
+import {
+  ConceptListConfigurationModalComponent
+} from "./concept-list-configuration-modal/concept-list-configuration-modal.component";
 
 const header = [
   'Nombre del Concepto',
@@ -21,11 +30,29 @@ const header = [
   'Compresión',
   'Igualación',
 ];
+
 @Component({
-    selector: 'app-concept-list',
-    templateUrl: './concept-list.component.html',
-    providers: [ToastrService],
-    standalone: false
+  selector: 'app-concept-list',
+  templateUrl: './concept-list.component.html',
+  providers: [ToastrService],
+  standalone: true,
+  imports: [
+    TranslatePipe,
+    RouterLink,
+    IconsModule,
+    DatatableComponent,
+    DataTableColumnDirective,
+    DataTableColumnCellDirective,
+    NgbDropdown,
+    NgbDropdownToggle,
+    NgbDropdownMenu,
+    NgbDropdownItem,
+    ConceptListCreateModalComponent,
+    ConceptListEditModalComponent,
+    ConceptListDetailsModalComponent,
+    ConceptListBinaryConfigurationModalComponent,
+    ConceptListConfigurationModalComponent
+  ]
 })
 export class ConceptListComponent implements OnInit {
   rows = [];
@@ -44,11 +71,13 @@ export class ConceptListComponent implements OnInit {
     private printService: PrintService,
     private clipboardService: ClipboardService,
     private toastr: ToastrService
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.loadConceptList();
   }
+
   @HostListener('window:resize', ['$event'])
   onResize(event) {
     this.scrollBarHorizontal = window.innerWidth < 1200;

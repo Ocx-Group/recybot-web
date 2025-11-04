@@ -1,16 +1,20 @@
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Component, EventEmitter, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {Component, EventEmitter, OnInit, Output, TemplateRef, ViewChild} from '@angular/core';
 
-import { InvoiceModelOneTwo } from '@app/core/models/invoice-model/invoice-model-one-two';
-import { InvoiceService } from '@app/core/service/invoice-service/invoice.service';
-import { ModelBalancesInvoices } from '@app/core/models/invoice-model/model-balances-invoices';
 import Swal from 'sweetalert2';
+import {InvoiceModelOneTwo} from "../../../core/models/invoice-model/invoice-model-one-two";
+import {InvoiceService} from "../../../core/service/invoice-service/invoice.service";
+import {ModelBalancesInvoices} from "../../../core/models/invoice-model/model-balances-invoices";
+import {FormsModule} from "@angular/forms";
 
 @Component({
-    selector: 'app-split-balances-modal',
-    templateUrl: './split-balances-modal.component.html',
-    styleUrls: ['./split-balances-modal.component.sass'],
-    standalone: false
+  selector: 'app-split-balances-modal',
+  templateUrl: './split-balances-modal.component.html',
+  styleUrls: ['./split-balances-modal.component.sass'],
+  standalone: true,
+  imports: [
+    FormsModule
+  ]
 })
 export class SplitBalancesModalComponent implements OnInit {
   @ViewChild('splitBalancesModal') splitBalancesModal: TemplateRef<any>;
@@ -22,7 +26,8 @@ export class SplitBalancesModalComponent implements OnInit {
   model2Amount: number = 0;
   remainingTotal: number = 0;
 
-  constructor(private modalService: NgbModal, private invoiceService: InvoiceService) { }
+  constructor(private modalService: NgbModal, private invoiceService: InvoiceService) {
+  }
 
   ngOnInit() {
 
@@ -31,7 +36,7 @@ export class SplitBalancesModalComponent implements OnInit {
   initModal() {
     this.calculateSelectedInvoicesTotal();
     this.updateRemainingTotal();
-    this.modalService.open(this.splitBalancesModal, { size: 'lg', centered: true });
+    this.modalService.open(this.splitBalancesModal, {size: 'lg', centered: true});
   }
 
   setInvoices(invoices: InvoiceModelOneTwo[]) {
@@ -92,7 +97,7 @@ export class SplitBalancesModalComponent implements OnInit {
           title: 'Se devolvieron los saldos correctamente.',
           html: htmlContent,
           icon: 'success'
-        });
+        }).then();
 
         this.reloadRequested.emit();
         this.selectedInvoices = [];
@@ -103,7 +108,7 @@ export class SplitBalancesModalComponent implements OnInit {
           title: 'Error',
           text: 'No se pudieron procesar los saldos.',
           icon: 'error'
-        });
+        }).then();
       }
     });
   }
@@ -117,7 +122,7 @@ export class SplitBalancesModalComponent implements OnInit {
         text: 'El monto total de las facturas es mayor al monto asignado a los modelos.',
         icon: 'warning',
         confirmButtonText: 'Ok'
-      });
+      }).then();
       return false;
     }
 
@@ -127,7 +132,7 @@ export class SplitBalancesModalComponent implements OnInit {
         text: 'No se puede procesar la devolución de saldos si todos los montos asignados son cero.',
         icon: 'warning',
         confirmButtonText: 'Ok'
-      });
+      }).then();
       return false;
     }
     return true;

@@ -1,13 +1,25 @@
-import { Component, OnInit } from '@angular/core';
-import { ConfigurationService } from '@app/core/service/configuration-service/configuration.service';
-import { CompensationPlansConfiguration } from '@app/core/models/compensation-plans-configuration-model/compensation-plans-configuration.model';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { ToastrService } from 'ngx-toastr';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, ReactiveFormsModule} from '@angular/forms';
+import {ToastrService} from 'ngx-toastr';
+import {
+  CompensationPlansConfiguration
+} from "../../core/models/compensation-plans-configuration-model/compensation-plans-configuration.model";
+import {ConfigurationService} from "../../core/service/configuration-service/configuration.service";
+import {TranslatePipe} from "@ngx-translate/core";
+import {RouterLink} from "@angular/router";
+import {NgbTooltip} from "@ng-bootstrap/ng-bootstrap";
+
 
 @Component({
-    selector: 'app-compensation-plans',
-    templateUrl: './compensation-plans.component.html',
-    standalone: false
+  selector: 'app-compensation-plans',
+  templateUrl: './compensation-plans.component.html',
+  standalone: true,
+  imports: [
+    TranslatePipe,
+    ReactiveFormsModule,
+    RouterLink,
+    NgbTooltip
+  ]
 })
 export class CompensationPlansComponent implements OnInit {
   compesationPlansForm!: FormGroup;
@@ -15,7 +27,10 @@ export class CompensationPlansComponent implements OnInit {
   compesationPlansConfiguration: CompensationPlansConfiguration =
     new CompensationPlansConfiguration();
 
-  constructor(private configurationService: ConfigurationService, private formBuilder: FormBuilder, private toastr: ToastrService) { }
+  constructor(private configurationService: ConfigurationService,
+              private formBuilder: FormBuilder,
+              private toastr: ToastrService) {
+  }
 
   ngOnInit(): void {
     this.loadValidation();
@@ -31,7 +46,7 @@ export class CompensationPlansComponent implements OnInit {
     })
   }
 
-  showSuccess(message) {
+  showSuccess(message: string) {
     this.toastr.success(message, 'Success!');
   }
 
@@ -65,6 +80,4 @@ export class CompensationPlansComponent implements OnInit {
       }
     });
   }
-
-
 }

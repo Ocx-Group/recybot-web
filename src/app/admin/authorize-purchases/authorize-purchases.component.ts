@@ -1,9 +1,12 @@
-import { Component, ViewChild, HostListener } from '@angular/core';
-import { DatatableComponent } from '@swimlane/ngx-datatable';
-import { ToastrService } from 'ngx-toastr';
-import { ClipboardService } from 'ngx-clipboard';
-
-import { PrintService } from '@app/core/service/print-service/print.service';
+import {Component, ViewChild, HostListener} from '@angular/core';
+import {DataTableColumnCellDirective, DataTableColumnDirective, DatatableComponent} from '@swimlane/ngx-datatable';
+import {ToastrService} from 'ngx-toastr';
+import {ClipboardService} from 'ngx-clipboard';
+import {PrintService} from "../../core/service/print-service/print.service";
+import {TranslatePipe} from "@ngx-translate/core";
+import {RouterLink} from "@angular/router";
+import {IconsModule} from "../../shared";
+import {NgbAlert} from "@ng-bootstrap/ng-bootstrap";
 
 interface Alert {
   type: string;
@@ -27,10 +30,19 @@ const header = [
 ];
 
 @Component({
-    selector: 'app-authorize-purchases',
-    templateUrl: './authorize-purchases.component.html',
-    providers: [ToastrService],
-    standalone: false
+  selector: 'app-authorize-purchases',
+  templateUrl: './authorize-purchases.component.html',
+  providers: [ToastrService],
+  standalone: true,
+  imports: [
+    TranslatePipe,
+    RouterLink,
+    IconsModule,
+    NgbAlert,
+    DatatableComponent,
+    DataTableColumnDirective,
+    DataTableColumnCellDirective
+  ]
 })
 export class AuthorizePurchasesComponent {
   alerts: Alert[];
@@ -49,14 +61,6 @@ export class AuthorizePurchasesComponent {
     private clipboardService: ClipboardService,
     private printService: PrintService
   ) {
-    this.alerts = Array.from(ALERTS);
-    this.fetch((data) => {
-      this.temp = [...data];
-      this.rows = data;
-      setTimeout(() => {
-        this.loadingIndicator = false;
-      }, 500);
-    });
   }
 
   @HostListener('window:resize', ['$event'])
@@ -69,6 +73,7 @@ export class AuthorizePurchasesComponent {
   getRowHeight(row) {
     return row.height;
   }
+
   fetch(cb) {
     const req = new XMLHttpRequest();
     req.open('GET', `assets/data/admin/authorize-purchases-data.json`);

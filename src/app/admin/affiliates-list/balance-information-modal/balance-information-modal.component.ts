@@ -1,21 +1,32 @@
-import { UserAffiliate } from './../../../core/models/user-affiliate-model/user.affiliate.model';
-import { AfterViewInit, Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import {UserAffiliate} from '@app/core/models/user-affiliate-model/user.affiliate.model';
+import {AfterViewInit, Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import {NgbModal, NgbNav, NgbNavContent, NgbNavItem, NgbNavLink, NgbNavOutlet} from '@ng-bootstrap/ng-bootstrap';
 
-import { BalanceInformationModel1A } from '@app/core/models/wallet-model-1a/balance-information-1a.model';
-import { BalanceInformationModel1B } from '@app/core/models/wallet-model-1b/balance-information-1b.model';
-import { BalanceInformation } from '@app/core/models/wallet-model/balance-information.model';
-import { WalletModel1AService } from '@app/core/service/wallet-model-1a-service/wallet-model-1a.service';
-import { WalletModel1BService } from '@app/core/service/wallet-model-1b-service/wallet-model-1b.service';
-import { WalletService } from '@app/core/service/wallet-service/wallet.service';
-import { use } from 'echarts';
-
+import {BalanceInformationModel1A} from '@app/core/models/wallet-model-1a/balance-information-1a.model';
+import {BalanceInformationModel1B} from '@app/core/models/wallet-model-1b/balance-information-1b.model';
+import {BalanceInformation} from '@app/core/models/wallet-model/balance-information.model';
+import {WalletModel1AService} from '@app/core/service/wallet-model-1a-service/wallet-model-1a.service';
+import {WalletModel1BService} from '@app/core/service/wallet-model-1b-service/wallet-model-1b.service';
+import {WalletService} from '@app/core/service/wallet-service/wallet.service';
+import {ChartComponent} from "ng-apexcharts";
+import {TruncateDecimalsPipe} from "@app/shared/truncate-decimals.pipe";
+import {TranslatePipe} from "@ngx-translate/core";
 
 @Component({
-    selector: 'app-balance-information-modal',
-    templateUrl: './balance-information-modal.component.html',
-    styleUrls: ['./balance-information-modal.component.sass'],
-    standalone: false
+  selector: 'app-balance-information-modal',
+  templateUrl: './balance-information-modal.component.html',
+  styleUrls: ['./balance-information-modal.component.sass'],
+  standalone: true,
+  imports: [
+    NgbNavItem,
+    ChartComponent,
+    TruncateDecimalsPipe,
+    NgbNavLink,
+    NgbNavContent,
+    TranslatePipe,
+    NgbNavOutlet,
+    NgbNav
+  ]
 })
 export class BalanceInformationModalComponent implements OnInit, AfterViewInit {
   withdrawalBalance: number = 0;
@@ -29,13 +40,16 @@ export class BalanceInformationModalComponent implements OnInit, AfterViewInit {
   public pieChartOptionsModel1A: any;
   public pieChartOptionsModel1B: any;
 
-  constructor(private modalService: NgbModal, private walletModel1AService: WalletModel1AService,
-    private walletModel1BService: WalletModel1BService, private walletService: WalletService,) { }
+  constructor(private modalService: NgbModal,
+              private walletModel1AService: WalletModel1AService,
+              private walletModel1BService: WalletModel1BService,
+              private walletService: WalletService,) {
+  }
 
   ngOnInit() {
-    this.pieChartOptions = { series: [], chart: {}, labels: [], responsive: [], dataLabels: {}, legend: {} };
-    this.pieChartOptionsModel1A = { series: [], chart: {}, labels: [], responsive: [], dataLabels: {}, legend: {} };
-    this.pieChartOptionsModel1B = { series: [], chart: {}, labels: [], responsive: [], dataLabels: {}, legend: {} };
+    this.pieChartOptions = {series: [], chart: {}, labels: [], responsive: [], dataLabels: {}, legend: {}};
+    this.pieChartOptionsModel1A = {series: [], chart: {}, labels: [], responsive: [], dataLabels: {}, legend: {}};
+    this.pieChartOptionsModel1B = {series: [], chart: {}, labels: [], responsive: [], dataLabels: {}, legend: {}};
   }
 
   ngAfterViewInit(): void {
@@ -43,7 +57,7 @@ export class BalanceInformationModalComponent implements OnInit, AfterViewInit {
   }
 
   initModal(userAffiliate: UserAffiliate) {
-    this.modalService.open(this.balanceInformationModal, { size: 'lg', centered: true });
+    this.modalService.open(this.balanceInformationModal, {size: 'lg', centered: true});
     this.userName = userAffiliate.user_name;
     this.getBalanceInformationModel2(userAffiliate.id);
     this.getBalanceInformationModel1A(userAffiliate.id);

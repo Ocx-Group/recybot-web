@@ -31,10 +31,10 @@
                             </div>
                           </div>
                           <input style="background-color: white" type="text" class="form-control"
-                            id="inlineFormInputGroup" (keyup)="updateFilter($event)" aria-label="Search box"
-                            placeholder="{{
+                                 id="inlineFormInputGroup" (keyup)="updateFilter($event)" aria-label="Search box"
+                                 placeholder="{{
                               'USERS-LIST-PAGE.USERS-SEARCH.TEXT' | translate
-                            }}" />
+                            }}"/>
                         </div>
                       </div>
                     </div>
@@ -58,8 +58,8 @@
                   </div>
                 </div>
                 <ngx-datatable #table class="material" [rows]="rows" [loadingIndicator]="loadingIndicator"
-                  columnMode="force" [headerHeight]="50" [footerHeight]="50" rowHeight="auto" [limit]="10"
-                  [scrollbarH]="scrollBarHorizontal" [reorderable]="reorderable">
+                               columnMode="force" [headerHeight]="50" [footerHeight]="50" rowHeight="auto" [limit]="10"
+                               [scrollbarH]="scrollBarHorizontal" [reorderable]="reorderable">
                   <ngx-datatable-column name="{{
                       'AFFILIATES-LIST-PAGE.COL-USER.TEXT' | translate
                     }}">
@@ -139,7 +139,7 @@
                       <div ngbDropdown container="body">
                         <button type="button" class="btn btn-outline-primary btn-sm" ngbDropdownToggle>
                           {{
-                          'AFFILIATES-LIST-PAGE.BTN-ACTIONS.TEXT' | translate
+                            'AFFILIATES-LIST-PAGE.BTN-ACTIONS.TEXT' | translate
                           }}
                         </button>
                         <div ngbDropdownMenu>
@@ -148,12 +148,12 @@
                             <span class="ms-2">Activar Matriz</span>
                           </a>
                           <a ngbDropdownItem id="btn-detail"
-                            (click)="detailModal(userDetailModal); modalChildUpdate.updateOpenModal(modalChildUpdate['rolUpdateModal'], row)"
-                            (keydown)="modalChildUpdate.updateOpenModal(modalChildUpdate['rolUpdateModal'], row)"
-                            (keyup)="modalChildUpdate.updateOpenModal(modalChildUpdate['rolUpdateModal'], row)">
+                             (click)="detailModal(userDetailModal); modalChildUpdate.updateOpenModal(modalChildUpdate['rolUpdateModal'], row)"
+                             (keydown)="modalChildUpdate.updateOpenModal(modalChildUpdate['rolUpdateModal'], row)"
+                             (keyup)="modalChildUpdate.updateOpenModal(modalChildUpdate['rolUpdateModal'], row)">
                             <i class="bi bi-file-earmark-plus-fill me-2"></i>
                             <span>{{
-                              'AFFILIATES-LIST-PAGE.MORE-DETAILS.TEXT' | translate
+                                'AFFILIATES-LIST-PAGE.MORE-DETAILS.TEXT' | translate
                               }}</span>
                           </a>
                           <a ngbDropdownItem id="btn-edit" (click)="
@@ -164,91 +164,91 @@
                             ">
                             <i class="fas fa-edit me-2"></i>
                             <span>{{
-                              'AFFILIATES-LIST-PAGE.EDIT.TEXT' | translate
+                                'AFFILIATES-LIST-PAGE.EDIT.TEXT' | translate
                               }}</span>
                           </a>
-                          <a ngbDropdownItem id="btn-delete" (click)="onRouteUnilevelTree(row.id)">
+                          <a ngbDropdownItem id="btn-unilevel-tree" (click)="onRouteUnilevelTree(row.id)">
                             <i class="bi bi-diagram-3-fill me-2"></i>
                             <span>
-                              {{
-                              'AFFILIATES-LIST-PAGE.UNILEVEL-FAMILY-TREE.TEXT'
-                              | translate
+                                  {{
+                                'AFFILIATES-LIST-PAGE.UNILEVEL-FAMILY-TREE.TEXT'
+                                  | translate
                               }}</span>
                           </a>
-                          <a ngbDropdownItem id="btn-delete" (click)="onRouteForceGenealogicalTree()">
+                          <a ngbDropdownItem id="btn-force-tree" (click)="onRouteForceGenealogicalTree()">
                             <i class="bi bi-diagram-3-fill me-2"></i>
                             <span>{{
-                              'AFFILIATES-LIST-PAGE.FORCED-GENEALOGICAL-TREE.TEXT'
-                              | translate
+                                'AFFILIATES-LIST-PAGE.FORCED-GENEALOGICAL-TREE.TEXT'
+                                  | translate
                               }}</span>
                           </a>
-                          <a ngbDropdownItem id="btn-delete" (click)="onRouteBinaryGenealogicalTree(row.id)"
-                            (keydown)="onRouteBinaryGenealogicalTree(row.id)"
-                            (keyup)="onRouteBinaryGenealogicalTree(row.id)">
+                          <a ngbDropdownItem id="btn-binary-tree" (click)="onRouteBinaryGenealogicalTree(row.id)"
+                             (keydown)="onRouteBinaryGenealogicalTree(row.id)"
+                             (keyup)="onRouteBinaryGenealogicalTree(row.id)">
                             <i class="bi bi-diagram-3-fill me-2"></i>
                             <span>{{
-                              'AFFILIATES-LIST-PAGE.BINARY-GENEALOGICAL-TREE.TEXT'
-                              | translate
+                                'AFFILIATES-LIST-PAGE.BINARY-GENEALOGICAL-TREE.TEXT'
+                                  | translate
                               }}</span>
                           </a>
-                          <a ngbDropdownItem id="btn-delete" (click)="deleteSingleRow(row.id)">
+                          <a ngbDropdownItem id="btn-wallet-balance" (click)="deleteSingleRow(row.id)">
                             <i class="bi bi-wallet-fill me-2"></i>
                             <span>{{
-                              'AFFILIATES-LIST-PAGE.WALLET-BALANCE.TEXT'
-                              | translate
+                                'AFFILIATES-LIST-PAGE.WALLET-BALANCE.TEXT'
+                                  | translate
                               }}</span>
                           </a>
-                          <a ngbDropdownItem id="btn-delete"
-                            (click)="modalChildCreatePurchase.openMakePurchaseModal(modalChildCreatePurchase['makePurchaseModal'], row)"
-                            (keydown)="modalChildCreatePurchase.openMakePurchaseModal(modalChildCreatePurchase['makePurchaseModal'], row)"
-                            (keyup)="modalChildCreatePurchase.openMakePurchaseModal(modalChildCreatePurchase['makePurchaseModal'], row)">
+                          <a ngbDropdownItem id="btn-make-purchase"
+                             (click)="modalChildCreatePurchase.openMakePurchaseModal(modalChildCreatePurchase['makePurchaseModal'], row)"
+                             (keydown)="modalChildCreatePurchase.openMakePurchaseModal(modalChildCreatePurchase['makePurchaseModal'], row)"
+                             (keyup)="modalChildCreatePurchase.openMakePurchaseModal(modalChildCreatePurchase['makePurchaseModal'], row)">
                             <i class="bi bi-cart-check-fill me-2"></i>
                             <span>{{
-                              'AFFILIATES-LIST-PAGE.MAKE-PURCHASE.TEXT'
-                              | translate
+                                'AFFILIATES-LIST-PAGE.MAKE-PURCHASE.TEXT'
+                                  | translate
                               }}</span>
                           </a>
                           <a ngbDropdownItem id="btn-create-balance" (click)="confirmationCreateBalance(row)">
                             <i class="bi bi-currency-dollar me-2"></i>
                             <span>Acreditar Saldo</span>
                           </a>
-                          <a ngbDropdownItem id="btn-delete" (click)="deleteSingleRow(row.id)">
+                          <a ngbDropdownItem id="btn-change-sponsor" (click)="deleteSingleRow(row.id)">
                             <i class="bi bi-arrow-repeat me-2"></i>
                             <span>{{
-                              'AFFILIATES-LIST-PAGE.CHANGE-SPONSOR.TEXT'
-                              | translate
+                                'AFFILIATES-LIST-PAGE.CHANGE-SPONSOR.TEXT'
+                                  | translate
                               }}</span>
                           </a>
-                          <a ngbDropdownItem id="btn-delete" (click)="deleteSingleRow(row.id)"
-                            (keydown)="deleteSingleRow(row.id)" (keyup)="deleteSingleRow(row.id)">
+                          <a ngbDropdownItem id="btn-qualification-audit" (click)="deleteSingleRow(row.id)"
+                             (keydown)="deleteSingleRow(row.id)" (keyup)="deleteSingleRow(row.id)">
                             <i class="bi bi-eye-fill me-2"></i>
                             <span>{{
-                              'AFFILIATES-LIST-PAGE.QUALIFICATION-AUDIT.TEXT'
-                              | translate
+                                'AFFILIATES-LIST-PAGE.QUALIFICATION-AUDIT.TEXT'
+                                  | translate
                               }}</span>
                           </a>
-                          <a ngbDropdownItem id="btn-delete" (click)="deleteSingleRow(row.id)">
+                          <a ngbDropdownItem id="btn-network-purchase" (click)="deleteSingleRow(row.id)">
                             <i class="bi bi-database-fill-exclamation me-2"></i>
                             <span>{{
-                              'AFFILIATES-LIST-PAGE.NETWORK-PURCHASE-REGISTRY.TEXT'
-                              | translate
+                                'AFFILIATES-LIST-PAGE.NETWORK-PURCHASE-REGISTRY.TEXT'
+                                  | translate
                               }}</span>
                           </a>
-                          <a ngbDropdownItem id="btn-delete" (click)="deleteSingleRow(row.id)">
+                          <a ngbDropdownItem id="btn-tope-max" (click)="deleteSingleRow(row.id)">
                             <i class="bi bi-currency-exchange me-2"></i>
                             <span>{{
-                              'AFFILIATES-LIST-PAGE.TOPE-MAX-COINPAYMENTS.TEXT'
-                              | translate
+                                'AFFILIATES-LIST-PAGE.TOPE-MAX-COINPAYMENTS.TEXT'
+                                  | translate
                               }}</span>
                           </a>
                           <a ngbDropdownItem id="btn-delete" (click)="deleteSingleRow(row.id)">
                             <i class="fas fa-trash-alt me-2"></i>
                             <span>{{
-                              'AFFILIATES-LIST-PAGE.REMOVE-AFFILIATE.TEXT'
-                              | translate
+                                'AFFILIATES-LIST-PAGE.REMOVE-AFFILIATE.TEXT'
+                                  | translate
                               }}</span>
                           </a>
-                          <a ngbDropdownItem id="btn-delete" (click)="openBalanceInformationModal(row)">
+                          <a ngbDropdownItem id="btn-balance-info" (click)="openBalanceInformationModal(row)">
                             <i class="fa fa-money me-2"></i>
                             <span> Información de balances </span>
                           </a>
@@ -257,9 +257,8 @@
                     </ng-template>
                   </ngx-datatable-column>
                 </ngx-datatable>
-
                 <app-affiliates-list-edit-modal #modalChildEdit
-                  (loadAffiliateList)="loadAffiliateList()"></app-affiliates-list-edit-modal>
+                                                (loadAffiliateList)="loadAffiliateList()"></app-affiliates-list-edit-modal>
               </div>
             </div>
           </div>

@@ -1,19 +1,25 @@
 import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
-import { DatatableComponent } from '@swimlane/ngx-datatable';
+import {DataTableColumnCellDirective, DataTableColumnDirective, DatatableComponent} from '@swimlane/ngx-datatable';
 import { ClipboardService } from 'ngx-clipboard';
 import { ToastrService } from 'ngx-toastr';
 
-import { AffiliateService } from '@app/core/service/affiliate-service/affiliate.service';
-import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
-import { PrintService } from '@app/core/service/print-service/print.service';
-import { Router } from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
 import Swal from 'sweetalert2';
-import { WalletService } from '@app/core/service/wallet-service/wallet.service';
-import { CreditTransactionAdminRequest } from '@app/core/models/wallet-model/creditTransactionAdminRequest.mode';
 import { BalanceInformationModalComponent } from './balance-information-modal/balance-information-modal.component';
-import { WalletModel1AService } from '@app/core/service/wallet-model-1a-service/wallet-model-1a.service';
-import { WalletModel1BService } from '@app/core/service/wallet-model-1b-service/wallet-model-1b.service';
-import { MatrixActivationModalComponent } from '@app/admin/affiliates-list/matrix-activation/matrix-activation-modal.component';
+import {TranslatePipe} from "@ngx-translate/core";
+import {NgbDropdown, NgbDropdownItem, NgbDropdownMenu, NgbDropdownToggle} from "@ng-bootstrap/ng-bootstrap";
+import {MatrixActivationModalComponent} from "./matrix-activation/matrix-activation-modal.component";
+import {IconsModule} from "../../shared";
+import {MakePurchaseModalComponent} from "./make-purchase-modal/make-purchase-modal.component";
+import {AffiliatesListEditModalComponent} from "./affiliates-list-edit-modal/affiliates-list-edit-modal.component";
+import {AffiliateService} from "../../core/service/affiliate-service/affiliate.service";
+import {PrintService} from "../../core/service/print-service/print.service";
+import {WalletService} from "../../core/service/wallet-service/wallet.service";
+import {WalletModel1AService} from "../../core/service/wallet-model-1a-service/wallet-model-1a.service";
+import {WalletModel1BService} from "../../core/service/wallet-model-1b-service/wallet-model-1b.service";
+import {UserAffiliate} from "../../core/models/user-affiliate-model/user.affiliate.model";
+import {CreditTransactionAdminRequest} from "../../core/models/wallet-model/creditTransactionAdminRequest.mode";
+
 
 const header = [
   'Usuario',
@@ -31,7 +37,23 @@ const header = [
     selector: 'app-affiliates-list',
     templateUrl: './affiliates-list.component.html',
     providers: [ToastrService],
-    standalone: false
+    standalone: true,
+  imports: [
+    BalanceInformationModalComponent,
+    MatrixActivationModalComponent,
+    TranslatePipe,
+    RouterLink,
+    IconsModule,
+    DatatableComponent,
+    DataTableColumnDirective,
+    MakePurchaseModalComponent,
+    AffiliatesListEditModalComponent,
+    NgbDropdownItem,
+    NgbDropdownMenu,
+    NgbDropdown,
+    DataTableColumnCellDirective,
+    NgbDropdownToggle
+  ]
 })
 export class AffiliatesListComponent implements OnInit {
   rows = [];

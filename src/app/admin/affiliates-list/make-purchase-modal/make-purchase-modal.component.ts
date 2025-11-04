@@ -1,19 +1,23 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {Product} from '@app/core/models/product-model/product.model';
-import {UserAffiliate} from '@app/core/models/user-affiliate-model/user.affiliate.model';
-import {ProductsRequests, WalletRequest} from '@app/core/models/wallet-model/wallet-request.model';
-import {ProductService} from '@app/core/service/product-service/product.service';
-import {WalletService} from '@app/core/service/wallet-service/wallet.service';
+import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ToastrService} from 'ngx-toastr';
 import Swal from 'sweetalert2';
+import {UserAffiliate} from "@app/core/models/user-affiliate-model/user.affiliate.model";
+import {ProductsRequests, WalletRequest} from "@app/core/models/wallet-model/wallet-request.model";
+import {WalletService} from "@app/core/service/wallet-service/wallet.service";
+import {ProductService} from "@app/core/service/product-service/product.service";
+import {Product} from "@app/core/models/product-model/product.model";
 
 @Component({
-    selector: 'app-make-purchase-modal',
-    templateUrl: './make-purchase-modal.component.html',
-    styleUrls: ['./make-purchase-modal.component.sass'],
-    standalone: false
+  selector: 'app-make-purchase-modal',
+  templateUrl: './make-purchase-modal.component.html',
+  styleUrls: ['./make-purchase-modal.component.sass'],
+  standalone: true,
+  imports: [
+    ReactiveFormsModule
+  ]
 })
 export class MakePurchaseModalComponent implements OnInit {
   makePurchaseForm: FormGroup;
@@ -24,7 +28,10 @@ export class MakePurchaseModalComponent implements OnInit {
   public productList: any;
   public filterCategory: any;
 
-  constructor(private modalService: NgbModal, private walletService: WalletService, private toastr: ToastrService, private productService: ProductService) {
+  constructor(private modalService: NgbModal,
+              private walletService: WalletService,
+              private toastr: ToastrService,
+              private productService: ProductService) {
   }
 
   ngOnInit(): void {

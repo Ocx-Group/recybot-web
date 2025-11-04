@@ -7,21 +7,24 @@ import {
 } from '@angular/core';
 import {
   AbstractControl,
-  Form,
   FormBuilder,
-  FormGroup,
+  FormGroup, ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { ProductAttribute } from '@app/core/models/product-attribute-model/product-attribute.model';
-
-import { ProductAttributeService } from '@app/core/service/product-attribute/product-attribute.service';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ToastrService } from 'ngx-toastr';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {ToastrService} from 'ngx-toastr';
+import {ProductAttribute} from "../../../core/models/product-attribute-model/product-attribute.model";
+import {ProductAttributeService} from "../../../core/service/product-attribute/product-attribute.service";
+import {NgClass} from "@angular/common";
 
 @Component({
-    selector: 'app-attributes-list-create-modal',
-    templateUrl: './attributes-list-create-modal.component.html',
-    standalone: false
+  selector: 'app-attributes-list-create-modal',
+  templateUrl: './attributes-list-create-modal.component.html',
+  standalone: true,
+  imports: [
+    ReactiveFormsModule,
+    NgClass
+  ],
 })
 export class AttributesListCreateModalComponent implements OnInit {
   createAttributeForm!: FormGroup;
@@ -38,7 +41,7 @@ export class AttributesListCreateModalComponent implements OnInit {
     private productAttributeService: ProductAttributeService,
     private modalService: NgbModal,
     private toastr: ToastrService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.attributeValidation();

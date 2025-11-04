@@ -1,6 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { WalletService } from '@app/core/service/wallet-service/wallet.service';
+import {Component, OnInit} from '@angular/core';
 import Swal from 'sweetalert2';
+import {TranslatePipe} from "@ngx-translate/core";
+import {RouterLink} from "@angular/router";
+import {FormsModule} from "@angular/forms";
+import {CurrencyPipe, NgClass} from "@angular/common";
+import {NgbPagination} from "@ng-bootstrap/ng-bootstrap";
+import {WalletService} from "../../core/service/wallet-service/wallet.service";
 
 interface CommissionData {
   affiliateId: string;
@@ -13,9 +18,17 @@ interface CommissionData {
 }
 
 @Component({
-    selector: 'app-calculated-commissions',
-    templateUrl: './calculated-commissions.component.html',
-    standalone: false
+  selector: 'app-calculated-commissions',
+  templateUrl: './calculated-commissions.component.html',
+  standalone: true,
+  imports: [
+    TranslatePipe,
+    RouterLink,
+    FormsModule,
+    CurrencyPipe,
+    NgClass,
+    NgbPagination
+  ]
 })
 export class CalculatedCommissionsComponent implements OnInit {
   // Campos de filtro
@@ -37,18 +50,18 @@ export class CalculatedCommissionsComponent implements OnInit {
   pageSize: number = 10;
 
   months: { value: number, label: string }[] = [
-    { value: 1, label: 'Enero' },
-    { value: 2, label: 'Febrero' },
-    { value: 3, label: 'Marzo' },
-    { value: 4, label: 'Abril' },
-    { value: 5, label: 'Mayo' },
-    { value: 6, label: 'Junio' },
-    { value: 7, label: 'Julio' },
-    { value: 8, label: 'Agosto' },
-    { value: 9, label: 'Septiembre' },
-    { value: 10, label: 'Octubre' },
-    { value: 11, label: 'Noviembre' },
-    { value: 12, label: 'Diciembre' }
+    {value: 1, label: 'Enero'},
+    {value: 2, label: 'Febrero'},
+    {value: 3, label: 'Marzo'},
+    {value: 4, label: 'Abril'},
+    {value: 5, label: 'Mayo'},
+    {value: 6, label: 'Junio'},
+    {value: 7, label: 'Julio'},
+    {value: 8, label: 'Agosto'},
+    {value: 9, label: 'Septiembre'},
+    {value: 10, label: 'Octubre'},
+    {value: 11, label: 'Noviembre'},
+    {value: 12, label: 'Diciembre'}
   ];
 
   constructor(private walletService: WalletService) {
@@ -108,30 +121,6 @@ export class CalculatedCommissionsComponent implements OnInit {
       this.isLoading = false;
       this.showTable = true;
     }, 1500);
-
-    // TODO: Implementar llamada real al servicio
-    /*
-    this.walletService.getCalculatedCommissions({
-      startDate: this.startDate,
-      endDate: this.endDate,
-      commissionType: this.commissionType,
-      calculationMode: this.calculationMode
-    }).subscribe({
-      next: (response) => {
-        this.commissionsData = response.data;
-        this.isLoading = false;
-        this.showTable = true;
-      },
-      error: (error) => {
-        this.isLoading = false;
-        Swal.fire({
-          title: 'Error',
-          text: 'No se pudieron cargar las comisiones',
-          icon: 'error'
-        });
-      }
-    });
-    */
   }
 
   generateMockData(): CommissionData[] {
@@ -165,6 +154,6 @@ export class CalculatedCommissionsComponent implements OnInit {
       title: 'Exportar',
       text: 'Función de exportación en desarrollo',
       icon: 'info'
-    });
+    }).then();
   }
 }

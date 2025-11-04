@@ -136,7 +136,7 @@
                     <i class="material-icons" style="font-size: 18px; vertical-align: middle;">public</i>
                     País
                   </label>
-                  <select class="form-select form-select-lg" [selected]="country" formControlName="country">
+                  <select class="form-select form-select-lg" formControlName="country">
                     <option value="" disabled selected>Seleccione un país</option>
                     <option *ngFor="let country of listCountry" [value]="country.id">
                       {{ country.name }}

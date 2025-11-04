@@ -1,13 +1,24 @@
-import { Component, ViewChild, HostListener } from '@angular/core';
-import { DatatableComponent } from '@swimlane/ngx-datatable';
-import { ToastrService } from 'ngx-toastr';
-import { ClipboardService } from 'ngx-clipboard';
+import {Component, HostListener, ViewChild} from '@angular/core';
+import {DataTableColumnCellDirective, DataTableColumnDirective, DatatableComponent} from '@swimlane/ngx-datatable';
+import {ToastrService} from 'ngx-toastr';
+import {ClipboardService} from 'ngx-clipboard';
+import {TranslatePipe} from "@ngx-translate/core";
+import {RouterLink} from "@angular/router";
+import {IconsModule} from "../../shared";
 
 @Component({
-    selector: 'app-accredited-commissions',
-    templateUrl: './accredited-commissions.component.html',
-    providers: [ToastrService],
-    standalone: false
+  selector: 'app-accredited-commissions',
+  templateUrl: './accredited-commissions.component.html',
+  providers: [ToastrService],
+  imports: [
+    TranslatePipe,
+    RouterLink,
+    IconsModule,
+    DatatableComponent,
+    DataTableColumnDirective,
+    DataTableColumnCellDirective
+  ],
+  standalone: true
 })
 export class AccreditedCommissionsComponent {
   rows = [];
@@ -41,6 +52,7 @@ export class AccreditedCommissionsComponent {
   getRowHeight(row) {
     return row.height;
   }
+
   fetch(cb) {
     const req = new XMLHttpRequest();
     req.open('GET', `assets/data/admin/accredited-commissions-data.json`);
@@ -56,24 +68,28 @@ export class AccreditedCommissionsComponent {
     const val = event.target.value.toLowerCase();
 
     // filter our data
-    const temp = this.temp.filter(function (d) {
+    // update the rows
+    this.rows = this.temp.filter(function (d) {
       return d.name.toLowerCase().indexOf(val) !== -1 || !val;
     });
-
-    // update the rows
-    this.rows = temp;
     // Whenever the filter changes, always go back to the first page
     this.table.offset = 0;
   }
 
-  clipBoardCopy() {
-    var string = JSON.stringify(this.temp);
-    var result = this.clipboardService.copyFromContent(string);
+  clipBoardCopy(): void {
+    const tableData = JSON.stringify(this.temp);
+    this.clipboardService.copyFromContent(tableData);
 
-    if (this.temp.length === 0) {
-      this.toastr.info('no data to copy');
-    } else {
-      this.toastr.success('copied ' + this.temp.length + ' rows successfully');
+    this.showCopyNotification(this.temp.length);
+  }
+
+  private showCopyNotification(rowCount: number): void {
+    if (rowCount === 0) {
+      this.toastr.info('No data to copy');
+      return;
     }
+
+    const message = `Copied ${rowCount} rows successfully`;
+    this.toastr.success(message);
   }
 }

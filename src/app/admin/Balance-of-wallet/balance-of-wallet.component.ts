@@ -1,18 +1,28 @@
-import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
-import { ClipboardService } from 'ngx-clipboard';
-import { DatatableComponent } from '@swimlane/ngx-datatable';
+import {Component, HostListener, OnInit, ViewChild} from '@angular/core';
+import {ClipboardService} from 'ngx-clipboard';
+import {DataTableColumnCellDirective, DataTableColumnDirective, DatatableComponent} from '@swimlane/ngx-datatable';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 
-import { WalletService } from '@app/core/service/wallet-service/wallet.service';
-import { ToastrService } from 'ngx-toastr';
+import {ToastrService} from 'ngx-toastr';
 import Swal from 'sweetalert2';
-import { TranslateService } from '@ngx-translate/core';
+import {TranslatePipe, TranslateService} from '@ngx-translate/core';
+import {WalletService} from "../../core/service/wallet-service/wallet.service";
+import {RouterLink} from "@angular/router";
+import {IconsModule} from "../../shared";
 
 @Component({
-    selector: 'app-balance-of-wallet',
-    templateUrl: './balance-of-wallet.component.html',
-    standalone: false
+  selector: 'app-balance-of-wallet',
+  templateUrl: './balance-of-wallet.component.html',
+  standalone: true,
+  imports: [
+    TranslatePipe,
+    RouterLink,
+    IconsModule,
+    DatatableComponent,
+    DataTableColumnDirective,
+    DataTableColumnCellDirective
+  ]
 })
 export class BalanceOfWalletComponent implements OnInit {
   rows = [];
@@ -22,12 +32,14 @@ export class BalanceOfWalletComponent implements OnInit {
   scrollBarHorizontal = window.innerWidth < 1200;
 
   @ViewChild('table') table: DatatableComponent;
+
   constructor(
     private walletService: WalletService,
     private clipboardService: ClipboardService,
     private toastr: ToastrService,
     private translateService: TranslateService,
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.loadWalletBalance();
@@ -65,14 +77,12 @@ export class BalanceOfWalletComponent implements OnInit {
       'detail',
     ];
 
-    const temp = this.temp.filter(d => {
+    this.rows = this.temp.filter(d => {
       return searchFields.some(field => {
         const fieldValue = d[field]?.toString().toLowerCase() || '';
         return fieldValue.includes(val);
       });
     });
-
-    this.rows = temp;
     this.table.offset = 0;
   }
 

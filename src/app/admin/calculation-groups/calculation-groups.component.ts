@@ -1,22 +1,45 @@
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Component, ViewChild, HostListener, OnInit } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { DatatableComponent } from '@swimlane/ngx-datatable';
-import { ToastrService } from 'ngx-toastr';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Component, ViewChild, HostListener, OnInit} from '@angular/core';
+import {NgbDropdown, NgbDropdownItem, NgbDropdownMenu, NgbDropdownToggle, NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {DataTableColumnCellDirective, DataTableColumnDirective, DatatableComponent} from '@swimlane/ngx-datatable';
+import {ToastrService} from 'ngx-toastr';
 import Swal from 'sweetalert2';
 
-import { PaymentGroupsService } from '@app/core/service/payment-groups-service/payment-groups.service';
-import { PrintService } from './../../core/service/print-service/print.service';
-import { PaymentGroup } from '@app/core/models/payment-group-model/payment.group.model';
-import { ClipboardService } from 'ngx-clipboard';
+import {PrintService} from '../../core/service/print-service/print.service';
+import {ClipboardService} from 'ngx-clipboard';
+import {PaymentGroupsService} from "../../core/service/payment-groups-service/payment-groups.service";
+import {PaymentGroup} from "../../core/models/payment-group-model/payment.group.model";
+import {TranslatePipe} from "@ngx-translate/core";
+import {RouterLink} from "@angular/router";
+import {IconsModule} from "../../shared";
+import {
+  CalculationGroupsCreateModalComponent
+} from "./calculation-groups-create-modal/calculation-groups-create-modal.component";
+import {
+  CalculationGroupsEditModalComponent
+} from "./calculation-groups-edit-modal/calculation-groups-edit-modal.component";
 
 const header = ['Grupo de Calculo', 'Descripción', 'Fecha de Registro'];
 
 @Component({
-    selector: 'app-calculation-groups',
-    templateUrl: './calculation-groups.component.html',
-    providers: [ToastrService],
-    standalone: false
+  selector: 'app-calculation-groups',
+  templateUrl: './calculation-groups.component.html',
+  providers: [ToastrService],
+  standalone: true,
+  imports: [
+    TranslatePipe,
+    RouterLink,
+    IconsModule,
+    DatatableComponent,
+    DataTableColumnDirective,
+    DataTableColumnCellDirective,
+    NgbDropdown,
+    NgbDropdownToggle,
+    NgbDropdownMenu,
+    NgbDropdownItem,
+    CalculationGroupsCreateModalComponent,
+    CalculationGroupsEditModalComponent
+  ]
 })
 export class CalculationGroupsComponent implements OnInit {
   createCalculationForm: FormGroup;
@@ -35,7 +58,8 @@ export class CalculationGroupsComponent implements OnInit {
     private formBuilder: FormBuilder,
     private printService: PrintService,
     private clipboardService: ClipboardService
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.loadCalculationList();
@@ -48,6 +72,7 @@ export class CalculationGroupsComponent implements OnInit {
     this.table.recalculate();
     this.table.recalculateColumns();
   }
+
   getRowHeight(row) {
     return row.height;
   }

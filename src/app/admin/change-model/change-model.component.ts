@@ -1,19 +1,33 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { DatatableComponent } from '@swimlane/ngx-datatable';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {DataTableColumnCellDirective, DataTableColumnDirective, DatatableComponent} from '@swimlane/ngx-datatable';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 
-import { InvoiceService } from '@app/core/service/invoice-service/invoice.service';
-import { InvoiceModelOneTwo } from '@app/core/models/invoice-model/invoice-model-one-two';
-import { SplitBalancesModalComponent } from './split-balances-modal/split-balances-modal.component';
+import {SplitBalancesModalComponent} from './split-balances-modal/split-balances-modal.component';
 import Swal from 'sweetalert2';
-import { ToastrService } from 'ngx-toastr';
+import {ToastrService} from 'ngx-toastr';
+import {InvoiceModelOneTwo} from "../../core/models/invoice-model/invoice-model-one-two";
+import {InvoiceService} from "../../core/service/invoice-service/invoice.service";
+import {TranslatePipe} from "@ngx-translate/core";
+import {RouterLink} from "@angular/router";
+import {FormsModule} from "@angular/forms";
+import {IconsModule} from "../../shared";
 
 @Component({
-    selector: 'app-change-model',
-    templateUrl: './change-model.component.html',
-    styleUrls: ['./change-model.component.css'],
-    standalone: false
+  selector: 'app-change-model',
+  templateUrl: './change-model.component.html',
+  styleUrls: ['./change-model.component.css'],
+  standalone: true,
+  imports: [
+    TranslatePipe,
+    RouterLink,
+    FormsModule,
+    DataTableColumnDirective,
+    SplitBalancesModalComponent,
+    DatatableComponent,
+    IconsModule,
+    DataTableColumnCellDirective
+  ]
 })
 export class ChangeModelComponent implements OnInit, AfterViewInit {
   rows = [];
@@ -26,7 +40,8 @@ export class ChangeModelComponent implements OnInit, AfterViewInit {
   selectedInvoices: InvoiceModelOneTwo[] = [];
   @ViewChild(SplitBalancesModalComponent) private splitBalanceModalComponent: SplitBalancesModalComponent;
 
-  constructor(private invoiceService: InvoiceService, private toastr: ToastrService) { }
+  constructor(private invoiceService: InvoiceService, private toastr: ToastrService) {
+  }
 
   ngOnInit() {
     this.loadAllInvoicesForModelOneAndTwo();
@@ -51,7 +66,7 @@ export class ChangeModelComponent implements OnInit, AfterViewInit {
     }
   }
 
-  onSelect({ selected }) {
+  onSelect({selected}) {
     this.selectedInvoices.splice(0, this.selectedInvoices.length);
     this.selectedInvoices.push(...selected);
   }
@@ -73,7 +88,7 @@ export class ChangeModelComponent implements OnInit, AfterViewInit {
       text: message,
       icon: 'warning',
       confirmButtonText: 'Ok'
-    });
+    }).then();
   }
 
   generetedPdf() {
@@ -91,7 +106,7 @@ export class ChangeModelComponent implements OnInit, AfterViewInit {
       const posY = 30;
 
       pdf.setFontSize(18);
-      pdf.text('Lista de Modelo (1A), (1B) y 2.', pageWidth / 2, 20, { align: 'center' });
+      pdf.text('Lista de Modelo (1A), (1B) y 2.', pageWidth / 2, 20, {align: 'center'});
 
       const contentDataURL = canvas.toDataURL('image/png');
       pdf.addImage(contentDataURL, 'PNG', posX, posY, imgWidth, imgHeight);
@@ -113,7 +128,7 @@ export class ChangeModelComponent implements OnInit, AfterViewInit {
 
   copyTextToClipboard(text: string) {
     try {
-      navigator.clipboard.writeText(text);
+      navigator.clipboard.writeText(text).then();
       this.toastr.success('Se ha copiado al portapapeles');
     } catch (err) {
       this.toastr.error('Error al copiar al portapapeles');
@@ -131,15 +146,13 @@ export class ChangeModelComponent implements OnInit, AfterViewInit {
 
     val = modelMap[val] || val;
 
-    const temp = this.temp.filter(d => {
+    this.rows = this.temp.filter(d => {
       if (d[this.searchField]) {
         const fieldValue = d[this.searchField].toString().toLowerCase();
         return val === '' || fieldValue === val || fieldValue === modelMap[fieldValue];
       }
       return false;
     });
-
-    this.rows = temp;
     this.table.offset = 0;
   }
 

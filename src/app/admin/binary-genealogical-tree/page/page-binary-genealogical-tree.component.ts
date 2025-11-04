@@ -1,15 +1,25 @@
-import { Component, OnInit } from '@angular/core';
-import { MyTreeNode } from '@app/core/models/unilevel-tree-model/tree-node';
-import { NgxSpinnerService } from 'ngx-spinner';
-import { ToastrService } from 'ngx-toastr';
-import { AffiliateService } from '@app/core/service/affiliate-service/affiliate.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {NgxSpinnerComponent, NgxSpinnerService} from 'ngx-spinner';
+import {ToastrService} from 'ngx-toastr';
+import {ActivatedRoute, Router, RouterLink} from '@angular/router';
+import {MyTreeNode} from "../../../core/models/unilevel-tree-model/tree-node";
+import {AffiliateService} from "../../../core/service/affiliate-service/affiliate.service";
+import {TranslatePipe} from "@ngx-translate/core";
+import {
+  BinaryGenealogicalTreeComponent
+} from "../binary-genealogical-tree-component/binary-genealogical-tree.component";
 
 @Component({
-    selector: 'app-page-binary-genealogical-tree',
-    templateUrl: './page-binary-genealogical-tree.component.html',
-    styleUrls: ['./page-binary-genealogical-tree.component.scss'],
-    standalone: false
+  selector: 'app-page-binary-genealogical-tree',
+  templateUrl: './page-binary-genealogical-tree.component.html',
+  styleUrls: ['./page-binary-genealogical-tree.component.scss'],
+  standalone: true,
+  imports: [
+    TranslatePipe,
+    BinaryGenealogicalTreeComponent,
+    RouterLink,
+    NgxSpinnerComponent
+  ]
 })
 export class PageBinaryGenealogicalTreeComponent implements OnInit {
 
@@ -18,8 +28,7 @@ export class PageBinaryGenealogicalTreeComponent implements OnInit {
     id: 0,
     user_name: '',
     image: '',
-    children: [
-    ],
+    children: [],
   };
   typeSelected: string;
   showDiv = false;
@@ -38,10 +47,10 @@ export class PageBinaryGenealogicalTreeComponent implements OnInit {
   ngOnInit() {
     this.userId = this.activatedRoute.snapshot.params.id;
     this.onloadFamilyTree(this.userId);
-    }
+  }
 
 
-  public onloadFamilyTree(id: number){
+  public onloadFamilyTree(id: number) {
     this.showDiv = false;
     this.spinnerService.show();
 
@@ -49,8 +58,7 @@ export class PageBinaryGenealogicalTreeComponent implements OnInit {
       id: 0,
       user_name: '',
       image: '',
-      children: [
-      ],
+      children: [],
     };
     this.affiliateService.getBinaryTree(id).subscribe((users: MyTreeNode) => {
       if (users !== null) {
@@ -58,7 +66,7 @@ export class PageBinaryGenealogicalTreeComponent implements OnInit {
         setTimeout(() => {
           this.spinnerService.hide();
           this.showDiv = true;
-        }, 500);   
+        }, 500);
       }
     });
   }

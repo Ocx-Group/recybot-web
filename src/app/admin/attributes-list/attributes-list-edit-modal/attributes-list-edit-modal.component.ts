@@ -1,21 +1,24 @@
-import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
-  FormGroup,
+  FormGroup, ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ToastrService } from 'ngx-toastr';
-
-import { ProductAttribute } from '@app/core/models/product-attribute-model/product-attribute.model';
-import { ProductAttributeService } from '@app/core/service/product-attribute/product-attribute.service';
-
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {ToastrService} from 'ngx-toastr';
+import {ProductAttribute} from "../../../core/models/product-attribute-model/product-attribute.model";
+import {ProductAttributeService} from "../../../core/service/product-attribute/product-attribute.service";
+import {NgClass} from "@angular/common";
 
 @Component({
-    selector: 'app-attributes-list-edit-modal',
-    templateUrl: './attributes-list-edit-modal.component.html',
-    standalone: false
+  selector: 'app-attributes-list-edit-modal',
+  templateUrl: './attributes-list-edit-modal.component.html',
+  standalone: true,
+  imports: [
+    ReactiveFormsModule,
+    NgClass
+  ],
 })
 export class AttributesListEditModalComponent implements OnInit {
   editAttributeForm!: FormGroup;
@@ -31,8 +34,9 @@ export class AttributesListEditModalComponent implements OnInit {
     private formBuilder: FormBuilder,
     private modalService: NgbModal,
     private productAttributeService: ProductAttributeService,
-    private toastr:ToastrService
-  ) {}
+    private toastr: ToastrService
+  ) {
+  }
 
   ngOnInit(): void {
     this.attributeValidation();
@@ -64,16 +68,16 @@ export class AttributesListEditModalComponent implements OnInit {
       return;
     }
 
-    this.productAttribute.name        =  this.editAttributeForm.value.name;
-    this.productAttribute.attribute   =  parseInt(this.editAttributeForm.value.attribute_type);
-    this.productAttribute.description =  this.editAttributeForm.value.description;
-    this.productAttribute.position    =  this.editAttributeForm.value.position;
-    this.productAttributeService.updateProductAttribute(this.productAttribute).subscribe((resp)=>{
-       if(resp.success){
+    this.productAttribute.name = this.editAttributeForm.value.name;
+    this.productAttribute.attribute = parseInt(this.editAttributeForm.value.attribute_type);
+    this.productAttribute.description = this.editAttributeForm.value.description;
+    this.productAttribute.position = this.editAttributeForm.value.position;
+    this.productAttributeService.updateProductAttribute(this.productAttribute).subscribe((resp) => {
+      if (resp.success) {
         this.showSuccess('The attribute was update successfully!');
         this.closeModals();
         this.loadAttributesList.emit();
-       }
+      }
     })
   }
 
