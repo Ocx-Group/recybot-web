@@ -52,7 +52,13 @@ export interface TableConfig {
   reorderable?: boolean;
   swapColumns?: boolean;
   cssClasses?: any;
-  messages?: any;
+  messages?: {
+    emptyMessage?: string;
+    totalMessage?: string;
+    selectedMessage?: string;
+    sortAscending?: string;
+    sortDescending?: string;
+  }
 }
 
 @Component({
@@ -93,13 +99,27 @@ export class ReusableDatatableComponent implements OnInit, OnChanges {
     limit: 10,
     columnMode: 'force',
     reorderable: true,
-    swapColumns: true
+    swapColumns: true,
+    messages: {
+      emptyMessage: 'No hay datos para mostrar',
+      totalMessage: 'total',
+      selectedMessage: 'seleccionado',
+      sortAscending: ': activa para ordenar columna ascendente',
+      sortDescending: ': activa para ordenar columna descendente'
+    }
   };
 
   mergedConfig: TableConfig;
 
   ngOnInit(): void {
-    this.mergedConfig = { ...this.defaultConfig, ...this.config };
+    this.mergedConfig = {
+      ...this.defaultConfig,
+      ...this.config,
+      messages: {
+        ...this.defaultConfig.messages,
+        ...this.config.messages
+      }
+    };
     this.temp = [...this.rows];
   }
 
@@ -108,7 +128,14 @@ export class ReusableDatatableComponent implements OnInit, OnChanges {
       this.temp = [...this.rows];
     }
     if (changes['config'] && !changes['config'].firstChange) {
-      this.mergedConfig = { ...this.defaultConfig, ...this.config };
+      this.mergedConfig = {
+        ...this.defaultConfig,
+        ...this.config,
+        messages: {
+          ...this.defaultConfig.messages,
+          ...this.config.messages
+        }
+      };
     }
   }
 
