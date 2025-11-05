@@ -64,16 +64,28 @@
     class="material"
     [rows]="rows"
     [loadingIndicator]="loadingIndicator"
-    [columnMode]="mergedConfig.columnMode"
-    [headerHeight]="mergedConfig.headerHeight"
-    [footerHeight]="mergedConfig.footerHeight"
-    [rowHeight]="mergedConfig.rowHeight === 'auto' ? 'auto' : +mergedConfig.rowHeight"
-    [limit]="mergedConfig.limit"
+    [columnMode]="mergedConfig?.columnMode || 'force'"
+    [headerHeight]="mergedConfig?.headerHeight || 50"
+    [footerHeight]="mergedConfig?.footerHeight || 50"
+    [rowHeight]="mergedConfig?.rowHeight === 'auto' ? 'auto' : +(mergedConfig?.rowHeight || 'auto')"
+    [limit]="mergedConfig?.limit || 10"
     [scrollbarH]="scrollBarHorizontal"
-    [reorderable]="mergedConfig.reorderable"
-    [swapColumns]="mergedConfig.swapColumns"
-    [cssClasses]="mergedConfig.cssClasses"
-    [messages]="mergedConfig.messages"
+    [reorderable]="mergedConfig?.reorderable !== false"
+    [swapColumns]="mergedConfig?.swapColumns !== false"
+    [cssClasses]="{
+      sortAscending: 'datatable-icon-up',
+      sortDescending: 'datatable-icon-down',
+      sortUnset: 'datatable-icon-sort-unset',
+      pagerLeftArrow: 'datatable-icon-left',
+      pagerRightArrow: 'datatable-icon-right',
+      pagerPrevious: 'datatable-icon-prev',
+      pagerNext: 'datatable-icon-skip'
+    }"
+    [messages]="{
+      emptyMessage: 'No hay datos para mostrar',
+      totalMessage: 'total',
+      selectedMessage: 'seleccionado'
+    }"
     (activate)="onRowClick($event)"
     (select)="onSelect($event)">
 
@@ -108,8 +120,8 @@
 
     <!-- Columna de acciones si hay acciones definidas -->
     <ngx-datatable-column
-      *ngIf="actions && actions.length > 0 || actionsTemplate"
-      name="{{ 'COMMON.ACTIONS.TEXT' | translate }}"
+      *ngIf="(actions && actions.length > 0) || actionsTemplate"
+      [name]="'COMMON.ACTIONS.TEXT' | translate"
       [sortable]="false"
       [canAutoResize]="true"
       [draggable]="false"
@@ -121,7 +133,7 @@
         </ng-container>
 
         <!-- Dropdown de acciones por defecto -->
-        <div *ngIf="!actionsTemplate && actions.length > 0" class="btn-group">
+        <div *ngIf="!actionsTemplate && actions && actions.length > 0" class="btn-group">
           <button
             type="button"
             class="btn btn-outline-primary btn-sm dropdown-toggle"

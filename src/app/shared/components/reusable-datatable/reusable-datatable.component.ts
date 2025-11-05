@@ -51,14 +51,25 @@ export interface TableConfig {
   columnMode?: 'standard' | 'flex' | 'force';
   reorderable?: boolean;
   swapColumns?: boolean;
-  cssClasses?: any;
+  cssClasses?: {
+    sortAscending?: string;
+    sortDescending?: string;
+    sortUnset?: string;
+    pagerLeftArrow?: string;
+    pagerRightArrow?: string;
+    pagerPrevious?: string;
+    pagerNext?: string;
+  };
   messages?: {
     emptyMessage?: string;
     totalMessage?: string;
     selectedMessage?: string;
-    sortAscending?: string;
-    sortDescending?: string;
-  }
+    ariaFirstPageMessage?: string;
+    ariaPageNMessage?: string;
+    ariaPreviousPageMessage?: string;
+    ariaNextPageMessage?: string;
+    ariaLastPageMessage?: string;
+  };
 }
 
 @Component({
@@ -100,26 +111,40 @@ export class ReusableDatatableComponent implements OnInit, OnChanges {
     columnMode: 'force',
     reorderable: true,
     swapColumns: true,
+    cssClasses: {
+      sortAscending: 'datatable-icon-up',
+      sortDescending: 'datatable-icon-down',
+      sortUnset: 'datatable-icon-sort-unset',
+      pagerLeftArrow: 'datatable-icon-left',
+      pagerRightArrow: 'datatable-icon-right',
+      pagerPrevious: 'datatable-icon-prev',
+      pagerNext: 'datatable-icon-skip'
+    },
     messages: {
       emptyMessage: 'No hay datos para mostrar',
       totalMessage: 'total',
-      selectedMessage: 'seleccionado',
-      sortAscending: ': activa para ordenar columna ascendente',
-      sortDescending: ': activa para ordenar columna descendente'
+      selectedMessage: 'seleccionado'
     }
   };
 
-  mergedConfig: TableConfig;
+  mergedConfig: TableConfig = { ...this.defaultConfig };
+
 
   ngOnInit(): void {
+    // Merge de configuraciones
     this.mergedConfig = {
       ...this.defaultConfig,
       ...this.config,
       messages: {
         ...this.defaultConfig.messages,
-        ...this.config.messages
+        ...(this.config?.messages)
+      },
+      cssClasses: {
+        ...this.defaultConfig.cssClasses,
+        ...(this.config?.cssClasses)
       }
     };
+
     this.temp = [...this.rows];
   }
 
@@ -133,7 +158,11 @@ export class ReusableDatatableComponent implements OnInit, OnChanges {
         ...this.config,
         messages: {
           ...this.defaultConfig.messages,
-          ...this.config.messages
+          ...(this.config?.messages)
+        },
+        cssClasses: {
+          ...this.defaultConfig.cssClasses,
+          ...(this.config?.cssClasses)
         }
       };
     }
