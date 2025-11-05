@@ -14,7 +14,7 @@ import {
 import { CommonModule } from '@angular/common';
 import { DatatableComponent, NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { TranslateModule } from '@ngx-translate/core';
-import { IconsModule } from '../../feather-icons.module';
+import { IconsModule } from '@app/shared';
 
 export interface TableColumn {
   name: string;

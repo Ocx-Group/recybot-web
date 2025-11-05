@@ -67,7 +67,7 @@
     [columnMode]="mergedConfig.columnMode"
     [headerHeight]="mergedConfig.headerHeight"
     [footerHeight]="mergedConfig.footerHeight"
-    [rowHeight]="mergedConfig.rowHeight"
+    [rowHeight]="mergedConfig.rowHeight === 'auto' ? 'auto' : +mergedConfig.rowHeight"
     [limit]="mergedConfig.limit"
     [scrollbarH]="scrollBarHorizontal"
     [reorderable]="mergedConfig.reorderable"
@@ -91,8 +91,8 @@
       [maxWidth]="column.maxWidth">
 
       <!-- Template personalizado para el header si existe -->
-      <ng-template *ngIf="column.headerTemplate" ngx-datatable-header-template let-column="column">
-        <ng-container *ngTemplateOutlet="column.headerTemplate; context: { column: column }"></ng-container>
+      <ng-template *ngIf="column.headerTemplate" ngx-datatable-header-template let-column="column" let-sortDir="sortDir" let-sortFn="sortFn" let-selectFn="selectFn">
+        <ng-container *ngTemplateOutlet="column.headerTemplate; context: { column: column, sortDir: sortDir, sortFn: sortFn, selectFn: selectFn }"></ng-container>
       </ng-template>
 
       <!-- Template personalizado para la celda si existe -->
