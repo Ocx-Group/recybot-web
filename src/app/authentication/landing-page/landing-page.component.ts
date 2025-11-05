@@ -22,7 +22,7 @@ import { ActivatedRoute } from '@angular/router';
 import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
 import { AffiliateService } from '@app/core/service/affiliate-service/affiliate.service';
 import { PdfViewerService } from '@app/core/service/pdf-viewer-service/pdf-viewer.service';
-import { SafePipe } from '@app/shared/safe.pipe';
+import { SafePipe } from '@app/shared/pipes/safe.pipe';
 
 @Component({
     selector: 'app-home',

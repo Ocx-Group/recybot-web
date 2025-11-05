@@ -19,7 +19,7 @@ import { DatatableComponent, NgxDatatableModule } from '@swimlane/ngx-datatable'
 import { AuthService } from '@app/core/service/authentication-service/auth.service';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
-import { TruncateDecimalsPipe } from '@app/shared/truncate-decimals.pipe';
+import { TruncateDecimalsPipe } from '@app/shared/pipes/truncate-decimals.pipe';
 import { IconsModule } from '@app/shared';
 import {RouterLink} from "@angular/router";
 

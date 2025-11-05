@@ -15,7 +15,7 @@ import {MatrixQualificationService} from '@app/core/service/matrix-qualification
 import {CommonModule} from '@angular/common';
 import {NgxDatatableModule} from '@swimlane/ngx-datatable';
 import {TranslateModule} from '@ngx-translate/core';
-import {TruncateDecimalsPipe} from '@app/shared/truncate-decimals.pipe';
+import {TruncateDecimalsPipe} from '@app/shared/pipes/truncate-decimals.pipe';
 import {IconsModule} from '@app/shared';
 import {NgbAlert} from "@ng-bootstrap/ng-bootstrap";
 import {CreateRequestsModalComponent} from "@app/client/requests/create-requests-modal/create-requests-modal.component";

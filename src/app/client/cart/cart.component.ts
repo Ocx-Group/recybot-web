@@ -54,7 +54,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {TranslateModule} from '@ngx-translate/core';
 import {CoinpayModalComponent} from "@app/client/cart/coinpay-modal/coinpay-modal.component";
 import {PdfViewerComponent} from "@app/shared/components/pdf-viewer/pdf-viewer.component";
-import {TruncateDecimalsPipe} from "@app/shared/truncate-decimals.pipe";
+import {TruncateDecimalsPipe} from "@app/shared/pipes/truncate-decimals.pipe";
 
 @Component({
   selector: 'app-cart',

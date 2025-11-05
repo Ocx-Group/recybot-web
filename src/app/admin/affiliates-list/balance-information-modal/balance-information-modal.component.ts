@@ -9,7 +9,7 @@ import {WalletModel1AService} from '@app/core/service/wallet-model-1a-service/wa
 import {WalletModel1BService} from '@app/core/service/wallet-model-1b-service/wallet-model-1b.service';
 import {WalletService} from '@app/core/service/wallet-service/wallet.service';
 import {ChartComponent} from "ng-apexcharts";
-import {TruncateDecimalsPipe} from "@app/shared/truncate-decimals.pipe";
+import {TruncateDecimalsPipe} from "@app/shared/pipes/truncate-decimals.pipe";
 import {TranslatePipe} from "@ngx-translate/core";
 
 @Component({

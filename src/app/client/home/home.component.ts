@@ -23,7 +23,7 @@ import { ToastrService } from 'ngx-toastr';
 import { CommonModule } from '@angular/common';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { TranslateModule } from '@ngx-translate/core';
-import { TruncateDecimalsPipe } from '@app/shared/truncate-decimals.pipe';
+import { TruncateDecimalsPipe } from '@app/shared/pipes/truncate-decimals.pipe';
 import { NgxEchartsModule, provideEchartsCore } from 'ngx-echarts';
 import {ShareModalComponent} from "@app/client/home/share-modal/share-modal.component";
 import {RouterLink} from "@angular/router";
@@ -156,15 +156,6 @@ export class HomeComponent {
   get registerUrl() {
     return `https://www.recycoin.net/welcome/${this.user.user_name.toString()}`;
   }
-
-  showSuccess(message: string) {
-    this.toastr.success(message);
-  }
-
-  showError(message: string) {
-    this.toastr.error(message);
-  }
-
 
   setMapInfo() {
     // Preparar datos para ECharts

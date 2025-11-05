@@ -12,13 +12,13 @@ import {
 } from '@swimlane/ngx-datatable';
 
 import Swal from 'sweetalert2';
-import {Ticket} from "../../core/models/ticket-model/ticket.model";
-import {TicketCategories} from "../../core/models/ticket-categories-model/ticket-categories.model";
+import {Ticket} from "@app/core/models/ticket-model/ticket.model";
+import {TicketCategories} from "@app/core/models/ticket-categories-model/ticket-categories.model";
 import {CreateAdminModalComponent} from "./create-admin-modal/create-admin-modal.component";
-import {TicketHubService} from "../../core/service/ticket-service/ticket-hub.service";
-import {TicketCategoriesService} from "../../core/service/ticket-categories-service/ticket-categories.service";
+import {TicketHubService} from "@app/core/service/ticket-service/ticket-hub.service";
+import {TicketCategoriesService} from "@app/core/service/ticket-categories-service/ticket-categories.service";
 import {AsyncPipe, NgClass} from "@angular/common";
-import {AdminRespondedPipe} from "../../shared/admin-responded.pipe";
+import {AdminRespondedPipe} from "@app/shared/pipes/admin-responded.pipe";
 
 @Component({
   selector: 'app-tickets-admin',

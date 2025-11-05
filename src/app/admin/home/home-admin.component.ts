@@ -15,7 +15,7 @@ import {
   ChartComponent,
 } from 'ng-apexcharts';
 import {UserAffiliate} from '@app/core/models/user-affiliate-model/user.affiliate.model';
-import {TruncateDecimalsPipe} from '@app/shared/truncate-decimals.pipe';
+import {TruncateDecimalsPipe} from '@app/shared/pipes/truncate-decimals.pipe';
 import {CommonModule} from '@angular/common';
 import {TranslatePipe} from "@ngx-translate/core";
 import {NgxEchartsModule, provideEchartsCore} from 'ngx-echarts';
@@ -89,10 +89,6 @@ export class HomeAdminComponent implements OnInit {
     this.loadLocations().then();
     this.user = this.authService.currentUserAdminValue;
     this.getLastRegisteredUsers();
-  }
-
-  showSuccess(message: string) {
-    this.toastr.success(message);
   }
 
   showError(message: string) {
@@ -343,7 +339,6 @@ export class HomeAdminComponent implements OnInit {
       },
     });
   }
-
 
   setMapInfo() {
     // Preparar datos para ECharts
