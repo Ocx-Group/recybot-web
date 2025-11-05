@@ -15,6 +15,7 @@ import { CommonModule } from '@angular/common';
 import { DatatableComponent, NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { TranslateModule } from '@ngx-translate/core';
 import { IconsModule } from '@app/shared';
+import { NgbDropdown, NgbDropdownToggle, NgbDropdownMenu, NgbDropdownItem } from '@ng-bootstrap/ng-bootstrap';
 
 export interface TableColumn {
   name: string;
@@ -75,7 +76,7 @@ export interface TableConfig {
 @Component({
   selector: 'app-reusable-datatable',
   standalone: true,
-  imports: [CommonModule, NgxDatatableModule, TranslateModule, IconsModule],
+  imports: [CommonModule, NgxDatatableModule, TranslateModule, IconsModule, NgbDropdown, NgbDropdownToggle, NgbDropdownMenu, NgbDropdownItem],
   templateUrl: './reusable-datatable.component.html',
   styleUrls: ['./reusable-datatable.component.scss']
 })

@@ -107,14 +107,14 @@
         <ng-container *ngTemplateOutlet="column.headerTemplate; context: { column: column, sortDir: sortDir, sortFn: sortFn, selectFn: selectFn }"></ng-container>
       </ng-template>
 
-      <!-- Template personalizado para la celda si existe -->
-      <ng-template *ngIf="column.cellTemplate" let-row="row" let-value="value" ngx-datatable-cell-template>
-        <ng-container *ngTemplateOutlet="column.cellTemplate; context: { row: row, value: value }"></ng-container>
-      </ng-template>
-
-      <!-- Template por defecto para la celda si no hay personalizado -->
-      <ng-template *ngIf="!column.cellTemplate" let-row="row" ngx-datatable-cell-template>
-        {{ getCellValue(row, column) }}
+      <!-- Template para la celda -->
+      <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+        <ng-container *ngIf="column.cellTemplate; else defaultCell">
+          <ng-container *ngTemplateOutlet="column.cellTemplate; context: { row: row, value: value }"></ng-container>
+        </ng-container>
+        <ng-template #defaultCell>
+          {{ getCellValue(row, column) }}
+        </ng-template>
       </ng-template>
     </ngx-datatable-column>
 
@@ -133,26 +133,26 @@
         </ng-container>
 
         <!-- Dropdown de acciones por defecto -->
-        <div *ngIf="!actionsTemplate && actions && actions.length > 0" class="btn-group">
+        <div *ngIf="!actionsTemplate && actions && actions.length > 0" ngbDropdown container="body">
           <button
             type="button"
-            class="btn btn-outline-primary btn-sm dropdown-toggle"
-            data-bs-toggle="dropdown"
-            aria-expanded="false">
+            class="btn btn-outline-primary btn-sm"
+            ngbDropdownToggle>
             {{ 'COMMON.ACTIONS.TEXT' | translate }}
           </button>
-          <ul class="dropdown-menu">
-            <li *ngFor="let action of actions">
+          <div ngbDropdownMenu>
+            <ng-container *ngFor="let action of actions">
               <a
                 *ngIf="shouldShowAction(action, row)"
-                class="dropdown-item"
+                ngbDropdownItem
                 [ngClass]="action.class"
-                (click)="executeAction(action, row)">
+                (click)="executeAction(action, row)"
+                style="cursor: pointer;">
                 <i *ngIf="action.icon" [class]="action.icon"></i>
-                <span [style.margin-left]="action.icon ? '10px' : '0'">{{ action.label }}</span>
+                <span [style.margin-left]="action.icon ? '8px' : '0'">{{ action.label }}</span>
               </a>
-            </li>
-          </ul>
+            </ng-container>
+          </div>
         </div>
       </ng-template>
     </ngx-datatable-column>

@@ -2,8 +2,7 @@ import {
   WalletRequestRevertTransaction
 } from '@app/core/models/wallet-request-request-model/wallet-request-revert-transaction.model';
 import {Subject, Subscription, takeUntil} from 'rxjs';
-import {Component, HostListener, OnDestroy, OnInit, ViewChild,} from '@angular/core';
-import {DatatableComponent} from '@swimlane/ngx-datatable';
+import {Component, OnDestroy, OnInit, AfterViewInit, ViewChild, TemplateRef} from '@angular/core';
 import Swal from 'sweetalert2';
 
 import {InvoiceService} from '@app/core/service/invoice-service/invoice.service';
@@ -21,30 +20,25 @@ import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import {TranslateService, TranslateModule} from '@ngx-translate/core';
 import {CommonModule} from '@angular/common';
-import {NgxDatatableModule} from '@swimlane/ngx-datatable';
 import {
   BillingPurchasesDetailModalComponent
 } from "@app/client/billing-purchases/billing-purchases-detail-modal/billing-purchases-detail-modal.component";
 import {IconsModule} from '@app/shared';
 import {RouterLink} from "@angular/router";
-import {NgbDropdown, NgbDropdownItem, NgbDropdownMenu, NgbDropdownToggle} from "@ng-bootstrap/ng-bootstrap";
+import {ReusableDatatableComponent, TableColumn, TableAction, TableConfig} from '@app/shared/components/reusable-datatable/reusable-datatable.component';
 
 @Component({
   selector: 'app-filter',
   templateUrl: './billing-purchases.component.html',
   standalone: true,
   imports: [CommonModule,
-    NgxDatatableModule,
     TranslateModule,
     BillingPurchasesDetailModalComponent,
     IconsModule,
     RouterLink,
-    NgbDropdown,
-    NgbDropdownToggle,
-    NgbDropdownMenu,
-    NgbDropdownItem]
+    ReusableDatatableComponent]
 })
-export class BillingPurchasesComponent implements OnInit, OnDestroy {
+export class BillingPurchasesComponent implements OnInit, AfterViewInit, OnDestroy {
   private user: UserAffiliate = new UserAffiliate();
   private suscription: Subscription;
   private destroy$ = new Subject();
@@ -56,7 +50,28 @@ export class BillingPurchasesComponent implements OnInit, OnDestroy {
   reorderable = true;
   scrollBarHorizontal = window.innerWidth < 1200;
 
-  @ViewChild('table') table: DatatableComponent;
+  @ViewChild('modalChildDetail') modalChildDetail: BillingPurchasesDetailModalComponent;
+  @ViewChild('customButtons') customButtons: TemplateRef<any>;
+  @ViewChild('noBillTemplate') noBillTemplate: TemplateRef<any>;
+  @ViewChild('billStateTemplate') billStateTemplate: TemplateRef<any>;
+  @ViewChild('paidStateTemplate') paidStateTemplate: TemplateRef<any>;
+  @ViewChild('modelTemplate') modelTemplate: TemplateRef<any>;
+  @ViewChild('totalAmountTemplate') totalAmountTemplate: TemplateRef<any>;
+
+  // Configuración para tabla reutilizable
+  tableColumns: TableColumn[] = [];
+  tableActions: TableAction[] = [];
+  tableConfig: TableConfig = {
+    showSearch: true,
+    showActions: true,
+    searchPlaceholder: 'BILLING-PURCHASES-PAGE.SEARCH.TEXT',
+    headerHeight: 50,
+    footerHeight: 50,
+    rowHeight: 'auto',
+    limit: 10,
+    columnMode: 'force',
+    reorderable: true
+  };
 
   constructor(
     private invoiceService: InvoiceService,
@@ -75,8 +90,13 @@ export class BillingPurchasesComponent implements OnInit, OnDestroy {
       .subscribe((user) => {
         this.user = user;
       });
+    this.setupTableActions();
     this.loadBillingPurchases();
     this.loadWithdrawalConfiguration();
+  }
+
+  ngAfterViewInit(): void {
+    this.setupTableColumns();
   }
 
   ngOnDestroy(): void {
@@ -85,11 +105,61 @@ export class BillingPurchasesComponent implements OnInit, OnDestroy {
     this.suscription.unsubscribe();
   }
 
-  @HostListener('window:resize', ['$event'])
-  onResize(event) {
-    this.scrollBarHorizontal = window.innerWidth < 1200;
-    this.table.recalculate();
-    this.table.recalculateColumns();
+  setupTableColumns(): void {
+    this.tableColumns = [
+      {
+        name: this.translateService.instant('BILLING-PURCHASES-PAGE.ROW-NO-BILL.TEXT'),
+        prop: 'id',
+        sortable: true,
+        cellTemplate: this.noBillTemplate
+      },
+      {
+        name: this.translateService.instant('BILLING-PURCHASES-PAGE.ROW-DATE.TEXT'),
+        prop: 'date',
+        sortable: true
+      },
+      {
+        name: this.translateService.instant('BILLING-PURCHASES-PAGE.ROW-BILL-STATE.TEXT'),
+        prop: 'status',
+        sortable: true,
+        cellTemplate: this.billStateTemplate
+      },
+      {
+        name: this.translateService.instant('BILLING-PURCHASES-PAGE.ROW-PAID.TEXT'),
+        prop: 'state',
+        sortable: true,
+        cellTemplate: this.paidStateTemplate
+      },
+      {
+        name: this.translateService.instant('BILLING-PURCHASES-PAGE.ROW-MODEL.TEXT'),
+        prop: 'invoicesDetails',
+        sortable: false,
+        cellTemplate: this.modelTemplate
+      },
+      {
+        name: this.translateService.instant('BILLING-PURCHASES-PAGE.TOTAL-AMOUNT.TEXT'),
+        prop: 'totalInvoice',
+        sortable: true,
+        cellTemplate: this.totalAmountTemplate
+      }
+    ];
+  }
+
+  setupTableActions(): void {
+    this.tableActions = [
+      {
+        label: this.translateService.instant('BILLING-PURCHASES-PAGE.BTN-SEE-DETAILS.TEXT'),
+        icon: 'bi bi-person-badge',
+        callback: (row) => {
+          if (this.modalChildDetail) {
+            this.modalChildDetail.billingPurchasesOpenModal(
+              this.modalChildDetail['billingPurchasesDetailModal'],
+              row
+            );
+          }
+        }
+      }
+    ];
   }
 
   showSuccess(message: string) {
@@ -127,16 +197,6 @@ export class BillingPurchasesComponent implements OnInit, OnDestroy {
 
   getRowHeight(row) {
     return row.height;
-  }
-
-  updateFilter(event) {
-    const val = event.target.value.toLowerCase();
-
-    this.rows = this.temp.filter(function (d) {
-      const invoiceNumberStr = d.id.toString();
-      return invoiceNumberStr.toLowerCase().indexOf(val) !== -1 || !val;
-    });
-    this.table.offset = 0;
   }
 
   onPrintInvoice(invoice: Invoice) {
@@ -259,27 +319,24 @@ export class BillingPurchasesComponent implements OnInit, OnDestroy {
   }
 
   copyTableData() {
-    const rows = this.table._internalRows;
-    if (rows && rows.length) {
-      const headers = [
-        this.translateService.instant('BILLING-PURCHASES-PAGE.ROW-NO-BILL.TEXT'),
-        this.translateService.instant('BILLING-PURCHASES-PAGE.ROW-DATE.TEXT'),
-        this.translateService.instant('BILLING-PURCHASES-PAGE.ROW-BILL-STATE.TEXT'),
-        this.translateService.instant('BILLING-PURCHASES-PAGE.ROW-PAID.TEXT'),
-        this.translateService.instant('BILLING-PURCHASES-PAGE.ROW-DETAIL.TEXT')
-      ];
+    const headers = [
+      this.translateService.instant('BILLING-PURCHASES-PAGE.ROW-NO-BILL.TEXT'),
+      this.translateService.instant('BILLING-PURCHASES-PAGE.ROW-DATE.TEXT'),
+      this.translateService.instant('BILLING-PURCHASES-PAGE.ROW-BILL-STATE.TEXT'),
+      this.translateService.instant('BILLING-PURCHASES-PAGE.ROW-PAID.TEXT'),
+      this.translateService.instant('BILLING-PURCHASES-PAGE.ROW-DETAIL.TEXT')
+    ];
 
-      const data = rows.map(row => [
-        row.id,
-        row.date,
-        row.status ? 'Activa' : 'Cancelada',
-        row.state ? 'Pagado' : 'No pagado',
-        '...'
-      ]);
+    const data = this.rows.map(row => [
+      row.id,
+      row.date,
+      row.status ? 'Activa' : 'Cancelada',
+      row.state ? 'Pagado' : 'No pagado',
+      '...'
+    ]);
 
-      const tableText = [headers, ...data].map(row => row.join('\t')).join('\n');
-      this.copyTextToClipboard(tableText);
-    }
+    const tableText = [headers, ...data].map(row => row.join('\t')).join('\n');
+    this.copyTextToClipboard(tableText);
   }
 
   copyTextToClipboard(text: string) {
