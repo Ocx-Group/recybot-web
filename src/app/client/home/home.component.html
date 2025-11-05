@@ -252,7 +252,7 @@
           </div>
           <div class="card-body d-flex flex-column">
             <div class="row flex-grow-0 mb-3">
-              <div echarts [options]="mapChartOption" class="map-chart-height"></div>
+              <app-world-map-chart [countries]="maps" height="400px"></app-world-map-chart>
             </div>
             <div class="row flex-grow-1">
               <div id="new-orders" class="media-list position-relative h-100" style="max-height: 200px !important; overflow-y: auto;">

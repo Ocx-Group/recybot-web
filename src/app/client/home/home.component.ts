@@ -1,53 +1,53 @@
-import { ChangeDetectorRef, Component, CUSTOM_ELEMENTS_SCHEMA, NgZone, ViewChild } from '@angular/core';
-import * as echarts from 'echarts';
-import { AffiliateBtcService } from '@app/core/service/affiliate-btc-service/affiliate-btc.service';
-import { ChartComponent } from 'ng-apexcharts';
-import { EMPTY, map, Subject, switchMap, takeUntil } from 'rxjs';
+import {ChangeDetectorRef, Component, CUSTOM_ELEMENTS_SCHEMA, NgZone, OnInit, ViewChild} from '@angular/core';
+import {AffiliateBtcService} from '@app/core/service/affiliate-btc-service/affiliate-btc.service';
+import {ChartComponent} from 'ng-apexcharts';
+import {EMPTY, map, Subject, switchMap, takeUntil} from 'rxjs';
 
-import { AffiliateBtc } from '@app/core/models/affiliate-btc-model/affiliate-btc.model';
-import { Response } from '@app/core/models/response-model/response.model';
-import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
-import { BalanceInformationModel1A } from '@app/core/models/wallet-model-1a/balance-information-1a.model';
-import { BalanceInformationModel1B } from '@app/core/models/wallet-model-1b/balance-information-1b.model';
-import { BalanceInformation } from '@app/core/models/wallet-model/balance-information.model';
-import { PurchasePerMonthDto } from '@app/core/models/wallet-model/network-purchases.model';
-import { StatisticsInformation } from '@app/core/models/wallet-model/statisticsInformation';
-import { AffiliateService } from '@app/core/service/affiliate-service/affiliate.service';
-import { AuthService } from '@app/core/service/authentication-service/auth.service';
-import { ModelsVisibilityService } from '@app/core/service/models-visibility-service/models-visibility.service';
-import { WalletModel1AService } from '@app/core/service/wallet-model-1a-service/wallet-model-1a.service';
-import { WalletModel1BService } from '@app/core/service/wallet-model-1b-service/wallet-model-1b.service';
-import { WalletService } from '@app/core/service/wallet-service/wallet.service';
-import { EChartsOption } from 'echarts';
-import { ToastrService } from 'ngx-toastr';
-import { CommonModule } from '@angular/common';
-import { NgApexchartsModule } from 'ng-apexcharts';
-import { TranslateModule } from '@ngx-translate/core';
-import { TruncateDecimalsPipe } from '@app/shared/pipes/truncate-decimals.pipe';
-import { NgxEchartsModule, provideEchartsCore } from 'ngx-echarts';
+import {AffiliateBtc} from '@app/core/models/affiliate-btc-model/affiliate-btc.model';
+import {Response} from '@app/core/models/response-model/response.model';
+import {UserAffiliate} from '@app/core/models/user-affiliate-model/user.affiliate.model';
+import {BalanceInformationModel1A} from '@app/core/models/wallet-model-1a/balance-information-1a.model';
+import {BalanceInformationModel1B} from '@app/core/models/wallet-model-1b/balance-information-1b.model';
+import {BalanceInformation} from '@app/core/models/wallet-model/balance-information.model';
+import {PurchasePerMonthDto} from '@app/core/models/wallet-model/network-purchases.model';
+import {StatisticsInformation} from '@app/core/models/wallet-model/statisticsInformation';
+import {AffiliateService} from '@app/core/service/affiliate-service/affiliate.service';
+import {AuthService} from '@app/core/service/authentication-service/auth.service';
+import {ModelsVisibilityService} from '@app/core/service/models-visibility-service/models-visibility.service';
+import {WalletModel1AService} from '@app/core/service/wallet-model-1a-service/wallet-model-1a.service';
+import {WalletModel1BService} from '@app/core/service/wallet-model-1b-service/wallet-model-1b.service';
+import {WalletService} from '@app/core/service/wallet-service/wallet.service';
+import {EChartsOption} from 'echarts';
+import {ToastrService} from 'ngx-toastr';
+import {CommonModule} from '@angular/common';
+import {NgApexchartsModule} from 'ng-apexcharts';
+import {TranslateModule} from '@ngx-translate/core';
+import {TruncateDecimalsPipe} from '@app/shared/pipes/truncate-decimals.pipe';
+import {NgxEchartsModule, provideEchartsCore} from 'ngx-echarts';
 import {ShareModalComponent} from "@app/client/home/share-modal/share-modal.component";
 import {RouterLink} from "@angular/router";
+import {WorldMapChartComponent, CountryData} from "@app/shared/components/world-map-chart/world-map-chart.component";
 
 @Component({
-    selector: 'app-main',
-    templateUrl: './home.component.html',
-    styleUrls: ['./home.component.scss'],
-    standalone: true,
-  imports: [CommonModule, NgApexchartsModule, TranslateModule, TruncateDecimalsPipe, NgxEchartsModule, ShareModalComponent, RouterLink],
-    providers: [
-      provideEchartsCore({
-        echarts: () => import('echarts')
-      })
-    ],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  selector: 'app-main',
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.scss'],
+  standalone: true,
+  imports: [CommonModule, NgApexchartsModule, TranslateModule, TruncateDecimalsPipe, NgxEchartsModule, ShareModalComponent, RouterLink, WorldMapChartComponent],
+  providers: [
+    provideEchartsCore({
+      echarts: () => import('echarts')
+    })
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
   public user: UserAffiliate;
   private destroy$ = new Subject();
   balanceInformation: BalanceInformation = new BalanceInformation();
   balanceInformationModel1A: BalanceInformationModel1A = new BalanceInformationModel1A();
   balanceInformationModel1B: BalanceInformationModel1B = new BalanceInformationModel1B();
-  maps: any[] = [];
+  maps: CountryData[] = [];
   currentYearPurchases: PurchasePerMonthDto[] = [];
   previousYearPurchases: PurchasePerMonthDto[] = [];
   area_line_chart: EChartsOption;
@@ -65,7 +65,6 @@ export class HomeComponent {
   };
 
   information: StatisticsInformation = new StatisticsInformation();
-  public mapChartOption: EChartsOption = {};
   public pieChartOptions: any;
   public pieChartOptionsModel1A: any;
   public pieChartOptionsModel1B: any;
@@ -88,10 +87,10 @@ export class HomeComponent {
 
     this.currentYear = new Date().getFullYear();
     this.previousYear = this.currentYear - 1;
-    this.OnInitMethod();
+    this.ngOnInit();
   }
 
-  OnInitMethod() {
+  ngOnInit() {
     this.authService.currentUserAffiliate.pipe(
       takeUntil(this.destroy$),
       switchMap(user => {
@@ -109,7 +108,7 @@ export class HomeComponent {
       this.loadUserData(user.id);
     });
 
-    this.loadLocations().then();
+    this.loadLocations();
     this.getPurchasesInMyNetwork();
     this.loadInformation();
     this.loadBnbAddress();
@@ -155,73 +154,6 @@ export class HomeComponent {
 
   get registerUrl() {
     return `https://www.recycoin.net/welcome/${this.user.user_name.toString()}`;
-  }
-
-  setMapInfo() {
-    // Preparar datos para ECharts
-    const scatterData = this.maps.map(item => ({
-      name: item.Title,
-      value: [item.Lng, item.Lat, item.Value],
-      itemStyle: {
-        color: '#4a90e2' // Azul medio que funciona en ambos temas
-      }
-    }));
-
-    this.mapChartOption = {
-      tooltip: {
-        trigger: 'item',
-        formatter: (params: any) => {
-          if (params.data) {
-            return `<strong>${params.data.name}</strong><br/>Cantidad: ${params.data.value[2]}`;
-          }
-          return params.name;
-        }
-      },
-      geo: {
-        map: 'world',
-        roam: true,
-        itemStyle: {
-          areaColor: '#e0e0e0', // Gris claro para países
-          borderColor: '#666666' // Gris medio para bordes
-        },
-        emphasis: {
-          itemStyle: {
-            areaColor: '#b8c5d6' // Gris azulado suave al hacer hover
-          }
-        }
-      },
-      series: [
-        {
-          name: 'Afiliados por País',
-          type: 'scatter',
-          coordinateSystem: 'geo',
-          data: scatterData,
-          symbolSize: (val: any) => {
-            return Math.max(Math.sqrt(val[2]) * 2, 10);
-          },
-          label: {
-            show: true,
-            formatter: (params: any) => params.data.value[2],
-            position: 'inside',
-            color: '#ffffff',
-            fontWeight: 'bold',
-            textBorderColor: '#000000', // Contorno negro para el texto
-            textBorderWidth: 2
-          },
-          itemStyle: {
-            color: '#4a90e2', // Azul medio
-            borderColor: '#2c5aa0', // Azul más oscuro para el borde
-            borderWidth: 2
-          },
-          emphasis: {
-            itemStyle: {
-              color: '#5fb3f6', // Azul más claro al hover
-              borderColor: '#2c5aa0'
-            }
-          }
-        }
-      ]
-    };
   }
 
   initializeAreaLineChart() {
@@ -317,8 +249,8 @@ export class HomeComponent {
         },
       ],
       color: ['#9f78ff', '#fa626b'],
-    }
-  };
+    };
+  }
 
   isBalanceInformationValid(balance: BalanceInformation): boolean {
     return balance.serviceBalance !== undefined &&
@@ -383,25 +315,6 @@ export class HomeComponent {
     };
   }
 
-  async loadLocations() {
-    // Registrar el mapa mundial para ECharts
-    try {
-      const worldJson = await fetch('assets/data/world.json').then(res => res.json());
-      echarts.registerMap('world', worldJson);
-    } catch (error) {
-      console.error('Error loading world map:', error);
-    }
-
-    this.affiliateService.getTotalAffiliatesByCountries().subscribe({
-      next: (value) => {
-        this.maps = value.data;
-        this.setMapInfo();
-      },
-      error: (err) => {
-        console.error('Error fetching locations:', err);
-      },
-    })
-  }
 
   openNewWindow(url: string) {
     window.open(url)
@@ -459,10 +372,6 @@ export class HomeComponent {
   }
 
   getBalanceInformationModel1B(id: number): Promise<void> {
-    if (!this.canSeePaymentModels) {
-      return Promise.resolve();
-    }
-
     return new Promise((resolve, reject) => {
       this.walletModel1BService.getBalanceInformationByAffiliateId(id).subscribe({
         next: (value: BalanceInformationModel1B) => {
@@ -474,6 +383,17 @@ export class HomeComponent {
           reject(err);
         }
       });
+    });
+  }
+
+  loadLocations() {
+    this.affiliateService.getTotalAffiliatesByCountries().subscribe({
+      next: (value) => {
+        this.maps = value.data;
+      },
+      error: (err) => {
+        console.error('Error fetching locations:', err);
+      },
     });
   }
 

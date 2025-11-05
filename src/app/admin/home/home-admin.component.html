@@ -84,7 +84,7 @@
           </div>
           <div class="card-body">
             <div class="row">
-              <div echarts [options]="mapChartOption" class="map-chart-height"></div>
+              <app-world-map-chart [countries]="maps" height="350px"></app-world-map-chart>
             </div>
             <div class="row">
               <div id="new-orders" class="media-list" style="position: relative; max-height: 315px !important; overflow-y: auto;"

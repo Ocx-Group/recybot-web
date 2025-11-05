@@ -1,6 +1,5 @@
-import {AuthService} from 'src/app/core/service/authentication-service/auth.service';
+import {AuthService} from '@app/core/service/authentication-service/auth.service';
 import {Component, OnInit, ViewChild} from '@angular/core';
-import * as echarts from 'echarts';
 import {EChartsOption} from 'echarts';
 import {WalletService} from '@app/core/service/wallet-service/wallet.service';
 import {AffiliateService} from '@app/core/service/affiliate-service/affiliate.service';
@@ -20,6 +19,7 @@ import {CommonModule} from '@angular/common';
 import {TranslatePipe} from "@ngx-translate/core";
 import {NgxEchartsModule, provideEchartsCore} from 'ngx-echarts';
 import {RouterLink} from '@angular/router';
+import {WorldMapChartComponent, CountryData} from "@app/shared/components/world-map-chart/world-map-chart.component";
 
 export interface ChartOptions {
   series?: ApexNonAxisChartSeries;
@@ -37,7 +37,7 @@ export interface ChartOptions {
   templateUrl: './home-admin.component.html',
   styleUrls: ['./home-admin.component.scss'],
   standalone: true,
-  imports: [CommonModule, TruncateDecimalsPipe, TranslatePipe, ChartComponent, NgxEchartsModule, RouterLink],
+  imports: [CommonModule, TruncateDecimalsPipe, TranslatePipe, ChartComponent, NgxEchartsModule, RouterLink, WorldMapChartComponent],
   providers: [
     provideEchartsCore({
       echarts: () => import('echarts')
@@ -45,7 +45,6 @@ export interface ChartOptions {
   ]
 })
 export class HomeAdminComponent implements OnInit {
-  public mapChartOption: EChartsOption;
   public pieChartOptions: Partial<ChartOptions>;
   public avgLecChartOptions: any;
   totalMembers: number;
@@ -54,7 +53,7 @@ export class HomeAdminComponent implements OnInit {
   calculatedCommissions: number;
   totalReverseBalance: number;
   adminCommissions: number;
-  maps: any[] = [];
+  maps: CountryData[] = [];
   user: any;
   @ViewChild('chart') chart1: ChartComponent;
   lastRegisteredUsers: UserAffiliate[] = [];
@@ -86,13 +85,24 @@ export class HomeAdminComponent implements OnInit {
 
   ngOnInit() {
     this.initChartReport();
-    this.loadLocations().then();
+    this.loadLocations();
     this.user = this.authService.currentUserAdminValue;
     this.getLastRegisteredUsers();
   }
 
   showError(message: string) {
     this.toastr.error(message);
+  }
+
+  loadLocations() {
+    this.affiliateService.getTotalAffiliatesByCountries().subscribe({
+      next: (value) => {
+        this.maps = value.data;
+      },
+      error: (err) => {
+        console.error('Error fetching locations:', err);
+      },
+    })
   }
 
   private initChartReport3() {
@@ -340,92 +350,6 @@ export class HomeAdminComponent implements OnInit {
     });
   }
 
-  setMapInfo() {
-    // Preparar datos para ECharts
-    const scatterData = this.maps.map(item => ({
-      name: item.Title,
-      value: [item.Lng, item.Lat, item.Value],
-      itemStyle: {
-        color: '#4a90e2' // Azul medio que funciona en ambos temas
-      }
-    }));
-
-    this.mapChartOption = {
-      tooltip: {
-        trigger: 'item',
-        formatter: (params: any) => {
-          if (params.data) {
-            return `<strong>${params.data.name}</strong><br/>Cantidad: ${params.data.value[2]}`;
-          }
-          return params.name;
-        }
-      },
-      geo: {
-        map: 'world',
-        roam: true,
-        itemStyle: {
-          areaColor: '#e0e0e0', // Gris claro para países
-          borderColor: '#666666' // Gris medio para bordes
-        },
-        emphasis: {
-          itemStyle: {
-            areaColor: '#b8c5d6' // Gris azulado suave al hacer hover
-          }
-        }
-      },
-      series: [
-        {
-          name: 'Afiliados por País',
-          type: 'scatter',
-          coordinateSystem: 'geo',
-          data: scatterData,
-          symbolSize: (val: any) => {
-            return Math.max(Math.sqrt(val[2]) * 2, 10);
-          },
-          label: {
-            show: true,
-            formatter: (params: any) => params.data.value[2],
-            position: 'inside',
-            color: '#ffffff',
-            fontWeight: 'bold',
-            textBorderColor: '#000000', // Contorno negro para el texto
-            textBorderWidth: 2
-          },
-          itemStyle: {
-            color: '#4a90e2', // Azul medio
-            borderColor: '#2c5aa0', // Azul más oscuro para el borde
-            borderWidth: 2
-          },
-          emphasis: {
-            itemStyle: {
-              color: '#5fb3f6', // Azul más claro al hover
-              borderColor: '#2c5aa0'
-            }
-          }
-        }
-      ]
-    };
-  }
-
-  async loadLocations() {
-    // Registrar el mapa mundial para ECharts
-    try {
-      const worldJson = await fetch('assets/data/world.json').then(res => res.json());
-      echarts.registerMap('world', worldJson);
-    } catch (error) {
-      console.error('Error loading world map:', error);
-    }
-
-    this.affiliateService.getTotalAffiliatesByCountries().subscribe({
-      next: (value) => {
-        this.maps = value.data;
-        this.setMapInfo();
-      },
-      error: (err) => {
-        console.error('Error fetching locations:', err);
-      },
-    })
-  }
 
   getLastRegisteredUsers() {
     this.affiliateService.getLastRegisteredAffiliates().subscribe({
