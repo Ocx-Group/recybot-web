@@ -84,7 +84,7 @@
           </div>
           <div class="card-body">
             <div class="row">
-              <div id="chartdiv"></div>
+              <div echarts [options]="mapChartOption" class="map-chart-height"></div>
             </div>
             <div class="row">
               <div id="new-orders" class="media-list" style="position: relative; max-height: 315px !important; overflow-y: auto;"
@@ -99,8 +99,8 @@
                     </thead>
                     <tbody>
                       <tr *ngFor="let item of maps">
-                        <td class="text-truncate">{{ item.title }}</td>
-                        <td class="text-truncate">{{ item.value }}</td>
+                        <td class="text-truncate">{{ item.Title }}</td>
+                        <td class="text-truncate">{{ item.Value }}</td>
                       </tr>
                     </tbody>
                   </table>

@@ -1,10 +1,10 @@
-import { AuthService } from 'src/app/core/service/authentication-service/auth.service';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import {AuthService} from 'src/app/core/service/authentication-service/auth.service';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import * as echarts from 'echarts';
-import { EChartsOption } from 'echarts';
-import { WalletService } from '@app/core/service/wallet-service/wallet.service';
-import { AffiliateService } from '@app/core/service/affiliate-service/affiliate.service';
-import { ToastrService } from 'ngx-toastr';
+import {EChartsOption} from 'echarts';
+import {WalletService} from '@app/core/service/wallet-service/wallet.service';
+import {AffiliateService} from '@app/core/service/affiliate-service/affiliate.service';
+import {ToastrService} from 'ngx-toastr';
 import {
   ApexNonAxisChartSeries,
   ApexChart,
@@ -14,11 +14,12 @@ import {
   ApexPlotOptions,
   ChartComponent,
 } from 'ng-apexcharts';
-import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
-import { TruncateDecimalsPipe } from '@app/shared/truncate-decimals.pipe';
-import { CommonModule } from '@angular/common';
+import {UserAffiliate} from '@app/core/models/user-affiliate-model/user.affiliate.model';
+import {TruncateDecimalsPipe} from '@app/shared/truncate-decimals.pipe';
+import {CommonModule} from '@angular/common';
 import {TranslatePipe} from "@ngx-translate/core";
-import {NgxEchartsDirective} from "ngx-echarts";
+import {NgxEchartsModule, provideEchartsCore} from 'ngx-echarts';
+import {RouterLink} from '@angular/router';
 
 export interface ChartOptions {
   series?: ApexNonAxisChartSeries;
@@ -32,10 +33,16 @@ export interface ChartOptions {
 }
 
 @Component({
-    selector: 'app-home-admin',
-    templateUrl: './home-admin.component.html',
-    standalone: true,
-  imports: [CommonModule, TruncateDecimalsPipe, TranslatePipe, ChartComponent, NgxEchartsDirective]
+  selector: 'app-home-admin',
+  templateUrl: './home-admin.component.html',
+  styleUrls: ['./home-admin.component.scss'],
+  standalone: true,
+  imports: [CommonModule, TruncateDecimalsPipe, TranslatePipe, ChartComponent, NgxEchartsModule, RouterLink],
+  providers: [
+    provideEchartsCore({
+      echarts: () => import('echarts')
+    })
+  ]
 })
 export class HomeAdminComponent implements OnInit {
   public mapChartOption: EChartsOption;
@@ -79,7 +86,7 @@ export class HomeAdminComponent implements OnInit {
 
   ngOnInit() {
     this.initChartReport();
-    this.loadLocations();
+    this.loadLocations().then();
     this.user = this.authService.currentUserAdminValue;
     this.getLastRegisteredUsers();
   }
@@ -337,13 +344,14 @@ export class HomeAdminComponent implements OnInit {
     });
   }
 
+
   setMapInfo() {
     // Preparar datos para ECharts
     const scatterData = this.maps.map(item => ({
-      name: item.title,
-      value: [item.lng, item.lat, item.value],
+      name: item.Title,
+      value: [item.Lng, item.Lat, item.Value],
       itemStyle: {
-        color: '#765cbf'
+        color: '#4a90e2' // Azul medio que funciona en ambos temas
       }
     }));
 
@@ -361,12 +369,12 @@ export class HomeAdminComponent implements OnInit {
         map: 'world',
         roam: true,
         itemStyle: {
-          areaColor: '#96a2b4',
-          borderColor: '#fff'
+          areaColor: '#e0e0e0', // Gris claro para países
+          borderColor: '#666666' // Gris medio para bordes
         },
         emphasis: {
           itemStyle: {
-            areaColor: '#74a999'
+            areaColor: '#b8c5d6' // Gris azulado suave al hacer hover
           }
         }
       },
@@ -383,16 +391,20 @@ export class HomeAdminComponent implements OnInit {
             show: true,
             formatter: (params: any) => params.data.value[2],
             position: 'inside',
-            color: '#fff'
+            color: '#ffffff',
+            fontWeight: 'bold',
+            textBorderColor: '#000000', // Contorno negro para el texto
+            textBorderWidth: 2
           },
           itemStyle: {
-            color: '#765cbf',
-            borderColor: '#B27799',
-            borderWidth: 1
+            color: '#4a90e2', // Azul medio
+            borderColor: '#2c5aa0', // Azul más oscuro para el borde
+            borderWidth: 2
           },
           emphasis: {
             itemStyle: {
-              color: '#B27799'
+              color: '#5fb3f6', // Azul más claro al hover
+              borderColor: '#2c5aa0'
             }
           }
         }
@@ -403,27 +415,21 @@ export class HomeAdminComponent implements OnInit {
   async loadLocations() {
     // Registrar el mapa mundial para ECharts
     try {
-      const worldJson = await fetch('https://cdn.jsdelivr.net/npm/echarts@5/map/json/world.json').then(res => res.json());
+      const worldJson = await fetch('assets/data/world.json').then(res => res.json());
       echarts.registerMap('world', worldJson);
     } catch (error) {
       console.error('Error loading world map:', error);
     }
 
     this.affiliateService.getTotalAffiliatesByCountries().subscribe({
-      next: value => {
-        this.maps = value.data.map(item => ({
-          title: item.Title,
-          value: item.Value,
-          lat: item.Lat,
-          lng: item.Lng,
-        }));
-
+      next: (value) => {
+        this.maps = value.data;
         this.setMapInfo();
       },
-      error: () => {
-        this.showError('Error');
+      error: (err) => {
+        console.error('Error fetching locations:', err);
       },
-    });
+    })
   }
 
   getLastRegisteredUsers() {

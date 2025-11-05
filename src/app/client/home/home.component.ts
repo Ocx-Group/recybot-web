@@ -26,13 +26,14 @@ import { TranslateModule } from '@ngx-translate/core';
 import { TruncateDecimalsPipe } from '@app/shared/truncate-decimals.pipe';
 import { NgxEchartsModule, provideEchartsCore } from 'ngx-echarts';
 import {ShareModalComponent} from "@app/client/home/share-modal/share-modal.component";
+import {RouterLink} from "@angular/router";
 
 @Component({
     selector: 'app-main',
     templateUrl: './home.component.html',
     styleUrls: ['./home.component.scss'],
     standalone: true,
-    imports: [CommonModule, NgApexchartsModule, TranslateModule, TruncateDecimalsPipe, NgxEchartsModule, ShareModalComponent],
+  imports: [CommonModule, NgApexchartsModule, TranslateModule, TruncateDecimalsPipe, NgxEchartsModule, ShareModalComponent, RouterLink],
     providers: [
       provideEchartsCore({
         echarts: () => import('echarts')
@@ -164,13 +165,14 @@ export class HomeComponent {
     this.toastr.error(message);
   }
 
+
   setMapInfo() {
     // Preparar datos para ECharts
     const scatterData = this.maps.map(item => ({
       name: item.Title,
       value: [item.Lng, item.Lat, item.Value],
       itemStyle: {
-        color: '#765cbf'
+        color: '#4a90e2' // Azul medio que funciona en ambos temas
       }
     }));
 
@@ -188,12 +190,12 @@ export class HomeComponent {
         map: 'world',
         roam: true,
         itemStyle: {
-          areaColor: '#96a2b4',
-          borderColor: '#fff'
+          areaColor: '#e0e0e0', // Gris claro para países
+          borderColor: '#666666' // Gris medio para bordes
         },
         emphasis: {
           itemStyle: {
-            areaColor: '#74a999'
+            areaColor: '#b8c5d6' // Gris azulado suave al hacer hover
           }
         }
       },
@@ -210,16 +212,20 @@ export class HomeComponent {
             show: true,
             formatter: (params: any) => params.data.value[2],
             position: 'inside',
-            color: '#fff'
+            color: '#ffffff',
+            fontWeight: 'bold',
+            textBorderColor: '#000000', // Contorno negro para el texto
+            textBorderWidth: 2
           },
           itemStyle: {
-            color: '#765cbf',
-            borderColor: '#B27799',
-            borderWidth: 1
+            color: '#4a90e2', // Azul medio
+            borderColor: '#2c5aa0', // Azul más oscuro para el borde
+            borderWidth: 2
           },
           emphasis: {
             itemStyle: {
-              color: '#B27799'
+              color: '#5fb3f6', // Azul más claro al hover
+              borderColor: '#2c5aa0'
             }
           }
         }
