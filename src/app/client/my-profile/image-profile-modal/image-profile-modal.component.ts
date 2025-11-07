@@ -1,19 +1,31 @@
-import { Component, ViewChild, OnInit, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  ViewChild,
+  OnInit,
+  Output,
+  EventEmitter,
+} from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { AffiliateService } from '../../../core/service/affiliate-service/affiliate.service';
 import { UserAffiliate } from '../../../core/models/user-affiliate-model/user.affiliate.model';
 import { UpdateImageProfile } from '../../../core/models/user-affiliate-model/update-image-profile.model';
-import { Storage, ref, uploadBytesResumable, getDownloadURL } from '@angular/fire/storage';
+import {
+  Storage,
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+} from '@angular/fire/storage';
 import { AuthService } from '../../../core/service/authentication-service/auth.service';
 import { CommonModule } from '@angular/common';
 import { NgxDropzoneModule } from 'ngx-dropzone';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
-    selector: 'app-image-profile-modal',
-    templateUrl: './image-profile-modal.component.html',
-    standalone: true,
-    imports: [CommonModule, NgxDropzoneModule]
+  selector: 'app-image-profile-modal',
+  templateUrl: './image-profile-modal.component.html',
+  standalone: true,
+  imports: [CommonModule, NgxDropzoneModule, TranslateModule],
 })
 export class ImageProfileModalComponent implements OnInit {
   public userId: number;
@@ -24,15 +36,15 @@ export class ImageProfileModalComponent implements OnInit {
   @Output() getInfo = new EventEmitter<void>();
 
   constructor(
-    private modalService: NgbModal,
-    private toastr: ToastrService,
-    private affiliateService: AffiliateService,
-    private storage: Storage,
-    private authService: AuthService,
-  ) { }
+    private readonly modalService: NgbModal,
+    private readonly toastr: ToastrService,
+    private readonly affiliateService: AffiliateService,
+    private readonly storage: Storage,
+    private readonly authService: AuthService,
+  ) {}
 
   ngOnInit(): void {
-    this.user = this.authService.currentUserAffiliateValue
+    this.user = this.authService.currentUserAffiliateValue;
   }
 
   showError(message) {
@@ -43,7 +55,7 @@ export class ImageProfileModalComponent implements OnInit {
     this.modalService.open(content, {
       ariaLabelledBy: 'modal-basic-title',
       size: 'lg',
-      centered: true
+      centered: true,
     });
 
     this.userId = user.id;
@@ -57,41 +69,41 @@ export class ImageProfileModalComponent implements OnInit {
     this.modalService.dismissAll();
   }
 
-
   onFileSelected(event: any): void {
-
     this.file = event.addedFiles[0];
 
-    const filePath = 'affiliates/profile/' + `${this.user.user_name}/` + `${this.user.id}`;
+    const filePath =
+      'affiliates/profile/' + `${this.user.user_name}/` + `${this.user.id}`;
     this.fileRef = ref(this.storage, filePath);
     const uploadTask = uploadBytesResumable(this.fileRef, this.file);
 
-    uploadTask.on('state_changed',
-      (snapshot) => {
-      },
-      (error) => {
+    uploadTask.on(
+      'state_changed',
+      snapshot => {},
+      error => {
         console.log(error);
       },
       () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-
+        getDownloadURL(uploadTask.snapshot.ref).then(downloadURL => {
           let updateImage = new UpdateImageProfile();
           updateImage.image_profile_url = downloadURL;
-          this.affiliateService.updateImageProfile(this.user.id, updateImage).subscribe({
-            next: (value: UserAffiliate) => {
-              if (value) {
-                this.authService.setUserAffiliateValue(value);
-                this.user.image_profile_url = value.image_profile_url;
-                this.getInfo.emit();
-                this.showSuccess('Imagen actualizada correctamente');
-              }
-            },
-            error: () => {
-              this.showError('No se pudo actualizar la imagen de perfil');
-            },
-          })
+          this.affiliateService
+            .updateImageProfile(this.user.id, updateImage)
+            .subscribe({
+              next: (value: UserAffiliate) => {
+                if (value) {
+                  this.authService.setUserAffiliateValue(value);
+                  this.user.image_profile_url = value.image_profile_url;
+                  this.getInfo.emit();
+                  this.showSuccess('Imagen actualizada correctamente');
+                }
+              },
+              error: () => {
+                this.showError('No se pudo actualizar la imagen de perfil');
+              },
+            });
         });
-      }
+      },
     );
   }
 
@@ -101,19 +113,19 @@ export class ImageProfileModalComponent implements OnInit {
     this.user.image_profile_url = null;
     this.file = null;
 
-    this.affiliateService.updateImageProfile(this.user.id, updateImage).subscribe({
-      next: (value) => {
-        if (value) {
-          this.getInfo.emit();
-          this.showSuccess('Imagen eliminada correctamente');
-          this.authService.setUserAffiliateValue(value);
-        }
-      },
-      error: () => {
-        this.showError('La imagen no se ha eliminado');
-      },
-    })
+    this.affiliateService
+      .updateImageProfile(this.user.id, updateImage)
+      .subscribe({
+        next: value => {
+          if (value) {
+            this.getInfo.emit();
+            this.showSuccess('Imagen eliminada correctamente');
+            this.authService.setUserAffiliateValue(value);
+          }
+        },
+        error: () => {
+          this.showError('La imagen no se ha eliminado');
+        },
+      });
   }
 }
-
-
