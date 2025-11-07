@@ -1,12 +1,16 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { Response } from '@app/core/models/response-model/response.model';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/core/service/authentication-service/auth.service';
 import { CommonModule } from '@angular/common';
-
 
 import {
   animate,
@@ -20,23 +24,29 @@ import { LogoService } from '@app/core/service/logo-service/logo.service';
 import { DeviceDetectorService } from 'ngx-device-detector';
 
 @Component({
-    selector: 'app-signin',
-    templateUrl: './signin.component.html',
-    styleUrls: ['./signin.component.scss'],
-    animations: [
-        trigger('backgroundFade', [
-            state('visible', style({
-                opacity: 1,
-            })),
-            state('hidden', style({
-                opacity: 0,
-            })),
-            transition('visible => hidden', animate('1000ms ease-out')),
-            transition('hidden => visible', animate('1000ms ease-in')),
-        ]),
-    ],
-    standalone: true,
-    imports: [CommonModule, ReactiveFormsModule, RouterLink, TranslateModule]
+  selector: 'app-signin',
+  templateUrl: './signin.component.html',
+  styleUrls: ['./signin.component.scss'],
+  animations: [
+    trigger('backgroundFade', [
+      state(
+        'visible',
+        style({
+          opacity: 1,
+        }),
+      ),
+      state(
+        'hidden',
+        style({
+          opacity: 0,
+        }),
+      ),
+      transition('visible => hidden', animate('1000ms ease-out')),
+      transition('hidden => visible', animate('1000ms ease-in')),
+    ]),
+  ],
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule, RouterLink, TranslateModule],
 })
 export class SigninComponent implements OnInit, OnDestroy {
   submitted = false;
@@ -73,13 +83,22 @@ export class SigninComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
+    // Verificar si el usuario ya está logueado usando signals
+    if (this.authService.isLoggedIn()) {
+      // Redirigir según el tipo de usuario
+      if (this.authService.isAffiliateLoggedIn()) {
+        this.router.navigate(['/app/home']);
+      } else if (this.authService.isAdminLoggedIn()) {
+        this.router.navigate(['/admin/home-admin']);
+      }
+      return;
+    }
+
     this.getTheme();
-    this.authService.logoutUser();
     this.setLabels();
     this.setErrorMessages();
     this.startBackgroundRotation();
   }
-
 
   ngOnDestroy() {
     if (this.intervalId) {
