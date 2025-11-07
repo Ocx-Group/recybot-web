@@ -1,10 +1,10 @@
 import {
   ApplicationConfig,
   importProvidersFrom,
-  APP_INITIALIZER,
+  provideAppInitializer,
+  inject,
 } from '@angular/core';
 import { provideRouter, withComponentInputBinding } from '@angular/router';
-import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideHttpClient, HttpClient } from '@angular/common/http';
 import { LocationStrategy, PathLocationStrategy } from '@angular/common';
 
@@ -34,19 +34,11 @@ export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
-export function initialLanguage(translate: TranslateService) {
-  return () => {
-    translate.setDefaultLang('en');
-    const savedLang = localStorage.getItem('lang') || 'en';
-    translate.use(savedLang);
-    localStorage.setItem('lang', savedLang);
-  };
-}
-
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes, withComponentInputBinding()),
-    provideAnimations(),
+    // Note: Animations are now handled through animate.enter/animate.leave APIs in components
+    // No global provider needed in Angular 20+
     provideHttpClient(),
     provideToastr({
       timeOut: 3000,
@@ -73,11 +65,12 @@ export const appConfig: ApplicationConfig = {
     ),
 
     // Language initialization
-    {
-      provide: APP_INITIALIZER,
-      useFactory: initialLanguage,
-      deps: [TranslateService],
-      multi: true,
-    },
+    provideAppInitializer(() => {
+      const translate = inject(TranslateService);
+      translate.setFallbackLang('en');
+      const savedLang = localStorage.getItem('lang') || 'en';
+      translate.use(savedLang);
+      localStorage.setItem('lang', savedLang);
+    }),
   ],
 };
