@@ -1,4 +1,8 @@
-import { ApplicationConfig, importProvidersFrom, APP_INITIALIZER } from '@angular/core';
+import {
+  ApplicationConfig,
+  importProvidersFrom,
+  APP_INITIALIZER,
+} from '@angular/core';
 import { provideRouter, withComponentInputBinding } from '@angular/router';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideHttpClient, HttpClient } from '@angular/common/http';
@@ -10,7 +14,11 @@ import { getStorage, provideStorage } from '@angular/fire/storage';
 import { firebaseConfig } from '@environments/environment';
 
 // Translate
-import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
+import {
+  TranslateLoader,
+  TranslateModule,
+  TranslateService,
+} from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 // Loading Bar
@@ -21,7 +29,6 @@ import { provideToastr } from 'ngx-toastr';
 
 // Routes
 import { routes } from './app.routes';
-
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -45,7 +52,7 @@ export const appConfig: ApplicationConfig = {
       timeOut: 3000,
       positionClass: 'toast-top-right',
       preventDuplicates: true,
-      progressBar: true
+      progressBar: true,
     }),
     { provide: LocationStrategy, useClass: PathLocationStrategy },
 
@@ -62,7 +69,7 @@ export const appConfig: ApplicationConfig = {
           deps: [HttpClient],
         },
       }),
-      LoadingBarRouterModule
+      LoadingBarRouterModule,
     ),
 
     // Language initialization
@@ -70,8 +77,7 @@ export const appConfig: ApplicationConfig = {
       provide: APP_INITIALIZER,
       useFactory: initialLanguage,
       deps: [TranslateService],
-      multi: true
-    }
-  ]
+      multi: true,
+    },
+  ],
 };
-
