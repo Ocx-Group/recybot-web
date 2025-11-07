@@ -1,5 +1,10 @@
 import { UserService } from '@app/core/service/user-service/user.service';
-import {NavigationEnd, Router, RouterLink, RouterLinkActive} from '@angular/router';
+import {
+  NavigationEnd,
+  Router,
+  RouterLink,
+  RouterLinkActive,
+} from '@angular/router';
 import { DOCUMENT, CommonModule } from '@angular/common';
 import {
   Component,
@@ -13,18 +18,24 @@ import {
 import { ROUTESADMIN } from './sidebar-admin-items';
 import { AuthService } from 'src/app/core/service/authentication-service/auth.service';
 import { User } from '@app/core/models/user-model/user.model';
-import { Subject, takeUntil } from 'rxjs';
 import { RouteInfo } from './sidebar-admin.metadata';
 import { ImgProfileComponent } from '../img-profile/img-profile.component';
 import { IconsModule } from '@app/shared';
-import {TranslatePipe} from "@ngx-translate/core";
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
-    selector: 'app-sidebar-admin',
-    templateUrl: './sidebar-admin.component.html',
-    styleUrls: ['./sidebar-admin.component.sass'],
-    standalone: true,
-  imports: [CommonModule, RouterLink, ImgProfileComponent, IconsModule, TranslatePipe, RouterLinkActive]
+  selector: 'app-sidebar-admin',
+  templateUrl: './sidebar-admin.component.html',
+  styleUrls: ['./sidebar-admin.component.sass'],
+  standalone: true,
+  imports: [
+    CommonModule,
+    RouterLink,
+    ImgProfileComponent,
+    IconsModule,
+    TranslatePipe,
+    RouterLinkActive,
+  ],
 })
 export class SidebarAdminComponent implements OnInit, OnDestroy {
   public user: User = new User();
@@ -36,15 +47,14 @@ export class SidebarAdminComponent implements OnInit, OnDestroy {
   listMaxWidth: string;
   headerHeight = 60;
   routerObj = null;
-  private destroy$ = new Subject();
 
   constructor(
-    @Inject(DOCUMENT) private document: Document,
-    private renderer: Renderer2,
+    @Inject(DOCUMENT) private readonly document: Document,
+    private readonly renderer: Renderer2,
     public elementRef: ElementRef,
-    private authService: AuthService,
-    private router: Router,
-    private userService: UserService,
+    private readonly authService: AuthService,
+    private readonly router: Router,
+    private readonly userService: UserService,
   ) {
     this.routerObj = this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
@@ -55,7 +65,7 @@ export class SidebarAdminComponent implements OnInit, OnDestroy {
     });
   }
 
-  @HostListener('window:resize', ['$event'])
+  @HostListener('window:resize')
   windowResizecall() {
     if (window.innerWidth < 1025) {
       this.renderer.removeClass(this.document.body, 'side-closed');
@@ -86,14 +96,12 @@ export class SidebarAdminComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.authService.currentUserAdmin
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(user => {
-        if (user) {
-          this.user = user;
-          this.getUserInfo();
-        }
-      });
+    // Usar signal para obtener el usuario admin
+    const user = this.authService.userAdmin();
+    if (user) {
+      this.user = user;
+      this.getUserInfo();
+    }
 
     if (this.authService.currentUserAdminValue) {
       this.user = this.authService.currentUserAdminValue;
@@ -107,7 +115,6 @@ export class SidebarAdminComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.routerObj.unsubscribe();
-    this.destroy$.complete();
   }
 
   initializeSidebar() {
@@ -123,10 +130,9 @@ export class SidebarAdminComponent implements OnInit, OnDestroy {
   }
 
   initLeftSidebar() {
-    const _this = this;
     // Set menu height
-    _this.setMenuHeight();
-    _this.checkStatuForResize();
+    this.setMenuHeight();
+    this.checkStatuForResize();
   }
 
   setMenuHeight() {
@@ -186,7 +192,7 @@ export class SidebarAdminComponent implements OnInit, OnDestroy {
 
     const filteredRoutes: RouteInfo[] = [];
 
-    routes.forEach(route => {
+    for (const route of routes) {
       const routeCopy = { ...route };
 
       if (routeCopy.submenu && routeCopy.submenu.length > 0) {
@@ -203,11 +209,12 @@ export class SidebarAdminComponent implements OnInit, OnDestroy {
           routeCopy.class === 'menu-toggle' &&
           (!routeCopy.submenu || routeCopy.submenu.length === 0)
         ) {
+          // Skip empty menu-toggle items
         } else {
           filteredRoutes.push(routeCopy);
         }
       }
-    });
+    }
 
     return filteredRoutes;
   }

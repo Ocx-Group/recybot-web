@@ -1,49 +1,38 @@
-import {ThirdPartyPurchaseComponent} from './third-party-purchase/third-party-purchase.component';
-import {TranslateModule, TranslateService} from '@ngx-translate/core';
+import { ThirdPartyPurchaseComponent } from './third-party-purchase/third-party-purchase.component';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import Swal from 'sweetalert2';
-import {
-  Component,
-  HostListener,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
-import {DatatableComponent} from '@swimlane/ngx-datatable';
-import {Observable, Subject, takeUntil} from 'rxjs';
-import {Router, RouterLink} from '@angular/router';
+import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
+import { DatatableComponent } from '@swimlane/ngx-datatable';
+import { Observable } from 'rxjs';
+import { Router, RouterLink } from '@angular/router';
 import html2canvas from 'html2canvas';
 import JSPDF from 'jspdf';
 
-import {NetworkAffiliate} from '@app/core/models/network-affiliate/network.affiliate.model';
-import {AffiliateService} from '@app/core/service/affiliate-service/affiliate.service';
-import {UserAffiliate} from '@app/core/models/user-affiliate-model/user.affiliate.model';
-import {Grading} from '@app/core/models/grading-model/grading.model';
-import {GradingService} from '@app/core/service/grading-service/grading.service';
-import {AuthService} from '@app/core/service/authentication-service/auth.service';
-import {WalletService} from '@app/core/service/wallet-service/wallet.service';
-import {ToastrService} from 'ngx-toastr';
-import {TransferBalance} from '@app/core/models/wallet-model/transfer-balance.model';
-import {EncryptService} from '@app/core/service/encrypt-service/encrypt.service';
-import {ConfigurationService} from '@app/core/service/configuration-service/configuration.service';
-import {
-  WalletWithdrawalsConfiguration
-} from '@app/core/models/wallet-withdrawals-configuration-model/wallet-withdrawals-configuration.model';
-import {
-  PagaditoTransactionDetailRequest
-} from '@app/core/models/pagadito-model/pagadito-transaction-detail-request.model';
-import {
-  CreatePagaditoTransactionRequest
-} from '@app/core/models/pagadito-model/create-pagadito-transaction-request.model';
-import {PagaditoService} from '@app/core/service/pagadito-service/pagadito.service';
-import {Product} from '@app/core/models/product-model/product.model';
-import {ProductService} from '@app/core/service/product-service/product.service';
-import {StatisticsInformation} from '@app/core/models/wallet-model/statisticsInformation';
-import {MatrixQualificationService} from '@app/core/service/matrix-qualification-service/matrix-qualification.service';
-import {CommonModule} from '@angular/common';
-import {NgxDatatableModule} from '@swimlane/ngx-datatable';
-import {ReactiveFormsModule, FormsModule} from '@angular/forms';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
-import {IconsModule} from '@app/shared';
+import { NetworkAffiliate } from '@app/core/models/network-affiliate/network.affiliate.model';
+import { AffiliateService } from '@app/core/service/affiliate-service/affiliate.service';
+import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
+import { Grading } from '@app/core/models/grading-model/grading.model';
+import { GradingService } from '@app/core/service/grading-service/grading.service';
+import { AuthService } from '@app/core/service/authentication-service/auth.service';
+import { WalletService } from '@app/core/service/wallet-service/wallet.service';
+import { ToastrService } from 'ngx-toastr';
+import { TransferBalance } from '@app/core/models/wallet-model/transfer-balance.model';
+import { EncryptService } from '@app/core/service/encrypt-service/encrypt.service';
+import { ConfigurationService } from '@app/core/service/configuration-service/configuration.service';
+import { WalletWithdrawalsConfiguration } from '@app/core/models/wallet-withdrawals-configuration-model/wallet-withdrawals-configuration.model';
+import { PagaditoTransactionDetailRequest } from '@app/core/models/pagadito-model/pagadito-transaction-detail-request.model';
+import { CreatePagaditoTransactionRequest } from '@app/core/models/pagadito-model/create-pagadito-transaction-request.model';
+import { PagaditoService } from '@app/core/service/pagadito-service/pagadito.service';
+import { Product } from '@app/core/models/product-model/product.model';
+import { ProductService } from '@app/core/service/product-service/product.service';
+import { StatisticsInformation } from '@app/core/models/wallet-model/statisticsInformation';
+import { MatrixQualificationService } from '@app/core/service/matrix-qualification-service/matrix-qualification.service';
+import { CommonModule } from '@angular/common';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { IconsModule } from '@app/shared';
 
 @Component({
   selector: 'app-network',
@@ -58,14 +47,13 @@ import {IconsModule} from '@app/shared';
     NgbModule,
     IconsModule,
     RouterLink,
-    ThirdPartyPurchaseComponent
+    ThirdPartyPurchaseComponent,
   ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class NetworkComponent implements OnInit {
   isCollapsed = true;
   private user: UserAffiliate = new UserAffiliate();
-  private destroy$ = new Subject();
   rows: NetworkAffiliate[] = [];
   gradings: Grading[] = [];
   transferBalance: TransferBalance = new TransferBalance();
@@ -83,54 +71,51 @@ export class NetworkComponent implements OnInit {
   pagaditoRequest = new CreatePagaditoTransactionRequest();
   currentMembership: Product = new Product();
   information: StatisticsInformation = new StatisticsInformation();
-  @ViewChild('purchaseModal', {static: false}) purchaseModal!: ThirdPartyPurchaseComponent;
+  @ViewChild('purchaseModal', { static: false })
+  purchaseModal!: ThirdPartyPurchaseComponent;
   @ViewChild('tableRef') table: DatatableComponent;
   @ViewChild('tableRefGlobal') tableRefGlobal: DatatableComponent;
   recycoins$: Observable<Product[]>;
   isReachedWithdrawalLimit: boolean = false;
 
   constructor(
-    private affiliateService: AffiliateService,
-    private authService: AuthService,
-    private gradingService: GradingService,
-    private walletService: WalletService,
-    private toastr: ToastrService,
-    private encryptService: EncryptService,
-    private route: Router,
-    private translateService: TranslateService,
-    private configurationService: ConfigurationService,
-    private pagaditoService: PagaditoService,
-    private productService: ProductService,
-    private matrixQualificationService: MatrixQualificationService,
-  ) {
-  }
+    private readonly affiliateService: AffiliateService,
+    private readonly authService: AuthService,
+    private readonly gradingService: GradingService,
+    private readonly walletService: WalletService,
+    private readonly toastr: ToastrService,
+    private readonly encryptService: EncryptService,
+    private readonly route: Router,
+    private readonly translateService: TranslateService,
+    private readonly configurationService: ConfigurationService,
+    private readonly pagaditoService: PagaditoService,
+    private readonly productService: ProductService,
+    private readonly matrixQualificationService: MatrixQualificationService,
+  ) {}
 
   ngOnInit() {
     this.loadingIndicatorGlobal = false;
     this.loadAllMemberships();
-    this.authService.currentUserAffiliate
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(user => {
-        if (user.id) {
-          this.user = user;
-          this.affiliateService.changeId(this.user.id);
-          this.gradingService
-            .getAll()
-            .pipe(takeUntil(this.destroy$))
-            .subscribe((gradings: Grading[]) => {
-              this.gradings = gradings;
-            });
-          this.hasReachedWithdrawalLimit(this.user.id);
-          this.affiliateService
-            .GetPersonalNetwork(user.id)
-            .pipe(takeUntil(this.destroy$))
-            .subscribe((affiliates: NetworkAffiliate[]) => {
-              this.temp = [...affiliates];
-              this.rows = affiliates;
-            });
-        }
-        this.loadingIndicator = false;
+
+    // Usar signal para obtener el usuario afiliado
+    this.user = this.authService.userAffiliate();
+    if (this.user?.id) {
+      this.affiliateService.changeId(this.user.id);
+
+      this.gradingService.getAll().subscribe((gradings: Grading[]) => {
+        this.gradings = gradings;
       });
+
+      this.hasReachedWithdrawalLimit(this.user.id);
+
+      this.affiliateService
+        .GetPersonalNetwork(this.user.id)
+        .subscribe((affiliates: NetworkAffiliate[]) => {
+          this.temp = [...affiliates];
+          this.rows = affiliates;
+        });
+    }
+    this.loadingIndicator = false;
 
     this.loadBalanceAvailable();
     this.loadWithdrawalConfiguration();
@@ -148,7 +133,7 @@ export class NetworkComponent implements OnInit {
 
   getNameGrading(id: number) {
     let grading = this.gradings.find(item => item.id === id);
-    return grading !== undefined ? grading.name : 'N/A';
+    return grading ? grading.name : 'N/A';
   }
 
   loadBalanceAvailable() {
@@ -169,8 +154,7 @@ export class NetworkComponent implements OnInit {
       next: resp => {
         this.currentMembership = resp[0];
       },
-      error: () => {
-      },
+      error: () => {},
     });
   }
 
@@ -262,8 +246,8 @@ export class NetworkComponent implements OnInit {
         'Ingrese el código de verificación que ha sido enviado a su correo electrónico.',
       html: `
     <span style="font-size: 18px;">Transferencia para <span style="color: #ff5733;">${
-        row.userName || row.user_name
-      }</span></span><br>
+      row.userName || row.user_name
+    }</span></span><br>
     <span style="font-size: 18px;">Saldo Disponible <span style="color: #ff5733;">${formattedBalance}</span></span>
       <input id="swal-input-amount" type="number" placeholder="Monto" min="0" step="0.01" class="swal2-input">
       <input id="swal-input-code" type="text" placeholder="Código de verificación" class="swal2-input">
@@ -414,7 +398,7 @@ export class NetworkComponent implements OnInit {
       const posY = 30;
 
       pdf.setFontSize(18);
-      pdf.text('Mi red', pageWidth / 2, 20, {align: 'center'});
+      pdf.text('Mi red', pageWidth / 2, 20, { align: 'center' });
 
       const contentDataURL = canvas.toDataURL('image/png');
       pdf.addImage(contentDataURL, 'PNG', posX, posY, imgWidth, imgHeight);

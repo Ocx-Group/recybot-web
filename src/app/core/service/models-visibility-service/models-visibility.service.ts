@@ -1,28 +1,31 @@
-import { Injectable } from "@angular/core";
-import { ConfigurationService } from "../configuration-service/configuration.service";
-import { combineLatest, map, Observable } from "rxjs";
-import { AuthService } from "../authentication-service/auth.service";
+import { inject, Injectable, computed } from '@angular/core';
+import { ConfigurationService } from '../configuration-service/configuration.service';
+import { AuthService } from '../authentication-service/auth.service';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ModelsVisibilityService {
-  constructor(private configService: ConfigurationService, private authService: AuthService) { }
+  private readonly configService: ConfigurationService =
+    inject(ConfigurationService);
+  private readonly authService: AuthService = inject(AuthService);
 
-  canUserSeePaymentModels(): Observable<boolean> {
-    return combineLatest([
-      this.configService.getGeneralConfiguration(),
-      this.authService.currentUserAffiliate
-    ]).pipe(
-      map(([config, userAffiliate]) => {
-        console.log(userAffiliate)
-        if (config.success && config.data && userAffiliate) {
-          const cutoffDate = new Date(config.data.paymentModelCutoffDate);
+  private readonly configSignal = toSignal(
+    this.configService.getGeneralConfiguration(),
+    { initialValue: null },
+  );
 
-          return new Date(userAffiliate.created_at) < cutoffDate;
-        }
-        return true;
-      })
-    );
-  }
+  public canUserSeePaymentModels = computed(() => {
+    const config = this.configSignal();
+    const userAffiliate = this.authService.userAffiliate();
+
+    if (config?.success && config.data && userAffiliate) {
+      const cutoffDate = new Date(config.data.paymentModelCutoffDate);
+      return new Date(userAffiliate.created_at) < cutoffDate;
+    }
+    return true;
+  });
+
+  constructor() {}
 }

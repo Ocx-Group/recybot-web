@@ -1,5 +1,10 @@
-import {Router, NavigationEnd, RouterLink, RouterLinkActive} from '@angular/router';
-import {DOCUMENT, CommonModule} from '@angular/common';
+import {
+  Router,
+  NavigationEnd,
+  RouterLink,
+  RouterLinkActive,
+} from '@angular/router';
+import { DOCUMENT, CommonModule } from '@angular/common';
 import {
   Component,
   Inject,
@@ -10,29 +15,35 @@ import {
   OnDestroy,
 } from '@angular/core';
 
-import {ROUTES} from './sidebar-items';
-import {AuthService} from 'src/app/core/service/authentication-service/auth.service';
-import {Subject, takeUntil} from 'rxjs';
-import {UserAffiliate} from '@app/core/models/user-affiliate-model/user.affiliate.model';
-import {AffiliateService} from '@app/core/service/affiliate-service/affiliate.service';
-import {GradingService} from '@app/core/service/grading-service/grading.service';
-import {Grading} from '@app/core/models/grading-model/grading.model';
+import { ROUTES } from './sidebar-items';
+import { AuthService } from 'src/app/core/service/authentication-service/auth.service';
+import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
+import { AffiliateService } from '@app/core/service/affiliate-service/affiliate.service';
+import { GradingService } from '@app/core/service/grading-service/grading.service';
+import { Grading } from '@app/core/models/grading-model/grading.model';
 import { LogoComponent } from '../logo/logo.component';
 import { ImgProfileComponent } from '../img-profile/img-profile.component';
 import { IconsModule } from '@app/shared';
-import {TranslatePipe} from "@ngx-translate/core";
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
-    selector: 'app-sidebar',
-    templateUrl: './sidebar.component.html',
-    styleUrls: ['./sidebar.component.sass'],
-    standalone: true,
-  imports: [CommonModule, RouterLink, LogoComponent, ImgProfileComponent, IconsModule, TranslatePipe, RouterLinkActive]
+  selector: 'app-sidebar',
+  templateUrl: './sidebar.component.html',
+  styleUrls: ['./sidebar.component.sass'],
+  standalone: true,
+  imports: [
+    CommonModule,
+    RouterLink,
+    LogoComponent,
+    ImgProfileComponent,
+    IconsModule,
+    TranslatePipe,
+    RouterLinkActive,
+  ],
 })
 export class SidebarComponent implements OnInit, OnDestroy {
   public user: UserAffiliate = new UserAffiliate();
   public grading: Grading = new Grading();
-  private destroy$ = new Subject();
   public sidebarItems: any[];
   public innerHeight: any;
   public bodyTag: any;
@@ -42,15 +53,15 @@ export class SidebarComponent implements OnInit, OnDestroy {
   routerObj = null;
 
   constructor(
-    @Inject(DOCUMENT) private document: Document,
-    private renderer: Renderer2,
+    @Inject(DOCUMENT) private readonly document: Document,
+    private readonly renderer: Renderer2,
     public elementRef: ElementRef,
-    private authService: AuthService,
-    private affiliateService: AffiliateService,
-    private gradingService: GradingService,
-    private router: Router
+    private readonly authService: AuthService,
+    private readonly affiliateService: AffiliateService,
+    private readonly gradingService: GradingService,
+    private readonly router: Router,
   ) {
-    this.routerObj = this.router.events.subscribe((event) => {
+    this.routerObj = this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         // close sidebar on mobile screen after menu select
         this.renderer.removeClass(this.document.body, 'overlay-open');
@@ -59,7 +70,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
     });
   }
 
-  @HostListener('window:resize', ['$event'])
+  @HostListener('window:resize')
   windowResizecall() {
     if (window.innerWidth < 1025) {
       this.renderer.removeClass(this.document.body, 'side-closed');
@@ -90,17 +101,14 @@ export class SidebarComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.authService.currentUserAffiliate
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((user) => {
-        if (user) {
-          this.user = user;
-          this.refreshUserInfoData(this.user.id);
-        }
-      });
+    const user = this.authService.userAffiliate();
+    if (user) {
+      this.user = user;
+      this.refreshUserInfoData(this.user.id);
+    }
 
     if (this.user) {
-      this.sidebarItems = ROUTES.filter((sidebarItem) => sidebarItem);
+      this.sidebarItems = ROUTES.filter(Boolean);
     }
 
     this.initLeftSidebar();
@@ -109,14 +117,12 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.routerObj.unsubscribe();
-    this.destroy$.complete();
   }
 
   initLeftSidebar() {
-    const _this = this;
     // Set menu height
-    _this.setMenuHeight();
-    _this.checkStatuForResize();
+    this.setMenuHeight();
+    this.checkStatuForResize();
   }
 
   setMenuHeight() {
@@ -158,18 +164,16 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
   refreshUserInfoData(id: number) {
     this.affiliateService.getAffiliateById(id).subscribe({
-      next: (value) => {
+      next: value => {
         this.user = value.data;
         this.getGradingInfo(this.user.external_grading_before_id);
       },
-      error: () => {
-
-      },
-    })
+      error: () => {},
+    });
   }
 
   getGradingInfo(id: number) {
-    this.gradingService.getGradingById(id).subscribe((response) => {
+    this.gradingService.getGradingById(id).subscribe(response => {
       if (response.success) {
         this.grading = response.data;
       }

@@ -1,25 +1,29 @@
-import {Component, CUSTOM_ELEMENTS_SCHEMA, HostListener, OnInit, ViewChild} from '@angular/core';
-import {BalanceInformation} from '@app/core/models/wallet-model/balance-information.model';
-import {DatatableComponent} from '@swimlane/ngx-datatable';
-
-import {UserAffiliate} from '@app/core/models/user-affiliate-model/user.affiliate.model';
 import {
-  WalletWithdrawalsConfiguration
-} from '@app/core/models/wallet-withdrawals-configuration-model/wallet-withdrawals-configuration.model';
-import {AuthService} from '@app/core/service/authentication-service/auth.service';
-import {ConfigurationService} from '@app/core/service/configuration-service/configuration.service';
-import {WalletRequestService} from '@app/core/service/wallet-request/wallet-request.service';
-import {WalletService} from '@app/core/service/wallet-service/wallet.service';
-import {ToastrService} from 'ngx-toastr';
-import {MatrixQualificationService} from '@app/core/service/matrix-qualification-service/matrix-qualification.service';
-import {CommonModule} from '@angular/common';
-import {NgxDatatableModule} from '@swimlane/ngx-datatable';
-import {TranslateModule} from '@ngx-translate/core';
-import {TruncateDecimalsPipe} from '@app/shared/pipes/truncate-decimals.pipe';
-import {IconsModule} from '@app/shared';
-import {NgbAlert} from "@ng-bootstrap/ng-bootstrap";
-import {CreateRequestsModalComponent} from "@app/client/requests/create-requests-modal/create-requests-modal.component";
-import {RouterLink} from "@angular/router";
+  Component,
+  CUSTOM_ELEMENTS_SCHEMA,
+  HostListener,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
+import { BalanceInformation } from '@app/core/models/wallet-model/balance-information.model';
+import { DatatableComponent } from '@swimlane/ngx-datatable';
+
+import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
+import { WalletWithdrawalsConfiguration } from '@app/core/models/wallet-withdrawals-configuration-model/wallet-withdrawals-configuration.model';
+import { AuthService } from '@app/core/service/authentication-service/auth.service';
+import { ConfigurationService } from '@app/core/service/configuration-service/configuration.service';
+import { WalletRequestService } from '@app/core/service/wallet-request/wallet-request.service';
+import { WalletService } from '@app/core/service/wallet-service/wallet.service';
+import { ToastrService } from 'ngx-toastr';
+import { MatrixQualificationService } from '@app/core/service/matrix-qualification-service/matrix-qualification.service';
+import { CommonModule } from '@angular/common';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { TranslateModule } from '@ngx-translate/core';
+import { TruncateDecimalsPipe } from '@app/shared/pipes/truncate-decimals.pipe';
+import { IconsModule } from '@app/shared';
+import { NgbAlert } from '@ng-bootstrap/ng-bootstrap';
+import { CreateRequestsModalComponent } from '@app/client/requests/create-requests-modal/create-requests-modal.component';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-requests',
@@ -33,9 +37,9 @@ import {RouterLink} from "@angular/router";
     IconsModule,
     NgbAlert,
     CreateRequestsModalComponent,
-    RouterLink
+    RouterLink,
   ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class RequestsComponent implements OnInit {
   user: UserAffiliate = new UserAffiliate();
@@ -51,14 +55,13 @@ export class RequestsComponent implements OnInit {
   @ViewChild('table') table: DatatableComponent;
 
   constructor(
-    private walletRequestService: WalletRequestService,
-    private authService: AuthService,
-    private toastr: ToastrService,
-    private configurationService: ConfigurationService,
-    private walletService: WalletService,
-    private matrixQualificationService: MatrixQualificationService,
-  ) {
-  }
+    private readonly walletRequestService: WalletRequestService,
+    private readonly authService: AuthService,
+    private readonly toastr: ToastrService,
+    private readonly configurationService: ConfigurationService,
+    private readonly walletService: WalletService,
+    private readonly matrixQualificationService: MatrixQualificationService,
+  ) {}
 
   ngOnInit(): void {
     this.getUserInfo();
@@ -127,12 +130,11 @@ export class RequestsComponent implements OnInit {
   }
 
   getUserInfo() {
-    this.authService.currentUserAffiliate.subscribe({
-      next: value => {
-        this.user = value;
-        this.hasReachedWithdrawalLimit(this.user.id);
-      },
-    });
+    // Usar signal para obtener el usuario afiliado
+    this.user = this.authService.userAffiliate();
+    if (this.user?.id) {
+      this.hasReachedWithdrawalLimit(this.user.id);
+    }
   }
 
   showError(message) {

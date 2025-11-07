@@ -1,15 +1,13 @@
 import {
   Component,
   HostListener,
-  OnDestroy,
   OnInit,
   ViewChild,
   TemplateRef,
   AfterViewInit,
 } from '@angular/core';
-import { Subscription } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import Swal from 'sweetalert2';
@@ -20,7 +18,7 @@ import { WalletService } from '@app/core/service/wallet-service/wallet.service';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { AuthService } from '@app/core/service/authentication-service/auth.service';
 import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+
 import { TruncateDecimalsPipe } from '@app/shared/pipes/truncate-decimals.pipe';
 import { IconsModule } from '@app/shared';
 import { RouterLink } from '@angular/router';
@@ -45,8 +43,7 @@ import {
     ReusableDatatableComponent,
   ],
 })
-export class WalletComponent implements OnInit, OnDestroy, AfterViewInit {
-  private subscription: Subscription;
+export class WalletComponent implements OnInit, AfterViewInit {
   balanceInformation: BalanceInformation = new BalanceInformation();
   public userCookie: UserAffiliate;
   rows = [];
@@ -91,14 +88,11 @@ export class WalletComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.subscription = this.authService.currentUserAffiliate.subscribe(
-      user => {
-        this.userCookie = user;
-        if (user) {
-          this.loadBalanceInformation();
-        }
-      },
-    );
+    // Usar signal para obtener el usuario afiliado
+    this.userCookie = this.authService.userAffiliate();
+    if (this.userCookie) {
+      this.loadBalanceInformation();
+    }
     this.loadWalletList();
   }
 
@@ -107,10 +101,6 @@ export class WalletComponent implements OnInit, OnDestroy, AfterViewInit {
     setTimeout(() => {
       this.updateColumnsWithTemplates();
     });
-  }
-
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
   }
 
   showError(message: string) {
@@ -223,7 +213,7 @@ export class WalletComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   copyTableData() {
-    if (this.rows && this.rows.length) {
+    if (this.rows?.length) {
       const headers = [
         this.translateService.instant('WALLET-PAGE.USER-COLUMN.TEXT'),
         this.translateService.instant('WALLET-PAGE.AFFILIATE-COLUMN.TEXT'),
@@ -267,7 +257,7 @@ export class WalletComponent implements OnInit, OnDestroy, AfterViewInit {
       console.error('Error: ', err);
     }
 
-    document.body.removeChild(textArea);
+    textArea.remove();
   }
 
   showDetail(detail: string) {

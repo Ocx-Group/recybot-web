@@ -1,25 +1,22 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {Invoice} from '../../../core/models/invoice-model/invoice.model';
-import {UserAffiliate} from '../../../core/models/user-affiliate-model/user.affiliate.model';
-import {AffiliateService} from '../../../core/service/affiliate-service/affiliate.service';
-import {AuthService} from '../../../core/service/authentication-service/auth.service';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {ToastrService} from 'ngx-toastr';
-import {Subject, Subscription, takeUntil} from 'rxjs';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { Invoice } from '../../../core/models/invoice-model/invoice.model';
+import { UserAffiliate } from '../../../core/models/user-affiliate-model/user.affiliate.model';
+import { AffiliateService } from '../../../core/service/affiliate-service/affiliate.service';
+import { AuthService } from '../../../core/service/authentication-service/auth.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ToastrService } from 'ngx-toastr';
 import { CommonModule } from '@angular/common';
 
 @Component({
-    selector: 'app-billing-purchases-detail-modal',
-    templateUrl: './billing-purchases-detail-modal.component.html',
-    standalone: true,
-    imports: [CommonModule]
+  selector: 'app-billing-purchases-detail-modal',
+  templateUrl: './billing-purchases-detail-modal.component.html',
+  standalone: true,
+  imports: [CommonModule],
 })
-export class BillingPurchasesDetailModalComponent implements OnInit, OnDestroy {
+export class BillingPurchasesDetailModalComponent implements OnInit {
   protected invoice: Invoice = new Invoice();
   protected user: UserAffiliate = new UserAffiliate();
   countries = [];
-  private suscription: Subscription;
-  private destroy$ = new Subject();
   subTotal: number;
   totalDiscount: number;
   totalTax: number;
@@ -29,62 +26,45 @@ export class BillingPurchasesDetailModalComponent implements OnInit, OnDestroy {
   billingPurchasesDetailModal: NgbModal;
 
   constructor(
-    private modalService: NgbModal,
-    private auth: AuthService,
-    private affiliateService: AffiliateService,
-    private toastr: ToastrService
-  ) { }
+    private readonly modalService: NgbModal,
+    private readonly auth: AuthService,
+    private readonly affiliateService: AffiliateService,
+    private readonly toastr: ToastrService,
+  ) {}
 
   ngOnInit(): void {
     this.getAllCountries();
     this.getCurrentUser();
-
   }
 
   getAllCountries() {
     this.affiliateService.getCountries().subscribe({
-      next: (resp) => {
+      next: resp => {
         this.countries = resp;
       },
-      error: (err) => {
+      error: err => {
         this.toastr.error('Se produjo un error al cargar los países');
-        console.error(err)
+        console.error(err);
       },
     });
   }
 
   getCountryName(id: number) {
-    let countryName = '';
-    this.countries.find((item) => {
-      if (item.id === id) {
-        countryName = item.name;
-        return true;
-      }
-    })
-
-    return countryName;
+    const country = this.countries.find(item => item.id === id);
+    return country ? country.name : '';
   }
 
   getCurrentUser() {
-    this.suscription = this.auth.currentUserAffiliate
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((user) => {
-        this.user = user;
-      });
+    // Usar signal para obtener el usuario afiliado
+    this.user = this.auth.userAffiliate();
   }
 
-  ngOnDestroy(): void {
-    this.destroy$.complete();
-    this.suscription.unsubscribe();
-  }
-
-  billingPurchasesOpenModal(content:any, invoice: Invoice) {
+  billingPurchasesOpenModal(content: any, invoice: Invoice) {
     this.totalDiscount = invoice.invoicesDetails[0].productDiscount;
     this.totalTax = invoice.invoicesDetails[0].productIva;
     this.subTotal = invoice.invoicesDetails.reduce((accumulator, item) => {
-      return accumulator + (item.productPrice * item.productQuantity);
+      return accumulator + item.productPrice * item.productQuantity;
     }, 0);
-
 
     this.modalService.open(content, {
       ariaLabelledBy: 'modal-basic-title',
