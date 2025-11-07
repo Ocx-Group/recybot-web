@@ -74,12 +74,12 @@ export class SigninComponent implements OnInit, OnDestroy {
   showPassword: boolean = false;
 
   constructor(
-    private router: Router,
-    private authService: AuthService,
-    private toastr: ToastrService,
-    private logoService: LogoService,
-    private translate: TranslateService,
-    private deviceService: DeviceDetectorService,
+    private readonly router: Router,
+    private readonly authService: AuthService,
+    private readonly toastr: ToastrService,
+    private readonly logoService: LogoService,
+    private readonly translate: TranslateService,
+    private readonly deviceService: DeviceDetectorService,
   ) {}
 
   ngOnInit() {
@@ -117,7 +117,7 @@ export class SigninComponent implements OnInit, OnDestroy {
   });
 
   setLabels() {
-    if (this.translate.currentLang != undefined) {
+    if (this.translate.getCurrentLang() != undefined) {
       this.username = this.translate.instant('SIGNIN.USER-NAME.TEXT');
       this.password = this.translate.instant('SIGNIN.PASSWORD.TEXT');
       this.remember = this.translate.instant('SIGNIN.REMEMBER-ME.TEXT');
@@ -127,7 +127,7 @@ export class SigninComponent implements OnInit, OnDestroy {
   }
 
   setErrorMessages() {
-    if (this.translate.currentLang != undefined) {
+    if (this.translate.getCurrentLang() != undefined) {
       this.passwordIsRequerid = this.translate.instant(
         'SIGNIN.PASS-IS-REQUIRED.TEXT',
       );
