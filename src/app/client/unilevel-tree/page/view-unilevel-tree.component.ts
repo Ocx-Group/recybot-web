@@ -1,6 +1,6 @@
 import Swal from 'sweetalert2';
 import { ToastrService } from 'ngx-toastr';
-import { Component } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
 import { MyTreeNodeClient } from '@app/core/models/unilevel-tree-model/tree-node';
 import { NgxSpinnerService } from 'ngx-spinner';
 
@@ -12,7 +12,6 @@ import { MatrixConfigurationService } from '@app/core/service/matrix-configurati
 import { MatrixService } from '@app/core/service/matrix-service/matrix.service';
 import { MatrixQualificationService } from '@app/core/service/matrix-qualification-service/matrix-qualification.service';
 import { CommonModule } from '@angular/common';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ClientUnilevelTreeComponentComponent } from '@app/client/unilevel-tree/unilevel-tree-component/client-unilevel-tree-component.component';
@@ -30,7 +29,7 @@ import { ClientUnilevelTreeComponentComponent } from '@app/client/unilevel-tree/
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class ViewUnilevelTreeComponent {
+export class ViewUnilevelTreeComponent implements OnInit {
   userId: number;
   user: UserAffiliate;
   btnBack: boolean = false;
@@ -43,20 +42,18 @@ export class ViewUnilevelTreeComponent {
     image: '',
     children: [],
   };
-  typeSelected: string;
+  typeSelected: string = 'cube-transition';
   showDiv = false;
 
   constructor(
-    private authService: AuthService,
-    private spinnerService: NgxSpinnerService,
-    private affiliateService: AffiliateService,
-    private matrixConfigurationService: MatrixConfigurationService,
-    private matrixService: MatrixService,
-    private matrixQualificationService: MatrixQualificationService,
-    private toastrService: ToastrService,
-  ) {
-    this.typeSelected = 'cube-transition';
-  }
+    private readonly authService: AuthService,
+    private readonly spinnerService: NgxSpinnerService,
+    private readonly affiliateService: AffiliateService,
+    private readonly matrixConfigurationService: MatrixConfigurationService,
+    private readonly matrixService: MatrixService,
+    private readonly matrixQualificationService: MatrixQualificationService,
+    private readonly toastrService: ToastrService,
+  ) {}
 
   ngOnInit() {
     this.active = 1;

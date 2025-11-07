@@ -23,11 +23,10 @@ import { CommonModule } from '@angular/common';
   imports: [NgbPopover, CommonModule],
 })
 export class ClientUnilevelTreeComponentComponent {
-  @Input('data') data: MyTreeNodeClient | undefined;
+  @Input() data: MyTreeNodeClient | undefined;
   @Input() hasParent = false;
-  @Input('nodeTemplate') nodeTemplate!: TemplateRef<any>;
-  @Output('loadFamilyTree') loadFamilyTree: EventEmitter<number> =
-    new EventEmitter();
+  @Input() nodeTemplate!: TemplateRef<any>;
+  @Output() loadFamilyTree: EventEmitter<number> = new EventEmitter();
   zoomOut = false;
 
   constructor() {}
@@ -39,9 +38,7 @@ export class ClientUnilevelTreeComponentComponent {
   }
 
   public onClick() {
-    if (this.data && this.data.onClick) {
-      this.data.onClick();
-    }
+    this.data?.onClick?.();
   }
 
   public toggleZoom() {

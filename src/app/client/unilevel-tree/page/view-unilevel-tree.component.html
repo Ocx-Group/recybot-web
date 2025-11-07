@@ -46,10 +46,12 @@
                                       {{ node.userName || node.user_name }}
                                     </span>
                                   </div>
-                                  <div *ngIf="node.children && node.children.length"
-                                    (click)="node.hideChildren = !node.hideChildren" class="tree-fold-btn">
+                                  <button *ngIf="node.children && node.children.length"
+                                    (click)="node.hideChildren = !node.hideChildren"
+                                    (keypress)="node.hideChildren = !node.hideChildren" class="tree-fold-btn"
+                                    type="button">
                                     {{ node.hideChildren ? '+' : '-' }}
-                                  </div>
+                                  </button>
                                 </div>
                               </ng-template>
                             </div>
@@ -99,7 +101,8 @@
                                   </span>
                                 </div>
                                 <div *ngIf="node.children && node.children.length"
-                                  (click)="node.hideChildren = !node.hideChildren" class="tree-fold-btn">
+                                  (click)="node.hideChildren = !node.hideChildren"
+                                  (keypress)="node.hideChildren = !node.hideChildren" class="tree-fold-btn">
                                   {{ node.hideChildren ? '+' : '-' }}
                                 </div>
                               </div>
