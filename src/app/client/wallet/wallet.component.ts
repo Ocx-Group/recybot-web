@@ -23,19 +23,27 @@ import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { TruncateDecimalsPipe } from '@app/shared/pipes/truncate-decimals.pipe';
 import { IconsModule } from '@app/shared';
-import {RouterLink} from "@angular/router";
+import { RouterLink } from '@angular/router';
 import {
   ReusableDatatableComponent,
   TableColumn,
   TableConfig,
-  TableAction
+  TableAction,
 } from '@app/shared/components/reusable-datatable/reusable-datatable.component';
 
 @Component({
-    selector: 'app-wallet',
-    templateUrl: './wallet.component.html',
-    standalone: true,
-  imports: [CommonModule, NgxDatatableModule, TranslateModule, TruncateDecimalsPipe, IconsModule, RouterLink, ReusableDatatableComponent]
+  selector: 'app-wallet',
+  templateUrl: './wallet.component.html',
+  standalone: true,
+  imports: [
+    CommonModule,
+    NgxDatatableModule,
+    TranslateModule,
+    TruncateDecimalsPipe,
+    IconsModule,
+    RouterLink,
+    ReusableDatatableComponent,
+  ],
 })
 export class WalletComponent implements OnInit, OnDestroy, AfterViewInit {
   private subscription: Subscription;
@@ -48,9 +56,12 @@ export class WalletComponent implements OnInit, OnDestroy, AfterViewInit {
   scrollBarHorizontal = window.innerWidth < 1200;
 
   // Templates personalizados
-  @ViewChild('creditTemplate', { static: false }) creditTemplate: TemplateRef<any>;
-  @ViewChild('debitTemplate', { static: false }) debitTemplate: TemplateRef<any>;
-  @ViewChild('statusTemplate', { static: false }) statusTemplate: TemplateRef<any>;
+  @ViewChild('creditTemplate', { static: false })
+  creditTemplate: TemplateRef<any>;
+  @ViewChild('debitTemplate', { static: false })
+  debitTemplate: TemplateRef<any>;
+  @ViewChild('statusTemplate', { static: false })
+  statusTemplate: TemplateRef<any>;
 
   // Configuración para el componente reutilizable
   tableColumns: TableColumn[] = [];
@@ -65,15 +76,15 @@ export class WalletComponent implements OnInit, OnDestroy, AfterViewInit {
     limit: 10,
     columnMode: 'force',
     reorderable: true,
-    swapColumns: true
+    swapColumns: true,
     // messages se heredará del defaultConfig del componente reutilizable
   };
 
   constructor(
-    private walletService: WalletService,
-    private authService: AuthService,
-    private toastr: ToastrService,
-    private translateService: TranslateService,
+    private readonly walletService: WalletService,
+    private readonly authService: AuthService,
+    private readonly toastr: ToastrService,
+    private readonly translateService: TranslateService,
   ) {
     this.initializeTableColumns();
     this.initializeTableActions();
@@ -106,7 +117,7 @@ export class WalletComponent implements OnInit, OnDestroy, AfterViewInit {
     this.toastr.error(message, 'Error!');
   }
 
-  @HostListener('window:resize', ['$event'])
+  @HostListener('window:resize')
   onResize() {
     this.scrollBarHorizontal = window.innerWidth < 1200;
   }
@@ -156,9 +167,11 @@ export class WalletComponent implements OnInit, OnDestroy, AfterViewInit {
       this.rows = [...this.temp];
     } else {
       this.rows = this.temp.filter(d => {
-        return this.normalizeText(d.concept).indexOf(val) !== -1 ||
-               this.normalizeText(d.adminUserName || '').indexOf(val) !== -1 ||
-               this.normalizeText(d.affiliateUserName || '').indexOf(val) !== -1;
+        return (
+          this.normalizeText(d.concept).includes(val) ||
+          this.normalizeText(d.adminUserName || '').includes(val) ||
+          this.normalizeText(d.affiliateUserName || '').includes(val)
+        );
       });
     }
   }
@@ -283,38 +296,40 @@ export class WalletComponent implements OnInit, OnDestroy, AfterViewInit {
       {
         name: this.translateService.instant('WALLET-PAGE.USER-COLUMN.TEXT'),
         prop: 'adminUserName',
-        sortable: true
+        sortable: true,
       },
       {
-        name: this.translateService.instant('WALLET-PAGE.AFFILIATE-COLUMN.TEXT'),
+        name: this.translateService.instant(
+          'WALLET-PAGE.AFFILIATE-COLUMN.TEXT',
+        ),
         prop: 'affiliateUserName',
-        sortable: true
+        sortable: true,
       },
       {
         name: this.translateService.instant('WALLET-PAGE.CREDIT-COLUMN.TEXT'),
         prop: 'credit',
-        sortable: true
+        sortable: true,
       },
       {
         name: this.translateService.instant('WALLET-PAGE.DEBIT-COLUMN.TEXT'),
         prop: 'debit',
-        sortable: true
+        sortable: true,
       },
       {
         name: this.translateService.instant('WALLET-PAGE.STATE-COLUMN.TEXT'),
         prop: 'status',
-        sortable: true
+        sortable: true,
       },
       {
         name: this.translateService.instant('WALLET-PAGE.CONCEPT-COLUMN.TEXT'),
         prop: 'concept',
-        sortable: true
+        sortable: true,
       },
       {
         name: this.translateService.instant('WALLET-PAGE.DATE-COLUMN.TEXT'),
         prop: 'date',
-        sortable: true
-      }
+        sortable: true,
+      },
     ];
   }
 
@@ -324,8 +339,9 @@ export class WalletComponent implements OnInit, OnDestroy, AfterViewInit {
         label: this.translateService.instant('WALLET-PAGE.VIEW-DETAILS.TEXT'),
         icon: 'bi bi-folder2-open',
         callback: (row: any) => this.showDetail(row.detail),
-        condition: (row: any) => row.detail !== null && row.detail !== undefined && row.detail !== ''
-      }
+        condition: (row: any) =>
+          row.detail !== null && row.detail !== undefined && row.detail !== '',
+      },
     ];
   }
 

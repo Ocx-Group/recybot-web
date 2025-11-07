@@ -1,25 +1,27 @@
-import {UserService} from '@app/core/service/user-service/user.service';
-import {Component, ViewChild, OnInit, Input} from '@angular/core';
-import {ToastrService} from 'ngx-toastr';
+import { UserService } from '@app/core/service/user-service/user.service';
+import { Component, ViewChild, OnInit, Input } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import {
   AbstractControl,
   FormBuilder,
   FormGroup,
   Validators,
+  ReactiveFormsModule,
 } from '@angular/forms';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {User} from '@app/core/models/user-model/user.model';
-import {CommonModule} from '@angular/common';
-import {ReactiveFormsModule} from '@angular/forms';
-import {TranslatePipe} from "@ngx-translate/core";
-import {off} from "@angular/fire/database";
-import {UserAffiliate} from "@app/core/models/user-affiliate-model/user.affiliate.model";
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { User } from '@app/core/models/user-model/user.model';
+import { CommonModule } from '@angular/common';
+
+import { TranslatePipe } from '@ngx-translate/core';
+import { off } from '@angular/fire/database';
+import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
 
 @Component({
   selector: 'app-my-profile-edit-personal-info-modal',
   templateUrl: './my-profile-edit-personal-info-modal.component.html',
+  styleUrls: ['./my-profile-edit-personal-info-modal.component.scss'],
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, TranslatePipe]
+  imports: [CommonModule, ReactiveFormsModule, TranslatePipe],
 })
 export class MyProfileEditPersonalInfoModalComponent implements OnInit {
   editPersonalInfoForm: FormGroup;
@@ -27,14 +29,14 @@ export class MyProfileEditPersonalInfoModalComponent implements OnInit {
   public user: User = new User();
   @Input() personalInfo: any = [];
   @ViewChild('editPersonalInfoModal') editPersonalInfoModal: NgbModal;
+  activeTab: 'profile' | 'documents' = 'profile';
 
   constructor(
-    private modalService: NgbModal,
-    private formBuilder: FormBuilder,
-    private toastr: ToastrService,
-    private userService: UserService
-  ) {
-  }
+    private readonly modalService: NgbModal,
+    private readonly formBuilder: FormBuilder,
+    private readonly toastr: ToastrService,
+    private readonly userService: UserService,
+  ) {}
 
   ngOnInit(): void {
     this.loadValidations();
@@ -53,7 +55,9 @@ export class MyProfileEditPersonalInfoModalComponent implements OnInit {
   openEditPersonalInfoModal(content, user: UserAffiliate) {
     this.modalService.open(content, {
       ariaLabelledBy: 'modal-basic-title',
-      size: 'lg',
+      size: 'xl',
+      centered: true,
+      backdrop: 'static',
     });
     this.onSetValuesPersonalInfo(user);
   }
@@ -92,7 +96,7 @@ export class MyProfileEditPersonalInfoModalComponent implements OnInit {
     this.user.email = this.editPersonalInfoForm.value.email;
     this.user.phone = this.editPersonalInfoForm.value.phone;
     this.user.address = this.editPersonalInfoForm.value.address;
-    this.userService.updateUser(this.user).subscribe((response) => {
+    this.userService.updateUser(this.user).subscribe(response => {
       if (response.success) {
         this.showSuccess('The user was update successfully!');
         this.closeModals();

@@ -82,9 +82,9 @@
                           <i-feather name="search" style="color: #96a2b4;"></i-feather>
                         </div>
                       </div>
-                      <input style="background-color: white;" type="text" class="form-control"
-                             id="inlineFormInputGroup" (keyup)='updateFilter($event)' aria-label="Search box"
-                             placeholder="{{ 'WALLET-PAGE.SEARCH.TEXT' | translate }}">
+                      <input style="background-color: white;" type="text" class="form-control" id="inlineFormInputGroup"
+                        (keyup)='updateFilter($event)' aria-label="Search box"
+                        placeholder="{{ 'WALLET-PAGE.SEARCH.TEXT' | translate }}">
                     </div>
                   </div>
                 </div>
@@ -132,14 +132,8 @@
             </ng-template>
 
             <!-- Componente reutilizable -->
-            <app-reusable-datatable
-              id="htmlTable"
-              [rows]="rows"
-              [columns]="tableColumns"
-              [actions]="tableActions"
-              [config]="tableConfig"
-              [loadingIndicator]="loadingIndicator"
-              [customSearch]="customSearchTemplate"
+            <app-reusable-datatable id="htmlTable" [rows]="rows" [columns]="tableColumns" [actions]="tableActions"
+              [config]="tableConfig" [loadingIndicator]="loadingIndicator" [customSearch]="customSearchTemplate"
               [customButtons]="customButtonsTemplate">
             </app-reusable-datatable>
           </div>
