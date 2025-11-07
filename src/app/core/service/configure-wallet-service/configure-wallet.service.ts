@@ -1,17 +1,18 @@
-import { Injectable, TemplateRef } from '@angular/core';
+import { inject, Injectable, TemplateRef } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subject } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ConfigureWalletService {
+  private readonly modalService: NgbModal = inject(NgbModal);
   configureWalletModal: TemplateRef<any>;
   activeModal: any;
-  private modalOpenedSource = new Subject<void>();
+  private readonly modalOpenedSource = new Subject<void>();
   modalOpened$ = this.modalOpenedSource.asObservable();
 
-  constructor(private modalService: NgbModal) { }
+  constructor() {}
 
   setModalContent(content: TemplateRef<any>) {
     this.configureWalletModal = content;
@@ -24,7 +25,7 @@ export class ConfigureWalletService {
     this.activeModal = this.modalService.open(this.configureWalletModal, {
       ariaLabelledBy: 'modal-basic-title',
       size: 'lg',
-      centered: true
+      centered: true,
     });
 
     this.modalOpenedSource.next();
