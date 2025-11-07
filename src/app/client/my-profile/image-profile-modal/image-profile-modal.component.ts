@@ -24,6 +24,7 @@ import { TranslateModule } from '@ngx-translate/core';
 @Component({
   selector: 'app-image-profile-modal',
   templateUrl: './image-profile-modal.component.html',
+  styleUrls: ['./image-profile-modal.component.scss'],
   standalone: true,
   imports: [CommonModule, NgxDropzoneModule, TranslateModule],
 })
