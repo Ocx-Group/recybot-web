@@ -7,30 +7,30 @@ import {
   EventEmitter,
 } from '@angular/core';
 import { MyTreeNodeClient } from '../../../core/models/unilevel-tree-model/tree-node';
-import {NgbPopover} from "@ng-bootstrap/ng-bootstrap";
+import { NgbPopover } from '@ng-bootstrap/ng-bootstrap';
+import { CommonModule } from '@angular/common';
 
 @Component({
-    selector: 'app-client-unilevel-tree-component',
-    exportAs: 'orgChart',
-    templateUrl: './client-unilevel-tree-component.component.html',
-    styleUrls: ['./client-unilevel-tree-component.component.scss'],
-    host: {
-        '[class.ng13-org-chart-zoom-out]': 'zoomOut',
-    },
-    encapsulation: ViewEncapsulation.None,
-    standalone: true,
-  imports: [
-    NgbPopover
-  ]
+  selector: 'app-client-unilevel-tree-component',
+  exportAs: 'orgChart',
+  templateUrl: './client-unilevel-tree-component.component.html',
+  styleUrls: ['./client-unilevel-tree-component.component.scss'],
+  host: {
+    '[class.ng13-org-chart-zoom-out]': 'zoomOut',
+  },
+  encapsulation: ViewEncapsulation.None,
+  standalone: true,
+  imports: [NgbPopover, CommonModule],
 })
 export class ClientUnilevelTreeComponentComponent {
   @Input('data') data: MyTreeNodeClient | undefined;
   @Input() hasParent = false;
   @Input('nodeTemplate') nodeTemplate!: TemplateRef<any>;
-  @Output('loadFamilyTree') loadFamilyTree: EventEmitter<number> = new EventEmitter();
-  zoomOut = true;
+  @Output('loadFamilyTree') loadFamilyTree: EventEmitter<number> =
+    new EventEmitter();
+  zoomOut = false;
 
-  constructor() { }
+  constructor() {}
 
   public onloadFamilyTree(id: number) {
     if (id !== 0) {
