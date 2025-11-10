@@ -11,54 +11,60 @@ import {
   OnDestroy,
   OnInit,
   ViewEncapsulation,
+  CUSTOM_ELEMENTS_SCHEMA,
 } from '@angular/core';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { RouterLink, ActivatedRoute } from '@angular/router';
 
-import { ActivatedRoute } from '@angular/router';
 import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
 import { AffiliateService } from '@app/core/service/affiliate-service/affiliate.service';
+import { AuthService } from '@app/core/service/authentication-service/auth.service';
 import { PdfViewerService } from '@app/core/service/pdf-viewer-service/pdf-viewer.service';
 import { SafePipe } from '@app/shared/pipes/safe.pipe';
 
 @Component({
-    selector: 'app-home',
-    templateUrl: './landing-page.component.html',
-    styleUrls: ['./landing-page.component.scss'],
-    animations: [
-        trigger('slideInOut', [
-            state('in', style({
-                transform: 'translateX(0)',
-            })),
-            state('out', style({
-                transform: 'translateX(100%)',
-            })),
-            transition('in => out', animate('300ms ease-in-out')),
-            transition('out => in', animate('300ms ease-in-out')),
-        ]),
-    ],
-    encapsulation: ViewEncapsulation.ShadowDom,
-    providers: [ToastrService],
-    standalone: true,
-    imports: [CommonModule, RouterLink, TranslateModule, SafePipe],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  selector: 'app-home',
+  templateUrl: './landing-page.component.html',
+  styleUrls: ['./landing-page.component.scss'],
+  animations: [
+    trigger('slideInOut', [
+      state(
+        'in',
+        style({
+          transform: 'translateX(0)',
+        }),
+      ),
+      state(
+        'out',
+        style({
+          transform: 'translateX(100%)',
+        }),
+      ),
+      transition('in => out', animate('300ms ease-in-out')),
+      transition('out => in', animate('300ms ease-in-out')),
+    ]),
+  ],
+  encapsulation: ViewEncapsulation.ShadowDom,
+  providers: [ToastrService],
+  standalone: true,
+  imports: [CommonModule, RouterLink, TranslateModule, SafePipe],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class LandingPageComponent implements OnInit, OnDestroy {
   isNavbarVisible = false;
   documents = {
     whitePaper: {
-      url: '/assets/pdf/WhitePaper-2025.pdf',
+      url: 'assets/pdf/WhitePaper-2025.pdf',
       title: 'White Paper - RecyCoin',
     },
     legalDoc: {
-      url: '/assets/pdf/LEGAL-DOCUMENTATION.pdf',
+      url: 'assets/pdf/LEGAL-DOCUMENTATION.pdf',
       title: 'Documentos Legales - RecyCoin',
     },
     recycoinProject: {
-      url: '/assets/pdf/PROJECT.pdf',
+      url: 'assets/pdf/PROJECT.pdf',
       title: 'Proyecto RecyCoin',
     },
   };
@@ -81,16 +87,22 @@ export class LandingPageComponent implements OnInit, OnDestroy {
   user: UserAffiliate | null = null;
 
   constructor(
-    private pdfViewerService: PdfViewerService,
-    private translate: TranslateService,
-    private activatedRoute: ActivatedRoute,
-    private affiliateService: AffiliateService,
+    private readonly pdfViewerService: PdfViewerService,
+    private readonly translate: TranslateService,
+    private readonly activatedRoute: ActivatedRoute,
+    private readonly affiliateService: AffiliateService,
+    private readonly authService: AuthService,
   ) {
-    translate.setDefaultLang('en');
-    this.currentLang = translate.currentLang || 'en';
+    translate.setFallbackLang('en');
+    this.currentLang = translate.getCurrentLang() || 'en';
     this.key = this.activatedRoute.snapshot.params.key;
 
-    if (this.key) {
+    // Si hay un usuario logueado, usar sus datos
+    const loggedUser = this.authService.userAffiliate();
+    if (loggedUser) {
+      this.user = loggedUser;
+    } else if (this.key) {
+      // Si no hay usuario logueado pero hay key en la ruta, buscar por username
       this.getUserByUsername(this.key);
     }
   }

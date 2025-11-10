@@ -58,7 +58,7 @@
 }
 
 .nav-link {
-  color: #C5FF2B;
+  color: #c5ff2b;
   text-decoration: none;
   transition: all 0.3s ease;
   font-size: 0.9rem;
@@ -73,18 +73,17 @@
   display: none;
   background: none;
   border: none;
-  color: #C5FF2B;
+  color: #c5ff2b;
   padding: 0.5rem;
   cursor: pointer;
   z-index: 1001;
-
 }
 
 .navbar-toggle-icon {
   display: block;
   width: 1.5rem;
   height: 2px;
-  background-color: #C5FF2B;
+  background-color: #c5ff2b;
   position: relative;
   transition: all 0.3s ease;
 }
@@ -95,7 +94,7 @@
   position: absolute;
   width: 100%;
   height: 100%;
-  background-color: #C5FF2B;
+  background-color: #c5ff2b;
   transition: all 0.3s ease;
 }
 
@@ -120,7 +119,7 @@
 }
 
 .neon-button {
-  background-color: #00BD6B;
+  background-color: #00bd6b;
   color: #003637;
   border: none;
   padding: 0.625rem 1.25rem;
@@ -132,7 +131,7 @@
 
 .neon-button:hover {
   background-color: #00a05a;
-  box-shadow: 0 0 0.625rem #00BD6B;
+  box-shadow: 0 0 0.625rem #00bd6b;
 }
 
 .main-content {
@@ -174,17 +173,17 @@
 
 .feature-item {
   text-align: center;
-  color: #C5FF2B;
+  color: #c5ff2b;
   position: relative;
 }
 
 .feature-item:not(:last-child)::after {
-  content: "•";
+  content: '•';
   position: absolute;
   right: -1.5625rem;
   top: 50%;
   transform: translateY(-50%);
-  color: #C5FF2B;
+  color: #c5ff2b;
 }
 
 .cta-section {
@@ -199,7 +198,7 @@
   z-index: 10;
   background: rgba(0, 54, 55, 0.95);
   border: none;
-  color: #C5FF2B;
+  color: #c5ff2b;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -218,7 +217,7 @@
   svg {
     width: 24px;
     height: 24px;
-    color: #C5FF2B;
+    color: #c5ff2b;
   }
 }
 
@@ -361,6 +360,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
 }
 
 .image {
@@ -368,13 +371,17 @@
   height: 42px;
   border-radius: 50%;
   overflow: hidden;
-  border: 2px solid #C5FF2B;
+  border: 2px solid #c5ff2b;
   box-shadow: 0 0 8px rgba(197, 255, 43, 0.4);
   transition: all 0.3s ease;
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .user-container:hover .image {
-  border-color: #00BD6B;
+  border-color: #00bd6b;
   box-shadow: 0 0 12px rgba(0, 189, 107, 0.5);
 }
 
@@ -399,7 +406,7 @@
 
 .profile-usertitle-job {
   font-size: 0.75rem;
-  color: #C5FF2B;
+  color: #c5ff2b;
   margin: 0;
 }
 
@@ -430,7 +437,7 @@
   .menu-label {
     display: block;
     font-size: 0.9rem;
-    color: #C5FF2B;
+    color: #c5ff2b;
     position: absolute;
     top: -1rem;
     left: 0;

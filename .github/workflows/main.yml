@@ -13,6 +13,11 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+        with:
+          lfs: true # Esto habilita Git LFS automáticamente
+
+      - name: Pull LFS files
+        run: git lfs pull
 
       - name: Install doctl
         uses: digitalocean/action-doctl@v2

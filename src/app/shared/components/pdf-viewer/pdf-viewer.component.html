@@ -27,18 +27,10 @@
         </button>
       </div>
 
-      <pdf-viewer
-        [src]="currentDocument.url"
-        [render-text]="true"
-        [original-size]="false"
-        [zoom]="zoom"
-        [show-all]="false"
-        [(page)]="currentPage"
-        (after-load-complete)="afterLoadComplete($event)"
-        [rotation]="0"
-        [external-link-target]="'blank'"
-        style="width: 100%; height: calc(100vh - 150px);"
-      ></pdf-viewer>
+      <pdf-viewer [src]="currentDocument.url" [render-text]="true" [original-size]="false" [zoom]="zoom"
+        [show-all]="false" [(page)]="currentPage" (after-load-complete)="afterLoadComplete($event)"
+        (error)="onError($event)" [rotation]="0" [external-link-target]="'blank'"
+        style="width: 100%; height: calc(100vh - 150px);"></pdf-viewer>
     </div>
   </div>
 </div>

@@ -1,16 +1,16 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Subscription} from "rxjs";
-import {PdfDocument} from "@app/core/interfaces/pdf-document.interface";
-import {PdfViewerService} from "@app/core/service/pdf-viewer-service/pdf-viewer.service";
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { PdfDocument } from '@app/core/interfaces/pdf-document.interface';
+import { PdfViewerService } from '@app/core/service/pdf-viewer-service/pdf-viewer.service';
 import { CommonModule } from '@angular/common';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 @Component({
-    selector: 'app-pdf-viewer',
-    templateUrl: './pdf-viewer.component.html',
-    styleUrls: ['./pdf-viewer.component.scss'],
-    standalone: true,
-    imports: [CommonModule, PdfViewerModule]
+  selector: 'app-pdf-viewer',
+  templateUrl: './pdf-viewer.component.html',
+  styleUrls: ['./pdf-viewer.component.scss'],
+  standalone: true,
+  imports: [CommonModule, PdfViewerModule],
 })
 export class PdfViewerComponent implements OnInit, OnDestroy {
   isVisible: boolean = false;
@@ -23,22 +23,19 @@ export class PdfViewerComponent implements OnInit, OnDestroy {
   protected pdfSrc: string;
   protected title: any;
 
-  constructor(private pdfViewerService: PdfViewerService) {
-  }
+  constructor(private pdfViewerService: PdfViewerService) {}
 
   ngOnInit() {
     this.subscriptions.push(
       this.pdfViewerService.isVisible$.subscribe(
-        isVisible => this.isVisible = isVisible
+        isVisible => (this.isVisible = isVisible),
       ),
-      this.pdfViewerService.currentDocument$.subscribe(
-        document => {
-          this.currentDocument = document;
-          if (document) {
-            this.resetViewer();
-          }
+      this.pdfViewerService.currentDocument$.subscribe(document => {
+        this.currentDocument = document;
+        if (document) {
+          this.resetViewer();
         }
-      )
+      }),
     );
   }
 
@@ -84,13 +81,20 @@ export class PdfViewerComponent implements OnInit, OnDestroy {
 
   afterLoadComplete(pdf: any) {
     this.totalPages = pdf.numPages;
+    console.log('PDF cargado correctamente', pdf);
+  }
+
+  onError(error: any) {
+    console.error('Error al cargar el PDF:', error);
+    console.log('URL del PDF:', this.currentDocument?.url);
   }
 
   savePdf() {
     if (this.currentDocument) {
       const link = document.createElement('a');
       link.href = this.currentDocument.url;
-      link.download = this.currentDocument.title.replace(/\s+/g, '_').toLowerCase() + '.pdf';
+      link.download =
+        this.currentDocument.title.replace(/\s+/g, '_').toLowerCase() + '.pdf';
 
       document.body.appendChild(link);
       link.click();

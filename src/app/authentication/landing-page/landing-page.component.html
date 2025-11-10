@@ -9,12 +9,12 @@
       </picture>
 
       <div *ngIf="user" class="user-container green-theme">
-        <div role="button" class="user-panel">
+        <button type="button" class="user-panel">
           <div class="image">
             <img [src]="user?.image_profile_url ? user?.image_profile_url : 'assets/images/user.png'"
-              class="img-fluid img-circle" alt="User Image" />
+              class="img-fluid img-circle" alt="User Profile" />
           </div>
-        </div>
+        </button>
         <div class="profile-usertitle">
           <div class="sidebar-userpic-name">{{this.user.name}} {{this.user.last_name}}</div>
           <div class="profile-usertitle-job">{{this.user.user_name}}</div>
@@ -24,7 +24,7 @@
     </div>
 
     <button class="navbar-toggle" (click)="toggleNavbar()">
-      <label class="menu-label">Menú</label>
+      <span class="menu-label">Menú</span>
       <span class="navbar-toggle-icon"></span>
     </button>
 
@@ -82,10 +82,10 @@
   </div>
 
   <div class="video-modal" [ngStyle]="{'display': showVideoModal ? 'flex' : 'none'}">
-    <div class="modal-overlay" (click)="closeVideo()"></div>
+    <div class="modal-overlay" (click)="closeVideo()" (keydown)="closeVideo()"></div>
     <div class="modal-content">
       <button class="close-button" (click)="closeVideo()">×</button>
-      <iframe title="reproductor" [src]="currentVideoUrl | safe" width="100%" height="100%" frameborder="0"
+      <iframe title="reproductor" [src]="currentVideoUrl | safe" width="100%" height="100%"
         allow="autoplay; encrypted-media" allowfullscreen>
       </iframe>
     </div>
