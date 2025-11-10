@@ -1,4 +1,4 @@
-name: Deploy to Digital Ocean
+name: Build and Deploy to Digital Ocean
 
 on:
   push:
@@ -7,14 +7,32 @@ on:
   workflow_dispatch:
 
 jobs:
-  deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Deploy to Digital Ocean
+      - name: Install doctl
+        uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+
+      - name: Log in to DO Container Registry
+        run: doctl registry login --expiry-seconds 600
+
+      - name: Build Docker image
+        run: |
+          docker build -t registry.digitalocean.com/ocx-registry/recycoin-app:latest \
+                       -t registry.digitalocean.com/ocx-registry/recycoin-app:${{ github.sha }} .
+
+      - name: Push image to DO Container Registry
+        run: |
+          docker push registry.digitalocean.com/ocx-registry/recycoin-app:latest
+          docker push registry.digitalocean.com/ocx-registry/recycoin-app:${{ github.sha }}
+
+      - name: Deploy to Digital Ocean Droplet
         uses: appleboy/ssh-action@v1.0.0
         with:
           host: ${{ secrets.DO_HOST }}
@@ -23,6 +41,8 @@ jobs:
           port: 22
           script: |
             cd recycoin-web
+            doctl registry login --expiry-seconds 600
             docker compose pull
             docker compose down
             docker compose up -d
+            docker system prune -af
