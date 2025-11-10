@@ -44,7 +44,7 @@ export class CartService {
 
   setProduct(product: any) {
     this.cartItemList.push(...product);
-    this.productList.next(product);
+    this.productList.next(this.cartItemList);
   }
 
   addtoCart(product: any) {
@@ -107,6 +107,6 @@ export class CartService {
   }
 
   clearPurchaseFromThirdParty() {
-    this.userReceivesPurchase.next(null);
+    this.userReceivesPurchase.next(new UserAffiliate());
   }
 }

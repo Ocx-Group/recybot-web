@@ -6,22 +6,29 @@ import {
   HostListener,
   OnInit,
 } from '@angular/core';
-import { FormGroup } from '@angular/forms';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ToastrService } from 'ngx-toastr';
-import { DatatableComponent } from '@swimlane/ngx-datatable';
-import { ConceptList } from '@app/core/models/concept-model/concept-list.model';
-import { ConceptConfigurationService } from '@app/core/service/concept-configuration-service/concept-configuration.service';
-import { GradingService } from '@app/core/service/grading-service/grading.service';
+import {FormGroup} from '@angular/forms';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {DataTableColumnCellDirective, DataTableColumnDirective, DatatableComponent} from '@swimlane/ngx-datatable';
+import {ConceptList} from "../../../core/models/concept-model/concept-list.model";
+import {
+  ConceptConfigurationService
+} from "../../../core/service/concept-configuration-service/concept-configuration.service";
+import {GradingService} from "../../../core/service/grading-service/grading.service";
+import {TranslatePipe} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-concept-list-details-modal',
   templateUrl: './concept-list-details-modal.component.html',
+  standalone: true,
+  imports: [
+    TranslatePipe,
+    DatatableComponent,
+    DataTableColumnDirective,
+    DataTableColumnCellDirective
+  ]
 })
 export class ConceptListDetailsModalComponent implements OnInit {
-  detailsConceptForm: FormGroup;
   submitted = false;
-  detailsData = [];
   rows = [];
   temp = [];
   loadingIndicator = true;
@@ -35,11 +42,13 @@ export class ConceptListDetailsModalComponent implements OnInit {
     private modalService: NgbModal,
     private conceptConfigurationService: ConceptConfigurationService,
     private gradingService: GradingService
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.fetchCalificationList();
   }
+
   @ViewChild('table') table: DatatableComponent;
   @ViewChild('conceptDetailsModal') conceptDetailsModal: NgbModal;
   @Output('loadConceptList') loadConceptList: EventEmitter<any> =

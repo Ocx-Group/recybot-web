@@ -1,21 +1,27 @@
-import { Component, ViewChild } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
   Validators,
-  AbstractControl,
+  AbstractControl, ReactiveFormsModule,
 } from '@angular/forms';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import {NgbModal, NgbTooltip} from '@ng-bootstrap/ng-bootstrap';
+import {NgClass} from "@angular/common";
 
 @Component({
   selector: 'app-products-services-configurations-create-carrier-modal',
-  templateUrl:
-    './products-services-configurations-create-carrier-modal.component.html',
+  templateUrl: './products-services-configurations-create-carrier-modal.component.html',
   styleUrls: [
     'products-services-configurations-create-carrier-modal.component.scss',
   ],
+  standalone: true,
+  imports: [
+    ReactiveFormsModule,
+    NgClass,
+    NgbTooltip
+  ],
 })
-export class ProductsServicesConfigurationsCreateCarrierModalComponent {
+export class ProductsServicesConfigurationsCreateCarrierModalComponent implements OnInit {
   title = 'angular13bestcode';
   generalParameters!: FormGroup;
   placeShippingCosts!: FormGroup;
@@ -27,7 +33,8 @@ export class ProductsServicesConfigurationsCreateCarrierModalComponent {
 
   @ViewChild('carrierCreateModal') carrierCreateModal: NgbModal;
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(private formBuilder: FormBuilder) {
+  }
 
   ngOnInit() {
     this.generalParameters = this.formBuilder.group({
@@ -56,10 +63,6 @@ export class ProductsServicesConfigurationsCreateCarrierModalComponent {
 
   get place_shipping_costs_controls(): { [key: string]: AbstractControl } {
     return this.placeShippingCosts.controls;
-  }
-
-  get summary_controls(): { [key: string]: AbstractControl } {
-    return this.summary.controls;
   }
 
   next() {

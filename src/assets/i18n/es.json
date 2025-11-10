@@ -2728,5 +2728,19 @@
     "TITLE": {
       "TEXT": "Retiro de Billetera"
     }
+  },
+  "COMMON": {
+    "ACTIONS": {
+      "TEXT": "Acciones"
+    },
+    "COPY": {
+      "TEXT": "Copiar"
+    },
+    "PRINT": {
+      "TEXT": "Imprimir"
+    },
+    "EXPORT": {
+      "TEXT": "Exportar"
+    }
   }
 }

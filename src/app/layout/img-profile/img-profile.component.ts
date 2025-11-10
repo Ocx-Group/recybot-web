@@ -1,35 +1,38 @@
-import { ImageProfileService } from './../../core/service/image-profile-service/image-profile.service';
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Storage, ref, uploadBytesResumable, getDownloadURL } from '@angular/fire/storage';
-import { AuthService } from '@app/core/service/authentication-service/auth.service';
-import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
-import { AffiliateService } from '@app/core/service/affiliate-service/affiliate.service';
-import { UpdateImageProfile } from '@app/core/models/user-affiliate-model/update-image-profile.model';
-import { ToastrService } from 'ngx-toastr';
-import { User } from '@app/core/models/user-model/user.model';
-import { UserService } from '@app/core/service/user-service/user.service';
-
+import {ImageProfileService} from '@app/core/service/image-profile-service/image-profile.service';
+import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {Storage, ref, uploadBytesResumable, getDownloadURL} from '@angular/fire/storage';
+import {AuthService} from '@app/core/service/authentication-service/auth.service';
+import {UserAffiliate} from '@app/core/models/user-affiliate-model/user.affiliate.model';
+import {AffiliateService} from '@app/core/service/affiliate-service/affiliate.service';
+import {UpdateImageProfile} from '@app/core/models/user-affiliate-model/update-image-profile.model';
+import {ToastrService} from 'ngx-toastr';
+import {User} from '@app/core/models/user-model/user.model';
+import {UserService} from '@app/core/service/user-service/user.service';
+import {CommonModule} from '@angular/common';
+import {NgxDropzoneModule} from 'ngx-dropzone';
 
 @Component({
   selector: 'app-img-profile',
   templateUrl: './img-profile.component.html',
-  styleUrls: ['./img-profile.component.sass']
+  styleUrls: ['./img-profile.component.sass'],
+  standalone: true,
+  imports: [CommonModule, NgxDropzoneModule]
 })
 export class ImgProfileComponent implements OnInit {
-  @ViewChild('profileImgModal', { static: true }) private modalContent: TemplateRef<any>;
+  @ViewChild('profileImgModal', {static: true}) private modalContent: TemplateRef<any>;
   file: File | null = null;
   fileRef: any;
   user: UserAffiliate = new UserAffiliate();
   userAdmin: User = new User();
 
   constructor(private modalService: NgbModal,
-    private storage: Storage,
-    private authService: AuthService,
-    private affiliateService: AffiliateService,
-    private toastr: ToastrService,
-    private imageProfileService: ImageProfileService,
-    private userService: UserService
+              private storage: Storage,
+              private authService: AuthService,
+              private affiliateService: AffiliateService,
+              private toastr: ToastrService,
+              private imageProfileService: ImageProfileService,
+              private userService: UserService
   ) {
   }
 
@@ -40,11 +43,11 @@ export class ImgProfileComponent implements OnInit {
     console.log(this.userAdmin)
   }
 
-  showSuccess(message) {
+  showSuccess(message: string) {
     this.toastr.success(message);
   }
 
-  showError(message) {
+  showError(message: string) {
     this.toastr.error(message);
   }
 
@@ -67,7 +70,8 @@ export class ImgProfileComponent implements OnInit {
     const uploadTask = uploadBytesResumable(this.fileRef, this.file);
 
     uploadTask.on('state_changed',
-      (snapshot) => { },
+      (snapshot) => {
+      },
       (error) => {
         console.log(error);
         this.showError('Error al subir la imagen');

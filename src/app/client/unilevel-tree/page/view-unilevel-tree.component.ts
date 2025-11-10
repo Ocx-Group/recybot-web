@@ -1,6 +1,6 @@
 import Swal from 'sweetalert2';
 import { ToastrService } from 'ngx-toastr';
-import { Component } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
 import { MyTreeNodeClient } from '@app/core/models/unilevel-tree-model/tree-node';
 import { NgxSpinnerService } from 'ngx-spinner';
 
@@ -10,15 +10,26 @@ import { AffiliateService } from '@app/core/service/affiliate-service/affiliate.
 import { AuthService } from '@app/core/service/authentication-service/auth.service';
 import { MatrixConfigurationService } from '@app/core/service/matrix-configuration/matrix-configuration.service';
 import { MatrixService } from '@app/core/service/matrix-service/matrix.service';
-import 'perfect-scrollbar';
 import { MatrixQualificationService } from '@app/core/service/matrix-qualification-service/matrix-qualification.service';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ClientUnilevelTreeComponentComponent } from '@app/client/unilevel-tree/unilevel-tree-component/client-unilevel-tree-component.component';
 
 @Component({
   selector: 'app-view-unilevel-tree',
   templateUrl: './view-unilevel-tree.component.html',
   styleUrls: ['./view-unilevel-tree.component.scss'],
+  standalone: true,
+  imports: [
+    CommonModule,
+    TranslateModule,
+    NgbModule,
+    ClientUnilevelTreeComponentComponent,
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class ViewUnilevelTreeComponent {
+export class ViewUnilevelTreeComponent implements OnInit {
   userId: number;
   user: UserAffiliate;
   btnBack: boolean = false;
@@ -31,20 +42,18 @@ export class ViewUnilevelTreeComponent {
     image: '',
     children: [],
   };
-  typeSelected: string;
+  typeSelected: string = 'cube-transition';
   showDiv = false;
 
   constructor(
-    private authService: AuthService,
-    private spinnerService: NgxSpinnerService,
-    private affiliateService: AffiliateService,
-    private matrixConfigurationService: MatrixConfigurationService,
-    private matrixService: MatrixService,
-    private matrixQualificationService: MatrixQualificationService,
-    private toastrService: ToastrService,
-  ) {
-    this.typeSelected = 'cube-transition';
-  }
+    private readonly authService: AuthService,
+    private readonly spinnerService: NgxSpinnerService,
+    private readonly affiliateService: AffiliateService,
+    private readonly matrixConfigurationService: MatrixConfigurationService,
+    private readonly matrixService: MatrixService,
+    private readonly matrixQualificationService: MatrixQualificationService,
+    private readonly toastrService: ToastrService,
+  ) {}
 
   ngOnInit() {
     this.active = 1;
@@ -122,21 +131,42 @@ export class ViewUnilevelTreeComponent {
   }
 
   private loadUnilevelTree(id: number) {
-    this.affiliateService.getUniLevelTree(id).subscribe(
-      (users: MyTreeNodeClient) => {
+    this.affiliateService.getUniLevelTree(id).subscribe({
+      next: (users: MyTreeNodeClient) => {
         if (users !== null) {
-          this.tree = users;
+          this.tree = this.initializeTreeNode(users);
           setTimeout(() => {
             this.spinnerService.hide();
             this.showDiv = true;
           }, 500);
         }
       },
-      error => {
+      error: error => {
         console.error('Error loading unilevel tree:', error);
         this.spinnerService.hide();
       },
-    );
+    });
+  }
+
+  private initializeTreeNode(node: MyTreeNodeClient): MyTreeNodeClient {
+    if (!node) return node;
+
+    // Inicializar hideChildren si no existe
+    node.hideChildren ??= false;
+
+    // Asegurar que children existe y es un array
+    if (!node.children) {
+      node.children = [];
+    }
+
+    // Recursivamente inicializar los nodos hijos
+    if (node.children && node.children.length > 0) {
+      node.children = node.children.map(child =>
+        this.initializeTreeNode(child),
+      );
+    }
+
+    return node;
   }
 
   onTabChange(newActiveId: number) {
@@ -153,22 +183,23 @@ export class ViewUnilevelTreeComponent {
 
     this.showDiv = false;
     this.spinnerService.show();
-    this.matrixService.getMatrixByUserId(request).subscribe(
-      (users: MyTreeNodeClient) => {
-        console.log('Matriz:', users);
+    this.matrixService.getMatrixByUserId(request).subscribe({
+      next: (users: MyTreeNodeClient) => {
+        console.log('Matriz recibida:', users);
         if (users !== null) {
-          this.tree = users;
+          this.tree = this.initializeTreeNode(users);
+          console.log('Árbol inicializado:', this.tree);
           setTimeout(() => {
             this.spinnerService.hide();
             this.showDiv = true;
           }, 500);
         }
       },
-      error => {
+      error: error => {
         console.error('Error loading matrix tree:', error);
         this.spinnerService.hide();
       },
-    );
+    });
   }
 
   activatedMatrixWithBalance(matrixType: number) {

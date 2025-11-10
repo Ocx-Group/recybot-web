@@ -8,14 +8,22 @@ import {
 import {
   AbstractControl,
   FormBuilder,
-  FormGroup,
+  FormGroup, ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-
-import { Grading } from '@app/core/models/grading-model/grading.model';
-import { GradingService } from '@app/core/service/grading-service/grading.service';
-import { ToastrService } from 'ngx-toastr';
+import {
+  NgbModal,
+  NgbNav,
+  NgbNavContent,
+  NgbNavItem,
+  NgbNavLink,
+  NgbNavOutlet,
+  NgbTooltip
+} from '@ng-bootstrap/ng-bootstrap';
+import {ToastrService} from 'ngx-toastr';
+import {Grading} from "../../../core/models/grading-model/grading.model";
+import {GradingService} from "../../../core/service/grading-service/grading.service";
+import {NgClass} from "@angular/common";
 
 interface Alert {
   type: string;
@@ -28,9 +36,21 @@ const ALERTS: Alert[] = [
     message: '',
   },
 ];
+
 @Component({
   selector: 'app-califications-list-edit-modal',
   templateUrl: './califications-list-edit-modal.component.html',
+  standalone: true,
+  imports: [
+    ReactiveFormsModule,
+    NgClass,
+    NgbNavItem,
+    NgbNav,
+    NgbNavOutlet,
+    NgbTooltip,
+    NgbNavLink,
+    NgbNavContent
+  ]
 })
 export class CalificationsListEditModalComponent implements OnInit {
   editCalificationForm: FormGroup;
@@ -63,6 +83,7 @@ export class CalificationsListEditModalComponent implements OnInit {
     this.fetchMembership();
     this.fetchCalificationList();
   }
+
   get edit_calification_controls(): { [key: string]: AbstractControl } {
     return this.editCalificationForm.controls;
   }
@@ -179,7 +200,7 @@ export class CalificationsListEditModalComponent implements OnInit {
       this.editCalificationForm.value.children_left_leg;
     this.grading.children_right_leg =
       this.editCalificationForm.value.children_right_leg;
-    this.grading.front_by_matrix =parseInt(this.editCalificationForm.value.front_by_matrix);
+    this.grading.front_by_matrix = parseInt(this.editCalificationForm.value.front_by_matrix);
     this.grading.front_score_1 =
       this.editCalificationForm.value.qualified_fronts1;
     this.grading.front_score_2 =

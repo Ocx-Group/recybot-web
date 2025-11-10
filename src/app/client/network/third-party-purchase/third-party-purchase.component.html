@@ -88,7 +88,7 @@
         <div *ngIf="paymentMethod === 'coinpay'" class="coinpay-container">
           <div *ngIf="qrCodeData" class="qr-code-section">
             <div class="qr-code-wrapper">
-              <img [ngSrc]="qrCodeData" width="200" height="200" priority class="qr-code" alt="CoinPay QR Code">
+              <img [ngSrc]="qrCodeData" width="200" height="200" class="qr-code" alt="CoinPay QR Code">
             </div>
             <div class="payment-details">
               <h5 class="payment-title">BEP20</h5>
@@ -97,7 +97,7 @@
               <h5 class="mb-3">{{ 'THIRD_PARTY_PURCHASE.PAYMENT_DETAILS' | translate }}</h5>
               <div class="detail-item">
                 <span class="detail-label">{{ 'THIRD_PARTY_PURCHASE.USER' | translate }}:</span>
-                <span class="detail-value">{{ userReceivingPurchase?.userName }}</span>
+                <span class="detail-value">{{ userReceivingPurchase?.user_name }}</span>
               </div>
               <div class="detail-item">
                 <span class="detail-label">{{ 'THIRD_PARTY_PURCHASE.AMOUNT_TO_PAY' | translate }}:</span>
@@ -152,7 +152,7 @@
             <h5 class="mb-3">{{ 'THIRD_PARTY_PURCHASE.PAYMENT_DETAILS' | translate }}</h5>
             <div class="detail-item">
               <span class="detail-label">{{ 'THIRD_PARTY_PURCHASE.USER' | translate }}:</span>
-              <span class="detail-value">{{ userReceivingPurchase?.userName }}</span>
+              <span class="detail-value">{{ userReceivingPurchase?.user_name }}</span>
             </div>
             <div class="detail-item">
               <span class="detail-label">{{ 'THIRD_PARTY_PURCHASE.AMOUNT_TO_PAY' | translate }}:</span>
@@ -174,7 +174,7 @@
     <ng-container *ngIf="selectedFlow === 'matrix'">
       <div *ngIf="currentStep === 2">
         <h4 class="text-center mb-4">
-          {{ 'THIRD_PARTY_PURCHASE.USER' | translate }} {{ userReceivingPurchase?.userName }}
+          {{ 'THIRD_PARTY_PURCHASE.USER' | translate }} {{ userReceivingPurchase?.user_name }}
         </h4>
         <div *ngIf="currentStep === 2">
           <div class="row row-cols-1 row-cols-md-2 g-3">

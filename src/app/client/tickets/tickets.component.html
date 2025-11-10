@@ -32,12 +32,14 @@
               <ngx-datatable #table class="material" [rows]="tickets" [loadingIndicator]="loadingIndicator"
                 columnMode="force" [headerHeight]="50" [footerHeight]="50" rowHeight="auto" [selected]="selectedTickets"
                 [limit]="10" [selectionType]="SelectionType.checkbox" [scrollbarH]="scrollBarHorizontal"
-                [reorderable]="reorderable" (activate)="onActivateEvent($event)">
+                [reorderable]="reorderable" (activate)="onActivateEvent($event)"
+                >
                 <ngx-datatable-column name="{{ 'TICKETS-PAGE.SELECT-COLUMN.TEXT' | translate }}">
                   <ng-template let-row="row" ngx-datatable-cell-template>
                     <label class="form-check-label">
-                      <input type="checkbox" [checked]="isTicketSelected(row)"
-                        (change)="onSelectTicket(row, $event.target.checked)" (click)="$event.stopPropagation()">
+                      <input
+                        type="checkbox" [checked]="isTicketSelected(row)"
+                            (change)="onSelectTicket(row, $any($event.target).checked)" (click)="$event.stopPropagation()">
                       <span class="form-check-sign"></span>
                     </label>
                   </ng-template>
@@ -73,8 +75,8 @@
                   <ng-template let-row="row" ngx-datatable-cell-template>
                     <div *ngIf="row.ticketImages.length > 0; else noImage">
                       <img [src]="row.ticketImages[0].imagePath" alt="{{ 'TICKETS-PAGE.IMAGE-ALT.TEXT' | translate }}"
-                        class="thumbnail" (click)="openModal(content, row)" (click)="$event.stopPropagation()"
-                        style="cursor: pointer; width: 100px; height: auto;">
+                           class="thumbnail" (click)="$event.stopPropagation()"
+                           style="cursor: pointer; width: 100px; height: auto;">
                     </div>
                     <ng-template #noImage>
                       <div
@@ -85,7 +87,7 @@
                   </ng-template>
                 </ngx-datatable-column>
               </ngx-datatable>
-              <ng-template #content let-modal>
+              <ng-template let-modal>
                 <div class="modal-header">
                   <h4 class="modal-title">{{ 'TICKETS-PAGE.IMAGE-MODAL.TITLE' | translate }}</h4>
                   <button type="button" class="close" (click)="modal.dismiss('Cross click')">×</button>

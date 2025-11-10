@@ -1,19 +1,45 @@
-import { Component, ViewChild, HostListener, OnInit } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { DatatableComponent } from '@swimlane/ngx-datatable';
+import {Component, HostListener, OnInit, ViewChild} from '@angular/core';
+import {NgbDropdown, NgbDropdownItem, NgbDropdownMenu, NgbDropdownToggle, NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {DataTableColumnCellDirective, DataTableColumnDirective, DatatableComponent} from '@swimlane/ngx-datatable';
 import Swal from 'sweetalert2';
 
-import { IncentiveService } from '@app/core/service/incentive-service/incentive.service';
-import { PrintService } from '@app/core/service/print-service/print.service';
-import { ClipboardService } from 'ngx-clipboard';
-import { ToastrService } from 'ngx-toastr';
+import {ClipboardService} from 'ngx-clipboard';
+import {ToastrService} from 'ngx-toastr';
+import {IncentiveService} from "../../core/service/incentive-service/incentive.service";
+import {PrintService} from "../../core/service/print-service/print.service";
+import {TranslatePipe} from "@ngx-translate/core";
+import {RouterLink} from "@angular/router";
+import {IconsModule} from "../../shared";
+import {
+  IncentivesListCreateModalComponent
+} from "./incentives-list-create-modal/incentives-list-create-modal.component";
+import {IncentivesListEditModalComponent} from "./incentives-list-edit-modal/incentives-list-edit-modal.component";
+import {
+  IncentivesListDetailsModalComponent
+} from "./incentives-list-details-modal/incentives-list-details-modal.component";
 
-const header = ['Nombre del Incentivo', 'Descripción', 'Estado de Incentivo','Fecha de Registro'];
+const header = ['Nombre del Incentivo', 'Descripción', 'Estado de Incentivo', 'Fecha de Registro'];
 
 @Component({
   selector: 'app-incentives-list',
   templateUrl: './incentives-list.component.html',
   providers: [ToastrService],
+  standalone: true,
+  imports: [
+    TranslatePipe,
+    RouterLink,
+    IconsModule,
+    DatatableComponent,
+    DataTableColumnDirective,
+    DataTableColumnCellDirective,
+    NgbDropdown,
+    NgbDropdownToggle,
+    NgbDropdownMenu,
+    NgbDropdownItem,
+    IncentivesListCreateModalComponent,
+    IncentivesListEditModalComponent,
+    IncentivesListDetailsModalComponent
+  ]
 })
 export class IncentivesListComponent implements OnInit {
   rows = [];
@@ -30,7 +56,8 @@ export class IncentivesListComponent implements OnInit {
     private printService: PrintService,
     private clipboardService: ClipboardService,
     private toastr: ToastrService
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.loadIncentiveList();
@@ -42,6 +69,7 @@ export class IncentivesListComponent implements OnInit {
     this.table.recalculate();
     this.table.recalculateColumns();
   }
+
   getRowHeight(row) {
     return row.height;
   }
@@ -50,12 +78,10 @@ export class IncentivesListComponent implements OnInit {
     const val = event.target.value.toLowerCase();
 
     // filter our data
-    const temp = this.temp.filter(function (d) {
+    // update the rows
+    this.rows = this.temp.filter(function (d) {
       return d.name.toLowerCase().indexOf(val) !== -1 || !val;
     });
-
-    // update the rows
-    this.rows = temp;
     // Whenever the filter changes, always go back to the first page
     this.table.offset = 0;
   }
@@ -65,10 +91,6 @@ export class IncentivesListComponent implements OnInit {
       ariaLabelledBy: 'modal-basic-title',
       size: 'xl',
     });
-  }
-
-  closeModals() {
-    this.modalService.dismissAll();
   }
 
   loadIncentiveList() {
@@ -86,22 +108,20 @@ export class IncentivesListComponent implements OnInit {
 
   onPrint() {
     const body = this.temp.map((items: any) => {
-      const data = [
+      return [
         items.name,
         items.description,
         items.status === 1 ? 'Activo' : 'Inactivo',
         items.created_at
       ];
-      return data;
     });
 
     this.printService.print(header, body, 'Lista de Incentivos', false);
   }
 
   clipBoardCopy() {
-    var string = JSON.stringify(this.temp);
-    var result = this.clipboardService.copyFromContent(string);
-
+    const string = JSON.stringify(this.temp);
+    this.clipboardService.copyFromContent(string);
     if (this.temp.length === 0) {
       this.toastr.info('No data to copy');
     } else {

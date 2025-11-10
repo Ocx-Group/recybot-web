@@ -2,6 +2,9 @@ import {ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild} 
 import {takeUntil} from "rxjs/operators";
 import Swal from "sweetalert2";
 import {Subject, Subscription} from "rxjs";
+import {CommonModule} from '@angular/common';
+import {FormsModule} from '@angular/forms';
+import {RouterLink} from '@angular/router';
 
 import {TicketHubService} from "@app/core/service/ticket-service/ticket-hub.service";
 import {AuthService} from "@app/core/service/authentication-service/auth.service";
@@ -9,9 +12,15 @@ import {TicketMessageRequest} from "@app/core/models/ticket-model/ticket-message
 import {Ticket} from "@app/core/models/ticket-model/ticket.model";
 
 @Component({
-  selector: 'app-tick-view',
-  templateUrl: './ticket-view-admin.component.html',
-  styleUrls: ['./ticket-view-admin.component.sass']
+    selector: 'app-tick-view',
+    templateUrl: './ticket-view-admin.component.html',
+    styleUrls: ['./ticket-view-admin.component.sass'],
+    standalone: true,
+    imports: [
+        CommonModule,
+        FormsModule,
+        RouterLink
+    ]
 })
 export class TicketViewAdminComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();

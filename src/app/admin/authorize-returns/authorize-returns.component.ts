@@ -1,13 +1,20 @@
-import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
-import { DatatableComponent } from '@swimlane/ngx-datatable';
-import { ToastrService } from 'ngx-toastr';
+import {Component, HostListener, OnInit, ViewChild} from '@angular/core';
+import {DataTableColumnCellDirective, DataTableColumnDirective, DatatableComponent} from '@swimlane/ngx-datatable';
+import {ToastrService} from 'ngx-toastr';
 import Swal from 'sweetalert2';
+import {WalletRequestService} from "../../core/service/wallet-request/wallet-request.service";
+import {WalletService} from "../../core/service/wallet-service/wallet.service";
+import {TranslatePipe} from "@ngx-translate/core";
+import {RouterLink} from "@angular/router";
+import {IconsModule} from "../../shared";
+import {NgbDropdown, NgbDropdownItem, NgbDropdownMenu, NgbDropdownToggle} from "@ng-bootstrap/ng-bootstrap";
 
-import { WalletRequestService } from '@app/core/service/wallet-request/wallet-request.service';
-import { WalletService } from '@app/core/service/wallet-service/wallet.service';
+
 @Component({
   selector: 'app-authorize-returns',
-  templateUrl: './authorize-returns.component.html'
+  templateUrl: './authorize-returns.component.html',
+  standalone: true,
+  imports: [DatatableComponent, TranslatePipe, RouterLink, IconsModule, DataTableColumnDirective, DataTableColumnCellDirective, NgbDropdown, NgbDropdownToggle, NgbDropdownMenu, NgbDropdownItem],
 })
 export class AuthorizeReturnsComponent implements OnInit {
   rows = [];

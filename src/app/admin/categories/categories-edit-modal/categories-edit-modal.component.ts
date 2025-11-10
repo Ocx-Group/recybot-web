@@ -1,14 +1,19 @@
-import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-
-import { ProductCategory } from '@app/core/models/product-category-model/product-category.model';
-import { ProductCategoryService } from '@app/core/service/product-category-service/product-category.service';
-import { ToastrService } from 'ngx-toastr';
+import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
+import {AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule} from '@angular/forms';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {ToastrService} from 'ngx-toastr';
+import {ProductCategoryService} from "../../../core/service/product-category-service/product-category.service";
+import {ProductCategory} from "../../../core/models/product-category-model/product-category.model";
+import {NgClass} from "@angular/common";
 
 @Component({
   selector: 'app-categories-edit-modal',
   templateUrl: './categories-edit-modal.component.html',
+  standalone: true,
+  imports: [
+    ReactiveFormsModule,
+    NgClass
+  ]
 })
 export class CategoriesEditModalComponent implements OnInit {
   editCategorieForm!: FormGroup;
@@ -28,7 +33,8 @@ export class CategoriesEditModalComponent implements OnInit {
     private modalService: NgbModal,
     private productCategoryService: ProductCategoryService,
     private toastr: ToastrService
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     this.categorieValidation();
@@ -37,22 +43,6 @@ export class CategoriesEditModalComponent implements OnInit {
 
   get edit_categorie_controls(): { [key: string]: AbstractControl } {
     return this.editCategorieForm.controls;
-  }
-
-  editOpenModal(content, row) {
-    this.category = row;
-    this.modalService.open(content, {
-      ariaLabelledBy: 'modal-basic-title',
-      size: 'xl',
-    });
-
-    this.editCategorieForm.setValue({
-      categorie: this.category.category,
-      name: this.category.name,
-      description: this.category.description,
-      activate_big_banner: this.category.displayBigBanner,
-      activate_small_banner: this.category.displaySmallBanner,
-    });
   }
 
   categorieValidation() {
@@ -70,15 +60,13 @@ export class CategoriesEditModalComponent implements OnInit {
     this.modalService.dismissAll();
   }
 
-  showSuccess(message) {
+  showSuccess(message: string) {
     this.toastr.success(message, 'Success!');
   }
 
   onFileSelected(event) {
     this.selectedFile = <File>event.target.files[0];
   }
-
-  uploadFile() { }
 
   onChangeSmallBanner() {
     this.checkboxSmallBanner = !this.checkboxSmallBanner;

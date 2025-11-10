@@ -5,25 +5,27 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {
-  FormBuilder,
-  FormGroup,
-  Validators,
-  AbstractControl,
+  FormBuilder
 } from '@angular/forms';
 import Swal from 'sweetalert2';
 
-import { ToastrService } from 'ngx-toastr';
-import { _ParseAST } from '@angular/compiler';
-
-import { AffiliateService } from '@app/core/service/affiliate-service/affiliate.service';
-import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
+import {ToastrService} from 'ngx-toastr';
+import {UserAffiliate} from "../../../core/models/user-affiliate-model/user.affiliate.model";
+import {AffiliateService} from "../../../core/service/affiliate-service/affiliate.service";
+import {DataTableColumnCellDirective, DataTableColumnDirective, DatatableComponent} from "@swimlane/ngx-datatable";
 
 @Component({
   selector: 'app-authorize-affiliates-edit-modal',
   templateUrl: './authorize-affiliates-edit-modal.component.html',
   providers: [ToastrService],
+  standalone: true,
+  imports: [
+    DatatableComponent,
+    DataTableColumnDirective,
+    DataTableColumnCellDirective
+  ]
 })
 export class AuthorizeAffiliatesEditModalComponent implements OnInit {
   user = new UserAffiliate();
@@ -36,7 +38,8 @@ export class AuthorizeAffiliatesEditModalComponent implements OnInit {
     private formBuilder: FormBuilder,
     private toastr: ToastrService,
     private affiliateService: AffiliateService
-  ) { }
+  ) {
+  }
 
   editOpenModal(content, affiliate: UserAffiliate) {
     this.modalService.open(content, {
@@ -49,19 +52,19 @@ export class AuthorizeAffiliatesEditModalComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  sendEmail(){
+  sendEmail() {
     this.affiliateService
-    .sendEmailConfirm(this.user.id)
-    .subscribe((response) => {
-      if (response.success) {
-        this.showSuccess('The email was sent correctly.');
-      } else {
-        this.showError('Error!');
-      }
-    });
+      .sendEmailConfirm(this.user.id)
+      .subscribe((response) => {
+        if (response.success) {
+          this.showSuccess('The email was sent correctly.');
+        } else {
+          this.showError('Error!');
+        }
+      });
   }
 
-  authorization(){
+  authorization() {
     Swal.fire({
       title: 'Are you sure?',
       showCancelButton: true,
@@ -72,13 +75,13 @@ export class AuthorizeAffiliatesEditModalComponent implements OnInit {
       if (result.value) {
         let approvedArray = [];
         approvedArray.push(this.user.id);
-        this.selectionProcess(approvedArray, []);     
+        this.selectionProcess(approvedArray, []);
       }
     });
 
   }
 
-  delete(){
+  delete() {
     Swal.fire({
       title: 'Are you sure?',
       showCancelButton: true,
@@ -89,7 +92,7 @@ export class AuthorizeAffiliatesEditModalComponent implements OnInit {
       if (result.value) {
         let disApprovedArray = [];
         disApprovedArray.push(this.user.id);
-        this.selectionProcess([], disApprovedArray);      
+        this.selectionProcess([], disApprovedArray);
       }
     });
   }
@@ -97,16 +100,16 @@ export class AuthorizeAffiliatesEditModalComponent implements OnInit {
 
   selectionProcess(approvedArray: any[], disApprovedArray: any[]) {
     this.affiliateService
-    .authorizationAffiliates(approvedArray, disApprovedArray)
-    .subscribe((response) => {
-      if (response.success) {
-        this.showSuccess('The affiliation have been processed successfully.');
-        this.loadAffiliateList.emit();
-        this.closeModals();
-      } else {
-        this.showError('Error!');
-      }
-    });
+      .authorizationAffiliates(approvedArray, disApprovedArray)
+      .subscribe((response) => {
+        if (response.success) {
+          this.showSuccess('The affiliation have been processed successfully.');
+          this.loadAffiliateList.emit();
+          this.closeModals();
+        } else {
+          this.showError('Error!');
+        }
+      });
   }
 
   showSuccess(message) {

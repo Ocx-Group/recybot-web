@@ -1,7 +1,12 @@
-import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { DatatableComponent } from '@swimlane/ngx-datatable';
-import { LoginMovements } from './../../core/models/signin-model/login-movements.model';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import {
+  NgbDropdown,
+  NgbDropdownItem,
+  NgbDropdownMenu,
+  NgbDropdownToggle,
+  NgbModal,
+} from '@ng-bootstrap/ng-bootstrap';
+import { LoginMovements } from '@app/core/models/signin-model/login-movements.model';
 
 import { AffiliateService } from '@app/core/service/affiliate-service/affiliate.service';
 import { AuthService } from '@app/core/service/authentication-service/auth.service';
@@ -14,10 +19,34 @@ import { Grading } from '@app/core/models/grading-model/grading.model';
 import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
 
 const header = ['Movimientos', 'IP', 'Fecha'];
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { MyProfileEditPasswordModalComponent } from './my-profile-edit-password-modal/my-profile-edit-password-modal.component';
+import { MyProfileEditPersonalInfoModalComponent } from './my-profile-edit-personal-info-modal/my-profile-edit-personal-info-modal.component';
+import { EditSecurityPinModalComponent } from './edit-security-pin-modal/edit-security-pin-modal.component';
+import { SecretQuestionModalComponent } from './secret-question-modal/secret-question-modal.component';
+import { ImageProfileModalComponent } from './image-profile-modal/image-profile-modal.component';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-my-profile',
   templateUrl: './my-profile.component.html',
+  styleUrls: ['./my-profile.component.scss'],
+  standalone: true,
+  imports: [
+    CommonModule,
+    TranslateModule,
+    MyProfileEditPasswordModalComponent,
+    MyProfileEditPersonalInfoModalComponent,
+    EditSecurityPinModalComponent,
+    SecretQuestionModalComponent,
+    ImageProfileModalComponent,
+    RouterLink,
+    NgbDropdownItem,
+    NgbDropdown,
+    NgbDropdownToggle,
+    NgbDropdownMenu,
+  ],
 })
 export class MyProfileComponent implements OnInit {
   public user: UserAffiliate = new UserAffiliate();
@@ -27,60 +56,81 @@ export class MyProfileComponent implements OnInit {
   temp = [];
   loadingIndicator = true;
   reorderable = true;
-  scrollBarHorizontal = window.innerWidth < 1200;
+
+  @ViewChild('modalChildChangePassword')
+  modalChildChangePassword: MyProfileEditPasswordModalComponent;
+  @ViewChild('modalChildEditPersonalInfo')
+  modalChildEditPersonalInfo: MyProfileEditPersonalInfoModalComponent;
+  @ViewChild('modalChildSecretQuestion')
+  modalChildSecretQuestion: SecretQuestionModalComponent;
+  @ViewChild('modalChildImageProfile')
+  modalChildImageProfile: ImageProfileModalComponent;
 
   constructor(
-    private modalService: NgbModal,
-    private printService: PrintService,
-    private clipboardService: ClipboardService,
-    private toastr: ToastrService,
-    private authService: AuthService,
-    private gradingService: GradingService,
-    private affiliateService: AffiliateService,
-
-  ) { }
-
-  @ViewChild('table') table: DatatableComponent;
+    private readonly modalService: NgbModal,
+    private readonly printService: PrintService,
+    private readonly clipboardService: ClipboardService,
+    private readonly toastr: ToastrService,
+    private readonly authService: AuthService,
+    private readonly gradingService: GradingService,
+    private readonly affiliateService: AffiliateService,
+  ) {}
 
   ngOnInit(): void {
     this.getUserInfo();
   }
 
-  @HostListener('window:resize', ['$event'])
-  onResize(event) {
-    this.scrollBarHorizontal = window.innerWidth < 1200;
-    this.table.recalculate();
-    this.table.recalculateColumns();
+  openPasswordModal() {
+    if (this.modalChildChangePassword) {
+      this.modalChildChangePassword.openPasswordModal(
+        this.modalChildChangePassword['changePasswordModal'],
+        this.user,
+      );
+    }
   }
 
-  getRowHeight(row) {
-    return row.height;
+  openSecretQuestionModal() {
+    if (this.modalChildSecretQuestion) {
+      this.modalChildSecretQuestion.openSecretQuestionModal(
+        this.modalChildSecretQuestion['secretQuestionModal'],
+        this.user,
+      );
+    }
   }
 
-  updateFilter(event) {
-    const val = event.target.value.toLowerCase();
+  openEditPersonalInfoModal() {
+    if (this.modalChildEditPersonalInfo) {
+      this.modalChildEditPersonalInfo.openEditPersonalInfoModal(
+        this.modalChildEditPersonalInfo['editPersonalInfoModal'],
+        this.user,
+      );
+    }
+  }
 
-    const temp = this.temp.filter(function (d) {
-      return d.name.toLowerCase().indexOf(val) !== -1 || !val;
-    });
-
-    this.rows = temp;
-    this.table.offset = 0;
+  openImageProfileModal() {
+    if (this.modalChildImageProfile) {
+      this.modalChildImageProfile.openImageProfileModal(
+        this.modalChildImageProfile['imageProfileModal'],
+        this.user,
+      );
+    }
   }
 
   getUserInfo() {
     this.userCookie = this.authService.currentUserAffiliateValue;
-    this.affiliateService.getAffiliateById(this.userCookie.id).subscribe((response) => {
-      if (response.success) {
-        this.user = response.data;
-        this.getGradingInfo(this.user.external_grading_before_id);
-        this.loadLoginMovements();
-      }
-    });
+    this.affiliateService
+      .getAffiliateById(this.userCookie.id)
+      .subscribe(response => {
+        if (response.success) {
+          this.user = response.data;
+          this.getGradingInfo(this.user.external_grading_before_id);
+          this.loadLoginMovements();
+        }
+      });
   }
 
   getGradingInfo(id: number) {
-    this.gradingService.getGradingById(id).subscribe((response) => {
+    this.gradingService.getGradingById(id).subscribe(response => {
       if (response.success) {
         this.grading = response.data;
       }
@@ -97,8 +147,8 @@ export class MyProfileComponent implements OnInit {
   }
 
   clipBoardCopy() {
-    var string = JSON.stringify(this.temp);
-    var result = this.clipboardService.copyFromContent(string);
+    const string = JSON.stringify(this.temp);
+    this.clipboardService.copyFromContent(string);
 
     if (this.temp.length === 0) {
       this.toastr.info('No data to copy');
@@ -117,10 +167,10 @@ export class MyProfileComponent implements OnInit {
         }
         this.loadingIndicator = false;
       },
-      error: (error) => {
+      error: error => {
         this.toastr.error('Error loading movements');
         this.loadingIndicator = false;
-      }
+      },
     });
   }
 }

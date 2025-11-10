@@ -1,18 +1,17 @@
-import {
-  Component,
-  ElementRef,
-  HostListener,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
-import { DatatableComponent } from '@swimlane/ngx-datatable';
-import { ClipboardService } from 'ngx-clipboard';
-import { ToastrService } from 'ngx-toastr';
+import {Component, ElementRef, HostListener, OnInit, ViewChild,} from '@angular/core';
+import {DataTableColumnCellDirective, DataTableColumnDirective, DatatableComponent} from '@swimlane/ngx-datatable';
+import {ClipboardService} from 'ngx-clipboard';
+import {ToastrService} from 'ngx-toastr';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {PrintService} from "../../core/service/print-service/print.service";
+import {InvoiceService} from "../../core/service/invoice-service/invoice.service";
+import {PaginationRequest} from "../../core/interfaces/pagination-request";
+import {TranslatePipe} from "@ngx-translate/core";
+import {RouterLink} from "@angular/router";
+import {IconsModule} from "../../shared";
+import {FormsModule} from "@angular/forms";
+import {CurrencyPipe, DatePipe, NgClass} from "@angular/common";
 
-import { PaginationRequest } from '@app/core/interfaces/pagination-request';
-import { InvoiceService } from '@app/core/service/invoice-service/invoice.service';
-import { PrintService } from '@app/core/service/print-service/print.service';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 const header = [
   'Afiliado',
   'Nombre y Apellido',
@@ -21,10 +20,13 @@ const header = [
   'Estado Factura',
   'Pagado',
 ];
+
 @Component({
   selector: 'app-purchases-list',
   templateUrl: './purchases-list.component.html',
   providers: [ToastrService],
+  standalone: true,
+  imports: [DatatableComponent, TranslatePipe, RouterLink, IconsModule, FormsModule, NgClass, DataTableColumnDirective, DataTableColumnCellDirective, DatePipe, CurrencyPipe]
 })
 export class PurchasesListComponent implements OnInit {
   rows = [];
@@ -48,7 +50,8 @@ export class PurchasesListComponent implements OnInit {
     private printService: PrintService,
     private invoiceService: InvoiceService,
     private modalService: NgbModal,
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.loadData();
@@ -121,7 +124,7 @@ export class PurchasesListComponent implements OnInit {
   updateFilter(event) {
     const val = event.target.value.toLowerCase();
 
-    const temp = this.temp.filter(function (d) {
+    this.rows = this.temp.filter(function (d) {
       return (
         d.name?.toLowerCase().indexOf(val) !== -1 ||
         d.lastName?.toLowerCase().indexOf(val) !== -1 ||
@@ -130,8 +133,6 @@ export class PurchasesListComponent implements OnInit {
         !val
       );
     });
-
-    this.rows = temp;
     this.table.offset = 0;
   }
 
@@ -150,7 +151,7 @@ export class PurchasesListComponent implements OnInit {
 
   onPrint() {
     const body = this.temp.map((items: any) => {
-      const data = [
+      return [
         items.userName,
         `${items.name} ${items.lastName}`,
         items.id,
@@ -158,7 +159,6 @@ export class PurchasesListComponent implements OnInit {
         items.status ? 'Activa' : 'Pendiente o Anulada',
         items.totalInvoice,
       ];
-      return data;
     });
 
     this.printService.print(header, body, 'Lista de Compras', false);
@@ -171,11 +171,6 @@ export class PurchasesListComponent implements OnInit {
       backdrop: 'static',
       keyboard: false,
     });
-  }
-
-  closeDetails() {
-    this.modal?.close();
-    this.selectedInvoice = null;
   }
 
   printInvoiceDetails() {

@@ -1,21 +1,41 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {takeUntil} from "rxjs/operators";
 import {Subject} from "rxjs";
-import {Router} from "@angular/router";
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {Router, RouterLink} from "@angular/router";
+import {NgbCarousel, NgbModal, NgbSlide} from "@ng-bootstrap/ng-bootstrap";
 import {ToastrService} from 'ngx-toastr';
-import {DatatableComponent, SelectionType} from '@swimlane/ngx-datatable';
+import {
+  DataTableColumnCellDirective,
+  DataTableColumnDirective,
+  DatatableComponent,
+  SelectionType
+} from '@swimlane/ngx-datatable';
 
-import {TicketHubService} from "@app/core/service/ticket-service/ticket-hub.service";
-import {Ticket} from "@app/core/models/ticket-model/ticket.model";
-import {TicketCategoriesService} from "@app/core/service/ticket-categories-service/ticket-categories.service";
-import {TicketCategories} from "@app/core/models/ticket-categories-model/ticket-categories.model";
 import Swal from 'sweetalert2';
-import {CreateAdminModalComponent} from "@app/admin/tickets/create-admin-modal/create-admin-modal.component";
+import {Ticket} from "@app/core/models/ticket-model/ticket.model";
+import {TicketCategories} from "@app/core/models/ticket-categories-model/ticket-categories.model";
+import {CreateAdminModalComponent} from "./create-admin-modal/create-admin-modal.component";
+import {TicketHubService} from "@app/core/service/ticket-service/ticket-hub.service";
+import {TicketCategoriesService} from "@app/core/service/ticket-categories-service/ticket-categories.service";
+import {AsyncPipe, NgClass} from "@angular/common";
+import {AdminRespondedPipe} from "@app/shared/pipes/admin-responded.pipe";
 
 @Component({
   selector: 'app-tickets-admin',
   templateUrl: './tickets-admin.component.html',
+  standalone: true,
+  imports: [
+    RouterLink,
+    DatatableComponent,
+    DataTableColumnDirective,
+    DataTableColumnCellDirective,
+    NgClass,
+    AdminRespondedPipe,
+    AsyncPipe,
+    NgbCarousel,
+    NgbSlide,
+    CreateAdminModalComponent
+  ]
 })
 export class TicketsAdminComponent implements OnInit {
   tickets: Ticket[] = [];

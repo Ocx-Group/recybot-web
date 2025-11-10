@@ -1,15 +1,35 @@
-import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { DatatableComponent } from '@swimlane/ngx-datatable';
-import { map } from 'rxjs/operators';
+import {Component, HostListener, OnInit, ViewChild} from '@angular/core';
+import {NgbDropdown, NgbDropdownItem, NgbDropdownMenu, NgbDropdownToggle, NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {DataTableColumnCellDirective, DataTableColumnDirective, DatatableComponent} from '@swimlane/ngx-datatable';
+import {map} from 'rxjs/operators';
+import {InvoiceService} from "../../core/service/invoice-service/invoice.service";
+import {PaginationRequest} from "../../core/interfaces/pagination-request";
+import {Invoice} from "../../core/models/invoice-model/invoice.model";
+import {TranslatePipe} from "@ngx-translate/core";
+import {RouterLink} from "@angular/router";
+import {IconsModule} from "../../shared";
+import {PassivePackDetailsComponent} from "./passive-pack-details/passive-pack-details/passive-pack-details.component";
+import {PassivePackRunPoolModalComponent} from "./passive-pack-run-pool-modal/passive-pack-run-pool-modal.component";
 
-import { PaginationRequest } from '@app/core/interfaces/pagination-request';
-import { Invoice } from '@app/core/models/invoice-model/invoice.model';
-import { InvoiceService } from '@app/core/service/invoice-service/invoice.service';
 
 @Component({
   selector: 'app-passive-pack',
   templateUrl: './passive-pack.component.html',
+  standalone: true,
+  imports: [
+    TranslatePipe,
+    RouterLink,
+    IconsModule,
+    DatatableComponent,
+    DataTableColumnDirective,
+    DataTableColumnCellDirective,
+    NgbDropdownMenu,
+    NgbDropdown,
+    NgbDropdownItem,
+    NgbDropdownToggle,
+    PassivePackDetailsComponent,
+    PassivePackRunPoolModalComponent
+  ]
 })
 export class PassivePackComponent implements OnInit {
   rows = [];
@@ -17,7 +37,6 @@ export class PassivePackComponent implements OnInit {
   loadingIndicator = true;
   reorderable = true;
   scrollBarHorizontal = window.innerWidth < 1200;
-  totalElements: number = 0;
   pageSize: number = 10;
   currentPage: number = 1;
   startDate: string = null;
@@ -27,7 +46,8 @@ export class PassivePackComponent implements OnInit {
   constructor(
     private modalService: NgbModal,
     private invoiceService: InvoiceService,
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.loadInvoiceList();
@@ -81,11 +101,9 @@ export class PassivePackComponent implements OnInit {
 
   updateFilter(event) {
     const val = event.target.value.toLowerCase();
-    const temp = this.temp.filter(function (d) {
+    this.rows = this.temp.filter(function (d) {
       return d.invoiceId.toString().toLowerCase().indexOf(val) !== -1 || !val;
     });
-
-    this.rows = temp;
     this.table.offset = 0;
   }
 

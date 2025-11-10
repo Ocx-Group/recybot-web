@@ -1,12 +1,22 @@
-import { ConfigurationService } from '@app/core/service/configuration-service/configuration.service';
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { GeneralConfiguration } from '@app/core/models/general-configuration/general-configuration.model';
-import { ToastrService } from 'ngx-toastr';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {ToastrService} from 'ngx-toastr';
+import {ConfigurationService} from "../../core/service/configuration-service/configuration.service";
+import {GeneralConfiguration} from "../../core/models/general-configuration/general-configuration.model";
+import {NgbNav, NgbNavContent, NgbNavItem, NgbNavLink, NgbNavOutlet} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
+  standalone: true,
+  imports: [
+    NgbNav,
+    NgbNavItem,
+    NgbNavContent,
+    NgbNavLink,
+    ReactiveFormsModule,
+    NgbNavOutlet
+  ]
 })
 export class SettingsComponent implements OnInit {
   generalConfigurationForm: FormGroup
@@ -16,7 +26,8 @@ export class SettingsComponent implements OnInit {
     private fb: FormBuilder,
     private configurationService: ConfigurationService,
     private toastrService: ToastrService
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     this.generalConfigurationForm = this.fb.group({

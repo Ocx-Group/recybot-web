@@ -16,9 +16,15 @@ const ALERTS: Alert[] = [
   },
 ];
 
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { FormsModule } from '@angular/forms';
+
 @Component({
-  selector: 'app-commissions',
-  templateUrl: './commissions.component.html',
+    selector: 'app-commissions',
+    templateUrl: './commissions.component.html',
+    standalone: true,
+    imports: [CommonModule, TranslateModule, FormsModule]
 })
 export class CommissionsComponent implements OnInit {
   alerts: Alert[];

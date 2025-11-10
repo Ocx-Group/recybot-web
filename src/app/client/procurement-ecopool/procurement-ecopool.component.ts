@@ -1,8 +1,16 @@
-import { Component, ViewChild, HostListener } from '@angular/core';
-import { DatatableComponent } from '@swimlane/ngx-datatable';
+import { Component, ViewChild, HostListener, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { DatatableComponent, NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { IconsModule } from '@app/shared';
+import {RouterLink} from "@angular/router";
+
 @Component({
-  selector: 'app-procurement-ecopool',
-  templateUrl: './procurement-ecopool.component.html'
+    selector: 'app-procurement-ecopool',
+    templateUrl: './procurement-ecopool.component.html',
+    standalone: true,
+  imports: [CommonModule, NgxDatatableModule, TranslateModule, IconsModule, RouterLink],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class ProcurementEcopoolComponent  {
   rows = [];
@@ -13,7 +21,7 @@ export class ProcurementEcopoolComponent  {
 
   @ViewChild('table') table: DatatableComponent;
 
-  constructor() { 
+  constructor() {
     this.fetch((data) => {
       this.temp = [...data];
       this.rows = data;
@@ -24,7 +32,7 @@ export class ProcurementEcopoolComponent  {
   }
 
   @HostListener('window:resize', ['$event'])
-  onResize(event) {
+  onResize(_event: any) {
     this.scrollBarHorizontal = window.innerWidth < 1200;
     this.table.recalculate();
     this.table.recalculateColumns();
@@ -47,13 +55,10 @@ export class ProcurementEcopoolComponent  {
   updateFilter(event) {
     const val = event.target.value.toLowerCase();
 
-    // filter our data
-    const temp = this.temp.filter(function (d) {
+    // filter our data and update the rows
+    this.rows = this.temp.filter(function (d) {
       return d.name.toLowerCase().indexOf(val) !== -1 || !val;
     });
-
-    // update the rows
-    this.rows = temp;
     // Whenever the filter changes, always go back to the first page
     this.table.offset = 0;
   }

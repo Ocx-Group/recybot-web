@@ -5,23 +5,34 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import {NgbModal, NgbModalModule} from '@ng-bootstrap/ng-bootstrap';
 import {
   FormBuilder,
   FormGroup,
   Validators,
-  FormControl,
+  FormControl, FormsModule, ReactiveFormsModule,
 } from '@angular/forms';
-import { ToastrService } from 'ngx-toastr';
-import { Country } from '@app/core/models/country-model/country.model';
-import { AffiliateService } from '@app/core/service/affiliate-service/affiliate.service';
-import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
+import {ToastrService} from 'ngx-toastr';
+
+import {CommonModule} from "@angular/common";
+import {TranslateModule} from "@ngx-translate/core";
+import {UserAffiliate} from "../../../core/models/user-affiliate-model/user.affiliate.model";
+import {Country} from "../../../core/models/country-model/country.model";
+import {AffiliateService} from "../../../core/service/affiliate-service/affiliate.service";
 
 @Component({
   selector: 'app-affiliates-list-edit-modal',
   templateUrl: './affiliates-list-edit-modal.component.html',
   styleUrls: ['./affiliates-list-edit-modal.component.scss'],
   providers: [ToastrService],
+  standalone: true,
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NgbModalModule,
+    TranslateModule,
+  ]
 })
 export class AffiliatesListEditModalComponent implements OnInit {
   editAffiliateForm: FormGroup;
@@ -36,7 +47,8 @@ export class AffiliatesListEditModalComponent implements OnInit {
     private formBuilder: FormBuilder,
     private toastr: ToastrService,
     private affiliateService: AffiliateService,
-  ) {}
+  ) {
+  }
 
   editOpenModal(content, affiliate: UserAffiliate) {
     this.modalService.open(content, {
@@ -51,7 +63,7 @@ export class AffiliatesListEditModalComponent implements OnInit {
   setValues(affiliate: UserAffiliate) {
     this.affiliate = affiliate;
 
-    let birthdayFormatted = '';
+    let birthdayFormatted: string;
     const birthdayDate = new Date(affiliate.birthday);
     birthdayFormatted = birthdayDate.toISOString().split('T')[0];
 
@@ -90,11 +102,11 @@ export class AffiliatesListEditModalComponent implements OnInit {
     });
   }
 
-  showSuccess(message) {
+  showSuccess(message: string) {
     this.toastr.success(message, 'Success!');
   }
 
-  showError(message) {
+  showError(message: string) {
     this.toastr.error(message, 'Error!');
   }
 
@@ -107,17 +119,17 @@ export class AffiliatesListEditModalComponent implements OnInit {
   loadValidations() {
     this.editAffiliateForm = this.formBuilder.group({
       identification: [],
-      user_name: new FormControl({ value: '', disabled: true }),
-      name: new FormControl({ value: '', disabled: true }),
-      last_name: new FormControl({ value: '', disabled: true }),
+      user_name: new FormControl({value: '', disabled: true}),
+      name: new FormControl({value: '', disabled: true}),
+      last_name: new FormControl({value: '', disabled: true}),
       email: ['', Validators.required],
-      father: new FormControl({ value: '', disabled: true }),
+      father: new FormControl({value: '', disabled: true}),
       phone: ['', Validators.required],
       address: [],
       country: [],
       tax_id: [],
       zip_code: [],
-      created_at: new FormControl({ value: '', disabled: true }),
+      created_at: new FormControl({value: '', disabled: true}),
       birthday: [],
       status: [],
       beneficiary_name: [],

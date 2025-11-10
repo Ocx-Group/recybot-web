@@ -1,17 +1,37 @@
-import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
+import {Component, HostListener, OnInit, ViewChild} from '@angular/core';
 
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { DatatableComponent } from '@swimlane/ngx-datatable';
+import {NgbDropdown, NgbDropdownItem, NgbDropdownMenu, NgbDropdownToggle, NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {DataTableColumnCellDirective, DataTableColumnDirective, DatatableComponent} from '@swimlane/ngx-datatable';
 import Swal from 'sweetalert2';
-import { ToastrService } from 'ngx-toastr';
-
-import { ProductCategoryService } from '@app/core/service/product-category-service/product-category.service';
-import { PrintService } from '@app/core/service/print-service/print.service';
+import {ToastrService} from 'ngx-toastr';
+import {ProductCategoryService} from "../../core/service/product-category-service/product-category.service";
+import {PrintService} from "../../core/service/print-service/print.service";
+import {TranslatePipe} from "@ngx-translate/core";
+import {RouterLink} from "@angular/router";
+import {IconsModule} from "../../shared";
+import {CategoriesCreateModalComponent} from "./categories-create-modal/categories-create-modal.component";
+import {CategoriesEditModalComponent} from "./categories-edit-modal/categories-edit-modal.component";
 
 const header = ['Nombre de Categoría', 'Descripción', 'Categoría Padre'];
+
 @Component({
   selector: 'app-categories',
   templateUrl: './categories.component.html',
+  standalone: true,
+  imports: [
+    TranslatePipe,
+    RouterLink,
+    IconsModule,
+    DatatableComponent,
+    DataTableColumnDirective,
+    DataTableColumnCellDirective,
+    NgbDropdown,
+    NgbDropdownToggle,
+    NgbDropdownMenu,
+    NgbDropdownItem,
+    CategoriesCreateModalComponent,
+    CategoriesEditModalComponent
+  ]
 })
 export class CategoriesComponent implements OnInit {
   rows = [];
@@ -28,7 +48,8 @@ export class CategoriesComponent implements OnInit {
     private productCategoryService: ProductCategoryService,
     private toastr: ToastrService,
     private printService: PrintService
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.loadCategoryList();
@@ -49,11 +70,9 @@ export class CategoriesComponent implements OnInit {
 
   updateFilter(event) {
     const val = event.target.value.toLowerCase();
-    const temp = this.temp.filter(function (d) {
+    this.rows = this.temp.filter(function (d) {
       return d.name.toLowerCase().indexOf(val) !== -1 || !val;
     });
-
-    this.rows = temp;
     this.table.offset = 0;
   }
 
@@ -101,9 +120,7 @@ export class CategoriesComponent implements OnInit {
 
   onPrint() {
     const body = this.temp.map((items: any) => {
-      const data = [items.name, items.description, items.category];
-
-      return data;
+      return [items.name, items.description, items.category];
     });
 
     this.printService.print(header, body, 'Lista de Categorías', false);

@@ -6,12 +6,28 @@ import { MembershipManagerService } from '@app/core/service/membership-manager-s
 import { TermsConditionsService } from '@app/core/service/terms-conditions-service/terms-conditions.service';
 import { TicketHubService } from '@app/core/service/ticket-service/ticket-hub.service';
 import { ToastrService } from 'ngx-toastr';
-
+import { RouterOutlet } from '@angular/router';
+import { HeaderComponent } from '@app/layout/header/header.component';
+import { SidebarComponent } from '@app/layout/sidebar/sidebar.component';
+import { RightSidebarComponent } from '@app/layout/right-sidebar/right-sidebar.component';
+import { FooterComponent } from '@app/layout/footer/footer.component';
+import { TermsConditionsModalComponent } from '@app/layout/terms-conditions-modal/terms-conditions-modal.component';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 @Component({
-  selector: 'app-main-layout',
-  templateUrl: './main-layout.component.html',
-  styleUrls: [],
+    selector: 'app-main-layout',
+    templateUrl: './main-layout.component.html',
+    styleUrls: [],
+    standalone: true,
+    imports: [
+      RouterOutlet,
+      HeaderComponent,
+      SidebarComponent,
+      RightSidebarComponent,
+      FooterComponent,
+      TermsConditionsModalComponent
+    ],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class MainLayoutComponent implements OnInit {
   user: UserAffiliate = new UserAffiliate();

@@ -4,11 +4,15 @@ import {Product} from '@app/core/models/product-model/product.model';
 import {ToastrService} from 'ngx-toastr';
 import {CartService} from 'src/app/core/service/cart.service/cart.service';
 import {ProductService} from 'src/app/core/service/product-service/product.service';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-products',
-  templateUrl: './products.component.html',
-  styleUrls: ['./products.component.scss'],
+    selector: 'app-products',
+    templateUrl: './products.component.html',
+    styleUrls: ['./products.component.scss'],
+    standalone: true,
+    imports: [CommonModule, FormsModule]
 })
 export class ProductsComponent implements OnInit {
   public productList: any;

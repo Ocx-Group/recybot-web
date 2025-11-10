@@ -34,7 +34,8 @@
                                       ocultar modelos:</label>
                                     <div class="col-sm-8">
                                       <input id="paymentModelCutoffDate" type="date"
-                                        class="form-control form-control-sm" formControlName="paymentModelCutoffDate">
+                                             class="form-control form-control-sm"
+                                             formControlName="paymentModelCutoffDate">
                                     </div>
                                   </div>
                                 </div>
@@ -47,7 +48,7 @@
                                     <div class="col-sm-8">
                                       <div class="form-check">
                                         <input id="isUnderMaintenance" type="checkbox" class="form-check-input"
-                                          formControlName="isUnderMaintenance">
+                                               formControlName="isUnderMaintenance">
                                         <label class="form-check-label" for="isUnderMaintenance">
                                           Activar modo mantenimiento
                                         </label>
@@ -59,7 +60,8 @@
                               <div class="row">
                                 <div class="col-md-2 mx-auto">
                                   <button type="button" class="btn btn-primary btn-sm w-100"
-                                    (click)="saveGeneralConfiguration()" [disabled]="generalConfigurationForm.invalid">
+                                          (click)="saveGeneralConfiguration()"
+                                          [disabled]="generalConfigurationForm.invalid">
                                     Guardar configuración
                                   </button>
                                 </div>

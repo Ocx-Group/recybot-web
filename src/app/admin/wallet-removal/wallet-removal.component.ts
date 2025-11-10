@@ -1,23 +1,44 @@
-import { ToastrService } from 'ngx-toastr';
-import { forkJoin } from 'rxjs';
+import {ToastrService} from 'ngx-toastr';
+import {forkJoin} from 'rxjs';
 import Swal from 'sweetalert2';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
-import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
-import { DatatableComponent } from '@swimlane/ngx-datatable';
-
-import { WalletRequestRequest } from '@app/core/models/wallet-request-request-model/wallet-request-request.model';
-import { WalletWithdrawalsConfiguration } from '@app/core/models/wallet-withdrawals-configuration-model/wallet-withdrawals-configuration.model';
-import { CoinpaymentService } from '@app/core/service/coinpayment-service/coinpayment.service';
-import { ConfigurationService } from '@app/core/service/configuration-service/configuration.service';
-import { WalletRequestService } from '@app/core/service/wallet-request/wallet-request.service';
-import { CoinPaymentWithdrawalResponse } from '@app/core/models/coinpayment-model/coinpayment-withdrawal-response.model';
-import { CoinpayService } from '@app/core/service/coinpay-service/coinpay.service';
-import { CoinPayWithdrawal } from '@app/core/models/coinpay-model/coinpay-withdrawal.model';
+import {Component, HostListener, OnInit, ViewChild} from '@angular/core';
+import {
+  DataTableColumnCellDirective,
+  DataTableColumnDirective,
+  DataTableColumnHeaderDirective,
+  DatatableComponent
+} from '@swimlane/ngx-datatable';
+import {WalletRequestService} from "../../core/service/wallet-request/wallet-request.service";
+import {
+  WalletWithdrawalsConfiguration
+} from "../../core/models/wallet-withdrawals-configuration-model/wallet-withdrawals-configuration.model";
+import {ConfigurationService} from "../../core/service/configuration-service/configuration.service";
+import {CoinpaymentService} from "../../core/service/coinpayment-service/coinpayment.service";
+import {CoinpayService} from "../../core/service/coinpay-service/coinpay.service";
+import {WalletRequestRequest} from "../../core/models/wallet-request-request-model/wallet-request-request.model";
+import {CoinPaymentWithdrawalResponse} from "../../core/models/coinpayment-model/coinpayment-withdrawal-response.model";
+import {CoinPayWithdrawal} from "../../core/models/coinpay-model/coinpay-withdrawal.model";
+import {RouterLink} from "@angular/router";
+import {TranslatePipe} from "@ngx-translate/core";
+import {IconsModule} from "../../shared";
+import {FormsModule} from "@angular/forms";
 
 @Component({
   selector: 'app-wallet-removal',
   templateUrl: './wallet-removal.component.html',
+  standalone: true,
+  imports: [
+    RouterLink,
+    TranslatePipe,
+    IconsModule,
+    FormsModule,
+    DatatableComponent,
+    DataTableColumnDirective,
+    DataTableColumnCellDirective,
+    DataTableColumnHeaderDirective
+  ]
 })
 export class WalletRemovalComponent implements OnInit {
   rows = [];
@@ -37,7 +58,8 @@ export class WalletRemovalComponent implements OnInit {
     private configurationService: ConfigurationService,
     private coinPaymentService: CoinpaymentService,
     private coinpayService: CoinpayService,
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.loadData();
@@ -56,7 +78,7 @@ export class WalletRemovalComponent implements OnInit {
       walletConfig:
         this.configurationService.getWithdrawalsWalletConfiguration(),
     }).subscribe({
-      next: ({ walletRequests, walletConfig }) => {
+      next: ({walletRequests, walletConfig}) => {
         this.walletWithdrawalConfig = walletConfig;
         this.updateTable(walletRequests);
       },
@@ -165,7 +187,7 @@ export class WalletRemovalComponent implements OnInit {
       const posY = 30;
 
       pdf.setFontSize(18);
-      pdf.text('Lista de retiros', pageWidth / 2, 20, { align: 'center' });
+      pdf.text('Lista de retiros', pageWidth / 2, 20, {align: 'center'});
 
       const contentDataURL = canvas.toDataURL('image/png');
       pdf.addImage(contentDataURL, 'PNG', posX, posY, imgWidth, imgHeight);
@@ -307,7 +329,7 @@ export class WalletRemovalComponent implements OnInit {
             icon: 'info',
             html: detailsHtml,
             confirmButtonText: 'Close',
-          });
+          }).then();
         }
       },
       error: err => {
@@ -316,7 +338,7 @@ export class WalletRemovalComponent implements OnInit {
           text: 'Failed to process the request.',
           icon: 'error',
           confirmButtonText: 'Close',
-        });
+        }).then();
         console.error('Error occurred:', err);
       },
     });
@@ -345,7 +367,7 @@ export class WalletRemovalComponent implements OnInit {
         icon: 'error',
         confirmButtonColor: '#dc3545',
         confirmButtonText: 'OK',
-      });
+      }).then();
     } else {
       Swal.fire({
         title: 'Está seguro de realizar la operación!',

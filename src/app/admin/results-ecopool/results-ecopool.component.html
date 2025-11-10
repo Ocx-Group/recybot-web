@@ -33,8 +33,9 @@
                               </div>
                             </div>
                             <input style="background-color: white;" type="text" class="form-control"
-                              id="inlineFormInputGroup" aria-label="Search box"
-                              placeholder="{{ 'NETWORK-PAGE.SEARCH.TEXT' | translate }}" (keyup)="updateFilter($event)">
+                                   id="inlineFormInputGroup" aria-label="Search box"
+                                   placeholder="{{ 'NETWORK-PAGE.SEARCH.TEXT' | translate }}"
+                                   (keyup)="updateFilter($event)">
                           </div>
                         </div>
                       </div>
@@ -42,14 +43,12 @@
                   </div>
                 </div>
                 <ngx-datatable #table class="material" [rows]="rows" [loadingIndicator]="loadingIndicator"
-                  columnMode="force" [headerHeight]="50" [footerHeight]="50" rowHeight="auto" [limit]="10"
-                  [scrollbarH]="scrollBarHorizontal" [reorderable]="reorderable">
-
-
-                  <ngx-datatable-row-detail [rowHeight]="210" #myDetailRow (toggle)="onDetailToggle($event)">
-                    <ng-template let-row="row" let-expanded="expanded" ngx-datatable-row-detail-template>
+                               columnMode="force" [headerHeight]="50" [footerHeight]="50" rowHeight="auto" [limit]="10"
+                               [scrollbarH]="scrollBarHorizontal" [reorderable]="reorderable">
+                  <ngx-datatable-row-detail [rowHeight]="210" (toggle)="onDetailToggle($event)">
+                    <ng-template let-row="row" ngx-datatable-row-detail-template>
                       <div
-                        style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; padding: 0.3rem; padding-left: 6rem;">
+                        style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; padding: 0.3rem 0.3rem 0.3rem 6rem;">
                         <strong>Nombre afiliado:</strong>
                         <strong>Nivel:</strong>
                         <strong>Porcentaje Nivel:</strong>
@@ -59,7 +58,7 @@
                         <strong>Monto x pagar:</strong>
                       </div>
                       <div *ngFor="let item of row.resultEcoPoolLevels"
-                        style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; padding: 0.3rem; padding-left: 6rem;">
+                           style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; padding: 0.3rem 0.3rem 0.3rem 6rem;">
                         <div>{{ item.affiliateName }}</div>
                         <div>{{ item.level }}</div>
                         <div>{{ item.percentageLevel }}</div>
@@ -70,13 +69,12 @@
                       </div>
                     </ng-template>
                   </ngx-datatable-row-detail>
-
                   <ngx-datatable-column [width]="50" [resizeable]="false" [sortable]="false" [draggable]="false"
-                    [canAutoResize]="false">
+                                        [canAutoResize]="false">
                     <ng-template let-row="row" let-expanded="expanded" ngx-datatable-cell-template>
                       <a href="javascript:void(0)" [class.datatable-icon-right]="!expanded"
-                        [class.datatable-icon-down]="expanded" title="Expand/Collapse Row"
-                        (click)="toggleExpandRow(row)">
+                         [class.datatable-icon-down]="expanded" title="Expand/Collapse Row"
+                         (click)="toggleExpandRow(row)">
                       </a>
                     </ng-template>
                   </ngx-datatable-column>
@@ -87,12 +85,12 @@
                   </ngx-datatable-column>
                   <ngx-datatable-column name="Nombre Producto">
                     <ng-template let-row="row" ngx-datatable-cell-template>
-                      {{row.productName}}
+                      {{ row.productName }}
                     </ng-template>
                   </ngx-datatable-column>
                   <ngx-datatable-column name="Fecha pago">
                     <ng-template let-row="row" ngx-datatable-cell-template>
-                      {{row.paymentDate}}
+                      {{ row.paymentDate }}
                     </ng-template>
                   </ngx-datatable-column>
                   <ngx-datatable-column name="Porcentage Diario">

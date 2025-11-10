@@ -1,18 +1,27 @@
-import { ResultsEcoPool } from './../../core/models/results-ecopool-model/results-ecopool.model';
-import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
-import { ResultsEcoPoolService } from '@app/core/service/results-ecopool-service/results-ecopool.service';
-import { DatatableComponent } from '@swimlane/ngx-datatable';
+import {AfterViewInit, Component, HostListener, OnInit, ViewChild} from '@angular/core';
+
+import {
+  DataTableColumnCellDirective,
+  DataTableColumnDirective,
+  DatatableComponent,
+  DatatableRowDetailDirective,
+  DatatableRowDetailTemplateDirective
+} from '@swimlane/ngx-datatable';
+import {ResultsEcoPoolService} from "../../core/service/results-ecopool-service/results-ecopool.service";
+import {IconsModule} from "../../shared";
+import {TranslatePipe} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-results-ecopool',
-  templateUrl: './results-ecopool.component.html'
+  templateUrl: './results-ecopool.component.html',
+  standalone: true,
+  imports: [DatatableComponent, IconsModule, TranslatePipe, DatatableRowDetailDirective, DatatableRowDetailTemplateDirective, DataTableColumnDirective, DataTableColumnCellDirective]
 })
-export class ResultsEcopoolComponent implements OnInit {
+export class ResultsEcopoolComponent implements OnInit, AfterViewInit {
   temp = [];
   rows = [];
   expanded: any = {};
   timeout: any;
-  resultsEcoPool: ResultsEcoPool;
   loadingIndicator = true;
   reorderable = true;
   scrollBarHorizontal = window.innerWidth < 1200;
@@ -39,23 +48,13 @@ export class ResultsEcopoolComponent implements OnInit {
     this.table.recalculateColumns();
   }
 
-
   updateFilter(event) {
     const val = event.target.value.toLowerCase();
 
-    const temp = this.temp.filter(function (d) {
+    this.rows = this.temp.filter(function (d) {
       return d.affiliateName.toLowerCase().indexOf(val) !== -1 || !val;
     });
-
-    this.rows = temp;
     this.table.offset = 0;
-  }
-
-  onPage(event) {
-    clearTimeout(this.timeout);
-    this.timeout = setTimeout(() => {
-      console.log('paged!', event);
-    }, 100);
   }
 
   getRowHeight(row) {
@@ -78,8 +77,7 @@ export class ResultsEcopoolComponent implements OnInit {
         this.rows = value;
         this.loadingIndicator = false;
       },
-      error: (err) => {
-
+      error: () => {
       },
     })
   }

@@ -1,4 +1,3 @@
-import { PaymentGroup } from '@app/core/models/payment-group-model/payment.group.model';
 import {
   Component,
   EventEmitter,
@@ -12,14 +11,18 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ToastrService } from 'ngx-toastr';
-import { PaymentGroupsService } from '@app/core/service/payment-groups-service/payment-groups.service';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {ToastrService} from 'ngx-toastr';
+import {PaymentGroup} from "../../../core/models/payment-group-model/payment.group.model";
+import {PaymentGroupsService} from "../../../core/service/payment-groups-service/payment-groups.service";
+
 
 @Component({
   selector: 'app-calculation-groups-edit-modal',
   templateUrl: './calculation-groups-edit-modal.component.html',
   providers: [ToastrService],
+  standalone: true,
+  imports: []
 })
 export class CalculationGroupsEditModalComponent implements OnInit {
   editCalculationForm: FormGroup;
@@ -35,7 +38,8 @@ export class CalculationGroupsEditModalComponent implements OnInit {
     private toastr: ToastrService,
     private modalService: NgbModal,
     private formBuilder: FormBuilder
-  ) {}
+  ) {
+  }
 
   get edit_calculation_controls(): { [key: string]: AbstractControl } {
     return this.editCalculationForm.controls;
@@ -82,9 +86,10 @@ export class CalculationGroupsEditModalComponent implements OnInit {
       });
   }
 
-  showSuccess(message) {
+  showSuccess(message: string) {
     this.toastr.success(message, 'Success!');
   }
+
   closeModals() {
     this.modalService.dismissAll();
   }

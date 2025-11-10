@@ -5,7 +5,9 @@ interface Scripts {
 }
 export const ScriptStore: Scripts[] = [];
 declare var document: any;
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class DynamicScriptLoaderService {
   private scripts: any = {};
   constructor() {

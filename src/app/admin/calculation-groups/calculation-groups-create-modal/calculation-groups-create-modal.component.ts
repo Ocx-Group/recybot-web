@@ -8,18 +8,26 @@ import {
 import {
   AbstractControl,
   FormBuilder,
-  FormGroup,
+  FormGroup, ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { ToastrService } from 'ngx-toastr';
-import Swal from 'sweetalert2';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import {ToastrService} from 'ngx-toastr';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
-import { PaymentGroupsService } from '@app/core/service/payment-groups-service/payment-groups.service';
-import { PaymentGroup } from '@app/core/models/payment-group-model/payment.group.model';
+import {TranslatePipe} from "@ngx-translate/core";
+import {NgClass} from "@angular/common";
+import {PaymentGroup} from "../../../core/models/payment-group-model/payment.group.model";
+import {PaymentGroupsService} from "../../../core/service/payment-groups-service/payment-groups.service";
+
 @Component({
   selector: 'app-calculation-groups-create-modal',
   templateUrl: './calculation-groups-create-modal.component.html',
+  standalone: true,
+  imports: [
+    TranslatePipe,
+    ReactiveFormsModule,
+    NgClass
+  ]
 })
 export class CalculationGroupsCreateModalComponent implements OnInit {
   createCalculationForm: FormGroup;
@@ -35,7 +43,8 @@ export class CalculationGroupsCreateModalComponent implements OnInit {
     private paymentGroupService: PaymentGroupsService,
     private toastr: ToastrService,
     private modalService: NgbModal
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.loadValidations();
@@ -52,7 +61,7 @@ export class CalculationGroupsCreateModalComponent implements OnInit {
     });
   }
 
-  showSuccess(message) {
+  showSuccess(message: string) {
     this.toastr.success(message, 'Success!');
   }
 
@@ -73,7 +82,7 @@ export class CalculationGroupsCreateModalComponent implements OnInit {
 
     this.paymentGroupService
       .createPaymentGroup(this.paymentGroup)
-      .subscribe((resp) => {
+      .subscribe(() => {
         this.showSuccess('The payment group was created successfully!');
         this.closeModals();
         this.loadCalculationList.emit();

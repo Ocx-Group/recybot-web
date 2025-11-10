@@ -1,35 +1,53 @@
+import { WalletRequestRevertTransaction } from '@app/core/models/wallet-request-request-model/wallet-request-revert-transaction.model';
 import {
-  WalletRequestRevertTransaction
-} from '@app/core/models/wallet-request-request-model/wallet-request-revert-transaction.model';
-import {Subject, Subscription, takeUntil} from 'rxjs';
-import {Component, HostListener, OnDestroy, OnInit, ViewChild,} from '@angular/core';
-import {DatatableComponent} from '@swimlane/ngx-datatable';
+  Component,
+  OnInit,
+  AfterViewInit,
+  ViewChild,
+  TemplateRef,
+} from '@angular/core';
 import Swal from 'sweetalert2';
 
-import {InvoiceService} from '@app/core/service/invoice-service/invoice.service';
-import {ToastrService} from 'ngx-toastr';
-import {UserAffiliate} from '@app/core/models/user-affiliate-model/user.affiliate.model';
-import {AuthService} from '@app/core/service/authentication-service/auth.service';
-import {Invoice} from '@app/core/models/invoice-model/invoice.model';
-import {PrintService} from '@app/core/service/print-service/print.service';
-import {WalletRequestService} from '@app/core/service/wallet-request/wallet-request.service';
-import {ConfigurationService} from '@app/core/service/configuration-service/configuration.service';
-import {
-  WalletWithdrawalsConfiguration
-} from '@app/core/models/wallet-withdrawals-configuration-model/wallet-withdrawals-configuration.model';
+import { InvoiceService } from '@app/core/service/invoice-service/invoice.service';
+import { ToastrService } from 'ngx-toastr';
+import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
+import { AuthService } from '@app/core/service/authentication-service/auth.service';
+import { Invoice } from '@app/core/models/invoice-model/invoice.model';
+import { PrintService } from '@app/core/service/print-service/print.service';
+import { WalletRequestService } from '@app/core/service/wallet-request/wallet-request.service';
+import { ConfigurationService } from '@app/core/service/configuration-service/configuration.service';
+import { WalletWithdrawalsConfiguration } from '@app/core/models/wallet-withdrawals-configuration-model/wallet-withdrawals-configuration.model';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
-import {TranslateService} from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
+import { CommonModule } from '@angular/common';
+import { BillingPurchasesDetailModalComponent } from '@app/client/billing-purchases/billing-purchases-detail-modal/billing-purchases-detail-modal.component';
+import { IconsModule } from '@app/shared';
+import { RouterLink } from '@angular/router';
+import {
+  ReusableDatatableComponent,
+  TableColumn,
+  TableAction,
+  TableConfig,
+} from '@app/shared/components/reusable-datatable/reusable-datatable.component';
 
 @Component({
   selector: 'app-filter',
   templateUrl: './billing-purchases.component.html',
+  standalone: true,
+  imports: [
+    CommonModule,
+    TranslateModule,
+    BillingPurchasesDetailModalComponent,
+    IconsModule,
+    RouterLink,
+    ReusableDatatableComponent,
+  ],
 })
-export class BillingPurchasesComponent implements OnInit, OnDestroy {
+export class BillingPurchasesComponent implements OnInit, AfterViewInit {
   private user: UserAffiliate = new UserAffiliate();
-  private suscription: Subscription;
-  private destroy$ = new Subject();
-  private walletRequestRevertTransaction: WalletRequestRevertTransaction = new WalletRequestRevertTransaction();
+  private walletRequestRevertTransaction: WalletRequestRevertTransaction =
+    new WalletRequestRevertTransaction();
   withdrawalConfiguration = new WalletWithdrawalsConfiguration();
   rows = [];
   temp = [];
@@ -37,40 +55,122 @@ export class BillingPurchasesComponent implements OnInit, OnDestroy {
   reorderable = true;
   scrollBarHorizontal = window.innerWidth < 1200;
 
-  @ViewChild('table') table: DatatableComponent;
+  @ViewChild('modalChildDetail')
+  modalChildDetail: BillingPurchasesDetailModalComponent;
+  @ViewChild('customButtons') customButtons: TemplateRef<any>;
+  @ViewChild('noBillTemplate') noBillTemplate: TemplateRef<any>;
+  @ViewChild('billStateTemplate') billStateTemplate: TemplateRef<any>;
+  @ViewChild('paidStateTemplate') paidStateTemplate: TemplateRef<any>;
+  @ViewChild('modelTemplate') modelTemplate: TemplateRef<any>;
+  @ViewChild('totalAmountTemplate') totalAmountTemplate: TemplateRef<any>;
+
+  // Configuración para tabla reutilizable
+  tableColumns: TableColumn[] = [];
+  tableActions: TableAction[] = [];
+  tableConfig: TableConfig = {
+    showSearch: true,
+    showActions: true,
+    searchPlaceholder: 'BILLING-PURCHASES-PAGE.SEARCH.TEXT',
+    headerHeight: 50,
+    footerHeight: 50,
+    rowHeight: 'auto',
+    limit: 10,
+    columnMode: 'force',
+    reorderable: true,
+  };
 
   constructor(
-    private invoiceService: InvoiceService,
-    private toastr: ToastrService,
-    private auth: AuthService,
-    private printService: PrintService,
-    private walletRequestService: WalletRequestService,
-    private configurationService: ConfigurationService,
-    private translateService: TranslateService
-  ) {
-  }
+    private readonly invoiceService: InvoiceService,
+    private readonly toastr: ToastrService,
+    private readonly auth: AuthService,
+    private readonly printService: PrintService,
+    private readonly walletRequestService: WalletRequestService,
+    private readonly configurationService: ConfigurationService,
+    private readonly translateService: TranslateService,
+  ) {}
 
   ngOnInit(): void {
-    this.suscription = this.auth.currentUserAffiliate
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((user) => {
-        this.user = user;
-      });
+    // Usar signal para obtener el usuario afiliado
+    this.user = this.auth.userAffiliate();
+
+    this.setupTableActions();
     this.loadBillingPurchases();
     this.loadWithdrawalConfiguration();
   }
 
-  ngOnDestroy(): void {
-    this.destroy$.next(true);
-    this.destroy$.complete();
-    this.suscription.unsubscribe();
+  ngAfterViewInit(): void {
+    this.setupTableColumns();
   }
 
-  @HostListener('window:resize', ['$event'])
-  onResize(event) {
-    this.scrollBarHorizontal = window.innerWidth < 1200;
-    this.table.recalculate();
-    this.table.recalculateColumns();
+  setupTableColumns(): void {
+    this.tableColumns = [
+      {
+        name: this.translateService.instant(
+          'BILLING-PURCHASES-PAGE.ROW-NO-BILL.TEXT',
+        ),
+        prop: 'id',
+        sortable: true,
+        cellTemplate: this.noBillTemplate,
+      },
+      {
+        name: this.translateService.instant(
+          'BILLING-PURCHASES-PAGE.ROW-DATE.TEXT',
+        ),
+        prop: 'date',
+        sortable: true,
+      },
+      {
+        name: this.translateService.instant(
+          'BILLING-PURCHASES-PAGE.ROW-BILL-STATE.TEXT',
+        ),
+        prop: 'status',
+        sortable: true,
+        cellTemplate: this.billStateTemplate,
+      },
+      {
+        name: this.translateService.instant(
+          'BILLING-PURCHASES-PAGE.ROW-PAID.TEXT',
+        ),
+        prop: 'state',
+        sortable: true,
+        cellTemplate: this.paidStateTemplate,
+      },
+      {
+        name: this.translateService.instant(
+          'BILLING-PURCHASES-PAGE.ROW-MODEL.TEXT',
+        ),
+        prop: 'invoicesDetails',
+        sortable: false,
+        cellTemplate: this.modelTemplate,
+      },
+      {
+        name: this.translateService.instant(
+          'BILLING-PURCHASES-PAGE.TOTAL-AMOUNT.TEXT',
+        ),
+        prop: 'totalInvoice',
+        sortable: true,
+        cellTemplate: this.totalAmountTemplate,
+      },
+    ];
+  }
+
+  setupTableActions(): void {
+    this.tableActions = [
+      {
+        label: this.translateService.instant(
+          'BILLING-PURCHASES-PAGE.BTN-SEE-DETAILS.TEXT',
+        ),
+        icon: 'bi bi-person-badge',
+        callback: row => {
+          if (this.modalChildDetail) {
+            this.modalChildDetail.billingPurchasesOpenModal(
+              this.modalChildDetail['billingPurchasesDetailModal'],
+              row,
+            );
+          }
+        },
+      },
+    ];
   }
 
   showSuccess(message: string) {
@@ -83,13 +183,14 @@ export class BillingPurchasesComponent implements OnInit, OnDestroy {
 
   loadWithdrawalConfiguration() {
     this.configurationService.getWithdrawalsWalletConfiguration().subscribe({
-      next: (value) => {
-        this.withdrawalConfiguration.activate_invoice_cancellation = value.activate_invoice_cancellation;
+      next: value => {
+        this.withdrawalConfiguration.activate_invoice_cancellation =
+          value.activate_invoice_cancellation;
       },
-      error: (err) => {
+      error: err => {
         this.showError('Error');
       },
-    })
+    });
   }
 
   loadBillingPurchases() {
@@ -98,9 +199,9 @@ export class BillingPurchasesComponent implements OnInit, OnDestroy {
         this.temp = [...invoices];
         this.rows = invoices;
         this.loadingIndicator = false;
-        console.log(this.rows)
+        console.log(this.rows);
       },
-      error: (err) => {
+      error: err => {
         this.showError('Error');
       },
     });
@@ -110,20 +211,10 @@ export class BillingPurchasesComponent implements OnInit, OnDestroy {
     return row.height;
   }
 
-  updateFilter(event) {
-    const val = event.target.value.toLowerCase();
-
-    this.rows = this.temp.filter(function (d) {
-      const invoiceNumberStr = d.id.toString();
-      return invoiceNumberStr.toLowerCase().indexOf(val) !== -1 || !val;
-    });
-    this.table.offset = 0;
-  }
-
   onPrintInvoice(invoice: Invoice) {
     this.invoiceService.createInvoice(invoice.id).subscribe({
       next: (blob: Blob) => {
-        const blobUrl = window.URL.createObjectURL(blob);
+        const blobUrl = globalThis.URL.createObjectURL(blob);
 
         const a = document.createElement('a');
         a.href = blobUrl;
@@ -132,10 +223,10 @@ export class BillingPurchasesComponent implements OnInit, OnDestroy {
         document.body.appendChild(a);
         a.click();
 
-        window.URL.revokeObjectURL(blobUrl);
-        document.body.removeChild(a);
+        globalThis.URL.revokeObjectURL(blobUrl);
+        a.remove();
       },
-      error: (err) => {
+      error: err => {
         console.log(err);
         this.showError('Error downloading the invoice. Please try again.');
       },
@@ -146,7 +237,7 @@ export class BillingPurchasesComponent implements OnInit, OnDestroy {
     let reason;
 
     this.askForReason()
-      .then((result) => {
+      .then(result => {
         if (result.dismiss === Swal.DismissReason.cancel) {
           Swal.close();
           return;
@@ -160,13 +251,13 @@ export class BillingPurchasesComponent implements OnInit, OnDestroy {
         reason = result.value;
         return this.confirmRequest(result.value, row);
       })
-      .then((result) => {
-        if (result && result.isConfirmed) {
+      .then(result => {
+        if (result?.isConfirmed) {
           this.setRequestRevertTransaction(row, reason);
           this.createRequestRevertDebitTransaction();
         }
       })
-      .catch((error) => {
+      .catch(error => {
         Swal.fire({
           icon: 'error',
           title: 'Error',
@@ -206,14 +297,18 @@ export class BillingPurchasesComponent implements OnInit, OnDestroy {
   }
 
   createRequestRevertDebitTransaction() {
-    this.walletRequestService.createWalletRequestRevertDebitTransaction(this.walletRequestRevertTransaction).subscribe({
-      next: (value) => {
-        this.showSuccess('La solicitud fue creada correctamente');
-      },
-      error: (err) => {
-        this.showError('Error');
-      },
-    });
+    this.walletRequestService
+      .createWalletRequestRevertDebitTransaction(
+        this.walletRequestRevertTransaction,
+      )
+      .subscribe({
+        next: value => {
+          this.showSuccess('La solicitud fue creada correctamente');
+        },
+        error: err => {
+          this.showError('Error');
+        },
+      });
   }
 
   downloadPDF() {
@@ -225,13 +320,13 @@ export class BillingPurchasesComponent implements OnInit, OnDestroy {
       const pageWidth = 297;
       const imgWidth = pageWidth - 40;
 
-      const imgHeight = canvas.height * imgWidth / canvas.width;
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
       const posX = 20;
       const posY = 30;
 
       pdf.setFontSize(18);
-      pdf.text('Lista de compras', pageWidth / 2, 20, {align: 'center'});
+      pdf.text('Lista de compras', pageWidth / 2, 20, { align: 'center' });
 
       const contentDataURL = canvas.toDataURL('image/png');
       pdf.addImage(contentDataURL, 'PNG', posX, posY, imgWidth, imgHeight);
@@ -240,27 +335,26 @@ export class BillingPurchasesComponent implements OnInit, OnDestroy {
   }
 
   copyTableData() {
-    const rows = this.table._internalRows;
-    if (rows && rows.length) {
-      const headers = [
-        this.translateService.instant('BILLING-PURCHASES-PAGE.ROW-NO-BILL.TEXT'),
-        this.translateService.instant('BILLING-PURCHASES-PAGE.ROW-DATE.TEXT'),
-        this.translateService.instant('BILLING-PURCHASES-PAGE.ROW-BILL-STATE.TEXT'),
-        this.translateService.instant('BILLING-PURCHASES-PAGE.ROW-PAID.TEXT'),
-        this.translateService.instant('BILLING-PURCHASES-PAGE.ROW-DETAIL.TEXT')
-      ];
+    const headers = [
+      this.translateService.instant('BILLING-PURCHASES-PAGE.ROW-NO-BILL.TEXT'),
+      this.translateService.instant('BILLING-PURCHASES-PAGE.ROW-DATE.TEXT'),
+      this.translateService.instant(
+        'BILLING-PURCHASES-PAGE.ROW-BILL-STATE.TEXT',
+      ),
+      this.translateService.instant('BILLING-PURCHASES-PAGE.ROW-PAID.TEXT'),
+      this.translateService.instant('BILLING-PURCHASES-PAGE.ROW-DETAIL.TEXT'),
+    ];
 
-      const data = rows.map(row => [
-        row.id,
-        row.date,
-        row.status ? 'Activa' : 'Cancelada',
-        row.state ? 'Pagado' : 'No pagado',
-        '...'
-      ]);
+    const data = this.rows.map(row => [
+      row.id,
+      row.date,
+      row.status ? 'Activa' : 'Cancelada',
+      row.state ? 'Pagado' : 'No pagado',
+      '...',
+    ]);
 
-      const tableText = [headers, ...data].map(row => row.join('\t')).join('\n');
-      this.copyTextToClipboard(tableText);
-    }
+    const tableText = [headers, ...data].map(row => row.join('\t')).join('\n');
+    this.copyTextToClipboard(tableText);
   }
 
   copyTextToClipboard(text: string) {
@@ -272,7 +366,7 @@ export class BillingPurchasesComponent implements OnInit, OnDestroy {
 
     try {
       document.execCommand('copy');
-      this.toastr.success('Se ha copiado al portapapeles')
+      this.toastr.success('Se ha copiado al portapapeles');
     } catch (err) {
       console.error('Error: ', err);
     }

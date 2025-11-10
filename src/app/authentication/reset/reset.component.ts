@@ -3,11 +3,13 @@ import {
   AbstractControl,
   FormControl,
   FormGroup,
+  ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap, take, timer } from 'rxjs';
 import Swal from 'sweetalert2';
+import { CommonModule } from '@angular/common';
 declare let particlesJS: any;
 
 import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
@@ -15,9 +17,11 @@ import { AffiliateService } from '@app/core/service/affiliate-service/affiliate.
 import { RequestResetPassword } from '@app/core/models/user-affiliate-model/request-reset-password-model';
 
 @Component({
-  selector: 'app-reset',
-  templateUrl: './reset.component.html',
-  styleUrls: ['./reset.component.scss'],
+    selector: 'app-reset',
+    templateUrl: './reset.component.html',
+    styleUrls: ['./reset.component.scss'],
+    standalone: true,
+    imports: [CommonModule, ReactiveFormsModule]
 })
 export class ResetComponent implements OnInit {
   resetPassword: FormGroup;

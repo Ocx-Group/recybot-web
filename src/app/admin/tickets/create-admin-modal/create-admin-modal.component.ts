@@ -1,23 +1,31 @@
 import {Component, EventEmitter, OnInit, Output, TemplateRef, ViewChild} from '@angular/core';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {TicketCategories} from "@app/core/models/ticket-categories-model/ticket-categories.model";
-import {TicketRequest} from "@app/core/models/ticket-model/ticketRequest.model";
-import {UserAffiliate} from "@app/core/models/user-affiliate-model/user.affiliate.model";
+import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {TicketCategoriesService} from "@app/core/service/ticket-categories-service/ticket-categories.service";
 import {getDownloadURL, ref, Storage, uploadBytesResumable} from "@angular/fire/storage";
 
 import {ToastrService} from "ngx-toastr";
-import {TicketHubService} from "@app/core/service/ticket-service/ticket-hub.service";
 import {concatAll, from, Observable} from "rxjs";
-import {TicketImagesRequest} from "@app/core/models/ticket-model/ticket-images-request.model";
 import {toArray} from "rxjs/operators";
-import {AffiliateService} from "@app/core/service/affiliate-service/affiliate.service";
+import {TicketCategories} from "../../../core/models/ticket-categories-model/ticket-categories.model";
+import {TicketRequest} from "../../../core/models/ticket-model/ticketRequest.model";
+import {UserAffiliate} from "../../../core/models/user-affiliate-model/user.affiliate.model";
+import {TicketCategoriesService} from "../../../core/service/ticket-categories-service/ticket-categories.service";
+import {TicketHubService} from "../../../core/service/ticket-service/ticket-hub.service";
+import {AffiliateService} from "../../../core/service/affiliate-service/affiliate.service";
+import {TicketImagesRequest} from "../../../core/models/ticket-model/ticket-images-request.model";
+import {NgClass} from "@angular/common";
+import {NgxDropzoneModule} from "ngx-dropzone";
 
 @Component({
   selector: 'app-create-admin-modal',
   templateUrl: './create-admin-modal.component.html',
-  styleUrls: ['./create-admin-modal.component.scss']
+  styleUrls: ['./create-admin-modal.component.scss'],
+  standalone: true,
+  imports: [
+    ReactiveFormsModule,
+    NgClass,
+    NgxDropzoneModule
+  ]
 })
 export class CreateAdminModalComponent implements OnInit {
   createTicketForm: FormGroup;

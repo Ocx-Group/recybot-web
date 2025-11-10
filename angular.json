@@ -15,12 +15,15 @@
       },
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/main",
+            "outputPath": {
+              "base": "dist/main"
+            },
             "index": "src/index.html",
-            "main": "src/main.ts",
-            "polyfills": "src/polyfills.ts",
+            "polyfills": [
+              "src/polyfills.ts"
+            ],
             "tsConfig": "src/tsconfig.app.json",
             "allowedCommonJsDependencies": [
               "@babel/runtime/regenerator",
@@ -33,7 +36,7 @@
               "pdfmake/build/pdfmake.js",
               "svg-gaugng e",
               "echarts",
-              "@amcharts",
+
               "chart.js",
               "zrender/lib/svg/svg",
               "zrender/lib/vml/vml",
@@ -61,16 +64,15 @@
             ],
             "scripts": [
               "./node_modules/moment/min/moment.min.js",
-              "./node_modules/chart.js/dist/Chart.bundle.js",
+              "./node_modules/chart.js/dist/chart.umd.js",
               "./node_modules/apexcharts/dist/apexcharts.min.js",
               "./node_modules/particles.js/particles.js"
             ],
-            "vendorChunk": true,
             "extractLicenses": false,
-            "buildOptimizer": false,
             "sourceMap": true,
             "optimization": false,
-            "namedChunks": true
+            "namedChunks": true,
+            "browser": "src/main.ts"
           },
           "configurations": {
             "production": {
@@ -84,9 +86,7 @@
               "outputHashing": "all",
               "sourceMap": false,
               "namedChunks": false,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true
+              "extractLicenses": true
             },
             "dev": {
               "fileReplacements": [
@@ -101,18 +101,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "recycoin:build"
+            "buildTarget": "recycoin:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "recycoin:build:production"
+              "buildTarget": "recycoin:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "recycoin:build"
+            "buildTarget": "recycoin:build"
           }
         },
         "test": {

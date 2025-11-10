@@ -1,6 +1,6 @@
 import {Component, EventEmitter, OnInit, Output, TemplateRef, ViewChild} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {Storage, ref, uploadBytesResumable, getDownloadURL} from '@angular/fire/storage';
 import {concatAll, from, Observable} from 'rxjs';
 import {toArray} from 'rxjs/operators';
@@ -13,11 +13,16 @@ import {AuthService} from '@app/core/service/authentication-service/auth.service
 import {UserAffiliate} from '@app/core/models/user-affiliate-model/user.affiliate.model';
 import {TicketHubService} from '@app/core/service/ticket-service/ticket-hub.service';
 import {TicketImagesRequest} from "@app/core/models/ticket-model/ticket-images-request.model";
+import { CommonModule } from '@angular/common';
+import { NgxDropzoneModule } from 'ngx-dropzone';
+import {TranslatePipe} from "@ngx-translate/core";
 
 @Component({
-  selector: 'app-create-ticket-modal',
-  templateUrl: './create-ticket-modal.component.html',
-  styleUrls: ['./create-ticket-modal.component.scss']
+    selector: 'app-create-ticket-modal',
+    templateUrl: './create-ticket-modal.component.html',
+    styleUrls: ['./create-ticket-modal.component.scss'],
+    standalone: true,
+  imports: [CommonModule, ReactiveFormsModule, NgxDropzoneModule, TranslatePipe]
 })
 export class CreateTicketModalComponent implements OnInit {
   createTicketForm: FormGroup;

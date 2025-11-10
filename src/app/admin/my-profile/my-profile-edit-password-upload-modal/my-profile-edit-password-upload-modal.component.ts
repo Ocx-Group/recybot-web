@@ -1,16 +1,24 @@
-import { Component, ViewChild, OnInit } from '@angular/core';
+import {Component, ViewChild, OnInit} from '@angular/core';
 import {
   AbstractControl,
   FormGroup,
   Validators,
-  FormBuilder,
+  FormBuilder, ReactiveFormsModule,
 } from '@angular/forms';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ToastrService } from 'ngx-toastr';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {ToastrService} from 'ngx-toastr';
+import {TranslatePipe} from "@ngx-translate/core";
+import {NgClass} from "@angular/common";
 
 @Component({
   selector: 'app-my-profile-edit-password-upload-modal',
   templateUrl: './my-profile-edit-password-upload-modal.component.html',
+  standalone: true,
+  imports: [
+    TranslatePipe,
+    ReactiveFormsModule,
+    NgClass
+  ]
 })
 export class MyProfileEditPasswordUploadModalComponent implements OnInit {
   editPasswordUploadForm: FormGroup;
@@ -19,9 +27,9 @@ export class MyProfileEditPasswordUploadModalComponent implements OnInit {
 
   constructor(
     private modalService: NgbModal,
-    private formBuilder: FormBuilder,
-    private toastr: ToastrService
-  ) {}
+    private formBuilder: FormBuilder
+  ) {
+  }
 
   ngOnInit(): void {
     this.loadValidations();
@@ -38,15 +46,7 @@ export class MyProfileEditPasswordUploadModalComponent implements OnInit {
     return this.editPasswordUploadForm.controls;
   }
 
-  showSuccess(message) {
-    this.toastr.success(message, 'Success!');
-  }
-
-  closeModals() {
-    this.modalService.dismissAll();
-  }
-
-  onChangePasswordUpload(){
+  onChangePasswordUpload() {
     this.submitted = true;
     if (this.editPasswordUploadForm.invalid) {
       return;

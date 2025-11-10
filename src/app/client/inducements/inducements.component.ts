@@ -1,9 +1,15 @@
-import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
-import { DatatableComponent } from '@swimlane/ngx-datatable';
+import { Component, OnInit, ViewChild, HostListener, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { DatatableComponent, NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { IconsModule } from '@app/shared';
 
 @Component({
-  selector: 'app-inducements',
-  templateUrl: './inducements.component.html',
+    selector: 'app-inducements',
+    templateUrl: './inducements.component.html',
+    standalone: true,
+    imports: [CommonModule, NgxDatatableModule, TranslateModule, IconsModule],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class InducementsComponent implements OnInit {
   rows = [];
@@ -25,7 +31,7 @@ export class InducementsComponent implements OnInit {
   }
 
   @HostListener('window:resize', ['$event'])
-  onResize(event) {
+  onResize(_event: any) {
     this.scrollBarHorizontal = window.innerWidth < 1200;
     this.table.recalculate();
     this.table.recalculateColumns();

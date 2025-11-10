@@ -1,16 +1,10 @@
 import { ThirdPartyPurchaseComponent } from './third-party-purchase/third-party-purchase.component';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import Swal from 'sweetalert2';
-import {
-  Component,
-  HostListener,
-  OnInit,
-  Output,
-  ViewChild,
-} from '@angular/core';
+import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
-import { Observable, Subject, takeUntil } from 'rxjs';
-import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { Router, RouterLink } from '@angular/router';
 import html2canvas from 'html2canvas';
 import JSPDF from 'jspdf';
 
@@ -26,7 +20,6 @@ import { TransferBalance } from '@app/core/models/wallet-model/transfer-balance.
 import { EncryptService } from '@app/core/service/encrypt-service/encrypt.service';
 import { ConfigurationService } from '@app/core/service/configuration-service/configuration.service';
 import { WalletWithdrawalsConfiguration } from '@app/core/models/wallet-withdrawals-configuration-model/wallet-withdrawals-configuration.model';
-import { TruncateDecimalsPipe } from '@app/shared/truncate-decimals.pipe';
 import { PagaditoTransactionDetailRequest } from '@app/core/models/pagadito-model/pagadito-transaction-detail-request.model';
 import { CreatePagaditoTransactionRequest } from '@app/core/models/pagadito-model/create-pagadito-transaction-request.model';
 import { PagaditoService } from '@app/core/service/pagadito-service/pagadito.service';
@@ -34,15 +27,33 @@ import { Product } from '@app/core/models/product-model/product.model';
 import { ProductService } from '@app/core/service/product-service/product.service';
 import { StatisticsInformation } from '@app/core/models/wallet-model/statisticsInformation';
 import { MatrixQualificationService } from '@app/core/service/matrix-qualification-service/matrix-qualification.service';
+import { CommonModule } from '@angular/common';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { IconsModule } from '@app/shared';
 
 @Component({
   selector: 'app-network',
   templateUrl: './network.component.html',
+  standalone: true,
+  imports: [
+    CommonModule,
+    NgxDatatableModule,
+    ReactiveFormsModule,
+    FormsModule,
+    TranslateModule,
+    NgbModule,
+    IconsModule,
+    RouterLink,
+    ThirdPartyPurchaseComponent,
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class NetworkComponent implements OnInit {
   isCollapsed = true;
   private user: UserAffiliate = new UserAffiliate();
-  private destroy$ = new Subject();
   rows: NetworkAffiliate[] = [];
   gradings: Grading[] = [];
   transferBalance: TransferBalance = new TransferBalance();
@@ -60,54 +71,51 @@ export class NetworkComponent implements OnInit {
   pagaditoRequest = new CreatePagaditoTransactionRequest();
   currentMembership: Product = new Product();
   information: StatisticsInformation = new StatisticsInformation();
-  @ViewChild('purchaseModal') purchaseModal: ThirdPartyPurchaseComponent;
+  @ViewChild('purchaseModal', { static: false })
+  purchaseModal!: ThirdPartyPurchaseComponent;
   @ViewChild('tableRef') table: DatatableComponent;
   @ViewChild('tableRefGlobal') tableRefGlobal: DatatableComponent;
   recycoins$: Observable<Product[]>;
   isReachedWithdrawalLimit: boolean = false;
 
   constructor(
-    private affiliateService: AffiliateService,
-    private authService: AuthService,
-    private gradingService: GradingService,
-    private walletService: WalletService,
-    private toastr: ToastrService,
-    private encryptService: EncryptService,
-    private route: Router,
-    private translateService: TranslateService,
-    private configurationService: ConfigurationService,
-    private truncatedDecimals: TruncateDecimalsPipe,
-    private pagaditoService: PagaditoService,
-    private productService: ProductService,
-    private matrixQualificationService: MatrixQualificationService,
+    private readonly affiliateService: AffiliateService,
+    private readonly authService: AuthService,
+    private readonly gradingService: GradingService,
+    private readonly walletService: WalletService,
+    private readonly toastr: ToastrService,
+    private readonly encryptService: EncryptService,
+    private readonly route: Router,
+    private readonly translateService: TranslateService,
+    private readonly configurationService: ConfigurationService,
+    private readonly pagaditoService: PagaditoService,
+    private readonly productService: ProductService,
+    private readonly matrixQualificationService: MatrixQualificationService,
   ) {}
 
   ngOnInit() {
     this.loadingIndicatorGlobal = false;
     this.loadAllMemberships();
-    this.authService.currentUserAffiliate
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(user => {
-        if (user.id) {
-          this.user = user;
-          this.affiliateService.changeId(this.user.id);
-          this.gradingService
-            .getAll()
-            .pipe(takeUntil(this.destroy$))
-            .subscribe((gradings: Grading[]) => {
-              this.gradings = gradings;
-            });
-          this.hasReachedWithdrawalLimit(this.user.id);
-          this.affiliateService
-            .GetPersonalNetwork(user.id)
-            .pipe(takeUntil(this.destroy$))
-            .subscribe((affiliates: NetworkAffiliate[]) => {
-              this.temp = [...affiliates];
-              this.rows = affiliates;
-            });
-        }
-        this.loadingIndicator = false;
+
+    // Usar signal para obtener el usuario afiliado
+    this.user = this.authService.userAffiliate();
+    if (this.user?.id) {
+      this.affiliateService.changeId(this.user.id);
+
+      this.gradingService.getAll().subscribe((gradings: Grading[]) => {
+        this.gradings = gradings;
       });
+
+      this.hasReachedWithdrawalLimit(this.user.id);
+
+      this.affiliateService
+        .GetPersonalNetwork(this.user.id)
+        .subscribe((affiliates: NetworkAffiliate[]) => {
+          this.temp = [...affiliates];
+          this.rows = affiliates;
+        });
+    }
+    this.loadingIndicator = false;
 
     this.loadBalanceAvailable();
     this.loadWithdrawalConfiguration();
@@ -125,7 +133,7 @@ export class NetworkComponent implements OnInit {
 
   getNameGrading(id: number) {
     let grading = this.gradings.find(item => item.id === id);
-    return grading !== undefined ? grading.name : 'N/A';
+    return grading ? grading.name : 'N/A';
   }
 
   loadBalanceAvailable() {
@@ -231,10 +239,7 @@ export class NetworkComponent implements OnInit {
   showConfirmationTransferBalance(row) {
     this.generateVerificationCode();
 
-    let formattedBalance = this.truncatedDecimals.transform(
-      this.userBalance,
-      2,
-    );
+    let formattedBalance = Math.floor(this.userBalance * 100) / 100;
 
     Swal.fire({
       title:
@@ -571,5 +576,14 @@ export class NetworkComponent implements OnInit {
           console.error(err);
         },
       });
+  }
+
+  openPurchaseModal(row: any): void {
+    if (this.purchaseModal) {
+      this.purchaseModal.openModal(row);
+    } else {
+      console.error('Purchase modal component is not initialized');
+      this.showError('Error al abrir el modal de compra');
+    }
   }
 }

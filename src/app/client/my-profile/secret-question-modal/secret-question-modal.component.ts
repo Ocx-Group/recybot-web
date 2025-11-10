@@ -10,10 +10,14 @@ import { ToastrService } from 'ngx-toastr';
 import { AffiliateService } from '@app/core/service/affiliate-service/affiliate.service';
 import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
 import { SecretQuestion } from '@app/core/models/secret-question-model/secret.question.model';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-secret-question-modal',
-  templateUrl: './secret-question-modal.component.html',
+    selector: 'app-secret-question-modal',
+    templateUrl: './secret-question-modal.component.html',
+    standalone: true,
+    imports: [CommonModule, ReactiveFormsModule]
 })
 export class SecretQuestionModalComponent implements OnInit {
   secretQuestionForm: FormGroup;

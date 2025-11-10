@@ -24,24 +24,24 @@
               {{ 'UNILEVEL-TREE-PAGE.TITLE.TEXT' | translate }}
             </h4>
           </div>
-          <div class="card-body" class="media-list position-relative"
-          style="position: relative; max-width: 100% !important"
-          [perfectScrollbar]>
+          <div class="card-body media-list position-relative"
+               style="position: relative; max-width: 100% !important; overflow-y: auto;"
+          >
             <div *ngIf="showDiv">
-              <app-unilevel-tree-component [nodeTemplate]="nodeTemplate" [data]="tree" #exampleChart="orgChart"
-                (loadFamilyTree)="onloadFamilyTree($event)">
+              <app-unilevel-tree-component [nodeTemplate]="nodeTemplate" [data]="tree"
+                                           (loadFamilyTree)="onloadFamilyTree($event)">
               </app-unilevel-tree-component>
 
               <ng-template #nodeTemplate let-node>
                 <div class="chart-node">
-                  <img [src]="node?.image" />
+                  <img [src]="node?.image" alt="node"/>
                   <div class="name">
                     <span style="font-size: 11px;">
                       {{ node?.user_name }}
                     </span>
                   </div>
                   <div *ngIf="node.children.length" (click)="node.hideChildren = !node.hideChildren"
-                    class="tree-fold-btn">
+                       class="tree-fold-btn">
                     {{ node.hideChildren ? '+' : '-' }}
                   </div>
                 </div>

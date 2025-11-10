@@ -1,4 +1,3 @@
-import { Rol } from './../../../core/models/rol-model/rol.model';
 import {
   Component,
   EventEmitter,
@@ -7,21 +6,30 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {
   FormBuilder,
   FormGroup,
   Validators,
-  AbstractControl,
+  AbstractControl, ReactiveFormsModule,
 } from '@angular/forms';
-import { ToastrService } from 'ngx-toastr';
-import { User } from '@app/core/models/user-model/user.model';
-import { UserService } from '@app/core/service/user-service/user.service';
-import { _ParseAST } from '@angular/compiler';
+import {ToastrService} from 'ngx-toastr';
+import {UserService} from "../../../core/service/user-service/user.service";
+import {User} from "../../../core/models/user-model/user.model";
+import {Rol} from "../../../core/models/rol-model/rol.model";
+import {TranslatePipe} from "@ngx-translate/core";
+import {NgClass} from "@angular/common";
+
 
 @Component({
   selector: 'app-users-list-edit-modal',
   templateUrl: './users-list-edit-modal.component.html',
+  standalone: true,
+  imports: [
+    TranslatePipe,
+    ReactiveFormsModule,
+    NgClass
+  ]
 })
 export class UsersListEditModalComponent implements OnInit {
   editUserForm: FormGroup;
@@ -36,7 +44,8 @@ export class UsersListEditModalComponent implements OnInit {
     private formBuilder: FormBuilder,
     private toastr: ToastrService,
     private userService: UserService
-  ) {}
+  ) {
+  }
 
   get edit_user_controls(): { [key: string]: AbstractControl } {
     return this.editUserForm.controls;
@@ -117,26 +126,4 @@ export class UsersListEditModalComponent implements OnInit {
   closeModals() {
     this.modalService.dismissAll();
   }
-}
-
-export function MustMatch(controlName: string, matchingControlName: string) {
-  return (group: AbstractControl) => {
-    const control = group.get(controlName);
-    const matchingControl = group.get(matchingControlName);
-
-    if (!control || !matchingControl) {
-      return null;
-    }
-
-    if (matchingControl.errors && !matchingControl.errors.mustMatch) {
-      return null;
-    }
-
-    if (control.value !== matchingControl.value) {
-      matchingControl.setErrors({ mustMatch: true });
-    } else {
-      matchingControl.setErrors(null);
-    }
-    return null;
-  };
 }

@@ -1,14 +1,17 @@
 import {
   AbstractControl,
   FormBuilder,
-  FormGroup,
+  FormGroup, ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
-import { ToastrService } from 'ngx-toastr';
-
-import { ConfigurationService } from '@app/core/service/configuration-service/configuration.service';
-import { MatrixConfiguration } from '@app/core/models/matrix-configuration-model/matrix.configuration.model';
+import {Component, OnInit} from '@angular/core';
+import {ToastrService} from 'ngx-toastr';
+import {MatrixConfiguration} from "../../core/models/matrix-configuration-model/matrix.configuration.model";
+import {ConfigurationService} from "../../core/service/configuration-service/configuration.service";
+import {TranslatePipe} from "@ngx-translate/core";
+import {NgbAlert, NgbTooltip} from "@ng-bootstrap/ng-bootstrap";
+import {NgClass} from "@angular/common";
+import {RouterLink} from "@angular/router";
 
 interface Alert {
   type: string;
@@ -21,10 +24,20 @@ const ALERTS: Alert[] = [
     message: '',
   },
 ];
+
 @Component({
   selector: 'app-arrays-configurations',
   templateUrl: './arrays-configurations.component.html',
   providers: [ToastrService],
+  standalone: true,
+  imports: [
+    TranslatePipe,
+    ReactiveFormsModule,
+    NgbAlert,
+    NgClass,
+    RouterLink,
+    NgbTooltip
+  ]
 })
 export class ArraysConfigurationsComponent implements OnInit {
   alerts: Alert[];
@@ -46,6 +59,7 @@ export class ArraysConfigurationsComponent implements OnInit {
     this.loadValidations();
     this.loadConfiguration();
   }
+
   close(alert: Alert) {
     this.alerts.splice(this.alerts.indexOf(alert), 1);
   }
@@ -60,7 +74,7 @@ export class ArraysConfigurationsComponent implements OnInit {
     }
   }
 
-  showSuccess(message) {
+  showSuccess(message: string) {
     this.toastr.success(message, 'Success!');
   }
 

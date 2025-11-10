@@ -1,13 +1,25 @@
-import { Component, ViewChild, HostListener, OnInit } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { DatatableComponent } from '@swimlane/ngx-datatable';
+import {Component, ViewChild, HostListener, OnInit} from '@angular/core';
+import {NgbDropdown, NgbDropdownItem, NgbDropdownMenu, NgbDropdownToggle, NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {DataTableColumnCellDirective, DataTableColumnDirective, DatatableComponent} from '@swimlane/ngx-datatable';
 import Swal from 'sweetalert2';
 
-import { Grading } from '@app/core/models/grading-model/grading.model';
-import { GradingService } from '@app/core/service/grading-service/grading.service';
-import { PrintService } from '@app/core/service/print-service/print.service';
-import { ClipboardService } from 'ngx-clipboard';
-import { ToastrService } from 'ngx-toastr';
+import {ClipboardService} from 'ngx-clipboard';
+import {ToastrService} from 'ngx-toastr';
+import {GradingService} from "../../core/service/grading-service/grading.service";
+import {PrintService} from "../../core/service/print-service/print.service";
+import {Grading} from "../../core/models/grading-model/grading.model";
+import {TranslatePipe} from "@ngx-translate/core";
+import {RouterLink} from "@angular/router";
+import {IconsModule} from "../../shared";
+import {
+  CalificationsListCreateModalComponent
+} from "./califications-list-create-modal/califications-list-create-modal.component";
+import {
+  CalificationsListEditModalComponent
+} from "./califications-list-edit-modal/califications-list-edit-modal.component";
+import {
+  CalificationsListDetailsModalComponent
+} from "./califications-list-details-modal/califications-list-details-modal.component";
 
 const header = [
   'Nombre del Calificación',
@@ -20,6 +32,22 @@ const header = [
   selector: 'app-califications-list',
   templateUrl: './califications-list.component.html',
   providers: [ToastrService],
+  standalone: true,
+  imports: [
+    TranslatePipe,
+    RouterLink,
+    IconsModule,
+    DatatableComponent,
+    DataTableColumnDirective,
+    DataTableColumnCellDirective,
+    NgbDropdown,
+    NgbDropdownToggle,
+    NgbDropdownMenu,
+    NgbDropdownItem,
+    CalificationsListCreateModalComponent,
+    CalificationsListEditModalComponent,
+    CalificationsListDetailsModalComponent
+  ]
 })
 export class CalificationsListComponent implements OnInit {
   rows = [];
@@ -37,7 +65,8 @@ export class CalificationsListComponent implements OnInit {
     private printService: PrintService,
     private clipboardService: ClipboardService,
     private toastr: ToastrService
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.loadCalificationList();

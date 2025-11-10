@@ -10,11 +10,16 @@ import { CoinpaymentService } from '@app/core/service/coinpayment-service/coinpa
 import { MatrixConfigurationService } from '@app/core/service/matrix-configuration/matrix-configuration.service';
 import { ToastrService } from 'ngx-toastr';
 import Swal from 'sweetalert2';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
-  selector: 'app-activate-matrix',
-  templateUrl: './activate-matrix.component.html',
-  styleUrls: ['./activate-matrix.component.scss'],
+    selector: 'app-activate-matrix',
+    templateUrl: './activate-matrix.component.html',
+    styleUrls: ['./activate-matrix.component.scss'],
+    standalone: true,
+    imports: [CommonModule, FormsModule, TranslateModule]
 })
 export class ActivateMatrixComponent implements OnInit {
   matrixConfigurations: any[] = [];

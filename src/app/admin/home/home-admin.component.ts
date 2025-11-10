@@ -1,13 +1,9 @@
-import { AuthService } from 'src/app/core/service/authentication-service/auth.service';
-import { Component, OnInit, ViewChild } from '@angular/core';
-import * as am4core from '@amcharts/amcharts4/core';
-import * as am4maps from '@amcharts/amcharts4/maps';
-import am4geodata_worldLow from '@amcharts/amcharts4-geodata/worldLow';
-import am5themes_Animated from '@amcharts/amcharts4/themes/animated';
-import { EChartsOption } from 'echarts';
-import { WalletService } from '@app/core/service/wallet-service/wallet.service';
-import { AffiliateService } from '@app/core/service/affiliate-service/affiliate.service';
-import { ToastrService } from 'ngx-toastr';
+import {AuthService} from '@app/core/service/authentication-service/auth.service';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {EChartsOption} from 'echarts';
+import {WalletService} from '@app/core/service/wallet-service/wallet.service';
+import {AffiliateService} from '@app/core/service/affiliate-service/affiliate.service';
+import {ToastrService} from 'ngx-toastr';
 import {
   ApexNonAxisChartSeries,
   ApexChart,
@@ -17,7 +13,13 @@ import {
   ApexPlotOptions,
   ChartComponent,
 } from 'ng-apexcharts';
-import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
+import {UserAffiliate} from '@app/core/models/user-affiliate-model/user.affiliate.model';
+import {TruncateDecimalsPipe} from '@app/shared/pipes/truncate-decimals.pipe';
+import {CommonModule} from '@angular/common';
+import {TranslatePipe} from "@ngx-translate/core";
+import {NgxEchartsModule, provideEchartsCore} from 'ngx-echarts';
+import {RouterLink} from '@angular/router';
+import {WorldMapChartComponent, CountryData} from "@app/shared/components/world-map-chart/world-map-chart.component";
 
 export interface ChartOptions {
   series?: ApexNonAxisChartSeries;
@@ -30,14 +32,19 @@ export interface ChartOptions {
   plotOptions?: ApexPlotOptions;
 }
 
-am4core.useTheme(am5themes_Animated);
-
 @Component({
   selector: 'app-home-admin',
   templateUrl: './home-admin.component.html',
+  styleUrls: ['./home-admin.component.scss'],
+  standalone: true,
+  imports: [CommonModule, TruncateDecimalsPipe, TranslatePipe, ChartComponent, NgxEchartsModule, RouterLink, WorldMapChartComponent],
+  providers: [
+    provideEchartsCore({
+      echarts: () => import('echarts')
+    })
+  ]
 })
 export class HomeAdminComponent implements OnInit {
-  private chart: am4maps.MapChart;
   public pieChartOptions: Partial<ChartOptions>;
   public avgLecChartOptions: any;
   totalMembers: number;
@@ -46,7 +53,7 @@ export class HomeAdminComponent implements OnInit {
   calculatedCommissions: number;
   totalReverseBalance: number;
   adminCommissions: number;
-  maps: any[] = [];
+  maps: CountryData[] = [];
   user: any;
   @ViewChild('chart') chart1: ChartComponent;
   lastRegisteredUsers: UserAffiliate[] = [];
@@ -83,12 +90,19 @@ export class HomeAdminComponent implements OnInit {
     this.getLastRegisteredUsers();
   }
 
-  showSuccess(message: string) {
-    this.toastr.success(message);
-  }
-
   showError(message: string) {
     this.toastr.error(message);
+  }
+
+  loadLocations() {
+    this.affiliateService.getTotalAffiliatesByCountries().subscribe({
+      next: (value) => {
+        this.maps = value.data;
+      },
+      error: (err) => {
+        console.error('Error fetching locations:', err);
+      },
+    })
   }
 
   private initChartReport3() {
@@ -336,64 +350,6 @@ export class HomeAdminComponent implements OnInit {
     });
   }
 
-  setMapInfo() {
-    this.chart = am4core.create('chartdiv', am4maps.MapChart);
-    this.chart.geodata = am4geodata_worldLow;
-    this.chart.projection = new am4maps.projections.Miller();
-
-    let polygonSeries = this.chart.series.push(new am4maps.MapPolygonSeries());
-    polygonSeries.exclude = ['AQ'];
-    polygonSeries.useGeodata = true;
-
-    const imageSeries = this.chart.series.push(new am4maps.MapImageSeries());
-    const imageSeriesTemplate = imageSeries.mapImages.template;
-    const circle = imageSeriesTemplate.createChild(am4core.Circle);
-
-    circle.radius = 14;
-    circle.fill = am4core.color('#765cbf');
-    circle.stroke = am4core.color('#B27799');
-    circle.strokeWidth = 1;
-    circle.nonScaling = true;
-
-    circle.tooltipText = '[bold]{title}[/]\nCantidad: {value}';
-
-    imageSeriesTemplate.propertyFields.latitude = 'lat';
-    imageSeriesTemplate.propertyFields.longitude = 'lng';
-
-    const centerLabel = imageSeriesTemplate.createChild(am4core.Label);
-    centerLabel.text = '{value}';
-    centerLabel.horizontalCenter = 'middle';
-    centerLabel.verticalCenter = 'middle';
-    centerLabel.fill = am4core.color('#55555');
-    centerLabel.nonScaling = true;
-
-    const data = this.maps.map(item => item);
-    imageSeries.addData(data);
-
-    let polygonTemplate = polygonSeries.mapPolygons.template;
-    polygonTemplate.tooltipText = '{name}';
-    polygonTemplate.fill = am4core.color('#96a2b4');
-    let hs = polygonTemplate.states.create('hover');
-    hs.properties.fill = am4core.color('#74X999');
-  }
-
-  loadLocations() {
-    this.affiliateService.getTotalAffiliatesByCountries().subscribe({
-      next: value => {
-        this.maps = value.data.map(item => ({
-          title: item.Title,
-          value: item.Value,
-          lat: item.Lat,
-          lng: item.Lng,
-        }));
-
-        this.setMapInfo();
-      },
-      error: () => {
-        this.showError('Error');
-      },
-    });
-  }
 
   getLastRegisteredUsers() {
     this.affiliateService.getLastRegisteredAffiliates().subscribe({

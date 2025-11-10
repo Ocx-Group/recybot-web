@@ -1,4 +1,4 @@
-import { MatrixQualificationService } from '@app/core/service/matrix-qualification-service/matrix-qualification.service';
+import {MatrixQualificationService} from '@app/core/service/matrix-qualification-service/matrix-qualification.service';
 import {
   Component,
   HostListener,
@@ -7,45 +7,68 @@ import {
   TemplateRef,
   ViewChild,
 } from '@angular/core';
-import { NavigationStart, Router } from '@angular/router';
-import { CreateChannelResponse } from '@app/core/models/coinpay-model/create-channel-response.model';
-import { CreatePagaditoTransactionRequest } from '@app/core/models/pagadito-model/create-pagadito-transaction-request.model';
-import { ToastrService } from 'ngx-toastr';
+import {NavigationStart, Router} from '@angular/router';
+import {CreateChannelResponse} from '@app/core/models/coinpay-model/create-channel-response.model';
+import {
+  CreatePagaditoTransactionRequest
+} from '@app/core/models/pagadito-model/create-pagadito-transaction-request.model';
+import {ToastrService} from 'ngx-toastr';
 import QRCode from 'qrcode';
-import { CartService } from 'src/app/core/service/cart.service/cart.service';
+import {CartService} from 'src/app/core/service/cart.service/cart.service';
 import Swal from 'sweetalert2';
 
-import { CreateTransactionResponse } from '@app/core/models/coinpay-model/create-transaction-response.model';
-import { RequestPayment } from '@app/core/models/coinpay-model/request-payment.model';
-import { ConpaymentTransaction } from '@app/core/models/coinpayment-model/conpayment-transaction.model';
+import {CreateTransactionResponse} from '@app/core/models/coinpay-model/create-transaction-response.model';
+import {RequestPayment} from '@app/core/models/coinpay-model/request-payment.model';
+import {ConpaymentTransaction} from '@app/core/models/coinpayment-model/conpayment-transaction.model';
 import {
   CreatePayment,
   ProductRequest,
 } from '@app/core/models/coinpayment-model/create-payment.model';
-import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
+import {UserAffiliate} from '@app/core/models/user-affiliate-model/user.affiliate.model';
 import {
   ProductsRequests,
   WalletRequest,
 } from '@app/core/models/wallet-model/wallet-request.model';
-import { WalletWithdrawalsConfiguration } from '@app/core/models/wallet-withdrawals-configuration-model/wallet-withdrawals-configuration.model';
-import { AuthService } from '@app/core/service/authentication-service/auth.service';
-import { CoinpayService } from '@app/core/service/coinpay-service/coinpay.service';
-import { CoinpaymentService } from '@app/core/service/coinpayment-service/coinpayment.service';
-import { ConfigurationService } from '@app/core/service/configuration-service/configuration.service';
-import { WalletService } from '@app/core/service/wallet-service/wallet.service';
+import {
+  WalletWithdrawalsConfiguration
+} from '@app/core/models/wallet-withdrawals-configuration-model/wallet-withdrawals-configuration.model';
+import {AuthService} from '@app/core/service/authentication-service/auth.service';
+import {CoinpayService} from '@app/core/service/coinpay-service/coinpay.service';
+import {CoinpaymentService} from '@app/core/service/coinpayment-service/coinpayment.service';
+import {ConfigurationService} from '@app/core/service/configuration-service/configuration.service';
+import {WalletService} from '@app/core/service/wallet-service/wallet.service';
 
-import { PagaditoTransactionDetailRequest } from '@app/core/models/pagadito-model/pagadito-transaction-detail-request.model';
-import { AffiliateService } from '@app/core/service/affiliate-service/affiliate.service';
-import { PagaditoService } from '@app/core/service/pagadito-service/pagadito.service';
-import { PdfViewerService } from '@app/core/service/pdf-viewer-service/pdf-viewer.service';
-import { WalletModel1AService } from '@app/core/service/wallet-model-1a-service/wallet-model-1a.service';
-import { WalletModel1BService } from '@app/core/service/wallet-model-1b-service/wallet-model-1b.service';
-import { Subscription, switchMap, timer } from 'rxjs';
+import {
+  PagaditoTransactionDetailRequest
+} from '@app/core/models/pagadito-model/pagadito-transaction-detail-request.model';
+import {AffiliateService} from '@app/core/service/affiliate-service/affiliate.service';
+import {PagaditoService} from '@app/core/service/pagadito-service/pagadito.service';
+import {PdfViewerService} from '@app/core/service/pdf-viewer-service/pdf-viewer.service';
+import {WalletModel1AService} from '@app/core/service/wallet-model-1a-service/wallet-model-1a.service';
+import {WalletModel1BService} from '@app/core/service/wallet-model-1b-service/wallet-model-1b.service';
+import {Subscription, switchMap, timer} from 'rxjs';
+import {CommonModule} from '@angular/common';
+import {ReactiveFormsModule, FormsModule} from '@angular/forms';
+import {QrcodeModule} from 'qrcode-angular';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {TranslateModule} from '@ngx-translate/core';
+import {CoinpayModalComponent} from "@app/client/cart/coinpay-modal/coinpay-modal.component";
+import {PdfViewerComponent} from "@app/shared/components/pdf-viewer/pdf-viewer.component";
+import {TruncateDecimalsPipe} from "@app/shared/pipes/truncate-decimals.pipe";
 
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.scss'],
+  standalone: true,
+  imports: [CommonModule,
+    ReactiveFormsModule,
+    FormsModule,
+    QrcodeModule,
+    NgbModule,
+    TranslateModule,
+    CoinpayModalComponent, PdfViewerComponent,
+    TruncateDecimalsPipe]
 })
 export class CartComponent implements OnInit, OnDestroy {
   today: Date;
@@ -92,7 +115,8 @@ export class CartComponent implements OnInit, OnDestroy {
     private pagaditoService: PagaditoService,
     private pdfViewerService: PdfViewerService,
     private matrixQualificationService: MatrixQualificationService,
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.user = this.auth.currentUserAffiliateValue;
@@ -223,7 +247,8 @@ export class CartComponent implements OnInit, OnDestroy {
         confirmButtonText: 'Sí, quiero realizar el pago',
         cancelButtonText: 'No',
         html: `Por favor, asegúrese de haber leído y aceptado los <a href="https://recycoinfx.com/wp-content/uploads/2024/01/recycoin-V3.pdf" target="_blank">términos y condiciones</a>.`,
-        preConfirm: () => {},
+        preConfirm: () => {
+        },
       });
       if (result.isConfirmed) {
         this.acceptTerms();

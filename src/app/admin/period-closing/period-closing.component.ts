@@ -1,7 +1,11 @@
-import { Component, ViewChild, HostListener } from '@angular/core';
-import { DatatableComponent } from '@swimlane/ngx-datatable';
-import { ClipboardService } from 'ngx-clipboard';
-import { ToastrService } from 'ngx-toastr';
+import {Component, HostListener, ViewChild} from '@angular/core';
+import {DataTableColumnCellDirective, DataTableColumnDirective, DatatableComponent} from '@swimlane/ngx-datatable';
+import {ClipboardService} from 'ngx-clipboard';
+import {ToastrService} from 'ngx-toastr';
+import {TranslatePipe} from "@ngx-translate/core";
+import {RouterLink} from "@angular/router";
+import {IconsModule} from "../../shared";
+import {NgbAlert} from "@ng-bootstrap/ng-bootstrap";
 
 interface Alert {
   type: string;
@@ -17,12 +21,21 @@ const ALERTS: Alert[] = [
 @Component({
   selector: 'app-period-closing',
   templateUrl: './period-closing.component.html',
-  providers: [ToastrService]
+  providers: [ToastrService],
+  standalone: true,
+  imports: [
+    TranslatePipe,
+    RouterLink,
+    IconsModule,
+    DatatableComponent,
+    DataTableColumnDirective,
+    DataTableColumnCellDirective,
+    NgbAlert
+  ]
 })
 export class PeriodClosingComponent {
   alerts: Alert[];
   show: Boolean = true;
-  linkMsj: String = 'hide';
   rows = [];
   temp = [];
   loadingIndicator = true;
@@ -31,7 +44,7 @@ export class PeriodClosingComponent {
 
   @ViewChild('table') table: DatatableComponent;
 
-  constructor(private toastr: ToastrService,private clipboardService: ClipboardService) {
+  constructor(private toastr: ToastrService, private clipboardService: ClipboardService) {
     this.alerts = Array.from(ALERTS);
     this.fetch((data) => {
       this.temp = [...data];
@@ -52,6 +65,7 @@ export class PeriodClosingComponent {
   getRowHeight(row) {
     return row.height;
   }
+
   fetch(cb) {
     const req = new XMLHttpRequest();
     req.open('GET', `assets/data/list-affiliates.json`);
@@ -67,12 +81,10 @@ export class PeriodClosingComponent {
     const val = event.target.value.toLowerCase();
 
     // filter our data
-    const temp = this.temp.filter(function (d) {
+    // update the rows
+    this.rows = this.temp.filter(function (d) {
       return d.name.toLowerCase().indexOf(val) !== -1 || !val;
     });
-
-    // update the rows
-    this.rows = temp;
     // Whenever the filter changes, always go back to the first page
     this.table.offset = 0;
   }
@@ -81,20 +93,9 @@ export class PeriodClosingComponent {
     this.alerts.splice(this.alerts.indexOf(alert), 1);
   }
 
-  showMsj() {
-    if (this.show) {
-      this.show = false;
-      this.linkMsj = 'show';
-    } else {
-      this.show = true;
-      this.linkMsj = 'hide';
-    }
-  }
-
   clipBoardCopy() {
-    var string = JSON.stringify(this.temp);
-    var result = this.clipboardService.copyFromContent(string);
-
+    const string = JSON.stringify(this.temp);
+    this.clipboardService.copyFromContent(string);
     if (this.temp.length === 0) {
       this.toastr.info('no data to copy');
     } else {

@@ -1,12 +1,16 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import {
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { Router, RouterLink } from '@angular/router';
 import { Response } from '@app/core/models/response-model/response.model';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/core/service/authentication-service/auth.service';
-
-declare let particlesJS: any;
+import { CommonModule } from '@angular/common';
 
 import {
   animate,
@@ -41,6 +45,8 @@ import { DeviceDetectorService } from 'ngx-device-detector';
       transition('hidden => visible', animate('1000ms ease-in')),
     ]),
   ],
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule, RouterLink, TranslateModule],
 })
 export class SigninComponent implements OnInit, OnDestroy {
   submitted = false;
@@ -68,22 +74,27 @@ export class SigninComponent implements OnInit, OnDestroy {
   showPassword: boolean = false;
 
   constructor(
-    private router: Router,
-    private authService: AuthService,
-    private toastr: ToastrService,
-    private logoService: LogoService,
-    private translate: TranslateService,
-    private deviceService: DeviceDetectorService,
+    private readonly router: Router,
+    private readonly authService: AuthService,
+    private readonly toastr: ToastrService,
+    private readonly logoService: LogoService,
+    private readonly translate: TranslateService,
+    private readonly deviceService: DeviceDetectorService,
   ) {}
 
   ngOnInit() {
+    // Verificar si el usuario ya está logueado usando signals
+    if (this.authService.isLoggedIn()) {
+      // Redirigir según el tipo de usuario
+      if (this.authService.isAffiliateLoggedIn()) {
+        this.router.navigate(['/app/home']);
+      } else if (this.authService.isAdminLoggedIn()) {
+        this.router.navigate(['/admin/home-admin']);
+      }
+      return;
+    }
+
     this.getTheme();
-    this.authService.logoutUser();
-    particlesJS.load(
-      'particles-js',
-      'assets/particles/particles.json',
-      function () {},
-    );
     this.setLabels();
     this.setErrorMessages();
     this.startBackgroundRotation();
@@ -106,7 +117,7 @@ export class SigninComponent implements OnInit, OnDestroy {
   });
 
   setLabels() {
-    if (this.translate.currentLang != undefined) {
+    if (this.translate.getCurrentLang() != undefined) {
       this.username = this.translate.instant('SIGNIN.USER-NAME.TEXT');
       this.password = this.translate.instant('SIGNIN.PASSWORD.TEXT');
       this.remember = this.translate.instant('SIGNIN.REMEMBER-ME.TEXT');
@@ -116,7 +127,7 @@ export class SigninComponent implements OnInit, OnDestroy {
   }
 
   setErrorMessages() {
-    if (this.translate.currentLang != undefined) {
+    if (this.translate.getCurrentLang() != undefined) {
       this.passwordIsRequerid = this.translate.instant(
         'SIGNIN.PASS-IS-REQUIRED.TEXT',
       );

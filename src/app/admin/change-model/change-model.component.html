@@ -26,11 +26,11 @@
                   <div class="col-12">
                     <div class="d-flex flex-wrap mb-2">
                       <label class="ms-2"><input type="radio" name="searchField" value="userName"
-                          [(ngModel)]="searchField"> Afiliado</label>
+                                                 [(ngModel)]="searchField"> Afiliado</label>
                       <label class="ms-2"><input type="radio" name="searchField" value="invoiceId"
-                          [(ngModel)]="searchField"> N°. Factura</label>
+                                                 [(ngModel)]="searchField"> N°. Factura</label>
                       <label class="ms-2"><input type="radio" name="searchField" value="paymentGroupId"
-                          [(ngModel)]="searchField"> Modelo</label>
+                                                 [(ngModel)]="searchField"> Modelo</label>
                     </div>
                   </div>
                   <div class="col-sm-3">
@@ -43,7 +43,7 @@
                             </div>
                           </div>
                           <input type="text" class="form-control search-background-color" id="inlineFormInputGroup"
-                            (keyup)="updateFilter($event)" aria-label="Search box" placeholder="Busqueda" />
+                                 (keyup)="updateFilter($event)" aria-label="Search box" placeholder="Busqueda"/>
                         </div>
                       </div>
                     </div>
@@ -72,11 +72,11 @@
                   </div>
                 </div>
                 <ngx-datatable id="table" #table class="material" [rows]="rows" [loadingIndicator]="loadingIndicator"
-                  columnMode="force" [headerHeight]="50" [footerHeight]="50" rowHeight="auto"
-                  [selectionType]="'checkbox'" (select)="onSelect($event)" [limit]="12"
-                  [scrollbarH]="scrollBarHorizontal" [reorderable]="reorderable">
+                               columnMode="force" [headerHeight]="50" [footerHeight]="50" rowHeight="auto"
+                               [selectionType]="'checkbox'" (select)="onSelect($event)" [limit]="12"
+                               [scrollbarH]="scrollBarHorizontal" [reorderable]="reorderable">
                   <ngx-datatable-column [width]="70" [sortable]="false" [draggable]="false" [resizeable]="false"
-                    [canAutoResize]="false" [headerCheckboxable]="true" [checkboxable]="true">
+                                        [canAutoResize]="false" [headerCheckboxable]="true" [checkboxable]="true">
                   </ngx-datatable-column>
                   <ngx-datatable-column name="Afiliado">
                     <ng-template let-row="row" ngx-datatable-cell-template>
@@ -112,7 +112,7 @@
                     </ng-template>
                   </ngx-datatable-column>
                   <ngx-datatable-column name="Detalles" sortable="false">
-                    <ng-template let-value="value" let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+                    <ng-template ngx-datatable-cell-template>
                       <a class="msr-2 h-auto tblEditBtn">
                         <i class="bi bi-pencil-square">Acciones</i>
                       </a>

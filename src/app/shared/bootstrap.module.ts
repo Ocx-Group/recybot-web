@@ -1,10 +1,15 @@
 import { NgModule } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-const bootstrapModules = [NgbModule];
 
+// Para módulos tradicionales (si aún los usas)
 @NgModule({
-  declarations: [],
-  imports: [bootstrapModules],
-  exports: [bootstrapModules],
+  imports: [NgbModule],
+  exports: [NgbModule],
 })
 export class BootstrapModule {}
+
+// Para componentes standalone - solo importa esto
+export function provideBootstrap() {
+  return NgbModule;
+}
+

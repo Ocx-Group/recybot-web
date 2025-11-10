@@ -8,21 +8,30 @@ import {
 import {
   AbstractControl,
   FormBuilder,
-  FormGroup,
+  FormGroup, ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { ToastrService } from 'ngx-toastr';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import {ToastrService} from 'ngx-toastr';
+import {NgbModal, NgbTooltip} from '@ng-bootstrap/ng-bootstrap';
+import {PaymentGroup} from "../../../core/models/payment-group-model/payment.group.model";
+import {PayConcept} from "../../../core/models/concept-model/pay-concept.model";
+import {ConceptList} from "../../../core/models/concept-model/concept-list.model";
+import {PaymentGroupsService} from "../../../core/service/payment-groups-service/payment-groups.service";
+import {ConceptService} from "../../../core/service/concept-service/concept.service";
+import {TranslatePipe} from "@ngx-translate/core";
+import {NgClass} from "@angular/common";
 
-import { ConceptList } from '@app/core/models/concept-model/concept-list.model';
-import { PayConcept } from '@app/core/models/concept-model/pay-concept.model';
-import { PaymentGroup } from '@app/core/models/payment-group-model/payment.group.model';
-import { PaymentGroupsService } from '@app/core/service/payment-groups-service/payment-groups.service';
-import { ConceptService } from '@app/core/service/concept-service/concept.service';
 
 @Component({
   selector: 'app-concept-list-edit-modal',
   templateUrl: './concept-list-edit-modal.component.html',
+  standalone: true,
+  imports: [
+    TranslatePipe,
+    ReactiveFormsModule,
+    NgClass,
+    NgbTooltip
+  ]
 })
 export class ConceptListEditModalComponent implements OnInit {
   editConceptForm: FormGroup;
@@ -43,7 +52,8 @@ export class ConceptListEditModalComponent implements OnInit {
     private toastr: ToastrService,
     private paymentGroupService: PaymentGroupsService,
     private conceptService: ConceptService
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.loadValidations();
@@ -91,7 +101,7 @@ export class ConceptListEditModalComponent implements OnInit {
     });
   }
 
-  showSuccess(message) {
+  showSuccess(message: string) {
     this.toastr.success(message, 'Success!');
   }
 
@@ -115,7 +125,8 @@ export class ConceptListEditModalComponent implements OnInit {
           this.calculateGroup = [...paymentGroups];
         }
 
-        setTimeout(() => {}, 500);
+        setTimeout(() => {
+        }, 500);
       });
   }
 
@@ -143,7 +154,7 @@ export class ConceptListEditModalComponent implements OnInit {
 
     this.conceptService
       .updateConcept(this.conceptListModel)
-      .subscribe((resp) => {
+      .subscribe(() => {
         this.showSuccess('The concept was update successfully!');
         this.closeModals();
         this.loadConceptList.emit();

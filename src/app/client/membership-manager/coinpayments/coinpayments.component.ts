@@ -3,19 +3,23 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 
-import { CreatePayment, ProductRequest } from '@app/core/models/coinpayment-model/create-payment.model';
-import { Product } from '@app/core/models/product-model/product.model';
-import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
-import { AuthService } from '@app/core/service/authentication-service/auth.service';
-import { CoinpaymentService } from '@app/core/service/coinpayment-service/coinpayment.service';
-import { TransactionInfo } from '@app/core/models/coinpayment-model/transaction-info.model'
-import { ConpaymentTransaction } from '@app/core/models/coinpayment-model/conpayment-transaction.model';
-import { MembershipManagerService } from '@app/core/service/membership-manager-service/membership-manager.service';
+import { CreatePayment, ProductRequest } from '../../../core/models/coinpayment-model/create-payment.model';
+import { Product } from '../../../core/models/product-model/product.model';
+import { UserAffiliate } from '../../../core/models/user-affiliate-model/user.affiliate.model';
+import { AuthService } from '../../../core/service/authentication-service/auth.service';
+import { CoinpaymentService } from '../../../core/service/coinpayment-service/coinpayment.service';
+import { TransactionInfo } from '../../../core/models/coinpayment-model/transaction-info.model'
+import { ConpaymentTransaction } from '../../../core/models/coinpayment-model/conpayment-transaction.model';
+import { MembershipManagerService } from '../../../core/service/membership-manager-service/membership-manager.service';
+import { CommonModule } from '@angular/common';
+import {NgbAlert} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
-  selector: 'app-coinpayments',
-  templateUrl: './coinpayments.component.html',
-  styleUrls: ['./coinpayments.component.scss']
+    selector: 'app-coinpayments',
+    templateUrl: './coinpayments.component.html',
+    styleUrls: ['./coinpayments.component.scss'],
+    standalone: true,
+  imports: [CommonModule, NgbAlert]
 })
 export class CoinpaymentsComponent {
   qrImageUrl: string;

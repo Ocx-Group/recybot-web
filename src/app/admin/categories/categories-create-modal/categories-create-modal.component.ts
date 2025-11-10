@@ -1,15 +1,20 @@
-import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
+import {AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 
-
-import { ProductCategory } from '@app/core/models/product-category-model/product-category.model';
-import { ProductCategoryService } from '@app/core/service/product-category-service/product-category.service';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ToastrService } from 'ngx-toastr';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {ToastrService} from 'ngx-toastr';
+import {ProductCategory} from "../../../core/models/product-category-model/product-category.model";
+import {ProductCategoryService} from "../../../core/service/product-category-service/product-category.service";
+import {NgClass} from "@angular/common";
 
 @Component({
   selector: 'app-categories-create-modal',
   templateUrl: './categories-create-modal.component.html',
+  standalone: true,
+  imports: [
+    ReactiveFormsModule,
+    NgClass
+  ]
 })
 export class CategoriesCreateModalComponent implements OnInit {
   createCategorieForm!: FormGroup;
@@ -29,7 +34,8 @@ export class CategoriesCreateModalComponent implements OnInit {
     private productCategoryService: ProductCategoryService,
     private modalService: NgbModal,
     private toastr: ToastrService
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     this.categorieValidation();
@@ -54,8 +60,6 @@ export class CategoriesCreateModalComponent implements OnInit {
     this.selectedFile = <File>event.target.files[0];
   }
 
-  uploadFile() { }
-
   onChangeSmallBanner() {
     this.checkboxSmallBanner = !this.checkboxSmallBanner;
   }
@@ -68,7 +72,7 @@ export class CategoriesCreateModalComponent implements OnInit {
     this.modalService.dismissAll();
   }
 
-  showSuccess(message) {
+  showSuccess(message: string) {
     this.toastr.success(message, 'Success!');
   }
 

@@ -1,15 +1,20 @@
-import { Component, ViewChild, HostListener, OnInit } from '@angular/core';
-import { DatatableComponent } from '@swimlane/ngx-datatable';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ToastrService } from 'ngx-toastr';
+import {Component, HostListener, OnInit, ViewChild} from '@angular/core';
+import {DataTableColumnCellDirective, DataTableColumnDirective, DatatableComponent} from '@swimlane/ngx-datatable';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {ToastrService} from 'ngx-toastr';
 import Swal from 'sweetalert2';
-import { ClipboardService } from 'ngx-clipboard';
-
-import { UserService } from '@app/core/service/user-service/user.service';
-import { User } from '@app/core/models/user-model/user.model';
-import { PrintService } from '@app/core/service/print-service/print.service';
-import { RolService } from '@app/core/service/rol-service/rol.service';
-import { Rol } from '@app/core/models/rol-model/rol.model';
+import {ClipboardService} from 'ngx-clipboard';
+import {UserService} from "../../core/service/user-service/user.service";
+import {User} from "../../core/models/user-model/user.model";
+import {PrintService} from "../../core/service/print-service/print.service";
+import {RolService} from "../../core/service/rol-service/rol.service";
+import {Rol} from "../../core/models/rol-model/rol.model";
+import {TranslatePipe} from "@ngx-translate/core";
+import {RouterLink} from "@angular/router";
+import {IconsModule} from "../../shared";
+import {UsersListCreateModalComponent} from "./users-list-create-modal/users-list-create-modal.component";
+import {UsersListEditModalComponent} from "./users-list-edit-modal/users-list-edit-modal.component";
+import {UsersListDetailModalComponent} from "./users-list-detail-modal/users-list-detail-modal.component";
 
 const header = ['Usuario', 'Rol', 'Nombre', 'Apellido', 'Correo'];
 
@@ -17,6 +22,18 @@ const header = ['Usuario', 'Rol', 'Nombre', 'Apellido', 'Correo'];
   selector: 'app-users-list',
   templateUrl: './users-list.component.html',
   providers: [ToastrService],
+  standalone: true,
+  imports: [
+    TranslatePipe,
+    RouterLink,
+    IconsModule,
+    DatatableComponent,
+    DataTableColumnDirective,
+    DataTableColumnCellDirective,
+    UsersListCreateModalComponent,
+    UsersListEditModalComponent,
+    UsersListDetailModalComponent
+  ]
 })
 export class UsersListComponent implements OnInit {
   rows = [];
@@ -36,18 +53,15 @@ export class UsersListComponent implements OnInit {
     private clipboardService: ClipboardService,
     private printService: PrintService,
     private rolService: RolService,
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.onFillDropdownRol();
     this.loadUserList();
   }
 
-  showSuccess(message) {
-    this.toastr.success(message, 'Success!');
-  }
-
-  showError(message) {
+  showError(message: string) {
     this.toastr.error(message, 'Error!');
   }
 
@@ -84,10 +98,6 @@ export class UsersListComponent implements OnInit {
     });
   }
 
-  closeModals() {
-    this.modalService.dismissAll();
-  }
-
   onFillDropdownRol() {
     this.rolService.getAll().subscribe({
       next: (roles: Rol[]) => {
@@ -104,11 +114,9 @@ export class UsersListComponent implements OnInit {
   updateFilter(event) {
     const val = event.target.value.toLowerCase();
 
-    const temp = this.temp.filter(function (d) {
+    this.rows = this.temp.filter(function (d) {
       return d.name.toLowerCase().includes(val) || !val;
     });
-
-    this.rows = temp;
     this.table.offset = 0;
   }
 
@@ -128,7 +136,7 @@ export class UsersListComponent implements OnInit {
 
   deleteRecord(value) {
     this.userService.deleteUser(value).subscribe({
-      next: resp => {
+      next: () => {
         this.deleteRecordSuccess(1);
         this.loadUserList();
       },
@@ -155,14 +163,13 @@ export class UsersListComponent implements OnInit {
 
   onPrint() {
     const body = this.temp.map((items: any) => {
-      const data = [
+      return [
         items.user_name,
         items.rol_name,
         items.name,
         items.last_name,
         items.email,
       ];
-      return data;
     });
 
     this.printService.print(header, body, 'Lista de Usuarios', false);

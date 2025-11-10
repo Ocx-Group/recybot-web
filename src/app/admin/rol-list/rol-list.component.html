@@ -107,7 +107,7 @@
                   <ngx-datatable-column
                     name="{{ 'ROL-LIST-PAGE.COL-ROLE.TEXT' | translate }}"
                   >
-                    <ng-template let-row="row" ngx-datatable-cell-template >
+                    <ng-template let-row="row" ngx-datatable-cell-template>
                       {{ row.name }}
                     </ng-template>
                   </ngx-datatable-column>
@@ -125,8 +125,8 @@
                       'ROL-LIST-PAGE.COL-ASSOCIATED-USERS.TEXT' | translate
                     }}"
                   >
-                    <ng-template let-row="row" ngx-datatable-cell-template (change)="onUsersAssociated(row)">
-                     {{row.associated_users}}
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                      {{ row.associated_users }}
                     </ng-template>
                   </ngx-datatable-column>
                   <ngx-datatable-column
@@ -134,7 +134,7 @@
                       'ROL-LIST-PAGE.COL-ROL-PERMISSIONS.TEXT' | translate
                     }}"
                   >
-                    <ng-template let-row="row" ngx-datatable-cell-template (change)="onUsersAssociated()">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
                       {{ row.permissions }}
                     </ng-template>
                   </ngx-datatable-column>
@@ -146,9 +146,7 @@
                     sortable="false"
                   >
                     <ng-template
-                      let-value="value"
                       let-row="row"
-                      let-rowIndex="rowIndex"
                       ngx-datatable-cell-template
                     >
                       <div ngbDropdown container="body">
@@ -169,8 +167,8 @@
                             <i class="fas fa-edit"></i>
                             <span
                               style="margin-left: 10px"
-                              
-                              >{{
+
+                            >{{
                                 'ROL-LIST-PAGE.BTN-EDIT.TEXT' | translate
                               }}</span
                             >
@@ -187,8 +185,8 @@
                           >
                             <i class="fas fa-file-import"></i>
                             <span style="margin-left: 10px">{{
-                              'ROL-LIST-PAGE.BTN-PERMISSIONS.TEXT' | translate
-                            }}</span>
+                                'ROL-LIST-PAGE.BTN-PERMISSIONS.TEXT' | translate
+                              }}</span>
                           </a>
                           <a ngbDropdownItem id="btn-detail" (click)="
                                 modalChildSummary.summaryOpenModal(
@@ -199,8 +197,8 @@
                             <i class="bi bi-eye-fill"></i>
                             <span
                               style="margin-left: 10px"
-                              
-                              >{{
+
+                            >{{
                                 'ROL-LIST-PAGE.BTN-SUMMARY.TEXT' | translate
                               }}</span
                             >
@@ -209,8 +207,8 @@
                             <i class="fas fa-trash-alt"></i>
                             <span
                               style="margin-left: 10px"
-                              
-                              >{{
+
+                            >{{
                                 'ROL-LIST-PAGE.BTN-DELETE.TEXT' | translate
                               }}</span
                             >

@@ -24,8 +24,8 @@
             </div>
           </div>
           <div class="chat-box">
-            <div class="card-body chat-content" style="position: relative; max-height: 400px;" #scrollMe
-              [perfectScrollbar]="config">
+            <div class="card-body chat-content" style="position: relative; max-height: 400px; overflow-y: auto;" #scrollMe
+              >
               <div *ngFor="let message of messages" class="chat-item"
                    [ngClass]="{'chat-right': !isAdmin(message.userId), 'chat-left': isAdmin(message.userId)}">
                 <img [src]="message.imageProfileUrl || 'assets/images/users/user-1.png'" alt="User avatar">

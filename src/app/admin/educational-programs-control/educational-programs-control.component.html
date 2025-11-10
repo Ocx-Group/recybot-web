@@ -25,13 +25,13 @@
                   <div class="col-12">
                     <div class="d-flex flex-wrap mb-2">
                       <label class="ms-2"><input type="radio" name="searchField" value="userName"
-                          [(ngModel)]="searchField"> Usuario</label>
+                                                 [(ngModel)]="searchField"> Usuario</label>
                       <label class="ms-2"><input type="radio" name="searchField" value="invoiceId"
-                          [(ngModel)]="searchField"> N°. Factura</label>
+                                                 [(ngModel)]="searchField"> N°. Factura</label>
                       <label class="ms-2"><input type="radio" name="searchField" value="createdAt"
-                          [(ngModel)]="searchField"> Fecha de pago</label>
+                                                 [(ngModel)]="searchField"> Fecha de pago</label>
                       <label class="ms-2"><input type="radio" name="searchField" value="endDay"
-                          [(ngModel)]="searchField"> Fecha de finalización</label>
+                                                 [(ngModel)]="searchField"> Fecha de finalización</label>
                     </div>
                   </div>
                   <div class="col-sm-3">
@@ -44,8 +44,8 @@
                             </div>
                           </div>
                           <input style="background-color: white" type="text" class="form-control"
-                            id="inlineFormInputGroup" (keyup)="updateFilter($event)" aria-label="Search box"
-                            placeholder="Busqueda" />
+                                 id="inlineFormInputGroup" (keyup)="updateFilter($event)" aria-label="Search box"
+                                 placeholder="Busqueda"/>
                         </div>
                       </div>
                     </div>
@@ -84,8 +84,8 @@
                   </div>
                 </div>
                 <ngx-datatable #table class="material" [rows]="rows" [loadingIndicator]="loadingIndicator"
-                  columnMode="force" [headerHeight]="50" [footerHeight]="50" rowHeight="auto" [limit]="10"
-                  [scrollbarH]="scrollBarHorizontal" [reorderable]="reorderable">
+                               columnMode="force" [headerHeight]="50" [footerHeight]="50" rowHeight="auto" [limit]="10"
+                               [scrollbarH]="scrollBarHorizontal" [reorderable]="reorderable">
                   <ngx-datatable-column name="Usuario">
                     <ng-template let-row="row" ngx-datatable-cell-template>
                       {{ row.userName }}
@@ -135,7 +135,7 @@
                           <a ngbDropdownItem id="btn-delete" (click)="deleteSingleRow(row.id)">
                             <i class="fas fa-trash-alt"></i>
                             <span style="margin-left: 10px">{{
-                              'CONCEPT-LIST-PAGE.BTN-DELETE.TEXT' | translate
+                                'CONCEPT-LIST-PAGE.BTN-DELETE.TEXT' | translate
                               }}</span>
                           </a>
                         </div>

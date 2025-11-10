@@ -31,23 +31,27 @@
                           </button>
                         </div>
                         <div class="col-12 col-md-12 col-lg-12">
-                          <div class="card-body media-list position-relative scrollable-container" [perfectScrollbar]>
+                          <div class="card-body media-list position-relative scrollable-container"
+                            style="overflow-y: auto;">
                             <div *ngIf="showDiv">
                               <app-client-unilevel-tree-component [nodeTemplate]="nodeTemplate" [data]="tree"
-                                #exampleChart="orgChart" (loadFamilyTree)="onloadFamilyTree($event)">
+                                (loadFamilyTree)="onloadFamilyTree($event)">
                               </app-client-unilevel-tree-component>
                               <ng-template #nodeTemplate let-node>
                                 <div class="chart-node">
-                                  <img title="user image" [ngSrc]="node.image" fill class="node-image" />
+                                  <img title="user image" alt="node" [src]="node.image || 'assets/images/user.png'"
+                                    class="node-image" />
                                   <div class="name">
                                     <span class="user-name">
                                       {{ node.userName || node.user_name }}
                                     </span>
                                   </div>
-                                  <div *ngIf="node.children.length" (click)="node.hideChildren = !node.hideChildren"
-                                    class="tree-fold-btn">
+                                  <button *ngIf="node.children && node.children.length"
+                                    (click)="node.hideChildren = !node.hideChildren"
+                                    (keypress)="node.hideChildren = !node.hideChildren" class="tree-fold-btn"
+                                    type="button">
                                     {{ node.hideChildren ? '+' : '-' }}
-                                  </div>
+                                  </button>
                                 </div>
                               </ng-template>
                             </div>
@@ -81,21 +85,24 @@
 
                     <div class="row">
                       <div class="col-12 col-md-12 col-lg-12">
-                        <div class="card-body media-list position-relative scrollable-container" [perfectScrollbar]>
+                        <div class="card-body media-list position-relative scrollable-container"
+                          style="overflow-y: auto;">
                           <div *ngIf="showDiv">
                             <app-client-unilevel-tree-component [nodeTemplate]="nodeTemplate" [data]="tree"
-                              #exampleChart="orgChart" (loadFamilyTree)="onloadFamilyTree($event)">
+                              (loadFamilyTree)="onloadFamilyTree($event)">
                             </app-client-unilevel-tree-component>
                             <ng-template #nodeTemplate let-node>
                               <div class="chart-node">
-                                <img title="user image" [ngSrc]="node.image" fill class="node-image" />
+                                <img alt="node" title="user image" [src]="node.image || 'assets/images/user.png'"
+                                  class="node-image" />
                                 <div class="name">
                                   <span class="user-name">
                                     {{ node.userName || node.user_name }}
                                   </span>
                                 </div>
-                                <div *ngIf="node.children.length" (click)="node.hideChildren = !node.hideChildren"
-                                  class="tree-fold-btn">
+                                <div *ngIf="node.children && node.children.length"
+                                  (click)="node.hideChildren = !node.hideChildren"
+                                  (keypress)="node.hideChildren = !node.hideChildren" class="tree-fold-btn">
                                   {{ node.hideChildren ? '+' : '-' }}
                                 </div>
                               </div>

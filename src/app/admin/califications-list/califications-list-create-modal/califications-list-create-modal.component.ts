@@ -1,18 +1,38 @@
-import { Component, ViewChild, OnInit, Output, EventEmitter } from '@angular/core';
+import {Component, ViewChild, OnInit, Output, EventEmitter} from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
-  FormGroup,
+  FormGroup, ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Grading } from '@app/core/models/grading-model/grading.model';
-import { GradingService } from '@app/core/service/grading-service/grading.service';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ToastrService } from 'ngx-toastr';
+import {
+  NgbModal,
+  NgbNav,
+  NgbNavContent,
+  NgbNavItem,
+  NgbNavLink,
+  NgbNavOutlet,
+  NgbTooltip
+} from '@ng-bootstrap/ng-bootstrap';
+import {ToastrService} from 'ngx-toastr';
+import {Grading} from "../../../core/models/grading-model/grading.model";
+import {GradingService} from "../../../core/service/grading-service/grading.service";
+import {NgClass} from "@angular/common";
 
 @Component({
   selector: 'app-califications-list-create-modal',
   templateUrl: './califications-list-create-modal.component.html',
+  standalone: true,
+  imports: [
+    ReactiveFormsModule,
+    NgClass,
+    NgbNav,
+    NgbNavItem,
+    NgbNavContent,
+    NgbNavLink,
+    NgbTooltip,
+    NgbNavOutlet
+  ]
 })
 export class CalificationsListCreateModalComponent implements OnInit {
   createCalificationForm!: FormGroup;
@@ -25,14 +45,15 @@ export class CalificationsListCreateModalComponent implements OnInit {
 
   @ViewChild('calificationCreateModal') calificationCreateModal: NgbModal;
   @Output('loadCalificationList') loadCalculationList: EventEmitter<any> =
-  new EventEmitter();
+    new EventEmitter();
 
   constructor(
     private formBuilder: FormBuilder,
     private gradingService: GradingService,
     private modalService: NgbModal,
     private toastr: ToastrService,
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.calificationValidations();
@@ -99,8 +120,7 @@ export class CalificationsListCreateModalComponent implements OnInit {
     this.grading.volume_points_network = this.createCalificationForm.value.network_points_qualify;
 
 
-
-    this.grading.children_left_leg =  this.createCalificationForm.value.children_left_leg;
+    this.grading.children_left_leg = this.createCalificationForm.value.children_left_leg;
     this.grading.children_right_leg = this.createCalificationForm.value.children_right_leg;
     this.grading.front_by_matrix = this.createCalificationForm.value.front_by_matrix;
     this.grading.front_score_1 = this.createCalificationForm.value.qualified_fronts1;
@@ -122,7 +142,7 @@ export class CalificationsListCreateModalComponent implements OnInit {
     this.grading.network_leaders_qualifier = this.createCalificationForm.value.network_leaders_qualifier;
 
 
-    this.gradingService.createGrading(this.grading).subscribe(()=>{
+    this.gradingService.createGrading(this.grading).subscribe(() => {
       this.showSuccess('The calification was created successfully!');
       this.closeModals();
       this.loadCalculationList.emit();
@@ -153,7 +173,7 @@ export class CalificationsListCreateModalComponent implements OnInit {
     this.modalService.dismissAll();
   }
 
-  showSuccess(message) {
+  showSuccess(message: string) {
     this.toastr.success(message, 'Success!');
   }
 

@@ -84,11 +84,11 @@
           </div>
           <div class="card-body">
             <div class="row">
-              <div id="chartdiv"></div>
+              <app-world-map-chart [countries]="maps" height="350px"></app-world-map-chart>
             </div>
             <div class="row">
-              <div id="new-orders" class="media-list" style="position: relative; max-height: 315px !important"
-                [perfectScrollbar]>
+              <div id="new-orders" class="media-list" style="position: relative; max-height: 315px !important; overflow-y: auto;"
+                >
                 <div class="table">
                   <table id="new-orders-table" class="table table-hover table-xl table-row-border mb-0">
                     <thead class="sr-only">
@@ -99,8 +99,8 @@
                     </thead>
                     <tbody>
                       <tr *ngFor="let item of maps">
-                        <td class="text-truncate">{{ item.title }}</td>
-                        <td class="text-truncate">{{ item.value }}</td>
+                        <td class="text-truncate">{{ item.Title }}</td>
+                        <td class="text-truncate">{{ item.Value }}</td>
                       </tr>
                     </tbody>
                   </table>

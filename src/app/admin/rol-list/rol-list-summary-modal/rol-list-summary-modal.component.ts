@@ -1,15 +1,23 @@
-import { UserService } from '@app/core/service/user-service/user.service';
-import { Component, ViewChild, HostListener } from '@angular/core';
-import { DatatableComponent } from '@swimlane/ngx-datatable';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import {Component, ViewChild, HostListener} from '@angular/core';
+import {DataTableColumnCellDirective, DataTableColumnDirective, DatatableComponent} from '@swimlane/ngx-datatable';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
-import { Rol } from '@app/core/models/rol-model/rol.model';
-import { User } from '@app/core/models/user-model/user.model';
-import { ToastrService } from 'ngx-toastr';
+import {ToastrService} from 'ngx-toastr';
+import {Rol} from "../../../core/models/rol-model/rol.model";
+import {UserService} from "../../../core/service/user-service/user.service";
+import {User} from "../../../core/models/user-model/user.model";
+import {TranslatePipe} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-rol-list-summary-modal',
   templateUrl: './rol-list-summary-modal.component.html',
+  standalone: true,
+  imports: [
+    TranslatePipe,
+    DatatableComponent,
+    DataTableColumnDirective,
+    DataTableColumnCellDirective
+  ]
 })
 export class RolListSummaryModalComponent {
   rolData = new Rol();
@@ -21,11 +29,13 @@ export class RolListSummaryModalComponent {
 
   @ViewChild('table') table: DatatableComponent;
   @ViewChild('rolDetailModal') rolDetailModal: NgbModal;
+
   constructor(
     private modalService: NgbModal,
     private userService: UserService,
     private toastr: ToastrService
-  ) {}
+  ) {
+  }
 
   summaryOpenModal(content, rol: Rol) {
     this.modalService.open(content, {
@@ -54,12 +64,8 @@ export class RolListSummaryModalComponent {
     });
   }
 
-  showError(message) {
+  showError(message: string) {
     this.toastr.error(message, 'Error!');
-  }
-
-  closeModals() {
-    this.modalService.dismissAll();
   }
 
   @HostListener('window:resize', ['$event'])

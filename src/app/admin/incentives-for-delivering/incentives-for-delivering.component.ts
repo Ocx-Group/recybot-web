@@ -1,12 +1,24 @@
-import { Component, ViewChild, HostListener } from '@angular/core';
-import { DatatableComponent } from '@swimlane/ngx-datatable';
-import { ToastrService } from 'ngx-toastr';
-import { ClipboardService } from 'ngx-clipboard';
+import {Component, HostListener, ViewChild} from '@angular/core';
+import {DataTableColumnCellDirective, DataTableColumnDirective, DatatableComponent} from '@swimlane/ngx-datatable';
+import {ToastrService} from 'ngx-toastr';
+import {ClipboardService} from 'ngx-clipboard';
+import {TranslatePipe} from "@ngx-translate/core";
+import {RouterLink} from "@angular/router";
+import {IconsModule} from "../../shared";
 
 @Component({
   selector: 'app-incentives-for-delivering',
   templateUrl: './incentives-for-delivering.component.html',
-  providers: [ToastrService]
+  providers: [ToastrService],
+  standalone: true,
+  imports: [
+    TranslatePipe,
+    RouterLink,
+    IconsModule,
+    DatatableComponent,
+    DataTableColumnDirective,
+    DataTableColumnCellDirective
+  ]
 })
 export class IncentivesForDeliveringComponent {
   rows = [];
@@ -37,6 +49,7 @@ export class IncentivesForDeliveringComponent {
   getRowHeight(row) {
     return row.height;
   }
+
   fetch(cb) {
     const req = new XMLHttpRequest();
     req.open('GET', `assets/data/admin/`);
@@ -52,25 +65,21 @@ export class IncentivesForDeliveringComponent {
     const val = event.target.value.toLowerCase();
 
     // filter our data
-    const temp = this.temp.filter(function (d) {
+    // update the rows
+    this.rows = this.temp.filter(function (d) {
       return d.name.toLowerCase().indexOf(val) !== -1 || !val;
     });
-
-    // update the rows
-    this.rows = temp;
     // Whenever the filter changes, always go back to the first page
     this.table.offset = 0;
   }
 
   clipBoardCopy() {
-    var string = JSON.stringify(this.temp);
-    var result = this.clipboardService.copyFromContent(string);
-
+    const string = JSON.stringify(this.temp);
+    this.clipboardService.copyFromContent(string);
     if (this.temp.length === 0) {
       this.toastr.info('no data to copy');
     } else {
       this.toastr.success('copied ' + this.temp.length + ' rows successfully');
     }
   }
-
 }

@@ -1,13 +1,13 @@
 import {
   Component,
   HostListener,
-  OnDestroy,
   OnInit,
   ViewChild,
+  TemplateRef,
+  AfterViewInit,
 } from '@angular/core';
-import { Subscription } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import Swal from 'sweetalert2';
@@ -15,15 +15,35 @@ import Swal from 'sweetalert2';
 import { BalanceInformation } from '@app/core/models/wallet-model/balance-information.model';
 import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
 import { WalletService } from '@app/core/service/wallet-service/wallet.service';
-import { DatatableComponent } from '@swimlane/ngx-datatable';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { AuthService } from '@app/core/service/authentication-service/auth.service';
+import { CommonModule } from '@angular/common';
+
+import { TruncateDecimalsPipe } from '@app/shared/pipes/truncate-decimals.pipe';
+import { IconsModule } from '@app/shared';
+import { RouterLink } from '@angular/router';
+import {
+  ReusableDatatableComponent,
+  TableColumn,
+  TableConfig,
+  TableAction,
+} from '@app/shared/components/reusable-datatable/reusable-datatable.component';
 
 @Component({
   selector: 'app-wallet',
   templateUrl: './wallet.component.html',
+  standalone: true,
+  imports: [
+    CommonModule,
+    NgxDatatableModule,
+    TranslateModule,
+    TruncateDecimalsPipe,
+    IconsModule,
+    RouterLink,
+    ReusableDatatableComponent,
+  ],
 })
-export class WalletComponent implements OnInit, OnDestroy {
-  private subscription: Subscription;
+export class WalletComponent implements OnInit, AfterViewInit {
   balanceInformation: BalanceInformation = new BalanceInformation();
   public userCookie: UserAffiliate;
   rows = [];
@@ -31,40 +51,65 @@ export class WalletComponent implements OnInit, OnDestroy {
   loadingIndicator = true;
   reorderable = true;
   scrollBarHorizontal = window.innerWidth < 1200;
-  @ViewChild('table') table: DatatableComponent;
+
+  // Templates personalizados
+  @ViewChild('creditTemplate', { static: false })
+  creditTemplate: TemplateRef<any>;
+  @ViewChild('debitTemplate', { static: false })
+  debitTemplate: TemplateRef<any>;
+  @ViewChild('statusTemplate', { static: false })
+  statusTemplate: TemplateRef<any>;
+
+  // Configuración para el componente reutilizable
+  tableColumns: TableColumn[] = [];
+  tableActions: TableAction[] = [];
+  tableConfig: TableConfig = {
+    showSearch: true, // Mostrar slot de búsqueda personalizada
+    showActions: true, // Mostrar slot de botones personalizados
+    searchPlaceholder: 'WALLET-PAGE.SEARCH.TEXT',
+    headerHeight: 50,
+    footerHeight: 50,
+    rowHeight: 'auto',
+    limit: 10,
+    columnMode: 'force',
+    reorderable: true,
+    swapColumns: true,
+    // messages se heredará del defaultConfig del componente reutilizable
+  };
 
   constructor(
-    private walletService: WalletService,
-    private authService: AuthService,
-    private toastr: ToastrService,
-    private translateService: TranslateService,
-  ) {}
+    private readonly walletService: WalletService,
+    private readonly authService: AuthService,
+    private readonly toastr: ToastrService,
+    private readonly translateService: TranslateService,
+  ) {
+    this.initializeTableColumns();
+    this.initializeTableActions();
+  }
 
   ngOnInit(): void {
-    this.subscription = this.authService.currentUserAffiliate.subscribe(
-      user => {
-        this.userCookie = user;
-        if (user) {
-          this.loadBalanceInformation();
-        }
-      },
-    );
+    // Usar signal para obtener el usuario afiliado
+    this.userCookie = this.authService.userAffiliate();
+    if (this.userCookie) {
+      this.loadBalanceInformation();
+    }
     this.loadWalletList();
   }
 
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+  ngAfterViewInit(): void {
+    // Actualizar las columnas con los templates personalizados
+    setTimeout(() => {
+      this.updateColumnsWithTemplates();
+    });
   }
 
   showError(message: string) {
     this.toastr.error(message, 'Error!');
   }
 
-  @HostListener('window:resize', ['$event'])
+  @HostListener('window:resize')
   onResize() {
     this.scrollBarHorizontal = window.innerWidth < 1200;
-    this.table.recalculate();
-    this.table.recalculateColumns();
   }
 
   loadWalletList() {
@@ -108,10 +153,17 @@ export class WalletComponent implements OnInit, OnDestroy {
   updateFilter(event: any) {
     const val = this.normalizeText(event.target.value);
 
-    this.rows = this.temp.filter(d => {
-      return this.normalizeText(d.concept).indexOf(val) !== -1 || !val;
-    });
-    this.table.offset = 0;
+    if (val === '') {
+      this.rows = [...this.temp];
+    } else {
+      this.rows = this.temp.filter(d => {
+        return (
+          this.normalizeText(d.concept).includes(val) ||
+          this.normalizeText(d.adminUserName || '').includes(val) ||
+          this.normalizeText(d.affiliateUserName || '').includes(val)
+        );
+      });
+    }
   }
 
   private normalizeText(text: string): string {
@@ -161,8 +213,7 @@ export class WalletComponent implements OnInit, OnDestroy {
   }
 
   copyTableData() {
-    const rows = this.table._internalRows;
-    if (rows && rows.length) {
+    if (this.rows?.length) {
       const headers = [
         this.translateService.instant('WALLET-PAGE.USER-COLUMN.TEXT'),
         this.translateService.instant('WALLET-PAGE.AFFILIATE-COLUMN.TEXT'),
@@ -174,12 +225,12 @@ export class WalletComponent implements OnInit, OnDestroy {
         this.translateService.instant('WALLET-PAGE.DETAILS-COLUMN.TEXT'),
       ];
 
-      const data = rows.map(row => [
+      const data = this.rows.map(row => [
         row.adminUserName,
         row.affiliateUserName,
         row.credit,
         row.debit,
-        row.state ? 'Atendido' : 'No atendido',
+        row.status ? 'Atendido' : 'No atendido',
         row.concept,
         row.date,
         '...',
@@ -206,7 +257,7 @@ export class WalletComponent implements OnInit, OnDestroy {
       console.error('Error: ', err);
     }
 
-    document.body.removeChild(textArea);
+    textArea.remove();
   }
 
   showDetail(detail: string) {
@@ -228,5 +279,80 @@ export class WalletComponent implements OnInit, OnDestroy {
         /* empty */
       }
     });
+  }
+
+  initializeTableColumns() {
+    this.tableColumns = [
+      {
+        name: this.translateService.instant('WALLET-PAGE.USER-COLUMN.TEXT'),
+        prop: 'adminUserName',
+        sortable: true,
+      },
+      {
+        name: this.translateService.instant(
+          'WALLET-PAGE.AFFILIATE-COLUMN.TEXT',
+        ),
+        prop: 'affiliateUserName',
+        sortable: true,
+      },
+      {
+        name: this.translateService.instant('WALLET-PAGE.CREDIT-COLUMN.TEXT'),
+        prop: 'credit',
+        sortable: true,
+      },
+      {
+        name: this.translateService.instant('WALLET-PAGE.DEBIT-COLUMN.TEXT'),
+        prop: 'debit',
+        sortable: true,
+      },
+      {
+        name: this.translateService.instant('WALLET-PAGE.STATE-COLUMN.TEXT'),
+        prop: 'status',
+        sortable: true,
+      },
+      {
+        name: this.translateService.instant('WALLET-PAGE.CONCEPT-COLUMN.TEXT'),
+        prop: 'concept',
+        sortable: true,
+      },
+      {
+        name: this.translateService.instant('WALLET-PAGE.DATE-COLUMN.TEXT'),
+        prop: 'date',
+        sortable: true,
+      },
+    ];
+  }
+
+  initializeTableActions() {
+    this.tableActions = [
+      {
+        label: this.translateService.instant('WALLET-PAGE.VIEW-DETAILS.TEXT'),
+        icon: 'bi bi-folder2-open',
+        callback: (row: any) => this.showDetail(row.detail),
+        condition: (row: any) =>
+          row.detail !== null && row.detail !== undefined && row.detail !== '',
+      },
+    ];
+  }
+
+  updateColumnsWithTemplates() {
+    // Asignar templates personalizados a las columnas correspondientes
+    const creditColumn = this.tableColumns.find(col => col.prop === 'credit');
+    if (creditColumn && this.creditTemplate) {
+      creditColumn.cellTemplate = this.creditTemplate;
+    }
+
+    const debitColumn = this.tableColumns.find(col => col.prop === 'debit');
+    if (debitColumn && this.debitTemplate) {
+      debitColumn.cellTemplate = this.debitTemplate;
+    }
+
+    const statusColumn = this.tableColumns.find(col => col.prop === 'status');
+    if (statusColumn && this.statusTemplate) {
+      statusColumn.cellTemplate = this.statusTemplate;
+    }
+
+    // Forzar la detección de cambios
+    this.tableColumns = [...this.tableColumns];
   }
 }

@@ -23,8 +23,9 @@
                   <div class="tab-pane">
                     <div class="row">
                       <ngx-datatable #table class="material" [rows]="rows" [loadingIndicator]="loadingIndicator"
-                        columnMode="force" [headerHeight]="50" [footerHeight]="50" rowHeight="auto" [limit]="10"
-                        [scrollbarH]="scrollBarHorizontal" [reorderable]="reorderable">
+                                     columnMode="force" [headerHeight]="50" [footerHeight]="50" rowHeight="auto"
+                                     [limit]="10"
+                                     [scrollbarH]="scrollBarHorizontal" [reorderable]="reorderable">
                         <ngx-datatable-column name="Valor">
                           <ng-template let-row="row" ngx-datatable-cell-template>
                             {{ row.attributeValue }}
@@ -38,11 +39,11 @@
                         <ngx-datatable-column name="Eliminar">
                           <ng-template let-row="row" ngx-datatable-cell-template>
                             <div
-                            class="col-red"
-                            (click)="deleteSingleRow(row.id)"
-                          >
-                            <i class="bi bi-trash"></i>
-                          </div>
+                              class="col-red"
+                              (click)="deleteSingleRow(row.id)"
+                            >
+                              <i class="bi bi-trash"></i>
+                            </div>
                           </ng-template>
                         </ngx-datatable-column>
                       </ngx-datatable>
@@ -60,13 +61,13 @@
                           Grupo de atributo
                           <span class="text-danger">*</span></label>
                         <select id="attribute_group" class="form-select form-control" formControlName="attribute_group"
-                          required="required" [ngClass]="{
+                                required="required" [ngClass]="{
                             'is-invalid':
                               submitted &&
                               details_attributes_controls.attribute_group.errors
                           }">
                           <option value="">Seleccione una opción</option>
-                          <option value="{{item.id}}" *ngFor="let item of attributesList">{{item.name}}</option>
+                          <option value="{{item.id}}" *ngFor="let item of attributesList">{{ item.name }}</option>
                         </select>
                         <div *ngIf="
                             submitted &&
@@ -85,11 +86,11 @@
                           Valor
                           <span class="text-danger">*</span></label>
                         <input type="text" class="form-control" formControlName="value" required="required" id="value"
-                          placeholder="Valor" [ngClass]="{
+                               placeholder="Valor" [ngClass]="{
                             'is-invalid':
                               submitted &&
                               details_attributes_controls.value.errors
-                          }" />
+                          }"/>
                         <div *ngIf="
                             submitted &&
                             details_attributes_controls.value.errors
@@ -108,11 +109,11 @@
                           Posición
                           <span class="text-danger">*</span></label>
                         <input type="number" min="0" class="form-control" formControlName="position" id="position"
-                          required="required" placeholder="0" [ngClass]="{
+                               required="required" placeholder="0" [ngClass]="{
                             'is-invalid':
                               submitted &&
                               details_attributes_controls.position.errors
-                          }" />
+                          }"/>
                         <div *ngIf="
                             submitted &&
                             details_attributes_controls.position.errors

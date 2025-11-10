@@ -1,13 +1,13 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import * as signalR from '@microsoft/signalr';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { HubConnectionState } from "@microsoft/signalr";
+import {BehaviorSubject, Observable, Subject} from 'rxjs';
+import {HubConnectionState} from "@microsoft/signalr";
 
-import { TicketRequest } from '@app/core/models/ticket-model/ticketRequest.model';
-import { TicketMessageRequest } from '@app/core/models/ticket-model/ticket-message-request.model';
-import { Ticket } from '@app/core/models/ticket-model/ticket.model';
-import { environment } from '@environments/environment';
-import { TicketSummary } from '@app/core/models/ticket-model/ticket-summary.model'
+import {TicketRequest} from '../../models/ticket-model/ticketRequest.model';
+import {TicketMessageRequest} from '../../models/ticket-model/ticket-message-request.model';
+import {Ticket} from '../../models/ticket-model/ticket.model';
+import {environment} from '@environments/environment';
+import {TicketSummary} from '../../models/ticket-model/ticket-summary.model'
 
 @Injectable({
   providedIn: 'root'
@@ -43,7 +43,7 @@ export class TicketHubService {
 
   public async startConnection(): Promise<void> {
     this.hubConnection = new signalR.HubConnectionBuilder()
-      .withUrl(this.urlApi, { withCredentials: true })
+      .withUrl(this.urlApi, {withCredentials: true})
       .withAutomaticReconnect()
       .build();
 

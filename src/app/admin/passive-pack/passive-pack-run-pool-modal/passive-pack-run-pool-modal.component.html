@@ -21,26 +21,27 @@
         <div class="alert-icon"><i class="far fa-lightbulb"></i></div>
         <div class="alert-body">
           <div class="alert-title"> {{
-            'REQUESTS-PAGE.TITTLE-MSJ-INFO.TEXT'
-            | translate
-            }}</div>
-<ul class="list-unstyled">
-          <li>
-            Tenga presente que al momento de confirmar la acción de ejecución
-            será irreversible en este proceso.
-          </li>
-          <li>
-            Los parámetros que configuren son los que se tomaran en cuenta al
-            momento de la ejecución.
-          </li>
-          <li>
-            Si no desea ejecutar los pagos pero quiere saber cuánto es el valor
-            a pagar por cada afiliado, es recomendable simular el proceso de
-            pagos.
-          </li>
-        </ul>
-</div>
-</ngb-alert>
+              'REQUESTS-PAGE.TITTLE-MSJ-INFO.TEXT'
+                | translate
+            }}
+          </div>
+          <ul class="list-unstyled">
+            <li>
+              Tenga presente que al momento de confirmar la acción de ejecución
+              será irreversible en este proceso.
+            </li>
+            <li>
+              Los parámetros que configuren son los que se tomaran en cuenta al
+              momento de la ejecución.
+            </li>
+            <li>
+              Si no desea ejecutar los pagos pero quiere saber cuánto es el valor
+              a pagar por cada afiliado, es recomendable simular el proceso de
+              pagos.
+            </li>
+          </ul>
+        </div>
+      </ngb-alert>
       <!-- <div class="alert alert-warning text-center alert-has-icon">
         <div class="alert-icon"><i class="far fa-lightbulb"></i></div>
         <h6>Importante:</h6>
@@ -68,10 +69,10 @@
             Porcentaje para la empresa
             <span class="text-danger">*</span></label>
           <input type="number" min="0" class="form-control" formControlName="company_percentage" id="company_percentage"
-            placeholder="0%" [ngClass]="{
+                 placeholder="0%" [ngClass]="{
               'is-invalid':
                 submitted && passive_pack_controls.company_percentage.errors
-            }" />
+            }"/>
           <div *ngIf="submitted && passive_pack_controls.company_percentage.errors" class="invalid-feedback">
             <div *ngIf="passive_pack_controls.company_percentage.errors.required">
               Ingrese un valor
@@ -83,11 +84,11 @@
             Porcentaje de pago pasivo
             <span class="text-danger">*</span></label>
           <input type="number" min="0" class="form-control" formControlName="passive_percentage_paid"
-            id="passive_percentage_paid" placeholder="0%" [ngClass]="{
+                 id="passive_percentage_paid" placeholder="0%" [ngClass]="{
               'is-invalid':
                 submitted &&
                 passive_pack_controls.passive_percentage_paid.errors
-            }" />
+            }"/>
           <div *ngIf="submitted && passive_pack_controls.passive_percentage_paid.errors" class="invalid-feedback">
             <div *ngIf="passive_pack_controls.passive_percentage_paid.errors.required">
               Ingrese un valor
@@ -99,11 +100,11 @@
         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 mb-2">
           <label>Máximo limite ganacias</label>
           <input type="number" min="0" class="form-control" formControlName="earnings_limit" id="earnings_limit"
-            placeholder="0%" [ngClass]="{
+                 placeholder="0%" [ngClass]="{
               'is-invalid':
                 submitted &&
                 passive_pack_controls.earnings_limit.errors
-            }" />
+            }"/>
           <div *ngIf="submitted && passive_pack_controls.earnings_limit.errors" class="invalid-feedback">
             <div *ngIf="passive_pack_controls.earnings_limit.errors.required">
               Ingrese un valor
@@ -117,9 +118,9 @@
           </label>
           <input type="date" id="start_date" formControlName="start_date" class="form-control" [ngClass]="{
             'is-invalid': passive_pack_controls.start_date.touched && passive_pack_controls.start_date.errors
-          }" />
+          }"/>
           <div *ngIf="passive_pack_controls.start_date.touched && passive_pack_controls.start_date.errors"
-            class="invalid-feedback">
+               class="invalid-feedback">
             <div *ngIf="passive_pack_controls.start_date.errors.required">
               Ingrese un valor
             </div>
@@ -136,9 +137,9 @@
           </label>
           <input type="date" id="final_date" formControlName="final_date" class="form-control" [ngClass]="{
             'is-invalid': passive_pack_controls.final_date.touched && passive_pack_controls.final_date.errors
-          }" />
+          }"/>
           <div *ngIf="passive_pack_controls.final_date.touched && passive_pack_controls.final_date.errors"
-            class="invalid-feedback">
+               class="invalid-feedback">
             <div *ngIf="passive_pack_controls.final_date.errors.required">
               Ingrese un valor
             </div>
@@ -174,7 +175,7 @@
           </label>
           <input type="date" id="period_date" formControlName="period_date" class="form-control" [ngClass]="{
             'is-invalid': submitted && passive_pack_controls.period_date.errors
-          }" readonly />
+          }" readonly/>
           <div *ngIf="submitted && passive_pack_controls.period_date.errors" class="invalid-feedback">
             <div *ngIf="passive_pack_controls.period_date.errors.required">
               Ingrese un valor
@@ -186,9 +187,10 @@
       <div class="row">
         <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
           <label>Porcentaje de empresa por niveles</label>
-          <input type="number" id="company_percentage_levels" formControlName="company_percentage_levels" class="form-control" [ngClass]="{
+          <input type="number" id="company_percentage_levels" formControlName="company_percentage_levels"
+                 class="form-control" [ngClass]="{
             'is-invalid': passive_pack_controls.company_percentage_levels.touched && passive_pack_controls.company_percentage_levels.errors
-          }" />
+          }"/>
           <div *ngIf="submitted && passive_pack_controls.company_percentage_levels.errors" class="invalid-feedback">
             <div *ngIf="passive_pack_controls.company_percentage_levels.errors.required">
               Ingrese un valor
@@ -205,31 +207,33 @@
         </div>
       </div>
 
-        <div class="row" formArrayName="levels" style="position: relative; max-height: 250px !important" [perfectScrollbar]>
-          <div class="d-flex" *ngFor="let item of levels.controls; let i = index" [formGroupName]="i">
-            <div class="form-group col-xl-2 col-lg-2 col-md-2 col-sm-2 mb-2">
-              <label for="">Nivel</label>
-              <input type="number" class="form-control" min="0" name="level" id="level" placeholder="0"
-                [attr.id]="'level' + i" formControlName="level" readonly />
-            </div>
-            <div class="form-group col-xl-3 col-lg-3 col-md-3 col-sm-3 mb-2 ms-4">
-              <label for="">Porcentaje</label>
-              <input type="number" class="form-control" min="0" name="percentage_level" id="percentage_level"
-                placeholder="0" [attr.id]="'percentage_level' + i" formControlName="percentage_level" />
-            </div>
+      <div class="row" formArrayName="levels"
+           style="position: relative; max-height: 250px !important; overflow-y: auto;">
+        <div class="d-flex" *ngFor=" let i = index" [formGroupName]="i">
+          <div class="form-group col-xl-2 col-lg-2 col-md-2 col-sm-2 mb-2">
+            <label for="">Nivel</label>
+            <input type="number" class="form-control" min="0" name="level" id="level" placeholder="0"
+                   [attr.id]="'level' + i" formControlName="level" readonly/>
+          </div>
+          <div class="form-group col-xl-3 col-lg-3 col-md-3 col-sm-3 mb-2 ms-4">
+            <label for="">Porcentaje</label>
+            <input type="number" class="form-control" min="0" name="percentage_level" id="percentage_level"
+                   placeholder="0" [attr.id]="'percentage_level' + i" formControlName="percentage_level"/>
+          </div>
 
-            <div class="form-group col-xl-1 col-lg-1 col-md-1 col-sm-1 mb-2 mt-4 ms-4">
-              <button class="btn btn-danger mt-1" (click)="deleteSingleRow(i)">
-                <i class="bi bi-trash-fill"></i>
-              </button>
-            </div>
+          <div class="form-group col-xl-1 col-lg-1 col-md-1 col-sm-1 mb-2 mt-4 ms-4">
+            <button class="btn btn-danger mt-1" (click)="deleteSingleRow(i)">
+              <i class="bi bi-trash-fill"></i>
+            </button>
           </div>
         </div>
+      </div>
 
     </div>
 
     <div class="modal-footer">
-      <button *ngIf="configurationIsLoaded != false" (click)="confirmExecutePoolProcess()" type="button" class="btn btn-info">
+      <button *ngIf="configurationIsLoaded != false" (click)="confirmExecutePoolProcess()" type="button"
+              class="btn btn-info">
         <i class="bi bi-arrow-repeat"></i>
         Simular pagos del pool para los afiliados
       </button>

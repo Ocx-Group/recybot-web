@@ -1,17 +1,22 @@
 import { ChangeDetectorRef, Component, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ProductRequest, RequestPayment } from '@app/core/models/coinpay-model/request-payment.model';
-import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
-import { CoinpayService } from '@app/core/service/coinpay-service/coinpay.service';
+import { ProductRequest, RequestPayment } from '../../../core/models/coinpay-model/request-payment.model';
+import { UserAffiliate } from '../../../core/models/user-affiliate-model/user.affiliate.model';
+import { CoinpayService } from '../../../core/service/coinpay-service/coinpay.service';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
-import QRCode from 'qrcode';
+import * as QRCode from 'qrcode';
 import { Subscription, switchMap, timer } from 'rxjs';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
+import { QrcodeModule } from 'qrcode-angular';
 
 @Component({
-  selector: 'app-coinpay-modal',
-  templateUrl: './coinpay-modal.component.html',
-  styleUrls: ['./coinpay-modal.component.scss']
+    selector: 'app-coinpay-modal',
+    templateUrl: './coinpay-modal.component.html',
+    styleUrls: ['./coinpay-modal.component.scss'],
+    standalone: true,
+    imports: [CommonModule, ReactiveFormsModule, QrcodeModule]
 })
 export class CoinpayModalComponent implements OnInit {
   paymentGroup: FormGroup;
@@ -82,8 +87,7 @@ export class CoinpayModalComponent implements OnInit {
   }
 
   getNetworksById(id: number) {
-    let networkId = id;
-    this.coinpayService.getNetworks(networkId).subscribe({
+    this.coinpayService.getNetworks(id).subscribe({
       next: (response) => {
         if (response) {
           console.log(response);

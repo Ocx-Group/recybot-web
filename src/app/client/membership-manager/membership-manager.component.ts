@@ -1,6 +1,6 @@
-import { MembershipManagerService } from '@app/core/service/membership-manager-service/membership-manager.service';
-import { BalanceInformation } from '@app/core/models/wallet-model/balance-information.model';
-import { WalletService } from '@app/core/service/wallet-service/wallet.service';
+import { MembershipManagerService } from '../../core/service/membership-manager-service/membership-manager.service';
+import { BalanceInformation } from '../../core/models/wallet-model/balance-information.model';
+import { WalletService } from '../../core/service/wallet-service/wallet.service';
 import {
   Component,
   OnDestroy,
@@ -10,25 +10,30 @@ import {
 } from '@angular/core';
 import Swal from 'sweetalert2';
 
-import { Product } from '@app/core/models/product-model/product.model';
-import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
-import { AuthService } from '@app/core/service/authentication-service/auth.service';
-import { ProductService } from '@app/core/service/product-service/product.service';
+import { Product } from '../../core/models/product-model/product.model';
+import { UserAffiliate } from '../../core/models/user-affiliate-model/user.affiliate.model';
+import { AuthService } from '../../core/service/authentication-service/auth.service';
+import { ProductService } from '../../core/service/product-service/product.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subject, Subscription, takeUntil } from 'rxjs';
-import { ProductsRequests, WalletRequest } from '@app/core/models/wallet-model/wallet-request.model';
+import { ProductsRequests, WalletRequest } from '../../core/models/wallet-model/wallet-request.model';
 import { ToastrService } from 'ngx-toastr';
-import { AffiliateService } from '@app/core/service/affiliate-service/affiliate.service';
+import { AffiliateService } from '../../core/service/affiliate-service/affiliate.service';
 import { Router } from '@angular/router';
-import { CreatePagaditoTransactionRequest } from '@app/core/models/pagadito-model/create-pagadito-transaction-request.model';
-import { PagaditoTransactionDetailRequest } from '@app/core/models/pagadito-model/pagadito-transaction-detail-request.model';
-import { PagaditoService } from '@app/core/service/pagadito-service/pagadito.service';
+import { CreatePagaditoTransactionRequest } from '../../core/models/pagadito-model/create-pagadito-transaction-request.model';
+import { PagaditoTransactionDetailRequest } from '../../core/models/pagadito-model/pagadito-transaction-detail-request.model';
+import { PagaditoService } from '../../core/service/pagadito-service/pagadito.service';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { CoinpaymentsComponent } from './coinpayments/coinpayments.component';
 
 
 @Component({
-  selector: 'app-membership-manager',
-  templateUrl: './membership-manager.component.html',
-  styleUrls: ['./membership-manager-component.scss'],
+    selector: 'app-membership-manager',
+    templateUrl: './membership-manager.component.html',
+    styleUrls: ['./membership-manager-component.scss'],
+    standalone: true,
+    imports: [CommonModule, FormsModule, CoinpaymentsComponent]
 })
 export class MembershipManagerComponent implements OnInit, OnDestroy {
   payMethodSelected: number;

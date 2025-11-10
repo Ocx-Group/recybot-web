@@ -34,8 +34,8 @@
                             </div>
                           </div>
                           <input style="background-color: white" type="text" class="form-control"
-                            id="inlineFormInputGroup" (keyup)="updateFilter($event)" aria-label="Search box"
-                            placeholder="Búsqueda" />
+                                 id="inlineFormInputGroup" (keyup)="updateFilter($event)" aria-label="Search box"
+                                 placeholder="Búsqueda"/>
                         </div>
                       </div>
                     </div>
@@ -62,7 +62,7 @@
                         </button>
                       </li>
 
-                      <li class="nav-item m-2" >
+                      <li class="nav-item m-2">
                         <button type="button" (click)="onPrint()" class="btn btn-primary">
                           <i class="bi bi-printer"></i>
                           Imprimir
@@ -72,8 +72,8 @@
                   </div>
                 </div>
                 <ngx-datatable #table class="material" [rows]="rows" [loadingIndicator]="loadingIndicator"
-                  columnMode="force" [headerHeight]="50" [footerHeight]="50" rowHeight="auto" [limit]="10"
-                  [scrollbarH]="scrollBarHorizontal" [reorderable]="reorderable">
+                               columnMode="force" [headerHeight]="50" [footerHeight]="50" rowHeight="auto" [limit]="10"
+                               [scrollbarH]="scrollBarHorizontal" [reorderable]="reorderable">
                   <ngx-datatable-column name="Nombre de Categoría">
                     <ng-template let-row="row" ngx-datatable-cell-template>
                       {{ row.name }}
@@ -127,6 +127,6 @@
       </div>
     </div>
   </div>
-  <app-categories-create-modal #modalChildCreate (loadCategoryList)="loadCategoryList()"> </app-categories-create-modal>
+  <app-categories-create-modal #modalChildCreate (loadCategoryList)="loadCategoryList()"></app-categories-create-modal>
   <app-categories-edit-modal #modalChildEdit (loadCategoryList)="loadCategoryList()"></app-categories-edit-modal>
 </section>
