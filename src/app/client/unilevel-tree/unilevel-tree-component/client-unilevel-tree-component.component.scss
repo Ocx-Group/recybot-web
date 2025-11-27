@@ -3,8 +3,8 @@ $boxColor: #1a1d2e;
 $connectorColor: #5c53d9;
 $hoverColor: #667eea;
 
-$minBoxSize: 95px;
-$maxBoxSize: 105px;
+$minBoxSize: 50px;
+$maxBoxSize: 60px;
 
 // Variable CSS para el fondo que cambia según el tema
 :root {
@@ -22,7 +22,7 @@ app-client-unilevel-tree-component {
 }
 
 .ng13-org-chart-entity {
-  margin: 0 0.8em;
+  margin: 0 0.3em;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -48,7 +48,7 @@ app-client-unilevel-tree-component {
 .ng13-org-chart-container {
   display: flex;
   flex: 1;
-  gap: 0.5em;
+  gap: 0.3em;
 }
 
 .ng13-org-chart-connector {
@@ -66,7 +66,7 @@ app-client-unilevel-tree-component {
 
 .ng13-org-chart-entity-box {
   position: relative;
-  padding: 12px;
+  padding: 6px;
   display: flex;
   flex-direction: column;
   align-items: center;
