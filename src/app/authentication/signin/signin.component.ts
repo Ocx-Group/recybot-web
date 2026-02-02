@@ -11,7 +11,6 @@ import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/core/service/authentication-service/auth.service';
 import { CommonModule } from '@angular/common';
-import Swal from 'sweetalert2';
 
 import {
   animate,
@@ -165,7 +164,6 @@ export class SigninComponent implements OnInit, OnDestroy {
 
       this.authService.loginUser(signin).subscribe((response: Response) => {
         if (response.success) {
-          this.showInformativeBulletin();
           if (response.data.is_affiliate) {
             this.router.navigate(['/app/home']).then();
           } else {
@@ -185,32 +183,6 @@ export class SigninComponent implements OnInit, OnDestroy {
 
   showError(message: string) {
     this.toastr.error(message, 'Error!');
-  }
-
-  showInformativeBulletin() {
-    Swal.fire({
-      title: '<strong>Boletín Informativo</strong>',
-      icon: 'info',
-      html: `
-        <div style="text-align: left;">
-          <p>📅 <b>Fecha:</b> Domingo 1 de Marzo</p>
-          <p>💻 <b>Plataforma:</b> Zoom</p>
-          <hr>
-          <p><b>Temas a tratar:</b></p>
-          <ul>
-            <li>Información detallada sobre la <b>retribución</b> y su proceso.</li>
-            <li>Pasos a seguir para los participantes.</li>
-            <li>Presentación del <b>Plan Definitivo</b>.</li>
-          </ul>
-          <p style="font-size: 0.9em; color: #555;"><i>No faltes, tu participación es fundamental para el cierre del proceso.</i></p>
-        </div>
-      `,
-      showCloseButton: true,
-      focusConfirm: false,
-      confirmButtonText: '<i class="fa fa-thumbs-up"></i> Entendido',
-      confirmButtonAriaLabel: 'Thumbs up, entendido',
-      confirmButtonColor: '#3085d6',
-    });
   }
 
   get f() {
