@@ -75,11 +75,11 @@ export class LandingPageComponent implements OnInit, OnDestroy {
   key: string = '';
   videos = {
     es: {
-      url: '5VY0Hu8EW-c',
+      url: '',
       title: 'Ver Video Informativo',
     },
     en: {
-      url: '5VY0Hu8EW-c',
+      url: '',
       title: 'Watch Information Video',
     },
   };
@@ -177,7 +177,7 @@ export class LandingPageComponent implements OnInit, OnDestroy {
   showVideo(): void {
     const videoId = this.videos[this.currentLang].url;
 
-    this.currentVideoUrl = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&mute=1&rel=0`;
+    this.currentVideoUrl = ``;
     this.showVideoModal = true;
   }
 
