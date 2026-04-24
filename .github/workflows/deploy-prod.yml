@@ -109,12 +109,12 @@ jobs:
       - name: Wait for deployment to be created
         shell: bash
         run: |
-          for i in $(seq 1 20); do
+          for i in $(seq 1 40); do
             if kubectl get deployment recybot-web -n "${K8S_NAMESPACE}" >/dev/null 2>&1; then
               echo "Deployment recybot-web exists."
               exit 0
             fi
-            echo "[$i/20] Waiting for ArgoCD to create deployment recybot-web..."
+            echo "[$i/40] Waiting for ArgoCD to create deployment recybot-web..."
             sleep 15
           done
           echo "::error::Deployment recybot-web was not created in time."
