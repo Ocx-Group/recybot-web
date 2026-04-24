@@ -784,7 +784,7 @@
       "TEXT": "Facturado a"
     },
     "BUY": {
-      "TEXT": "Comprar Recycoin"
+      "TEXT": "Comprar RecyBot "
     },
     "BUY-MORE": {
       "TEXT": "Comprar Más"
@@ -1294,7 +1294,7 @@
       "TEXT": "Comisiones Calculadas"
     },
     "INFORMATION": {
-      "TEXT": "Información RecyCoin"
+      "TEXT": "Información RecyBot "
     },
     "LAST-REGISTERED-AFFILIATES": {
       "TEXT": "Ultimos afiliados registrados"
@@ -1332,25 +1332,25 @@
       "TEXT": "Información Modelo 1"
     },
     "INFORMATION-2": {
-      "TEXT": "Balances Recycoin"
+      "TEXT": "Balances RecyBot "
     },
     "INFORMATION-R": {
       "TEXT": "Información Modelo R"
     },
     "MODEL-REQUEST": {
-      "TEXT": "Ofertar Recycoins"
+      "TEXT": "Ofertar RecyBot s"
     },
     "PUBLIC-STORE": {
       "TEXT": "Tienda Pública"
     },
-    "RECYCOIN-DASHBOARD": {
+    "RecyBot -DASHBOARD": {
       "CHANGE-24H": "BNB Smart Chain",
       "COMMISSION-PAID": "Comisión pagada",
       "MARKET-CAP": "Venta pública",
       "MONTHLY-COMMISSION": "Comisión mensual",
-      "RECYCOIN-AMOUNT": "Cantidad de RecyCoins",
+      "RecyBot -AMOUNT": "Cantidad de RecyBot s",
       "REFERRAL-COMMISSION": "Comisiones por Referidos",
-      "TITLE": "Información de RecyCoin",
+      "TITLE": "Información de RecyBot ",
       "TOKEN-AMOUNT": "Cantidad de tokens",
       "TOKEN-BONUS": "Bonificación de tokens",
       "TOKEN-CONTRACT": "Contrato",
@@ -1375,7 +1375,7 @@
       "TEXT": "Compras realizadas en mi red"
     },
     "TOTAL-ACQUISITIONS": {
-      "TEXT": "Mis Recycoins"
+      "TEXT": "Mis RecyBot s"
     },
     "TOTAL-PAID": {
       "TEXT": "Total Pagado"
@@ -1499,7 +1499,7 @@
       "SECURE_TRANSACTIONS": "Transacciones seguras"
     },
     "MAIN_TITLE": {
-      "LINE1": "RECYCOIN: Riqueza Inteligente",
+      "LINE1": "RecyBot : Riqueza Inteligente",
       "LINE2": "Planeta Saludable",
       "LINE3": "Ganamos juntos"
     },
@@ -1508,7 +1508,7 @@
       "COLLABORATORS": "Colaboradores",
       "LOGIN": "Ingresar",
       "PRODUCT": "Producto",
-      "RECYCOIN_PROJECT": "Proyecto Recycoin",
+      "RecyBot _PROJECT": "Proyecto RecyBot ",
       "WHITE_PAPER": "White Paper"
     },
     "VIDEO": {
@@ -1528,7 +1528,7 @@
     "BILLING-PURCHASE": {
       "TEXT": "Tienda medio ambiente"
     },
-    "BUY-RECYCOIN": {
+    "BUY-RecyBot ": {
       "TEXT": "Comprar"
     },
     "COMMISSIONS": {
@@ -1784,7 +1784,7 @@
       "LINE1": "Explore los",
       "LINE2": "diferentes",
       "LINE3": "paquetes",
-      "LINE4": "Recycoin"
+      "LINE4": "RecyBot "
     }
   },
   "PRODUCTS-SERVICES-CONFIGURATION": {
@@ -2204,7 +2204,7 @@
   },
   "SAVINGS-PLANS-PAGE": {
     "SUBTITLE": {
-      "TEXT": "Paquetes Recycoin"
+      "TEXT": "Paquetes RecyBot "
     },
     "TITLE": {
       "TEXT": "Criptomoneda"
@@ -2300,14 +2300,14 @@
     "PAYMENT_ADDRESS": "Dirección de pago",
     "PAYMENT_DETAILS": "Detalles de pago",
     "PRICE": "Precio",
-    "PURCHASE_RECYCOINS": "Compra de Recycoins",
+    "PURCHASE_RecyBot S": "Compra de RecyBot s",
     "REVIEW_SELECTION": "Revisa tu selección",
     "SCAN_QR": "Escanea el código QR para pagar",
     "SELECT": "Seleccionar",
     "SELECT_FLOW": "¿Qué quieres hacer?",
     "SELECT_MATRIX": " Selecciona el nivel de matriz",
     "SELECT_PAYMENT_METHOD": "Seleccionar método de pago",
-    "SELECT_RECYCOINS": "Selecciona los Recycoins",
+    "SELECT_RecyBot S": "Selecciona los RecyBot s",
     "SELECTED": "Seleccionado",
     "SUFFICIENT_BALANCE": "Tienes saldo suficiente para esta compra",
     "TOTAL": "Total",

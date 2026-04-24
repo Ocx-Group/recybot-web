@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LogoService {
   private isDarkTheme = new BehaviorSubject<boolean>(false);
@@ -19,6 +19,6 @@ export class LogoService {
   }
 
   getLogoSrc(): string {
-    return this.isDarkTheme.value ? 'assets/images/logo-dark.png' : 'assets/images/logo-white.png';
+    return 'assets/images/logos/Logo-recybot.png';
   }
 }

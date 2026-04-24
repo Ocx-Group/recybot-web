@@ -29,13 +29,13 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t registry.digitalocean.com/ocx-registry/recycoin-app:latest \
-                       -t registry.digitalocean.com/ocx-registry/recycoin-app:${{ github.sha }} .
+          docker build -t registry.digitalocean.com/ocx-registry/recybot-app:latest \
+                       -t registry.digitalocean.com/ocx-registry/recybot-app:${{ github.sha }} .
 
       - name: Push image to DO Container Registry
         run: |
-          docker push registry.digitalocean.com/ocx-registry/recycoin-app:latest
-          docker push registry.digitalocean.com/ocx-registry/recycoin-app:${{ github.sha }}
+          docker push registry.digitalocean.com/ocx-registry/recybot-app:latest
+          docker push registry.digitalocean.com/ocx-registry/recybot-app:${{ github.sha }}
 
       - name: Deploy to Digital Ocean Droplet
         uses: appleboy/ssh-action@v1.0.0
@@ -45,7 +45,7 @@ jobs:
           key: ${{ secrets.DO_SSH_KEY }}
           port: 22
           script: |
-            cd recycoin-web
+            cd recybot-web
             doctl registry login --expiry-seconds 600
             docker compose pull
             docker compose down

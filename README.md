@@ -1,4 +1,4 @@
-# RecyCoin - Angular 20 Application
+# recybot - Angular 20 Application
 
 > ⚠️ **Importante**: Esta aplicación ha sido migrada completamente a la arquitectura **Standalone** de Angular 20.
 > No utiliza módulos tradicionales (`NgModule`). Ver [MIGRATION-TO-STANDALONE.md](./MIGRATION-TO-STANDALONE.md) para más detalles.
@@ -138,14 +138,15 @@ Si encuentras componentes que aún no son standalone:
 @Component({
   selector: 'app-my-component',
   templateUrl: './my-component.component.html',
-  standalone: true,  // Agregar esta línea
-  imports: [         // Agregar imports necesarios
+  standalone: true, // Agregar esta línea
+  imports: [
+    // Agregar imports necesarios
     CommonModule,
     FormsModule,
     // ... otros módulos
-  ]
+  ],
 })
-export class MyComponent { }
+export class MyComponent {}
 ```
 
 ## 🤝 Contribución
@@ -159,7 +160,7 @@ Al contribuir código, asegúrate de:
 
 ## 📄 Licencia
 
-Copyright © 2025 RecyCoin. Todos los derechos reservados.
+Copyright © 2025 recybot. Todos los derechos reservados.
 
 ---
 
