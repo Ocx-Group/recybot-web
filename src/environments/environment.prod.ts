@@ -3,7 +3,7 @@ import { FirebaseOptions } from '@firebase/app-types';
 export const environment = {
   production: true,
   apis: {
-    apiUrl: 'https://ecosystemfx.net/',
+    apiUrl: 'https://recybotia.com/',
     accountService: 'https://account.recycoin.net/api/v1',
     accountServiceSignalR: 'https://account.recycoin.net/ticketHub',
     systemConfigurationService: 'https://configuration.recycoin.net/api/v1',
@@ -34,7 +34,7 @@ export const environment = {
     currency: 'USDC.TRC20',
     reset: '1',
     cmd: '_pay_simple',
-    success_url: 'https://ecosystemfx.net/#/conpayment-confirmation',
+    success_url: 'https://recybotia.com/#/conpayment-confirmation',
     format: 'json',
   },
 };
