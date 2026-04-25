@@ -1,121 +1,166 @@
 <main class="main-container">
+
+  <!-- Background FX -->
+  <div class="bg-grid" aria-hidden="true"></div>
+  <div class="bg-orb bg-orb--1" aria-hidden="true"></div>
+  <div class="bg-orb bg-orb--2" aria-hidden="true"></div>
+  <div class="bg-scanline" aria-hidden="true"></div>
+
+  <!-- Navbar -->
   <nav class="navbar">
     <div class="navbar-left">
       <picture>
-        <!-- móviles, tablets y dispositivos pequeños -->
         <source media="(max-width: 1024px)" srcset="../../../assets/images/logos/Logo-recybot.png">
-        <!-- laptops y PCs -->
-        <img src="../../../assets/images/logos/Logo-recybot.png" alt="RecyBot" class="navbar-logo neon-effect">
+        <img src="../../../assets/images/logos/Logo-recybot.png" alt="RecyBot" class="navbar-logo">
       </picture>
 
-      <div *ngIf="user" class="user-container green-theme">
-        <button type="button" class="user-panel">
-          <div class="image">
-            <img [src]="user?.image_profile_url ? user?.image_profile_url : 'assets/images/user.png'"
-              class="img-fluid img-circle" alt="User Profile" />
-          </div>
-        </button>
-        <div class="profile-usertitle">
-          <div class="sidebar-userpic-name">{{this.user.name}} {{this.user.last_name}}</div>
-          <div class="profile-usertitle-job">{{this.user.user_name}}</div>
-          <div *ngIf="this.user.phone" class="profile-usertitle-job">{{this.user.phone}}</div>
+      <div *ngIf="user" class="user-chip">
+        <div class="user-chip__avatar">
+          <img [src]="user?.image_profile_url ? user?.image_profile_url : 'assets/images/user.png'"
+            alt="User Profile" />
+        </div>
+        <div class="user-chip__info">
+          <span class="user-chip__name">{{this.user.name}} {{this.user.last_name}}</span>
+          <span class="user-chip__username">{{this.user.user_name}}</span>
+          <span *ngIf="this.user.phone" class="user-chip__username">{{this.user.phone}}</span>
         </div>
       </div>
     </div>
 
     <button class="navbar-toggle" (click)="toggleNavbar()">
-      <span class="menu-label">Menú</span>
+      <span class="menu-label">Menu</span>
       <span class="navbar-toggle-icon"></span>
     </button>
 
     <div class="navbar-nav" [class.show]="isNavbarVisible">
       <div class="language-selector">
-        <button title="Cambia el idioma" type="button" (click)="toggleLanguageDropdown($event)">
-          <img title="Bandera Spain" src="../../../assets/images/flags/spain.jpg" [alt]="currentLang" class="flag-icon"
+        <button title="Change language" type="button" (click)="toggleLanguageDropdown($event)">
+          <img title="Spain flag" src="../../../assets/images/flags/spain.jpg" [alt]="currentLang" class="flag-icon"
             *ngIf="currentLang === 'es'">
-          <img title="Bandera USA" src="../../../assets/images/flags/us.jpg" [alt]="currentLang" class="flag-icon"
+          <img title="USA flag" src="../../../assets/images/flags/us.jpg" [alt]="currentLang" class="flag-icon"
             *ngIf="currentLang === 'en'">
         </button>
         <div class="language-dropdown" [class.show]="isLanguageDropdownOpen">
           <a href="#" (click)="changeLanguage('es'); $event.preventDefault(); $event.stopPropagation()">
-            <img src="../../../assets/images/flags/spain.jpg" alt="español" class="flag-icon">
+            <img src="../../../assets/images/flags/spain.jpg" alt="spanish" class="flag-icon">
           </a>
           <a href="#" (click)="changeLanguage('en'); $event.preventDefault(); $event.stopPropagation()">
             <img src="../../../assets/images/flags/us.jpg" alt="english" class="flag-icon">
           </a>
         </div>
       </div>
-      <!-- <a class="nav-link hover-glow" href="#" (click)="showDocument('recycoinProject'); $event.preventDefault()">
-        {{ 'LANDING-PAGE.NAVBAR.RECYCOIN_PROJECT' | translate }}
-      </a> -->
-      <!-- <a class="nav-link hover-glow" href="#" (click)="showDocument('whitePaper'); $event.preventDefault()">
-        {{ 'LANDING-PAGE.NAVBAR.WHITE_PAPER' | translate }}
-      </a> -->
-      <!-- <a class="nav-link hover-glow" href="#"
-        (click)="openNewTab('https://bscscan.com/address/0x7c482FF834dfb546A8E48C14f3C34652E9826723#code'); $event.preventDefault()">
-        {{ 'LANDING-PAGE.NAVBAR.BNB_SCANNER' | translate }}
-      </a> -->
-      <a class="nav-link hover-glow" href="#" routerLink="/products-preview">
+
+      <a class="nav-link" href="#" routerLink="/products-preview">
         {{ 'LANDING-PAGE.NAVBAR.PRODUCT' | translate }}
       </a>
-      <button class="btn neon-button" routerLink="/signup/{{this.user?.user_name}}">
+      <button class="btn btn-outline-neon" routerLink="/signup/{{this.user?.user_name}}">
         {{ 'LANDING-PAGE.CTA.CREATE_ACCOUNT' | translate }}
       </button>
-      <button class="btn neon-button" (click)="openNewTab('/signin')">
+      <button class="btn btn-neon" (click)="openNewTab('/signin')">
         {{ 'LANDING-PAGE.NAVBAR.LOGIN' | translate }}
       </button>
     </div>
   </nav>
 
-  <div class="main-content">
-    <div class="title-group">
-      <h5 class="title neon-text">{{ 'LANDING-PAGE.MAIN_TITLE.LINE1' | translate }}</h5>
-      <h5 class="title neon-text m-0">{{ 'LANDING-PAGE.MAIN_TITLE.LINE2' | translate }}</h5>
-      <h5 class="title neon-text m-0">{{ 'LANDING-PAGE.MAIN_TITLE.LINE3' | translate }}</h5>
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero__content">
+      <div class="hero__badge">
+        <span class="hero__badge-dot"></span>
+        <span>{{ 'LANDING-PAGE.FEATURES.ECOLOGICAL_CRYPTO' | translate }}</span>
+      </div>
+
+      <div class="hero__title-group">
+        <h1 class="hero__title text-gradient">{{ 'LANDING-PAGE.MAIN_TITLE.LINE1' | translate }}</h1>
+        <h1 class="hero__title hero__title--muted">{{ 'LANDING-PAGE.MAIN_TITLE.LINE2' | translate }}</h1>
+        <h1 class="hero__title text-gradient">{{ 'LANDING-PAGE.MAIN_TITLE.LINE3' | translate }}</h1>
+      </div>
+
+      <div class="hero__actions">
+        <button class="btn btn-neon btn-lg" routerLink="/signup/{{this.user?.user_name}}">
+          {{ 'LANDING-PAGE.CTA.CREATE_ACCOUNT' | translate }}
+          <i class="bi bi-arrow-right-circle-fill"></i>
+        </button>
+        <button class="btn btn-glass btn-lg" routerLink="/contact">
+          {{ 'LANDING-PAGE.CTA.CONTACT_FORM' | translate }}
+        </button>
+      </div>
+
+      <div class="hero__stats">
+        <div class="stat-item">
+          <span class="stat-item__value text-gradient">100%</span>
+          <span class="stat-item__label">{{ currentLang === 'es' ? 'Ecologico' : 'Ecological' }}</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <span class="stat-item__value text-gradient">24/7</span>
+          <span class="stat-item__label">{{ currentLang === 'es' ? 'Disponible' : 'Available' }}</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <span class="stat-item__value text-gradient">Web3</span>
+          <span class="stat-item__label">{{ currentLang === 'es' ? 'Biometrico' : 'Biometric' }}</span>
+        </div>
+      </div>
     </div>
 
-    <div class="crypto-animation">
-      <i class="bi bi-currency-bitcoin"></i>
-      <i class="bi bi-currency-ethereum"></i>
-      <i class="bi bi-currency-dollar"></i>
+    <div class="hero__visual">
+      <div class="orbit-ring orbit-ring--outer">
+        <div class="orbit-dot orbit-dot--1">
+          <img src="assets/images/crypto/bitcoin.png" alt="Bitcoin">
+        </div>
+        <div class="orbit-dot orbit-dot--2">
+          <img src="assets/images/crypto/erc20.png" alt="Ethereum">
+        </div>
+        <div class="orbit-dot orbit-dot--3">
+          <img src="assets/images/crypto/solana.png" alt="Solana">
+        </div>
+        <div class="orbit-dot orbit-dot--4">
+          <img src="assets/images/crypto/polygon.png" alt="Polygon">
+        </div>
+      </div>
+      <div class="orbit-ring orbit-ring--inner">
+        <div class="orbit-dot orbit-dot--5">
+          <img src="assets/images/crypto/bep20.png" alt="BNB">
+        </div>
+        <div class="orbit-dot orbit-dot--6">
+          <img src="assets/images/crypto/trc20.png" alt="TRON">
+        </div>
+      </div>
+      <div class="orbit-center">
+        <img src="assets/images/logos/Logo-recybot.png" alt="RecyBot">
+      </div>
     </div>
-  </div>
+  </section>
 
-  <div class="video-modal" [ngStyle]="{'display': showVideoModal ? 'flex' : 'none'}">
-    <div class="modal-overlay" (click)="closeVideo()" (keydown)="closeVideo()"></div>
-    <div class="modal-content">
-      <button class="close-button" (click)="closeVideo()">×</button>
-      <iframe title="reproductor" [src]="currentVideoUrl | safe" width="100%" height="100%"
-        allow="autoplay; encrypted-media" allowfullscreen>
-      </iframe>
+  <!-- Feature Cards -->
+  <section class="features">
+    <div class="feature-card">
+      <div class="feature-card__icon"><i class="bi bi-leaf-fill"></i></div>
+      <p class="feature-card__text">{{ 'LANDING-PAGE.FEATURES.ECOLOGICAL_CRYPTO' | translate }}</p>
     </div>
-  </div>
+    <div class="feature-card">
+      <div class="feature-card__icon"><i class="bi bi-shield-lock-fill"></i></div>
+      <p class="feature-card__text">{{ 'LANDING-PAGE.FEATURES.SECURE_TRANSACTIONS' | translate }}</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-card__icon"><i class="bi bi-graph-up-arrow"></i></div>
+      <p class="feature-card__text">{{ 'LANDING-PAGE.FEATURES.REAL_TIME_ANALYSIS' | translate }}</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-card__icon"><i class="bi bi-fingerprint"></i></div>
+      <p class="feature-card__text">{{ 'LANDING-PAGE.FEATURES.BIOMETRIC_SECURITY' | translate }}</p>
+    </div>
+  </section>
 
-  <div class="feature-section">
-    <div class="feature-item">
-      <p>{{ 'LANDING-PAGE.FEATURES.ECOLOGICAL_CRYPTO' | translate }}</p>
-    </div>
-    <div class="feature-item">
-      <p>{{ 'LANDING-PAGE.FEATURES.SECURE_TRANSACTIONS' | translate }}</p>
-    </div>
-    <div class="feature-item">
-      <p>{{ 'LANDING-PAGE.FEATURES.REAL_TIME_ANALYSIS' | translate }}</p>
-    </div>
-    <div class="feature-item">
-      <p>{{ 'LANDING-PAGE.FEATURES.BIOMETRIC_SECURITY' | translate }}</p>
-    </div>
-  </div>
-
-  <div class="cta-section">
-    <!-- <button class="btn neon-button" (click)="showDocument('legalDoc')">
-      {{ 'LANDING-PAGE.CTA.LEGAL_DOCS' | translate }}
-    </button> -->
-    <button class="btn neon-button" routerLink="/contact">
-      {{ 'LANDING-PAGE.CTA.CONTACT_FORM' | translate }}
-    </button>
-    <button class="btn neon-button" routerLink="/testimonials">
+  <!-- Bottom CTA -->
+  <section class="cta-bar">
+    <button class="btn btn-glass btn-lg" routerLink="/testimonials">
       {{ 'LANDING-PAGE.CTA.TESTIMONIALS' | translate }}
     </button>
-  </div>
+    <button class="btn btn-neon btn-lg" routerLink="/contact">
+      {{ 'LANDING-PAGE.CTA.CONTACT_FORM' | translate }}
+    </button>
+  </section>
 </main>
 <app-pdf-viewer></app-pdf-viewer>

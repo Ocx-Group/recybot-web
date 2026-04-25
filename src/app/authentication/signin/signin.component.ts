@@ -11,54 +11,22 @@ import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/core/service/authentication-service/auth.service';
 import { CommonModule } from '@angular/common';
-
-import {
-  animate,
-  state,
-  style,
-  transition,
-  trigger,
-} from '@angular/animations';
 import { Signin } from '@app/core/models/signin-model/signin.model';
-import { LogoService } from '@app/core/service/logo-service/logo.service';
 import { DeviceDetectorService } from 'ngx-device-detector';
 
 @Component({
   selector: 'app-signin',
   templateUrl: './signin.component.html',
   styleUrls: ['./signin.component.scss'],
-  animations: [
-    trigger('backgroundFade', [
-      state(
-        'visible',
-        style({
-          opacity: 1,
-        }),
-      ),
-      state(
-        'hidden',
-        style({
-          opacity: 0,
-        }),
-      ),
-      transition('visible => hidden', animate('1000ms ease-out')),
-      transition('hidden => visible', animate('1000ms ease-in')),
-    ]),
-  ],
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, RouterLink, TranslateModule],
 })
 export class SigninComponent implements OnInit, OnDestroy {
-  submitted = false;
   error = '';
   loading = false;
-  hide = true;
-  logoUrl: string;
-  username: string = 'Usuario';
-  password: string = 'Contraseña';
-  remember: string = 'Recordar';
-  forgot: string = 'Cambiar contraseña';
-  signin: string = 'Iniciar sesión';
+  username = 'Usuario';
+  password = 'Contraseña';
+  signin = 'Iniciar sesión';
   passwordIsRequerid = 'La contraseña es requerida.';
   userNameIsRequerid = 'El usuario es requerido.';
   passwordErrorMessage =
@@ -70,22 +38,28 @@ export class SigninComponent implements OnInit, OnDestroy {
     '/assets/images/login-option-3.png',
   ];
   currentImageIndex = 0;
-  private intervalId: any;
-  showPassword: boolean = false;
+  showPassword = false;
+  private intervalId: ReturnType<typeof setInterval> | null = null;
+
+  authLogin = new FormGroup({
+    email: new FormControl('', [Validators.required]),
+    pwd: new FormControl('', [
+      Validators.required,
+      Validators.minLength(6),
+      Validators.maxLength(15),
+    ]),
+  });
 
   constructor(
     private readonly router: Router,
     private readonly authService: AuthService,
     private readonly toastr: ToastrService,
-    private readonly logoService: LogoService,
     private readonly translate: TranslateService,
     private readonly deviceService: DeviceDetectorService,
   ) {}
 
   ngOnInit() {
-    // Verificar si el usuario ya está logueado usando signals
     if (this.authService.isLoggedIn()) {
-      // Redirigir según el tipo de usuario
       if (this.authService.isAffiliateLoggedIn()) {
         this.router.navigate(['/app/home']);
       } else if (this.authService.isAdminLoggedIn()) {
@@ -94,7 +68,6 @@ export class SigninComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.getTheme();
     this.setLabels();
     this.setErrorMessages();
     this.startBackgroundRotation();
@@ -106,22 +79,10 @@ export class SigninComponent implements OnInit, OnDestroy {
     }
   }
 
-  authLogin = new FormGroup({
-    remeber: new FormControl('', []),
-    email: new FormControl('', [Validators.required]),
-    pwd: new FormControl('', [
-      Validators.required,
-      Validators.minLength(6),
-      Validators.maxLength(15),
-    ]),
-  });
-
   setLabels() {
     if (this.translate.getCurrentLang() != undefined) {
       this.username = this.translate.instant('SIGNIN.USER-NAME.TEXT');
       this.password = this.translate.instant('SIGNIN.PASSWORD.TEXT');
-      this.remember = this.translate.instant('SIGNIN.REMEMBER-ME.TEXT');
-      this.forgot = this.translate.instant('SIGNIN.FORGOT-PASS.TEXT');
       this.signin = this.translate.instant('SIGNIN.TITLE.TEXT');
     }
   }
@@ -144,24 +105,19 @@ export class SigninComponent implements OnInit, OnDestroy {
   }
 
   loginSubmitted() {
-    let signin = new Signin();
-    this.submitted = true;
+    const signin = new Signin();
     this.error = '';
     signin.userName = this.authLogin.value.email;
     signin.password = this.authLogin.value.pwd;
-
     signin.browserInfo = this.deviceService.getDeviceInfo().browser;
     signin.operatingSystem = this.deviceService.getDeviceInfo().os;
 
     this.authService.fetchIpAddress().subscribe(ip => {
       signin.ipAddress = ip;
-      console.log(signin);
 
-      if (signin.userName === '' || signin.password === '') {
-        return;
-      }
+      if (!signin.userName || !signin.password) return;
+
       this.loading = true;
-
       this.authService.loginUser(signin).subscribe((response: Response) => {
         if (response.success) {
           if (response.data.is_affiliate) {
@@ -170,23 +126,12 @@ export class SigninComponent implements OnInit, OnDestroy {
             this.router.navigate(['admin/home-admin']).then();
           }
         } else {
-          this.showError(response.message);
+          this.error = response.message;
+          this.toastr.error(response.message, 'Error!');
         }
         this.loading = false;
       });
     });
-  }
-
-  showSuccess(message: string) {
-    this.toastr.success(message, 'Success!');
-  }
-
-  showError(message: string) {
-    this.toastr.error(message, 'Error!');
-  }
-
-  get f() {
-    return this.authLogin.controls;
   }
 
   get Email(): FormControl {
@@ -195,10 +140,6 @@ export class SigninComponent implements OnInit, OnDestroy {
 
   get Pwd(): FormControl {
     return this.authLogin.get('pwd') as FormControl;
-  }
-
-  getTheme() {
-    this.logoUrl = this.logoService.getLogoSrc();
   }
 
   private startBackgroundRotation() {

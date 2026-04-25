@@ -2225,8 +2225,47 @@
     }
   },
   "SIGNIN": {
+    "BACK": {
+      "TEXT": "Inicio"
+    },
+    "BRAND-TITLE-1": {
+      "TEXT": "Ecosistema cripto"
+    },
+    "BRAND-TITLE-2": {
+      "TEXT": "del futuro"
+    },
+    "BRAND-SUBTITLE": {
+      "TEXT": "La plataforma Web3 eco-sostenible que transforma el reciclaje en valor digital."
+    },
+    "BRAND-STAT-ECO": {
+      "TEXT": "Ecológico"
+    },
+    "BRAND-STAT-AVAIL": {
+      "TEXT": "Disponible"
+    },
+    "BRAND-STAT-BIO": {
+      "TEXT": "Biométrico"
+    },
+    "WELCOME-LINE-1": {
+      "TEXT": "Bienvenido"
+    },
+    "WELCOME-LINE-2": {
+      "TEXT": "de vuelta"
+    },
+    "WELCOME-SUBTITLE": {
+      "TEXT": "Ingresa tus datos para acceder a tu cuenta"
+    },
+    "TOGGLE-HIDE": {
+      "TEXT": "Ocultar contraseña"
+    },
+    "TOGGLE-SHOW": {
+      "TEXT": "Mostrar contraseña"
+    },
+    "LOADING": {
+      "TEXT": "Cargando..."
+    },
     "FORGOT-PASS": {
-      "TEXT": "Cambiar contraseña"
+      "TEXT": "¿Olvidaste tu contraseña?"
     },
     "PASS-IS-REQUIRED": {
       "TEXT": "La contraseña es requerida."

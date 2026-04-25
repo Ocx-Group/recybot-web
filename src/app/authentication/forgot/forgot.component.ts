@@ -8,23 +8,23 @@ import {
 } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { CommonModule } from '@angular/common';
-
+import { RouterLink } from '@angular/router';
 import { AffiliateService } from '@app/core/service/affiliate-service/affiliate.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-    selector: 'app-forgot',
-    templateUrl: './forgot.component.html',
-    styleUrls: ['./forgot.component.scss'],
-    standalone: true,
-    imports: [CommonModule, ReactiveFormsModule]
+  selector: 'app-forgot',
+  templateUrl: './forgot.component.html',
+  styleUrls: ['./forgot.component.scss'],
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule, RouterLink],
 })
 export class ForgotComponent implements OnInit {
   forgotPassword: FormGroup;
   submitted = false;
   constructor(
-    private affiliateService: AffiliateService,
-    private toastr: ToastrService,
+    private readonly affiliateService: AffiliateService,
+    private readonly toastr: ToastrService,
   ) {}
 
   ngOnInit(): void {

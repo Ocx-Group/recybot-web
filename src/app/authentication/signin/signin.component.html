@@ -1,54 +1,149 @@
 <main class="login-wrapper">
-  <div class="background-image" [style.backgroundImage]="'url(' + backgroundImages[currentImageIndex] + ')'"
-    [@backgroundFade]="'visible'">
-  </div>
 
-  <div class="login-card">
-    <img src="assets/images/logo-yellow.png" alt="RecyCoin" class="signin-logo mb-3">
-    <form class="validate-form" [formGroup]="authLogin" (ngSubmit)="loginSubmitted()">
-      <div class="login-input-group">
+  <!-- Global BG FX -->
+  <div class="bg-grid" aria-hidden="true"></div>
+  <div class="bg-scanline" aria-hidden="true"></div>
+  <div class="bg-photo" [style.backgroundImage]="'url(' + backgroundImages[currentImageIndex] + ')'"
+    aria-hidden="true"></div>
 
-        <input id="email" type="email" formControlName="email" placeholder="{{username}}" required="required" />
-        <i class="bi bi-person"></i>
-        <div class="form-text text-danger fw-bold" *ngIf="Email.errors?.['email'] && (Email.dirty || Email.touched)">
-          {{ userNameErrorMessage }}
-        </div>
-        <div class="form-text text-danger fw-bold" *ngIf="Email.errors?.['required'] && (Email.dirty || Email.touched)">
-          {{ userNameIsRequerid }}
-        </div>
-      </div>
-      <div class="login-input-group">
-        <input [type]="showPassword ? 'text' : 'password'" id="pwd" formControlName="pwd" placeholder="{{ password }}"
-          required="required" />
-        <i class="bi bi-key"></i>
+  <!-- ══ LEFT — Brand Panel ══════════════════════════════════ -->
+  <aside class="brand-side">
+    <div class="brand-side__glow brand-side__glow--1" aria-hidden="true"></div>
+    <div class="brand-side__glow brand-side__glow--2" aria-hidden="true"></div>
 
-        <button type="button" class="toggle-password" (click)="togglePasswordVisibility()">
-          <i [class]="showPassword ? 'bi bi-eye-slash' : 'bi bi-eye'"></i>
-        </button>
+    <a routerLink="/" class="back-link">
+      <i class="bi bi-arrow-left"></i>
+      {{ 'SIGNIN.BACK.TEXT' | translate }}
+    </a>
 
-        <div class="form-text text-danger fw-bold"
-          *ngIf="Pwd.errors?.['minlength'] || Pwd.errors?.['maxlength'] && (Pwd.dirty || Pwd.touched)">
-          {{ passwordErrorMessage }}
-        </div>
-        <div class="form-text text-danger fw-bold" *ngIf="Pwd.errors?.['required'] && (Pwd.dirty || Pwd.touched)">
-          {{ passwordIsRequerid }}
-        </div>
-      </div>
-
-      <div class="container-login-button">
-        <button class="login-button" type="submit" [disabled]="loading">
-          <output *ngIf="loading" class="spinner-border spinner-border-sm">
-            <span class="sr-only">Loading...</span>
-          </output>
-          {{ signin }}
-        </button>
-      </div>
-      <div *ngIf="error !== ''" class="alert alert-danger">
-        {{ error }}
-      </div>
-    </form>
-    <div class="forgot-password">
-      <p>Cambiar <a routerLink="/forgot">Contraseña</a></p>
+    <div class="brand-logo">
+      <img src="assets/images/logos/Logo-recybot.png" alt="RecyBot">
     </div>
-  </div>
+
+    <!-- Orbit visual -->
+    <div class="orbit-system" aria-hidden="true">
+      <div class="orbit-ring orbit-ring--outer">
+        <div class="orbit-dot orbit-dot--1"><img src="assets/images/crypto/bitcoin.png" alt="Bitcoin"></div>
+        <div class="orbit-dot orbit-dot--2"><img src="assets/images/crypto/erc20.png" alt="Ethereum"></div>
+        <div class="orbit-dot orbit-dot--3"><img src="assets/images/crypto/solana.png" alt="Solana"></div>
+        <div class="orbit-dot orbit-dot--4"><img src="assets/images/crypto/polygon.png" alt="Polygon"></div>
+      </div>
+      <div class="orbit-ring orbit-ring--inner">
+        <div class="orbit-dot orbit-dot--5"><img src="assets/images/crypto/bep20.png" alt="BEP20"></div>
+        <div class="orbit-dot orbit-dot--6"><img src="assets/images/crypto/trc20.png" alt="TRON"></div>
+      </div>
+      <div class="orbit-center">
+        <img src="assets/images/logos/Logo-recybot.png" alt="RecyBot">
+      </div>
+    </div>
+
+    <div class="brand-copy">
+      <h2 class="brand-copy__title">
+        <span class="text-gradient">{{ 'SIGNIN.BRAND-TITLE-1.TEXT' | translate }}</span><br>
+        {{ 'SIGNIN.BRAND-TITLE-2.TEXT' | translate }}
+      </h2>
+      <p class="brand-copy__sub">{{ 'SIGNIN.BRAND-SUBTITLE.TEXT' | translate }}</p>
+    </div>
+
+    <div class="brand-stats">
+      <div class="brand-stat">
+        <span class="brand-stat__val">100%</span>
+        <span class="brand-stat__label">{{ 'SIGNIN.BRAND-STAT-ECO.TEXT' | translate }}</span>
+      </div>
+      <div class="brand-stat__sep"></div>
+      <div class="brand-stat">
+        <span class="brand-stat__val">24/7</span>
+        <span class="brand-stat__label">{{ 'SIGNIN.BRAND-STAT-AVAIL.TEXT' | translate }}</span>
+      </div>
+      <div class="brand-stat__sep"></div>
+      <div class="brand-stat">
+        <span class="brand-stat__val">Web3</span>
+        <span class="brand-stat__label">{{ 'SIGNIN.BRAND-STAT-BIO.TEXT' | translate }}</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ══ RIGHT — Form Panel ══════════════════════════════════ -->
+  <section class="form-side">
+
+    <!-- Mobile-only logo -->
+    <div class="mobile-logo">
+      <img src="assets/images/logos/Logo-recybot.png" alt="RecyBot">
+    </div>
+
+    <div class="form-box">
+      <div class="form-box__header">
+        <h1 class="form-box__title">
+          {{ 'SIGNIN.WELCOME-LINE-1.TEXT' | translate }}<br>
+          <span class="text-gradient">{{ 'SIGNIN.WELCOME-LINE-2.TEXT' | translate }}</span>
+        </h1>
+        <p class="form-box__subtitle">{{ 'SIGNIN.WELCOME-SUBTITLE.TEXT' | translate }}</p>
+      </div>
+
+      <form [formGroup]="authLogin" (ngSubmit)="loginSubmitted()">
+
+        <!-- Email -->
+        <div class="field">
+          <label class="field__label" for="email">{{ username }}</label>
+          <div class="field__control">
+            <i class="bi bi-person field__icon"></i>
+            <input id="email" class="field__input" type="email" formControlName="email"
+              [placeholder]="username" autocomplete="username" />
+          </div>
+          <span class="field__error" *ngIf="Email.errors?.['email'] && (Email.dirty || Email.touched)">
+            {{ userNameErrorMessage }}
+          </span>
+          <span class="field__error" *ngIf="Email.errors?.['required'] && (Email.dirty || Email.touched)">
+            {{ userNameIsRequerid }}
+          </span>
+        </div>
+
+        <!-- Password -->
+        <div class="field">
+          <label class="field__label" for="pwd">{{ password }}</label>
+          <div class="field__control">
+            <i class="bi bi-key field__icon"></i>
+            <input [type]="showPassword ? 'text' : 'password'" id="pwd" class="field__input"
+              formControlName="pwd" [placeholder]="password"
+              [attr.autocomplete]="showPassword ? 'off' : 'current-password'" />
+            <button type="button" class="field__toggle" (click)="togglePasswordVisibility()"
+              [attr.aria-label]="(showPassword ? 'SIGNIN.TOGGLE-HIDE.TEXT' : 'SIGNIN.TOGGLE-SHOW.TEXT') | translate">
+              <i [class]="showPassword ? 'bi bi-eye-slash' : 'bi bi-eye'"></i>
+            </button>
+          </div>
+          <span class="field__error"
+            *ngIf="(Pwd.errors?.['minlength'] || Pwd.errors?.['maxlength']) && (Pwd.dirty || Pwd.touched)">
+            {{ passwordErrorMessage }}
+          </span>
+          <span class="field__error" *ngIf="Pwd.errors?.['required'] && (Pwd.dirty || Pwd.touched)">
+            {{ passwordIsRequerid }}
+          </span>
+        </div>
+
+        <!-- Forgot -->
+        <div class="form-extras">
+          <a routerLink="/forgot" class="link-forgot">
+            {{ 'SIGNIN.FORGOT-PASS.TEXT' | translate }}
+          </a>
+        </div>
+
+        <!-- Submit -->
+        <button class="btn-login" type="submit" [disabled]="loading">
+          <span class="btn-login__spinner" *ngIf="loading" aria-hidden="true"></span>
+          <span *ngIf="loading" class="sr-only">{{ 'SIGNIN.LOADING.TEXT' | translate }}</span>
+          <span *ngIf="!loading">
+            {{ signin }}&nbsp;<i class="bi bi-arrow-right-circle-fill"></i>
+          </span>
+        </button>
+
+        <!-- Error -->
+        <div class="form-alert" *ngIf="error !== ''">
+          <i class="bi bi-exclamation-circle-fill"></i>
+          {{ error }}
+        </div>
+
+      </form>
+    </div>
+  </section>
+
 </main>

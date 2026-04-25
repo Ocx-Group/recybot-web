@@ -1,41 +1,86 @@
-<div class="aurora-forgot-password-wrapper">
-  <div class="aurora-main d-flex align-items-center min-vh-100 py-3 py-md-0">
-    <div class="aurora-container">
-      <div class="aurora-forgot-password-card">
-        <img src="assets/images/logos/Logo-recybot.png" alt="Logo de RecyBot" class="logo-title">
-        <form class="aurora-register-form" [formGroup]="forgotPassword" (ngSubmit)="sendPasswordRecovery()">
-          <div class="aurora-card-content">
-            <div class="aurora-card-header">
-              <h2 class="aurora-title aurora-neon-text">Olvidé mi contraseña</h2>
-            </div>
-            <div class="aurora-card-body">
-              <p class="aurora-text-muted">Te enviaremos un enlace para restablecer tu contraseña</p>
-              <div class="aurora-form-group">
-                <label for="email" class="aurora-label">Correo electrónico</label>
-                <input id="email" type="email" class="aurora-form-control" name="email" required autofocus
-                  formControlName="email" [ngClass]="{
-                    'aurora-is-invalid': submitted && forgotPassword.get('email').errors,
-                    'aurora-is-valid': forgotPassword.get('email').valid && forgotPassword.get('email').dirty
-                  }" (input)="validateEmail()">
-                <div *ngIf="submitted && forgotPassword.get('email').errors" class="aurora-invalid-feedback">
-                  <div *ngIf="forgotPassword.get('email').errors.required">
-                    Ingrese un correo electrónico.
-                  </div>
-                  <div *ngIf="forgotPassword.get('email').errors.email">
-                    Ingrese un correo electrónico válido.
-                  </div>
-                </div>
-              </div>
-              <div class="aurora-form-group">
-                <button type="submit"
-                  class="aurora-btn aurora-btn-primary aurora-btn-lg aurora-btn-block aurora-neon-button">
-                  Enviar enlace
-                </button>
-              </div>
-            </div>
-          </div>
-        </form>
-      </div>
-    </div>
+<main class="forgot-wrapper">
+
+  <!-- Background FX -->
+  <div class="bg-grid" aria-hidden="true"></div>
+  <div class="bg-orb bg-orb--1" aria-hidden="true"></div>
+  <div class="bg-orb bg-orb--2" aria-hidden="true"></div>
+  <div class="bg-scanline" aria-hidden="true"></div>
+
+  <!-- Energy line -->
+  <div class="energy-line" aria-hidden="true">
+    <div class="energy-line__beam"></div>
   </div>
-</div>
+
+  <!-- Back link -->
+  <a routerLink="/signin" class="back-link">
+    <i class="bi bi-arrow-left"></i> Volver
+  </a>
+
+  <!-- Card -->
+  <div class="forgot-card">
+
+    <!-- Status indicator -->
+    <div class="status-bar">
+      <span class="status-bar__dot"></span>
+      <span class="status-bar__text">RECYBOT · SECURE AUTH</span>
+    </div>
+
+    <!-- Logo -->
+    <div class="forgot-card__logo">
+      <img src="assets/images/logos/Logo-recybot.png" alt="RecyBot">
+    </div>
+
+    <!-- Header -->
+    <div class="forgot-card__header">
+      <h1 class="forgot-card__title">
+        <span class="text-gradient">Recuperar</span> acceso
+      </h1>
+      <p class="forgot-card__subtitle">
+        Ingresa tu correo y te enviaremos un enlace para restablecer tu contraseña.
+      </p>
+    </div>
+
+    <form [formGroup]="forgotPassword" (ngSubmit)="sendPasswordRecovery()">
+
+      <!-- Email field -->
+      <div class="field" [class.field--error]="submitted && forgotPassword.get('email').errors"
+        [class.field--valid]="forgotPassword.get('email').valid && forgotPassword.get('email').dirty">
+
+        <label class="field__label" for="email">Correo electrónico</label>
+        <div class="field__control">
+          <i class="bi bi-envelope field__icon"></i>
+          <input id="email" class="field__input" type="email" formControlName="email"
+            placeholder="usuario@email.com" autocomplete="email" (input)="validateEmail()" />
+          <span class="field__status" aria-hidden="true">
+            <i *ngIf="forgotPassword.get('email').valid && forgotPassword.get('email').dirty"
+              class="bi bi-check-circle-fill field__status--ok"></i>
+          </span>
+        </div>
+
+        <span class="field__error-msg"
+          *ngIf="submitted && forgotPassword.get('email').errors?.['required']">
+          Ingresa un correo electrónico.
+        </span>
+        <span class="field__error-msg"
+          *ngIf="submitted && forgotPassword.get('email').errors?.['email']">
+          Ingresa un correo electrónico válido.
+        </span>
+      </div>
+
+      <!-- Submit -->
+      <button class="btn-recover" type="submit">
+        <i class="bi bi-send-fill"></i>
+        Enviar enlace de recuperación
+      </button>
+
+    </form>
+
+    <!-- Footer hint -->
+    <p class="forgot-card__hint">
+      ¿Recuerdas tu contraseña?
+      <a routerLink="/signin" class="link-inline">Iniciar sesión</a>
+    </p>
+
+  </div>
+
+</main>

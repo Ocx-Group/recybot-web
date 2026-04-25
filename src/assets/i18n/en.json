@@ -2228,8 +2228,47 @@
     }
   },
   "SIGNIN": {
+    "BACK": {
+      "TEXT": "Home"
+    },
+    "BRAND-TITLE-1": {
+      "TEXT": "Crypto ecosystem"
+    },
+    "BRAND-TITLE-2": {
+      "TEXT": "of the future"
+    },
+    "BRAND-SUBTITLE": {
+      "TEXT": "The eco-sustainable Web3 platform that transforms recycling into digital value."
+    },
+    "BRAND-STAT-ECO": {
+      "TEXT": "Ecological"
+    },
+    "BRAND-STAT-AVAIL": {
+      "TEXT": "Available"
+    },
+    "BRAND-STAT-BIO": {
+      "TEXT": "Biometric"
+    },
+    "WELCOME-LINE-1": {
+      "TEXT": "Welcome"
+    },
+    "WELCOME-LINE-2": {
+      "TEXT": "back"
+    },
+    "WELCOME-SUBTITLE": {
+      "TEXT": "Enter your credentials to access your account"
+    },
+    "TOGGLE-HIDE": {
+      "TEXT": "Hide password"
+    },
+    "TOGGLE-SHOW": {
+      "TEXT": "Show password"
+    },
+    "LOADING": {
+      "TEXT": "Loading..."
+    },
     "FORGOT-PASS": {
-      "TEXT": "Forgot password"
+      "TEXT": "Forgot your password?"
     },
     "PASS-IS-REQUIRED": {
       "TEXT": "Password is required"
@@ -2244,16 +2283,16 @@
       "TEXT": "Remember me"
     },
     "TITLE": {
-      "TEXT": "Signin"
+      "TEXT": "Sign in"
     },
     "USER-NAME": {
-      "TEXT": "Your User Name"
+      "TEXT": "Your Username"
     },
     "USER-NAME-IS-REQUIRED": {
-      "TEXT": "User name is required"
+      "TEXT": "Username is required"
     },
     "USER-NAME-MESSAGE-ERROR": {
-      "TEXT": "User name is invalid"
+      "TEXT": "Username is invalid"
     }
   },
   "SIGNUP": {
