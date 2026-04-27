@@ -73,14 +73,6 @@ export class HomeComponent implements OnInit {
   previousYear: number;
   @ViewChild('chart') chart1: ChartComponent;
   canSeePaymentModels: boolean = false;
-  recycoinInfo = {
-    usdValue: 1250000,
-    tokenAmount: 5000000,
-    marketCap: 10000000,
-    change24h: 5.75,
-    contractAddress: '0x7c482FF834dfb546A8E48C14f3C34652E9826723',
-    bnbAddress: '',
-  };
 
   information: StatisticsInformation = new StatisticsInformation();
   public pieChartOptions: any;
@@ -520,17 +512,7 @@ export class HomeComponent implements OnInit {
       .subscribe({
         next: (value: Response & { data: AffiliateBtc[] }) => {
           if (value.success) {
-            const address = value.data.reduce(
-              (acc: any, item: any) => {
-                if (item?.networkId === 2) {
-                  acc.bnb_address = item.address;
-                }
-                return acc;
-              },
-              { bnb_address: '' },
-            );
-
-            this.recycoinInfo.bnbAddress = address.bnb_address;
+            // address data loaded for future use
           }
         },
         error: err => {

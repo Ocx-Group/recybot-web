@@ -4,6 +4,385 @@
  * because it will make it harder for you to update.
  *
  */
+
+// ============================================================
+// RECYBOT DASHBOARD — DARK FUTURISTIC THEME
+// ============================================================
+
+// ── Design tokens ─────────────────────────────────────────────
+:root {
+  --c-green: #c5ff2b;
+  --c-teal: #00d4aa;
+  --c-bg: #040c0e;
+  --c-surface: rgba(255, 255, 255, 0.04);
+  --c-border: rgba(197, 255, 43, 0.12);
+  --c-border-hov: rgba(197, 255, 43, 0.35);
+  --c-text: #ffffff;
+  --c-muted: rgba(255, 255, 255, 0.52);
+}
+
+// ── Global body ───────────────────────────────────────────────
 body {
   font-family: 'Pangram', sans-serif;
+  background-color: #040c0e !important;
+  background-image:
+    radial-gradient(
+      ellipse 90% 55% at 10% 5%,
+      rgba(0, 54, 55, 0.45) 0%,
+      transparent 60%
+    ),
+    radial-gradient(
+      ellipse 60% 45% at 90% 92%,
+      rgba(197, 255, 43, 0.05) 0%,
+      transparent 55%
+    );
+  background-attachment: fixed;
+  color: #ffffff !important;
+}
+
+.main-content {
+  background: transparent !important;
+  min-height: 100vh;
+}
+
+// ── Sidebar ───────────────────────────────────────────────────
+.sidebar,
+.main-sidebar {
+  background: rgba(4, 10, 12, 0.98) !important;
+  border-right: 1px solid rgba(197, 255, 43, 0.1) !important;
+  box-shadow: 4px 0 28px rgba(0, 0, 0, 0.55) !important;
+}
+
+.sidebar .sidebar-brand {
+  border-bottom: 1px solid rgba(197, 255, 43, 0.1) !important;
+  padding-bottom: 0.5rem;
+}
+
+// User panel
+.sidebar .sidebar-userpic-name {
+  color: #ffffff !important;
+  font-weight: 600 !important;
+}
+
+.sidebar .profile-usertitle-job {
+  color: rgba(255, 255, 255, 0.52) !important;
+  font-size: 0.72rem !important;
+}
+
+// Nav links
+.sidebar .menu .list a.menu-top {
+  color: rgba(255, 255, 255, 0.65) !important;
+  transition:
+    background 0.2s,
+    color 0.2s;
+}
+
+.sidebar .menu .list a.menu-top:hover {
+  background: rgba(197, 255, 43, 0.07) !important;
+  color: #ffffff !important;
+}
+
+.sidebar .menu .list a.menu-top .sidebarIcon {
+  color: rgba(255, 255, 255, 0.45) !important;
+  stroke: rgba(255, 255, 255, 0.45) !important;
+}
+
+// Active items
+.sidebar .list li.active .menu-top,
+.sidebar .list li.active-top .menu-top {
+  background: rgba(197, 255, 43, 0.09) !important;
+  color: #c5ff2b !important;
+  border-left: 2px solid #c5ff2b;
+}
+
+.sidebar .list li.active .menu-top .sidebarIcon,
+.sidebar .list li.active-top .menu-top .sidebarIcon {
+  color: #c5ff2b !important;
+  stroke: #c5ff2b !important;
+}
+
+// Submenu items
+.sidebar .ml-menu a,
+.sidebar .ml-menu-2 a,
+.sidebar .ml-menu-3 a {
+  color: rgba(255, 255, 255, 0.55) !important;
+}
+
+.sidebar .ml-menu a:hover,
+.sidebar .ml-menu-2 a:hover,
+.sidebar .ml-menu-3 a:hover {
+  color: #c5ff2b !important;
+}
+
+.sidebar .ml-menu li a::before,
+.sidebar .ml-menu-2 li a::before,
+.sidebar .ml-menu-3 li a::before {
+  color: rgba(197, 255, 43, 0.35) !important;
+}
+
+.sidebar .list li.active .ml-menu a {
+  background: transparent !important;
+}
+
+// Group titles
+.sidebar .list .header {
+  color: rgba(197, 255, 43, 0.5) !important;
+  letter-spacing: 0.1em;
+}
+
+// Status badge in user panel
+.sidebar .btn.badge-outline.col-green {
+  color: #c5ff2b !important;
+  border-color: rgba(197, 255, 43, 0.4) !important;
+  background: rgba(197, 255, 43, 0.06) !important;
+}
+
+.sidebar .btn.badge-outline.col-red {
+  background: rgba(252, 84, 75, 0.08) !important;
+}
+
+// Scrollbar inside sidebar
+.sidebar .menu::-webkit-scrollbar {
+  width: 4px;
+}
+.sidebar .menu::-webkit-scrollbar-track {
+  background: transparent;
+}
+.sidebar .menu::-webkit-scrollbar-thumb {
+  background: rgba(197, 255, 43, 0.18);
+  border-radius: 2px;
+}
+
+// ── Navbar / Header ───────────────────────────────────────────
+nav.navbar.main-navbar {
+  background: rgba(4, 10, 12, 0.96) !important;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(197, 255, 43, 0.1) !important;
+  box-shadow: 0 2px 24px rgba(0, 0, 0, 0.45) !important;
+}
+
+.navbar .nav-link,
+.navbar a.nav-link {
+  color: rgba(255, 255, 255, 0.75) !important;
+}
+
+.navbar .nav-link:hover,
+.navbar a.nav-link:hover {
+  color: #c5ff2b !important;
+}
+
+// Navbar dropdowns
+.navbar .dropdown-menu,
+.header-dropdown {
+  background: rgba(4, 20, 24, 0.97) !important;
+  border: 1px solid rgba(197, 255, 43, 0.15) !important;
+  box-shadow: 0 8px 36px rgba(0, 0, 0, 0.55) !important;
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+.navbar .dropdown-item,
+.header-dropdown .dropdown-item {
+  color: rgba(255, 255, 255, 0.75) !important;
+}
+
+.navbar .dropdown-item:hover,
+.navbar .dropdown-item:focus,
+.header-dropdown .dropdown-item:hover,
+.header-dropdown .dropdown-item:focus {
+  background: rgba(197, 255, 43, 0.08) !important;
+  color: #c5ff2b !important;
+}
+
+.header-dropdown .dropdown-item.text-danger {
+  color: rgba(252, 84, 75, 0.85) !important;
+}
+
+.header-dropdown .dropdown-header,
+.header-dropdown .dropdown-title {
+  color: rgba(197, 255, 43, 0.7) !important;
+  border-bottom: 1px solid rgba(197, 255, 43, 0.1) !important;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.header-dropdown .dropdown-divider {
+  border-color: rgba(197, 255, 43, 0.1) !important;
+}
+
+// ── Cards ─────────────────────────────────────────────────────
+.card {
+  background: rgba(255, 255, 255, 0.04) !important;
+  border: 1px solid rgba(197, 255, 43, 0.12) !important;
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.35) !important;
+  color: #ffffff !important;
+  border-radius: 1rem !important;
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.card:hover {
+  border-color: rgba(197, 255, 43, 0.25) !important;
+  box-shadow: 0 8px 36px rgba(0, 0, 0, 0.45) !important;
+}
+
+.card-header,
+.card-body,
+.card-footer {
+  background: transparent !important;
+}
+
+.card-header {
+  border-bottom: 1px solid rgba(197, 255, 43, 0.08) !important;
+}
+
+.card-header h4,
+.card-header h5,
+.card-header h6 {
+  color: #ffffff !important;
+}
+
+.card-body p {
+  color: rgba(255, 255, 255, 0.72) !important;
+}
+
+.card-footer {
+  border-top: 1px solid rgba(197, 255, 43, 0.08) !important;
+}
+
+// ── Tables ────────────────────────────────────────────────────
+.table {
+  color: rgba(255, 255, 255, 0.75) !important;
+}
+
+.table td,
+.table th {
+  border-color: rgba(197, 255, 43, 0.08) !important;
+  color: rgba(255, 255, 255, 0.75) !important;
+}
+
+.table thead th {
+  color: rgba(197, 255, 43, 0.82) !important;
+  font-weight: 600;
+  border-bottom-color: rgba(197, 255, 43, 0.18) !important;
+}
+
+.table.table-hover tbody tr:hover,
+.table.table-hover tbody tr:hover td {
+  background: rgba(197, 255, 43, 0.04) !important;
+  color: #ffffff !important;
+}
+
+.table-row-border td,
+.table-row-border th {
+  border-color: rgba(197, 255, 43, 0.08) !important;
+}
+
+// ── Breadcrumbs ───────────────────────────────────────────────
+.breadcrumb-style,
+.breadcrumb {
+  background: transparent !important;
+}
+
+.page-title {
+  color: #ffffff !important;
+  font-weight: 700;
+}
+
+.breadcrumb-item a {
+  color: rgba(197, 255, 43, 0.7) !important;
+}
+
+.breadcrumb-item a:hover {
+  color: #c5ff2b !important;
+}
+
+.breadcrumb-item.active {
+  color: rgba(255, 255, 255, 0.45) !important;
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+  color: rgba(255, 255, 255, 0.3) !important;
+}
+
+// ── Buttons ───────────────────────────────────────────────────
+.btn-primary {
+  background: linear-gradient(135deg, #c5ff2b 0%, #9fd400 100%) !important;
+  border-color: transparent !important;
+  color: #03230a !important;
+  font-weight: 600;
+  box-shadow: 0 4px 14px rgba(197, 255, 43, 0.2) !important;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+  background: linear-gradient(135deg, #d8ff55 0%, #c5ff2b 100%) !important;
+  box-shadow: 0 6px 22px rgba(197, 255, 43, 0.4) !important;
+  border-color: transparent !important;
+  color: #03230a !important;
+}
+
+.btn-outline-primary {
+  color: #c5ff2b !important;
+  border-color: rgba(197, 255, 43, 0.45) !important;
+  background: transparent !important;
+}
+
+.btn-outline-primary:hover {
+  background: rgba(197, 255, 43, 0.1) !important;
+  border-color: #c5ff2b !important;
+  color: #c5ff2b !important;
+}
+
+// ── Badges ────────────────────────────────────────────────────
+.badge-outline.col-green {
+  color: #c5ff2b !important;
+  border-color: rgba(197, 255, 43, 0.4) !important;
+  background: rgba(197, 255, 43, 0.06) !important;
+}
+
+.col-green {
+  color: #c5ff2b !important;
+}
+.col-blue {
+  color: #3abaf4 !important;
+}
+.col-emerald {
+  color: #00d4aa !important;
+}
+
+// ── Footer ────────────────────────────────────────────────────
+.main-footer {
+  background: rgba(4, 10, 12, 0.98) !important;
+  border-top: 1px solid rgba(197, 255, 43, 0.1) !important;
+  color: rgba(255, 255, 255, 0.3) !important;
+}
+
+// ── Links ─────────────────────────────────────────────────────
+a {
+  color: rgba(197, 255, 43, 0.8);
+}
+
+a:hover {
+  color: #c5ff2b;
+}
+
+// ── Global scrollbar ──────────────────────────────────────────
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.03);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(197, 255, 43, 0.2);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(197, 255, 43, 0.4);
 }
