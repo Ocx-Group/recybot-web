@@ -1,0 +1,346 @@
+// ============================================================
+// RECYBOT MAINTENANCE PAGE — Futuristic Design
+// ============================================================
+
+// ── CSS Variables ─────────────────────────────────────────────
+:host {
+  --c-green: #c5ff2b;
+  --c-teal: #00d4aa;
+  --c-bg: #040c0e;
+  --c-surface: rgba(255, 255, 255, 0.04);
+  --c-border: rgba(197, 255, 43, 0.12);
+  --c-border-hov: rgba(197, 255, 43, 0.35);
+  --c-text: #ffffff;
+  --c-muted: rgba(255, 255, 255, 0.55);
+  --r: 0.75rem;
+  --r-lg: 1.25rem;
+  --r-pill: 100px;
+  display: block;
+  font-family:
+    'Segoe UI',
+    system-ui,
+    -apple-system,
+    sans-serif;
+}
+
+// ── Keyframes ─────────────────────────────────────────────────
+@keyframes glow-pulse {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 0.65;
+  }
+}
+@keyframes scanline {
+  0% {
+    top: -2px;
+  }
+  100% {
+    top: 100%;
+  }
+}
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes spin-cw {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes spin-ccw {
+  to {
+    transform: rotate(-360deg);
+  }
+}
+@keyframes pulse-ring {
+  0% {
+    box-shadow: 0 0 0 0 rgba(197, 255, 43, 0.35);
+  }
+  70% {
+    box-shadow: 0 0 0 18px rgba(197, 255, 43, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(197, 255, 43, 0);
+  }
+}
+@keyframes wrench-rock {
+  0%,
+  100% {
+    transform: rotate(-12deg);
+  }
+  50% {
+    transform: rotate(12deg);
+  }
+}
+
+// ── Base ──────────────────────────────────────────────────────
+.main-container {
+  min-height: 100vh;
+  background-color: var(--c-bg);
+  background-image:
+    radial-gradient(
+      ellipse 75% 55% at 20% 30%,
+      rgba(0, 54, 55, 0.45) 0%,
+      transparent 65%
+    ),
+    radial-gradient(
+      ellipse 50% 40% at 85% 80%,
+      rgba(197, 255, 43, 0.06) 0%,
+      transparent 60%
+    );
+  color: var(--c-text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  padding: 2rem 1.5rem;
+}
+
+// ── Background FX ─────────────────────────────────────────────
+.bg-grid {
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(197, 255, 43, 0.022) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(197, 255, 43, 0.022) 1px, transparent 1px);
+  background-size: 64px 64px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.bg-orb {
+  position: fixed;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: glow-pulse 6s ease-in-out infinite;
+  z-index: 0;
+
+  &--1 {
+    width: 600px;
+    height: 600px;
+    top: -200px;
+    left: -160px;
+    background: radial-gradient(
+      circle,
+      rgba(0, 212, 170, 0.12) 0%,
+      transparent 68%
+    );
+  }
+  &--2 {
+    width: 500px;
+    height: 500px;
+    bottom: -120px;
+    right: -120px;
+    background: radial-gradient(
+      circle,
+      rgba(197, 255, 43, 0.09) 0%,
+      transparent 68%
+    );
+    animation-delay: -3s;
+  }
+}
+
+.bg-scanline {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(197, 255, 43, 0.04) 50%,
+      transparent 100%
+    );
+    animation: scanline 10s linear infinite;
+  }
+}
+
+// ── Card ──────────────────────────────────────────────────────
+.maint-card {
+  position: relative;
+  z-index: 2;
+  max-width: 560px;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-lg);
+  padding: 3rem 2.75rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1.5rem;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.5);
+  animation: fade-up 0.65s ease both;
+}
+
+// ── Status bar (top of card) ──────────────────────────────────
+.maint-status {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(197, 255, 43, 0.06);
+  border: 1px solid rgba(197, 255, 43, 0.18);
+  border-radius: var(--r-pill);
+  padding: 0.3rem 0.875rem;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--c-green);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+
+  &__dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--c-green);
+    animation: pulse-ring 1.8s ease-out infinite;
+    flex-shrink: 0;
+  }
+}
+
+// ── Icon ──────────────────────────────────────────────────────
+.maint-icon-wrap {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(0, 54, 55, 0.9) 0%,
+    rgba(4, 12, 16, 0.9) 100%
+  );
+  border: 2px solid rgba(197, 255, 43, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow:
+    0 0 28px rgba(197, 255, 43, 0.18),
+    inset 0 0 16px rgba(0, 212, 170, 0.1);
+  animation: glow-pulse 3s ease-in-out infinite;
+}
+
+.maint-icon {
+  font-size: 2.25rem;
+  color: var(--c-green);
+  display: block;
+  animation: wrench-rock 1.8s ease-in-out infinite;
+  transform-origin: bottom center;
+}
+
+// ── Text ──────────────────────────────────────────────────────
+.maint-title {
+  font-size: clamp(1.75rem, 5vw, 2.5rem);
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+  margin: 0;
+  background: linear-gradient(130deg, var(--c-green) 0%, var(--c-teal) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.maint-description {
+  font-size: 0.95rem;
+  color: var(--c-muted);
+  line-height: 1.65;
+  max-width: 400px;
+  margin: 0;
+}
+
+// ── Divider ───────────────────────────────────────────────────
+.maint-divider {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--c-border) 50%,
+    transparent 100%
+  );
+}
+
+// ── Progress bar ──────────────────────────────────────────────
+.maint-progress {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  &__label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.7rem;
+    color: var(--c-muted);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  &__track {
+    height: 4px;
+    background: rgba(255, 255, 255, 0.07);
+    border-radius: var(--r-pill);
+    overflow: hidden;
+  }
+
+  &__fill {
+    height: 100%;
+    width: 72%;
+    border-radius: var(--r-pill);
+    background: linear-gradient(90deg, var(--c-teal) 0%, var(--c-green) 100%);
+    box-shadow: 0 0 10px rgba(197, 255, 43, 0.4);
+  }
+}
+
+// ── Back link ─────────────────────────────────────────────────
+.maint-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.8rem;
+  color: var(--c-muted);
+  text-decoration: none;
+  transition: color 0.2s;
+  letter-spacing: 0.02em;
+
+  &:hover {
+    color: var(--c-green);
+    text-decoration: none;
+  }
+}
+
+// ── Responsive ────────────────────────────────────────────────
+@media (max-width: 480px) {
+  .maint-card {
+    padding: 2.25rem 1.5rem;
+    gap: 1.25rem;
+  }
+
+  .maint-icon-wrap {
+    width: 72px;
+    height: 72px;
+  }
+  .maint-icon {
+    font-size: 1.85rem;
+  }
+}

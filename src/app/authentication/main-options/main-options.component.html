@@ -1,43 +1,87 @@
-<div class="recycoin-preview-wrapper">
-  <div id="particles-js"></div>
-  <div class="recycoin-preview">
-    <img src="assets/images/logo-dark.png" alt="Logo de RecyCoin" class="logo-title">
-    <h2 class="title neon-text">Vista Previa de RecyCoin</h2>
-    <div class="package-grid">
-      <div class="package-card">
-        <div class="card-content">
-          <div class="card-front">
-            <div class="image-container">
-              <img src="assets/images/logo-dark.png" alt="Logo de RecyCoin" class="package-image">
-              <div class="glow-effect"></div>
+<main class="main-container">
+
+  <!-- Background FX -->
+  <div class="bg-grid" aria-hidden="true"></div>
+  <div class="bg-orb bg-orb--1" aria-hidden="true"></div>
+  <div class="bg-orb bg-orb--2" aria-hidden="true"></div>
+  <div class="bg-scanline" aria-hidden="true"></div>
+
+  <!-- Header -->
+  <header class="mo-header">
+    <img src="assets/images/logos/Logo-recybot.png" alt="RecyBot" class="mo-logo">
+  </header>
+
+  <!-- Main content -->
+  <div class="mo-content">
+
+    <!-- Heading -->
+    <div class="mo-heading">
+      <div class="mo-badge">
+        <span class="mo-badge__dot"></span>
+        RecyBot Platform
+      </div>
+      <h1 class="mo-title">
+        Medio Ambiente<br>
+        <span class="text-gradient">&amp; Trading</span>
+      </h1>
+      <p class="mo-subtitle">
+        La plataforma de inversión ecológica más avanzada del ecosistema verde.
+      </p>
+    </div>
+
+    <!-- Flip cards -->
+    <div class="mo-grid">
+
+      <!-- Card 1: Plataforma verde -->
+      <div class="flip-card">
+        <div class="flip-card__inner">
+          <div class="flip-card__front">
+            <div class="flip-card__icon-wrap">
+              <i class="bi bi-tree-fill"></i>
             </div>
-            <h3 class="package-name neon-text">RecyCoin</h3>
-            <p class="package-price neon-text">Cripto Ecológica</p>
+            <h3 class="flip-card__title">Impacto Verde</h3>
+            <p class="flip-card__sub">Inversión sostenible</p>
+            <span class="flip-card__hint"><i class="bi bi-arrow-repeat"></i> Ver más</span>
           </div>
-          <div class="card-back">
-            <p class="package-description">Únete a la revolución verde con RecyCoin. Criptomoneda sostenible, eficiente
-              y ecológica.</p>
-            <button class="buy-button neon-text" (click)="backToTop()">Volver al inicio</button>
+          <div class="flip-card__back">
+            <i class="bi bi-leaf-fill flip-card__back-icon"></i>
+            <p class="flip-card__desc">
+              Contribuye al cuidado del medio ambiente mientras operas en mercados de trading ecológico de forma
+              eficiente y responsable.
+            </p>
+            <button class="btn-flip" (click)="backToTop()">
+              <i class="bi bi-arrow-left"></i>
+              Volver al inicio
+            </button>
           </div>
         </div>
       </div>
-      <div class="package-card">
-        <div class="card-content">
-          <div class="card-front">
-            <div class="image-container">
-              <img src="assets/images/logo-dark.png" alt="Icono de Registro" class="package-image">
-              <div class="glow-effect"></div>
+
+      <!-- Card 2: Registro -->
+      <div class="flip-card">
+        <div class="flip-card__inner">
+          <div class="flip-card__front">
+            <div class="flip-card__icon-wrap flip-card__icon-wrap--teal">
+              <i class="bi bi-person-plus-fill"></i>
             </div>
-            <h3 class="package-name neon-text">Regístrate</h3>
-            <p class="package-price neon-text">Únete a nosotros</p>
+            <h3 class="flip-card__title">Únete Ahora</h3>
+            <p class="flip-card__sub">Comunidad global</p>
+            <span class="flip-card__hint"><i class="bi bi-arrow-repeat"></i> Ver más</span>
           </div>
-          <div class="card-back">
-            <p class="package-description">Crea tu cuenta y sé parte de la comunidad RecyCoin. ¡Comienza tu viaje
-              eco-friendly hoy!</p>
-            <button class="buy-button neon-text" (click)="goToRegister()">Regístrate</button>
+          <div class="flip-card__back">
+            <i class="bi bi-globe2 flip-card__back-icon"></i>
+            <p class="flip-card__desc">
+              Crea tu cuenta y forma parte de la comunidad eco-friendly más grande. Comienza tu camino hacia el trading
+              responsable hoy.
+            </p>
+            <button class="btn-flip btn-flip--neon" (click)="goToRegister()">
+              <i class="bi bi-arrow-right-circle-fill"></i>
+              Regístrate
+            </button>
           </div>
         </div>
       </div>
+
     </div>
   </div>
-</div>
+</main>

@@ -1,38 +1,65 @@
-<div class="container-fluid vh-100">
-  <div class="dark-overlay-left"></div>
-  <div class="dark-overlay-right"></div>
+<main class="main-container">
 
-  <div class="logo-section">
-    <img src="assets/images/logo-yellow.png" alt="Logo" class="logo">
-  </div>
+  <!-- Background FX -->
+  <div class="bg-grid" aria-hidden="true"></div>
+  <div class="bg-orb bg-orb--1" aria-hidden="true"></div>
+  <div class="bg-orb bg-orb--2" aria-hidden="true"></div>
+  <div class="bg-scanline" aria-hidden="true"></div>
 
-  <div class="content-wrapper">
-    <div class="explore-section">
-      <div class="explore-content">
-        <h1 class="text-white explore-text">
+  <!-- Header -->
+  <header class="pp-header">
+    <a routerLink="/" class="pp-logo-link">
+      <img src="assets/images/logos/Logo-recybot.png" alt="RecyBot" class="pp-logo">
+    </a>
+    <a routerLink="/signin" class="btn-signin">
+      <i class="bi bi-box-arrow-in-right"></i>
+      <span>{{ 'LANDING-PAGE.NAVBAR.LOGIN' | translate }}</span>
+    </a>
+  </header>
+
+  <!-- Body: split layout -->
+  <div class="pp-wrapper">
+
+    <!-- Explore panel (left) -->
+    <aside class="pp-explore">
+      <div class="pp-explore__inner">
+        <div class="pp-badge">
+          <span class="pp-badge__dot"></span>
+          RecyBot
+        </div>
+        <h1 class="pp-title">
           <span>{{ 'PRODUCTS-PREVIEW.EXPLORE.LINE1' | translate }}</span><br>
           <span>{{ 'PRODUCTS-PREVIEW.EXPLORE.LINE2' | translate }}</span><br>
           <span>{{ 'PRODUCTS-PREVIEW.EXPLORE.LINE3' | translate }}</span><br>
-          <span class="text-recycoin">{{ 'PRODUCTS-PREVIEW.EXPLORE.LINE4' | translate }}</span>
+          <span class="text-gradient">{{ 'PRODUCTS-PREVIEW.EXPLORE.LINE4' | translate }}</span>
         </h1>
+        <a routerLink="/signin" class="btn-cta">
+          {{ 'LANDING-PAGE.NAVBAR.LOGIN' | translate }}
+          <i class="bi bi-arrow-right-circle-fill"></i>
+        </a>
       </div>
-    </div>
+    </aside>
 
-    <div class="products-section">
-      <div class="row">
-        <div class="col-12 col-md-4" *ngFor="let item of productList;">
-          <div class="product-card">
-            <img routerLink="/signin" type="button" src="{{item.image}}" class="card-img" alt="Semilla">
-            <div class="card-footer">
-              <img src="assets/images/logos/Logo-recybot.png" class="recycoin-icon" alt="icon">
-              <div class="text-container">
-                <span class="product-name">{{ item.name }}</span>
-                <span class="product-price">${{ item.baseAmount }}</span>
-              </div>
+    <!-- Products (right) -->
+    <section class="pp-products">
+      <div class="pp-grid">
+        <div class="product-card" *ngFor="let item of productList">
+          <a class="product-card__image-wrap" routerLink="/signin">
+            <img [src]="item.image" [alt]="item.name" class="product-card__img">
+            <div class="product-card__overlay" aria-hidden="true">
+              <i class="bi bi-bag-plus-fill product-card__cta-icon"></i>
+            </div>
+          </a>
+          <div class="product-card__footer">
+            <img src="assets/images/logos/Logo-recybot.png" class="product-card__brand" alt="RecyBot">
+            <div class="product-card__info">
+              <span class="product-card__name">{{ item.name }}</span>
+              <span class="product-card__price">${{ item.baseAmount }}</span>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </section>
+
   </div>
-</div>
+</main>

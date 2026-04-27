@@ -10,18 +10,16 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap, take, timer } from 'rxjs';
 import Swal from 'sweetalert2';
 import { CommonModule } from '@angular/common';
-declare let particlesJS: any;
-
 import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
 import { AffiliateService } from '@app/core/service/affiliate-service/affiliate.service';
 import { RequestResetPassword } from '@app/core/models/user-affiliate-model/request-reset-password-model';
 
 @Component({
-    selector: 'app-reset',
-    templateUrl: './reset.component.html',
-    styleUrls: ['./reset.component.scss'],
-    standalone: true,
-    imports: [CommonModule, ReactiveFormsModule]
+  selector: 'app-reset',
+  templateUrl: './reset.component.html',
+  styleUrls: ['./reset.component.scss'],
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule],
 })
 export class ResetComponent implements OnInit {
   resetPassword: FormGroup;
@@ -30,28 +28,25 @@ export class ResetComponent implements OnInit {
   public user: UserAffiliate = new UserAffiliate();
   isLoading: boolean = true;
   linkValid: boolean = false;
+  showPassword: boolean = false;
+  showConfirm: boolean = false;
 
   constructor(
-    private affiliateService: AffiliateService,
-    private activatedRoute: ActivatedRoute,
-    private router: Router,
+    private readonly affiliateService: AffiliateService,
+    private readonly activatedRoute: ActivatedRoute,
+    private readonly router: Router,
   ) {
     this.verificationCode =
       this.activatedRoute.snapshot.params.verificationCode;
+  }
+
+  ngOnInit(): void {
     if (!this.verificationCode) {
       this.router.navigate(['/signin']);
       return;
     }
     this.getAffiliateByVerificationCode(this.verificationCode);
-  }
-
-  ngOnInit(): void {
     this.initResetPassword();
-    particlesJS.load(
-      'particles-js',
-      'assets/particles/particles.json',
-      function () {},
-    );
   }
 
   get create_reset_password_controls(): { [key: string]: AbstractControl } {
@@ -209,10 +204,10 @@ export class ResetComponent implements OnInit {
     let pass = group.controls.password.value;
     let confirmPass = group.controls.confirm_password.value;
 
-    if (pass !== confirmPass) {
-      group.setErrors({ mismatch: true });
-    } else {
+    if (pass === confirmPass) {
       group.setErrors(null);
+    } else {
+      group.setErrors({ mismatch: true });
     }
   }
 }

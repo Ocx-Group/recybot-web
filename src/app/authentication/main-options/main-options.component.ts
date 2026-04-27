@@ -1,27 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { LogoService } from '@app/core/service/logo-service/logo.service';
 import { CommonModule } from '@angular/common';
-declare var particlesJS: any;
 
 @Component({
-    selector: 'app-main-options',
-    templateUrl: './main-options.component.html',
-    styleUrls: ['./main-options.component.scss'],
-    standalone: true,
-    imports: [CommonModule]
+  selector: 'app-main-options',
+  templateUrl: './main-options.component.html',
+  styleUrls: ['./main-options.component.scss'],
+  standalone: true,
+  imports: [CommonModule],
 })
-export class MainOptionsComponent implements OnInit {
+export class MainOptionsComponent {
   userName: string;
-  logoUrl = '';
-  constructor(private router: Router, private activateRoute: ActivatedRoute, private logoService: LogoService) {
-    this.userName = activateRoute.snapshot.paramMap.get('userName');
-  }
 
-  ngOnInit(): void {
-    this.getLogoUrl();
-    particlesJS.load('particles-js', 'assets/particles/particles.json', function () {
-    });
+  constructor(
+    private readonly router: Router,
+    private readonly activateRoute: ActivatedRoute,
+  ) {
+    this.userName = this.activateRoute.snapshot.paramMap.get('userName');
   }
 
   backToTop() {
@@ -29,10 +24,6 @@ export class MainOptionsComponent implements OnInit {
   }
 
   goToRegister() {
-    this.router.navigate([`/signup/${this.userName}`])
-  }
-
-  getLogoUrl() {
-    this.logoUrl = this.logoService.getLogoSrc();
+    this.router.navigate([`/signup/${this.userName}`]);
   }
 }

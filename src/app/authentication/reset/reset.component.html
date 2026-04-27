@@ -1,50 +1,89 @@
-<div class="aurora-forgot-password-wrapper">
-  <div id="particles-js"></div>
+<main class="main-container">
+
+  <!-- Background FX -->
+  <div class="bg-grid" aria-hidden="true"></div>
+  <div class="bg-orb bg-orb--1" aria-hidden="true"></div>
+  <div class="bg-orb bg-orb--2" aria-hidden="true"></div>
+  <div class="bg-scanline" aria-hidden="true"></div>
+
+  <!-- Loading overlay -->
   <div *ngIf="isLoading" class="loading-overlay">
-    <div class="loading-message">
-      <i class="fas fa-spinner fa-spin"></i>
-      <p>Cargando... <br>
-        <small>Por favor espera</small>
-      </p>
+    <div class="loading-card">
+      <div class="loading-spinner"></div>
+      <p class="loading-text">Verificando enlace&hellip;</p>
+      <small class="loading-sub">Por favor espera</small>
     </div>
   </div>
 
-  <div class="aurora-forgot-password-container">
-    <form *ngIf="!isLoading && linkValid" [formGroup]="resetPassword" (ngSubmit)="changePassword()"
-      class="aurora-forgot-password-card">
-      <img src="assets/images/logos/Logo-recybot.png" alt="Logo" class="logo-title">
-      <h2 class="aurora-title aurora-neon-text">Restablecer Contraseña</h2>
-      <p class="aurora-text-muted">Ingresa tu nueva contraseña</p>
+  <!-- Reset form -->
+  <form *ngIf="!isLoading && linkValid" [formGroup]="resetPassword" (ngSubmit)="changePassword()" class="reset-card"
+    novalidate>
+    <!-- Vertical energy line -->
+    <div class="energy-line" aria-hidden="true"></div>
 
-      <div class="aurora-form-group">
-        <label for="password" class="aurora-label">Nueva Contraseña</label>
-        <input id="password" type="password" class="aurora-form-control" formControlName="password"
-          [ngClass]="{'is-invalid': resetPassword.get('password').errors && resetPassword.get('password').touched}">
-        <div *ngIf="resetPassword.get('password').errors && resetPassword.get('password').touched"
-          class="aurora-invalid-feedback">
-          <div *ngIf="resetPassword.get('password').errors.required">Ingrese una contraseña.</div>
-          <div *ngIf="resetPassword.get('password').errors.pattern">
-            La contraseña debe contener al menos un dígito, una letra minúscula, una letra mayúscula, un carácter
-            especial y al menos 8 caracteres.
-          </div>
-        </div>
+    <!-- Status bar -->
+    <div class="status-bar">
+      <span class="status-dot"></span>
+      RECYBOT &middot; SECURE RESET
+    </div>
+
+    <!-- Logo -->
+    <img src="assets/images/logos/Logo-recybot.png" alt="RecyBot" class="reset-logo">
+
+    <!-- Heading -->
+    <div class="reset-heading">
+      <h1 class="reset-title">Restablecer contraseña</h1>
+      <p class="reset-subtitle">Ingresa y confirma tu nueva contraseña</p>
+    </div>
+
+    <!-- Password field -->
+    <div class="field-group"
+      [class.field-group--error]="resetPassword.get('password').errors && resetPassword.get('password').touched"
+      [class.field-group--valid]="!resetPassword.get('password').errors && resetPassword.get('password').touched">
+      <label class="field-label" for="password">Nueva contraseña</label>
+      <div class="field-wrap">
+        <i class="bi bi-lock field-icon"></i>
+        <input id="password" [type]="showPassword ? 'text' : 'password'" class="field-input" formControlName="password"
+          placeholder="••••••••" autocomplete="off">
+        <button type="button" class="toggle-visibility" (click)="showPassword = !showPassword" tabindex="-1">
+          <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'"></i>
+        </button>
       </div>
-
-      <div class="aurora-form-group">
-        <label for="password-confirm" class="aurora-label">Confirmar Contraseña</label>
-        <input id="password-confirm" type="password" class="aurora-form-control" formControlName="confirm_password"
-          [ngClass]="{'is-invalid': (resetPassword.get('confirm_password').errors || resetPassword.errors?.mismatch) && resetPassword.get('confirm_password').touched}">
-        <div
-          *ngIf="(resetPassword.get('confirm_password').errors || resetPassword.errors?.mismatch) && resetPassword.get('confirm_password').touched"
-          class="aurora-invalid-feedback">
-          <div *ngIf="resetPassword.get('confirm_password').errors?.required">Confirme su contraseña.</div>
-          <div *ngIf="resetPassword.errors?.mismatch">Las contraseñas no coinciden.</div>
-        </div>
+      <div *ngIf="resetPassword.get('password').errors && resetPassword.get('password').touched" class="field-error">
+        <span *ngIf="resetPassword.get('password').errors.required">Ingrese una contraseña.</span>
+        <span *ngIf="resetPassword.get('password').errors.pattern">
+          Mínimo 8 caracteres con mayúscula, minúscula, número y carácter especial.
+        </span>
       </div>
+    </div>
 
-      <button type="submit" class="aurora-neon-button" [disabled]="resetPassword.invalid">
-        Restablecer Contraseña
-      </button>
-    </form>
-  </div>
-</div>
+    <!-- Confirm password field -->
+    <div class="field-group"
+      [class.field-group--error]="(resetPassword.get('confirm_password').errors || resetPassword.errors?.mismatch) && resetPassword.get('confirm_password').touched"
+      [class.field-group--valid]="!resetPassword.get('confirm_password').errors && !resetPassword.errors?.mismatch && resetPassword.get('confirm_password').touched">
+      <label class="field-label" for="password-confirm">Confirmar contraseña</label>
+      <div class="field-wrap">
+        <i class="bi bi-lock-fill field-icon"></i>
+        <input id="password-confirm" [type]="showConfirm ? 'text' : 'password'" class="field-input"
+          formControlName="confirm_password" placeholder="••••••••" autocomplete="off">
+        <button type="button" class="toggle-visibility" (click)="showConfirm = !showConfirm" tabindex="-1">
+          <i class="bi" [ngClass]="showConfirm ? 'bi-eye-slash' : 'bi-eye'"></i>
+        </button>
+      </div>
+      <div
+        *ngIf="(resetPassword.get('confirm_password').errors || resetPassword.errors?.mismatch) && resetPassword.get('confirm_password').touched"
+        class="field-error">
+        <span *ngIf="resetPassword.get('confirm_password').errors?.required">Confirme su contraseña.</span>
+        <span *ngIf="resetPassword.errors?.mismatch">Las contraseñas no coinciden.</span>
+      </div>
+    </div>
+
+    <!-- Submit -->
+    <button type="submit" class="btn-reset" [disabled]="resetPassword.invalid">
+      <i class="bi bi-shield-lock-fill"></i>
+      Restablecer contraseña
+    </button>
+
+  </form>
+
+</main>

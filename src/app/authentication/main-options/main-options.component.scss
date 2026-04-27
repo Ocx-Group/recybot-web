@@ -1,195 +1,380 @@
-.recycoin-preview-wrapper {
-  min-height: 100vh;
-  background-image: url('/assets/images/main-options.jpg');
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 2.5rem 1.25rem;
-  position: relative;
-  overflow: hidden;
+// ============================================================
+// RECYBOT MAIN OPTIONS — Futuristic Design
+// ============================================================
 
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: radial-gradient(circle, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.8) 100%);
+// ── CSS Variables ─────────────────────────────────────────────
+:host {
+  --c-green:       #c5ff2b;
+  --c-teal:        #00d4aa;
+  --c-bg:          #040c0e;
+  --c-surface:     rgba(255, 255, 255, 0.04);
+  --c-surface-hov: rgba(255, 255, 255, 0.08);
+  --c-border:      rgba(197, 255, 43, 0.12);
+  --c-border-hov:  rgba(197, 255, 43, 0.38);
+  --c-text:        #ffffff;
+  --c-muted:       rgba(255, 255, 255, 0.52);
+  --r:             0.75rem;
+  --r-lg:          1.25rem;
+  --r-pill:        100px;
+  display: block;
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+// ── Keyframes ─────────────────────────────────────────────────
+@keyframes glow-pulse {
+  0%, 100% { opacity: 0.35; }
+  50%       { opacity: 0.65; }
+}
+@keyframes scanline {
+  0%   { top: -2px;  }
+  100% { top: 100%;  }
+}
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1;   transform: scale(1);   }
+  50%       { opacity: 0.4; transform: scale(1.6); }
+}
+
+// ── Base ──────────────────────────────────────────────────────
+.main-container {
+  min-height: 100vh;
+  background-color: var(--c-bg);
+  background-image:
+    radial-gradient(ellipse 75% 55% at 15% 25%, rgba(0, 54, 55, 0.5) 0%, transparent 65%),
+    radial-gradient(ellipse 55% 45% at 88% 82%, rgba(197, 255, 43, 0.06) 0%, transparent 60%);
+  color: var(--c-text);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  overflow-x: hidden;
+}
+
+// ── Background FX ─────────────────────────────────────────────
+.bg-grid {
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(197, 255, 43, 0.022) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(197, 255, 43, 0.022) 1px, transparent 1px);
+  background-size: 64px 64px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.bg-orb {
+  position: fixed;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: glow-pulse 6s ease-in-out infinite;
+  z-index: 0;
+
+  &--1 {
+    width: 620px;
+    height: 620px;
+    top: -200px;
+    left: -160px;
+    background: radial-gradient(circle, rgba(0, 212, 170, 0.12) 0%, transparent 68%);
+  }
+  &--2 {
+    width: 500px;
+    height: 500px;
+    bottom: -120px;
+    right: -120px;
+    background: radial-gradient(circle, rgba(197, 255, 43, 0.09) 0%, transparent 68%);
+    animation-delay: -3s;
   }
 }
 
-.recycoin-preview {
-  background-color: rgba(17, 75, 95, 0.6);
-  border-radius: 1.25rem;
-  padding: 2.5rem;
-  box-shadow: 0 0 50px rgba(136, 212, 152, 0.3);
-  width: 100%;
-  max-width: 75rem;
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(136, 212, 152, 0.3);
+.bg-scanline {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent 0%, rgba(197, 255, 43, 0.04) 50%, transparent 100%);
+    animation: scanline 10s linear infinite;
+  }
+}
+
+// ── Header ────────────────────────────────────────────────────
+.mo-header {
   position: relative;
-  z-index: 1;
+  z-index: 10;
+  width: 100%;
+  padding: 1.5rem 2.5rem 0;
+  display: flex;
+  justify-content: center;
 }
 
-.title {
-  font-size: 2.8em;
-  text-align: center;
-  margin-bottom: 3.125rem;
-  letter-spacing: 0.125rem;
+.mo-logo {
+  height: 2.75rem;
+  width: auto;
+  filter: drop-shadow(0 0 10px rgba(197, 255, 43, 0.35));
+  animation: fade-up 0.5s ease both;
 }
 
-.package-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 2.5rem;
-}
-
-.package-card {
-  perspective: 1000px;
-  height: 25rem;
-}
-
-.card-content {
+// ── Content wrapper ───────────────────────────────────────────
+.mo-content {
   position: relative;
+  z-index: 2;
   width: 100%;
-  height: 100%;
-  transition: transform 0.8s;
-  transform-style: preserve-3d;
-}
-
-.package-card:hover .card-content {
-  transform: rotateY(180deg);
-}
-
-.card-front,
-.card-back {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  backface-visibility: hidden;
-  border-radius: 1.25rem;
+  max-width: 900px;
+  padding: 3rem 2rem 4rem;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  padding: 1.875rem;
+  gap: 3rem;
 }
 
-.card-front {
-  background: linear-gradient(145deg, rgba(26, 147, 111, 0.6), rgba(17, 75, 95, 0.6));
-  border: 2px solid rgba(136, 212, 152, 0.5);
-  overflow: hidden;
-}
-
-.card-back {
-  background: linear-gradient(145deg, rgba(17, 75, 95, 0.8), rgba(26, 147, 111, 0.8));
-  border: 2px solid rgba(136, 212, 152, 0.5);
-  transform: rotateY(180deg);
-}
-
-.image-container {
-  position: relative;
-  width: 9.375rem;
-  height: 9.375rem;
-  margin-bottom: 1.25rem;
-}
-
-.package-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 50%;
-  border: 3px solid #88d498;
-}
-
-.glow-effect {
-  position: absolute;
-  top: -10px;
-  left: -10px;
-  right: -10px;
-  bottom: -10px;
-  background: radial-gradient(circle, rgba(136, 212, 152, 0.6) 0%, rgba(136, 212, 152, 0) 70%);
-  border-radius: 50%;
-  filter: blur(10px);
-  z-index: -1;
-}
-
-.package-name {
-  font-size: 1.8em;
-  margin-bottom: 15px;
-}
-
-.package-price {
-  font-size: 1.5em;
-  font-weight: bold;
-}
-
-.package-description {
+// ── Heading ───────────────────────────────────────────────────
+.mo-heading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.875rem;
   text-align: center;
-  margin-bottom: 1.875rem;
-  color: #ffffff;
-  font-size: 1.1em;
+  animation: fade-up 0.6s ease both;
+}
+
+.mo-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(197, 255, 43, 0.07);
+  border: 1px solid rgba(197, 255, 43, 0.22);
+  border-radius: var(--r-pill);
+  padding: 0.35rem 1rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--c-green);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+
+  &__dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--c-green);
+    animation: pulse-dot 2s ease-in-out infinite;
+    flex-shrink: 0;
+  }
+}
+
+.mo-title {
+  font-size: clamp(2.25rem, 5vw, 3.5rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  margin: 0;
+  color: var(--c-text);
+}
+
+.text-gradient {
+  background: linear-gradient(130deg, var(--c-green) 0%, var(--c-teal) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.mo-subtitle {
+  font-size: 0.95rem;
+  color: var(--c-muted);
+  max-width: 520px;
+  margin: 0;
   line-height: 1.6;
 }
 
-.neon-text {
-  color: #ffffff;
-  text-shadow: 0 0 5px #88d498, 0 0 10px #88d498, 0 0 15px #88d498;
+// ── Cards grid ────────────────────────────────────────────────
+.mo-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.75rem;
+  width: 100%;
+  animation: fade-up 0.7s ease 0.1s both;
 }
 
-.buy-button {
-  background: rgba(136, 212, 152, 0.3);
-  border: 2px solid #88d498;
-  padding: 0.75rem 1.5625rem;
-  border-radius: 1.875rem;
-  font-size: 1.2em;
-  cursor: pointer;
-  transition: all 0.3s ease;
-
-  &:hover {
-    background: rgba(136, 212, 152, 0.6);
-    box-shadow: 0 0 20px rgba(136, 212, 152, 0.8);
-  }
+// ── Flip card ─────────────────────────────────────────────────
+.flip-card {
+  perspective: 1200px;
+  height: 340px;
 }
 
-.logo-title {
-  max-width: 100%;
-  max-height: 100px;
-  object-fit: contain;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 0.9rem;
-}
-
-@media (max-width: 48rem) {
-  .recycoin-preview {
-    padding: 1.875rem;
-  }
-
-  .title {
-    font-size: 2.2em;
-  }
-
-  .package-grid {
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 1.875rem;
-  }
-
-  .package-card {
-    height: 21.875rem;
-  }
-}
-
-#particles-js {
-  position: absolute;
+.flip-card__inner {
+  position: relative;
   width: 100%;
   height: 100%;
-  top: 0;
-  left: 0;
-  z-index: 0;
+  transition: transform 0.75s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-style: preserve-3d;
+}
+
+.flip-card:hover .flip-card__inner {
+  transform: rotateY(180deg);
+}
+
+.flip-card__front,
+.flip-card__back {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--r-lg);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1.75rem;
+  gap: 0.75rem;
+  border: 1px solid var(--c-border);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+// Front face
+.flip-card__front {
+  background: var(--c-surface);
+
+  .flip-card:hover & {
+    border-color: var(--c-border-hov);
+  }
+}
+
+// Back face
+.flip-card__back {
+  background: rgba(4, 28, 32, 0.92);
+  border-color: rgba(197, 255, 43, 0.22);
+  transform: rotateY(180deg);
+  gap: 1.25rem;
+}
+
+// Icon wrapper — front
+.flip-card__icon-wrap {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: rgba(197, 255, 43, 0.08);
+  border: 1px solid rgba(197, 255, 43, 0.22);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.85rem;
+  color: var(--c-green);
+  box-shadow: 0 0 24px rgba(197, 255, 43, 0.12);
+  transition: box-shadow 0.3s;
+
+  .flip-card:hover & {
+    box-shadow: 0 0 36px rgba(197, 255, 43, 0.25);
+  }
+
+  &--teal {
+    background: rgba(0, 212, 170, 0.08);
+    border-color: rgba(0, 212, 170, 0.22);
+    color: var(--c-teal);
+    box-shadow: 0 0 24px rgba(0, 212, 170, 0.12);
+
+    .flip-card:hover & {
+      box-shadow: 0 0 36px rgba(0, 212, 170, 0.25);
+    }
+  }
+}
+
+.flip-card__title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 0;
+  color: var(--c-text);
+}
+
+.flip-card__sub {
+  font-size: 0.78rem;
+  color: var(--c-muted);
+  margin: 0;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.flip-card__hint {
+  font-size: 0.68rem;
+  color: rgba(197, 255, 43, 0.5);
+  letter-spacing: 0.04em;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  margin-top: 0.5rem;
+
+  i { font-size: 0.8rem; }
+}
+
+// Back icon (large decorative)
+.flip-card__back-icon {
+  font-size: 2.25rem;
+  color: var(--c-green);
+  opacity: 0.65;
+}
+
+.flip-card__desc {
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.75);
+  text-align: center;
+  line-height: 1.65;
+  margin: 0;
+}
+
+// ── Flip card buttons ─────────────────────────────────────────
+.btn-flip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.625rem 1.375rem;
+  border-radius: var(--r-pill);
+  background: transparent;
+  color: var(--c-green);
+  border: 1px solid rgba(197, 255, 43, 0.4);
+  font-size: 0.825rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  letter-spacing: 0.02em;
+  transition: all 0.25s;
+
+  &:hover {
+    background: rgba(197, 255, 43, 0.1);
+    border-color: var(--c-green);
+    box-shadow: 0 0 14px rgba(197, 255, 43, 0.3);
+  }
+
+  &--neon {
+    background: linear-gradient(135deg, var(--c-green) 0%, #9fd400 100%);
+    color: #03230a;
+    border-color: transparent;
+    box-shadow: 0 4px 18px rgba(197, 255, 43, 0.25);
+
+    &:hover {
+      background: linear-gradient(135deg, #d8ff55 0%, var(--c-green) 100%);
+      box-shadow: 0 6px 28px rgba(197, 255, 43, 0.5);
+    }
+  }
+}
+
+// ── Responsive ────────────────────────────────────────────────
+@media (max-width: 640px) {
+  .mo-content { padding: 2rem 1.25rem 3rem; gap: 2rem; }
+  .mo-header  { padding: 1.25rem 1.25rem 0; }
+
+  .mo-grid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  .flip-card { height: 300px; }
 }
