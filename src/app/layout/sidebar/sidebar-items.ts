@@ -13,7 +13,7 @@ export const ROUTES: RouteInfo[] = [
   },
   {
     path: '',
-    title: 'MENUITEMS.BUY-RECYCOIN.TEXT',
+    title: 'MENUITEMS.BUY-RECYBOT.TEXT',
     iconType: 'feather',
     icon: 'shopping-cart',
     class: 'menu-toggle',
@@ -22,7 +22,7 @@ export const ROUTES: RouteInfo[] = [
     badgeClass: '',
     submenu: [
       {
-        path: '/app/recycoin',
+        path: '/app/products',
         title: 'CART-PAGE.BUY.TEXT',
         iconType: 'feather',
         icon: 'dollar-sign',
