@@ -26,7 +26,7 @@ export const environment = {
       'eco-keyLd5DU5faBWLfLrE1ATUK0c1qpvSci1x5TvFkDVw3FEM7JO30Jm!zXyB4w',
     walletService:
       'eco-keypFvQnUOko=r4/G!chia5Fe2-6OU?2YNYqAPWlaiN!uYrZIdwoUNv9P4d7',
-    clientID: 'eco-keyhFvQoUOk=r6/F!chia2Fe1-8OU?4YNWqAVWlaiN!tYrWIdvoUMv8Q6d6',
+    clientID: 'eco-Rt9YpQzWm2=f7/X#kcJw8Hv4-5NB?3MDLgTVFcxtR@bZqUPLnasMKw1E6d9',
   },
   coinPaymentConfiguration: {
     publicApiKey:
