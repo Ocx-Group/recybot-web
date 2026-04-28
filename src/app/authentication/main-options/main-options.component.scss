@@ -4,13 +4,13 @@
 
 // ── CSS Variables ─────────────────────────────────────────────
 :host {
-  --c-green:       #c5ff2b;
+  --c-green:       #43e37f;
   --c-teal:        #00d4aa;
   --c-bg:          #040c0e;
   --c-surface:     rgba(255, 255, 255, 0.04);
   --c-surface-hov: rgba(255, 255, 255, 0.08);
-  --c-border:      rgba(197, 255, 43, 0.12);
-  --c-border-hov:  rgba(197, 255, 43, 0.38);
+  --c-border:      rgba(67, 227, 127, 0.12);
+  --c-border-hov:  rgba(67, 227, 127, 0.38);
   --c-text:        #ffffff;
   --c-muted:       rgba(255, 255, 255, 0.52);
   --r:             0.75rem;
@@ -44,7 +44,7 @@
   background-color: var(--c-bg);
   background-image:
     radial-gradient(ellipse 75% 55% at 15% 25%, rgba(0, 54, 55, 0.5) 0%, transparent 65%),
-    radial-gradient(ellipse 55% 45% at 88% 82%, rgba(197, 255, 43, 0.06) 0%, transparent 60%);
+    radial-gradient(ellipse 55% 45% at 88% 82%, rgba(67, 227, 127, 0.06) 0%, transparent 60%);
   color: var(--c-text);
   display: flex;
   flex-direction: column;
@@ -58,8 +58,8 @@
   position: fixed;
   inset: 0;
   background-image:
-    linear-gradient(rgba(197, 255, 43, 0.022) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(197, 255, 43, 0.022) 1px, transparent 1px);
+    linear-gradient(rgba(67, 227, 127, 0.022) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(67, 227, 127, 0.022) 1px, transparent 1px);
   background-size: 64px 64px;
   pointer-events: none;
   z-index: 0;
@@ -84,7 +84,7 @@
     height: 500px;
     bottom: -120px;
     right: -120px;
-    background: radial-gradient(circle, rgba(197, 255, 43, 0.09) 0%, transparent 68%);
+    background: radial-gradient(circle, rgba(67, 227, 127, 0.09) 0%, transparent 68%);
     animation-delay: -3s;
   }
 }
@@ -101,7 +101,7 @@
     position: absolute;
     left: 0; right: 0;
     height: 2px;
-    background: linear-gradient(90deg, transparent 0%, rgba(197, 255, 43, 0.04) 50%, transparent 100%);
+    background: linear-gradient(90deg, transparent 0%, rgba(67, 227, 127, 0.04) 50%, transparent 100%);
     animation: scanline 10s linear infinite;
   }
 }
@@ -119,7 +119,7 @@
 .mo-logo {
   height: 2.75rem;
   width: auto;
-  filter: drop-shadow(0 0 10px rgba(197, 255, 43, 0.35));
+  filter: drop-shadow(0 0 10px rgba(67, 227, 127, 0.35));
   animation: fade-up 0.5s ease both;
 }
 
@@ -150,8 +150,8 @@
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  background: rgba(197, 255, 43, 0.07);
-  border: 1px solid rgba(197, 255, 43, 0.22);
+  background: rgba(67, 227, 127, 0.07);
+  border: 1px solid rgba(67, 227, 127, 0.22);
   border-radius: var(--r-pill);
   padding: 0.35rem 1rem;
   font-size: 0.68rem;
@@ -251,7 +251,7 @@
 // Back face
 .flip-card__back {
   background: rgba(4, 28, 32, 0.92);
-  border-color: rgba(197, 255, 43, 0.22);
+  border-color: rgba(67, 227, 127, 0.22);
   transform: rotateY(180deg);
   gap: 1.25rem;
 }
@@ -261,18 +261,18 @@
   width: 72px;
   height: 72px;
   border-radius: 50%;
-  background: rgba(197, 255, 43, 0.08);
-  border: 1px solid rgba(197, 255, 43, 0.22);
+  background: rgba(67, 227, 127, 0.08);
+  border: 1px solid rgba(67, 227, 127, 0.22);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 1.85rem;
   color: var(--c-green);
-  box-shadow: 0 0 24px rgba(197, 255, 43, 0.12);
+  box-shadow: 0 0 24px rgba(67, 227, 127, 0.12);
   transition: box-shadow 0.3s;
 
   .flip-card:hover & {
-    box-shadow: 0 0 36px rgba(197, 255, 43, 0.25);
+    box-shadow: 0 0 36px rgba(67, 227, 127, 0.25);
   }
 
   &--teal {
@@ -305,7 +305,7 @@
 
 .flip-card__hint {
   font-size: 0.68rem;
-  color: rgba(197, 255, 43, 0.5);
+  color: rgba(67, 227, 127, 0.5);
   letter-spacing: 0.04em;
   display: flex;
   align-items: center;
@@ -339,7 +339,7 @@
   border-radius: var(--r-pill);
   background: transparent;
   color: var(--c-green);
-  border: 1px solid rgba(197, 255, 43, 0.4);
+  border: 1px solid rgba(67, 227, 127, 0.4);
   font-size: 0.825rem;
   font-weight: 600;
   cursor: pointer;
@@ -348,20 +348,20 @@
   transition: all 0.25s;
 
   &:hover {
-    background: rgba(197, 255, 43, 0.1);
+    background: rgba(67, 227, 127, 0.1);
     border-color: var(--c-green);
-    box-shadow: 0 0 14px rgba(197, 255, 43, 0.3);
+    box-shadow: 0 0 14px rgba(67, 227, 127, 0.3);
   }
 
   &--neon {
-    background: linear-gradient(135deg, var(--c-green) 0%, #9fd400 100%);
+    background: linear-gradient(135deg, var(--c-green) 0%, #2db865 100%);
     color: #03230a;
     border-color: transparent;
-    box-shadow: 0 4px 18px rgba(197, 255, 43, 0.25);
+    box-shadow: 0 4px 18px rgba(67, 227, 127, 0.25);
 
     &:hover {
-      background: linear-gradient(135deg, #d8ff55 0%, var(--c-green) 100%);
-      box-shadow: 0 6px 28px rgba(197, 255, 43, 0.5);
+      background: linear-gradient(135deg, #6ef0a0 0%, var(--c-green) 100%);
+      box-shadow: 0 6px 28px rgba(67, 227, 127, 0.5);
     }
   }
 }

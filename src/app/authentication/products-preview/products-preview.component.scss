@@ -4,16 +4,16 @@
 
 // ── CSS Variables ─────────────────────────────────────────────
 :host {
-  --c-green: #c5ff2b;
+  --c-green: #43e37f;
   --c-teal: #00d4aa;
   --c-bg: #040c0e;
   --c-surface: rgba(255, 255, 255, 0.04);
   --c-surface-hov: rgba(255, 255, 255, 0.08);
-  --c-border: rgba(197, 255, 43, 0.12);
-  --c-border-hov: rgba(197, 255, 43, 0.35);
+  --c-border: rgba(67, 227, 127, 0.12);
+  --c-border-hov: rgba(67, 227, 127, 0.35);
   --c-text: #ffffff;
   --c-muted: rgba(255, 255, 255, 0.55);
-  --glow-sm: 0 0 14px rgba(197, 255, 43, 0.4);
+  --glow-sm: 0 0 14px rgba(67, 227, 127, 0.4);
   --r: 0.75rem;
   --r-lg: 1.25rem;
   --r-pill: 100px;
@@ -80,7 +80,7 @@
     ),
     radial-gradient(
       ellipse 50% 40% at 90% 80%,
-      rgba(197, 255, 43, 0.06) 0%,
+      rgba(67, 227, 127, 0.06) 0%,
       transparent 60%
     );
   color: var(--c-text);
@@ -94,8 +94,8 @@
   position: fixed;
   inset: 0;
   background-image:
-    linear-gradient(rgba(197, 255, 43, 0.022) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(197, 255, 43, 0.022) 1px, transparent 1px);
+    linear-gradient(rgba(67, 227, 127, 0.022) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(67, 227, 127, 0.022) 1px, transparent 1px);
   background-size: 64px 64px;
   pointer-events: none;
   z-index: 0;
@@ -126,7 +126,7 @@
     right: -100px;
     background: radial-gradient(
       circle,
-      rgba(197, 255, 43, 0.09) 0%,
+      rgba(67, 227, 127, 0.09) 0%,
       transparent 68%
     );
     animation-delay: -3s;
@@ -149,7 +149,7 @@
     background: linear-gradient(
       90deg,
       transparent 0%,
-      rgba(197, 255, 43, 0.04) 50%,
+      rgba(67, 227, 127, 0.04) 50%,
       transparent 100%
     );
     animation: scanline 10s linear infinite;
@@ -181,11 +181,11 @@
 .pp-logo {
   height: 2.5rem;
   width: auto;
-  filter: drop-shadow(0 0 8px rgba(197, 255, 43, 0.3));
+  filter: drop-shadow(0 0 8px rgba(67, 227, 127, 0.3));
   transition: filter 0.3s;
 
   &:hover {
-    filter: drop-shadow(0 0 14px rgba(197, 255, 43, 0.6));
+    filter: drop-shadow(0 0 14px rgba(67, 227, 127, 0.6));
   }
 }
 
@@ -195,7 +195,7 @@
   gap: 0.5rem;
   padding: 0.5rem 1.25rem;
   border-radius: var(--r-pill);
-  background: linear-gradient(135deg, var(--c-green) 0%, #9fd400 100%);
+  background: linear-gradient(135deg, var(--c-green) 0%, #2db865 100%);
   color: #03230a;
   font-weight: 700;
   font-size: 0.875rem;
@@ -205,7 +205,7 @@
   white-space: nowrap;
 
   &:hover {
-    box-shadow: 0 4px 24px rgba(197, 255, 43, 0.4);
+    box-shadow: 0 4px 24px rgba(67, 227, 127, 0.4);
     transform: translateY(-1px);
     color: #03230a;
     text-decoration: none;
@@ -249,8 +249,8 @@
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  background: rgba(197, 255, 43, 0.08);
-  border: 1px solid rgba(197, 255, 43, 0.22);
+  background: rgba(67, 227, 127, 0.08);
+  border: 1px solid rgba(67, 227, 127, 0.22);
   border-radius: var(--r-pill);
   padding: 0.35rem 1rem;
   font-size: 0.7rem;
@@ -292,7 +292,7 @@
   gap: 0.5rem;
   padding: 0.75rem 1.75rem;
   border-radius: var(--r-pill);
-  background: linear-gradient(135deg, var(--c-green) 0%, #9fd400 100%);
+  background: linear-gradient(135deg, var(--c-green) 0%, #2db865 100%);
   color: #03230a;
   font-weight: 700;
   font-size: 0.9rem;
@@ -300,10 +300,10 @@
   letter-spacing: 0.025em;
   transition: all 0.25s;
   width: fit-content;
-  box-shadow: 0 4px 20px rgba(197, 255, 43, 0.25);
+  box-shadow: 0 4px 20px rgba(67, 227, 127, 0.25);
 
   &:hover {
-    box-shadow: 0 6px 32px rgba(197, 255, 43, 0.5);
+    box-shadow: 0 6px 32px rgba(67, 227, 127, 0.5);
     transform: translateY(-2px);
     color: #03230a;
     text-decoration: none;
@@ -323,11 +323,11 @@
     background: transparent;
   }
   &::-webkit-scrollbar-thumb {
-    background: rgba(197, 255, 43, 0.18);
+    background: rgba(67, 227, 127, 0.18);
     border-radius: 3px;
 
     &:hover {
-      background: rgba(197, 255, 43, 0.35);
+      background: rgba(67, 227, 127, 0.35);
     }
   }
 }
@@ -351,7 +351,7 @@
     background: var(--c-surface-hov);
     border-color: var(--c-border-hov);
     transform: translateY(-4px);
-    box-shadow: 0 12px 40px rgba(197, 255, 43, 0.1);
+    box-shadow: 0 12px 40px rgba(67, 227, 127, 0.1);
   }
 
   &__image-wrap {
@@ -393,7 +393,7 @@
   &__cta-icon {
     font-size: 2rem;
     color: var(--c-green);
-    filter: drop-shadow(0 0 12px rgba(197, 255, 43, 0.6));
+    filter: drop-shadow(0 0 12px rgba(67, 227, 127, 0.6));
   }
 
   &__footer {

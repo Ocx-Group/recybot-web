@@ -4,13 +4,13 @@
 
 // ── CSS Variables ─────────────────────────────────────────────
 :host {
-  --c-green: #c5ff2b;
+  --c-green: #43e37f;
   --c-teal: #00d4aa;
   --c-bg: #040c0e;
   --c-surface: rgba(255, 255, 255, 0.04);
   --c-surface-form: rgba(4, 28, 32, 0.82);
-  --c-border: rgba(197, 255, 43, 0.12);
-  --c-border-hov: rgba(197, 255, 43, 0.38);
+  --c-border: rgba(67, 227, 127, 0.12);
+  --c-border-hov: rgba(67, 227, 127, 0.38);
   --c-text: #ffffff;
   --c-muted: rgba(255, 255, 255, 0.52);
   --r: 0.75rem;
@@ -81,7 +81,7 @@
     ),
     radial-gradient(
       ellipse 55% 45% at 88% 85%,
-      rgba(197, 255, 43, 0.06) 0%,
+      rgba(67, 227, 127, 0.06) 0%,
       transparent 60%
     );
   color: var(--c-text);
@@ -98,8 +98,8 @@
   position: fixed;
   inset: 0;
   background-image:
-    linear-gradient(rgba(197, 255, 43, 0.022) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(197, 255, 43, 0.022) 1px, transparent 1px);
+    linear-gradient(rgba(67, 227, 127, 0.022) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(67, 227, 127, 0.022) 1px, transparent 1px);
   background-size: 64px 64px;
   pointer-events: none;
   z-index: 0;
@@ -130,7 +130,7 @@
     right: -120px;
     background: radial-gradient(
       circle,
-      rgba(197, 255, 43, 0.09) 0%,
+      rgba(67, 227, 127, 0.09) 0%,
       transparent 68%
     );
     animation-delay: -3s;
@@ -153,7 +153,7 @@
     background: linear-gradient(
       90deg,
       transparent 0%,
-      rgba(197, 255, 43, 0.04) 50%,
+      rgba(67, 227, 127, 0.04) 50%,
       transparent 100%
     );
     animation: scanline 10s linear infinite;
@@ -248,8 +248,8 @@
   transition: all 0.25s;
 
   &:hover {
-    background: rgba(197, 255, 43, 0.06);
-    border-color: rgba(197, 255, 43, 0.3);
+    background: rgba(67, 227, 127, 0.06);
+    border-color: rgba(67, 227, 127, 0.3);
     transform: translateX(6px);
   }
 
@@ -301,11 +301,11 @@
   transition: all 0.25s;
 
   &:hover {
-    background: rgba(197, 255, 43, 0.1);
-    border-color: rgba(197, 255, 43, 0.45);
+    background: rgba(67, 227, 127, 0.1);
+    border-color: rgba(67, 227, 127, 0.45);
     color: var(--c-green);
     transform: translateY(-3px);
-    box-shadow: 0 6px 18px rgba(197, 255, 43, 0.18);
+    box-shadow: 0 6px 18px rgba(67, 227, 127, 0.18);
   }
 }
 
@@ -363,7 +363,7 @@
     top: 50%;
     left: 0.875rem;
     transform: translateY(-50%);
-    color: rgba(197, 255, 43, 0.5);
+    color: rgba(67, 227, 127, 0.5);
     font-size: 0.9rem;
     pointer-events: none;
     transition: color 0.25s;
@@ -383,7 +383,7 @@ input,
 textarea {
   width: 100%;
   background: rgba(4, 20, 24, 0.7) !important;
-  border: 1px solid rgba(197, 255, 43, 0.2);
+  border: 1px solid rgba(67, 227, 127, 0.2);
   border-radius: var(--r);
   color: var(--c-text) !important;
   font-size: 0.9rem;
@@ -402,8 +402,8 @@ textarea {
   }
 
   &:focus {
-    border-color: rgba(197, 255, 43, 0.55);
-    box-shadow: 0 0 0 3px rgba(197, 255, 43, 0.08);
+    border-color: rgba(67, 227, 127, 0.55);
+    box-shadow: 0 0 0 3px rgba(67, 227, 127, 0.08);
   }
 
   &.is-invalid {
@@ -435,8 +435,8 @@ textarea {
   display: flex;
   align-items: center;
   gap: 0.625rem;
-  background: rgba(197, 255, 43, 0.07);
-  border: 1px solid rgba(197, 255, 43, 0.3);
+  background: rgba(67, 227, 127, 0.07);
+  border: 1px solid rgba(67, 227, 127, 0.3);
   border-radius: var(--r);
   padding: 0.875rem 1rem;
   font-size: 0.875rem;
@@ -453,7 +453,7 @@ textarea {
   width: 100%;
   padding: 0.875rem;
   border-radius: var(--r-pill);
-  background: linear-gradient(135deg, var(--c-green) 0%, #9fd400 100%);
+  background: linear-gradient(135deg, var(--c-green) 0%, #2db865 100%);
   border: none;
   color: #03230a;
   font-weight: 700;
@@ -461,7 +461,7 @@ textarea {
   font-family: inherit;
   cursor: pointer;
   letter-spacing: 0.02em;
-  box-shadow: 0 4px 18px rgba(197, 255, 43, 0.25);
+  box-shadow: 0 4px 18px rgba(67, 227, 127, 0.25);
   transition: all 0.25s;
 
   .button-content {
@@ -472,8 +472,8 @@ textarea {
   }
 
   &:hover {
-    background: linear-gradient(135deg, #d8ff55 0%, var(--c-green) 100%);
-    box-shadow: 0 6px 28px rgba(197, 255, 43, 0.5);
+    background: linear-gradient(135deg, #6ef0a0 0%, var(--c-green) 100%);
+    box-shadow: 0 6px 28px rgba(67, 227, 127, 0.5);
     transform: translateY(-1px);
   }
 

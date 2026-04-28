@@ -4,12 +4,12 @@
 
 // ── CSS Variables ─────────────────────────────────────────────
 :host {
-  --c-green: #c5ff2b;
+  --c-green: #43e37f;
   --c-teal: #00d4aa;
   --c-bg: #040c0e;
   --c-surface: rgba(255, 255, 255, 0.04);
-  --c-border: rgba(197, 255, 43, 0.12);
-  --c-border-hov: rgba(197, 255, 43, 0.35);
+  --c-border: rgba(67, 227, 127, 0.12);
+  --c-border-hov: rgba(67, 227, 127, 0.35);
   --c-text: #ffffff;
   --c-muted: rgba(255, 255, 255, 0.55);
   --r: 0.75rem;
@@ -63,13 +63,13 @@
 }
 @keyframes pulse-ring {
   0% {
-    box-shadow: 0 0 0 0 rgba(197, 255, 43, 0.35);
+    box-shadow: 0 0 0 0 rgba(67, 227, 127, 0.35);
   }
   70% {
-    box-shadow: 0 0 0 18px rgba(197, 255, 43, 0);
+    box-shadow: 0 0 0 18px rgba(67, 227, 127, 0);
   }
   100% {
-    box-shadow: 0 0 0 0 rgba(197, 255, 43, 0);
+    box-shadow: 0 0 0 0 rgba(67, 227, 127, 0);
   }
 }
 @keyframes wrench-rock {
@@ -94,7 +94,7 @@
     ),
     radial-gradient(
       ellipse 50% 40% at 85% 80%,
-      rgba(197, 255, 43, 0.06) 0%,
+      rgba(67, 227, 127, 0.06) 0%,
       transparent 60%
     );
   color: var(--c-text);
@@ -111,8 +111,8 @@
   position: fixed;
   inset: 0;
   background-image:
-    linear-gradient(rgba(197, 255, 43, 0.022) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(197, 255, 43, 0.022) 1px, transparent 1px);
+    linear-gradient(rgba(67, 227, 127, 0.022) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(67, 227, 127, 0.022) 1px, transparent 1px);
   background-size: 64px 64px;
   pointer-events: none;
   z-index: 0;
@@ -143,7 +143,7 @@
     right: -120px;
     background: radial-gradient(
       circle,
-      rgba(197, 255, 43, 0.09) 0%,
+      rgba(67, 227, 127, 0.09) 0%,
       transparent 68%
     );
     animation-delay: -3s;
@@ -166,7 +166,7 @@
     background: linear-gradient(
       90deg,
       transparent 0%,
-      rgba(197, 255, 43, 0.04) 50%,
+      rgba(67, 227, 127, 0.04) 50%,
       transparent 100%
     );
     animation: scanline 10s linear infinite;
@@ -199,8 +199,8 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  background: rgba(197, 255, 43, 0.06);
-  border: 1px solid rgba(197, 255, 43, 0.18);
+  background: rgba(67, 227, 127, 0.06);
+  border: 1px solid rgba(67, 227, 127, 0.18);
   border-radius: var(--r-pill);
   padding: 0.3rem 0.875rem;
   font-size: 0.65rem;
@@ -229,12 +229,12 @@
     rgba(0, 54, 55, 0.9) 0%,
     rgba(4, 12, 16, 0.9) 100%
   );
-  border: 2px solid rgba(197, 255, 43, 0.3);
+  border: 2px solid rgba(67, 227, 127, 0.3);
   display: flex;
   align-items: center;
   justify-content: center;
   box-shadow:
-    0 0 28px rgba(197, 255, 43, 0.18),
+    0 0 28px rgba(67, 227, 127, 0.18),
     inset 0 0 16px rgba(0, 212, 170, 0.1);
   animation: glow-pulse 3s ease-in-out infinite;
 }
@@ -308,7 +308,7 @@
     width: 72%;
     border-radius: var(--r-pill);
     background: linear-gradient(90deg, var(--c-teal) 0%, var(--c-green) 100%);
-    box-shadow: 0 0 10px rgba(197, 255, 43, 0.4);
+    box-shadow: 0 0 10px rgba(67, 227, 127, 0.4);
   }
 }
 

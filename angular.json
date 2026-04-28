@@ -21,9 +21,7 @@
               "base": "dist/main"
             },
             "index": "src/index.html",
-            "polyfills": [
-              "src/polyfills.ts"
-            ],
+            "polyfills": ["src/polyfills.ts"],
             "tsConfig": "src/tsconfig.app.json",
             "allowedCommonJsDependencies": [
               "@babel/runtime/regenerator",
@@ -101,6 +99,7 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
+            "proxyConfig": "proxy.conf.json",
             "buildTarget": "recycoin:build"
           },
           "configurations": {

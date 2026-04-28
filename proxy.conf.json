@@ -1,0 +1,15 @@
+{
+  "/api": {
+    "target": "https://api.ecosystemfx.net",
+    "secure": true,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  },
+  "/hubs": {
+    "target": "https://api.ecosystemfx.net",
+    "secure": true,
+    "changeOrigin": true,
+    "ws": true,
+    "logLevel": "debug"
+  }
+}

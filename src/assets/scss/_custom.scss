@@ -11,12 +11,12 @@
 
 // ── Design tokens ─────────────────────────────────────────────
 :root {
-  --c-green: #c5ff2b;
+  --c-green: #43e37f;
   --c-teal: #00d4aa;
   --c-bg: #040c0e;
   --c-surface: rgba(255, 255, 255, 0.04);
-  --c-border: rgba(197, 255, 43, 0.12);
-  --c-border-hov: rgba(197, 255, 43, 0.35);
+  --c-border: rgba(67, 227, 127, 0.12);
+  --c-border-hov: rgba(67, 227, 127, 0.35);
   --c-text: #ffffff;
   --c-muted: rgba(255, 255, 255, 0.52);
 }
@@ -33,7 +33,7 @@ body {
     ),
     radial-gradient(
       ellipse 60% 45% at 90% 92%,
-      rgba(197, 255, 43, 0.05) 0%,
+      rgba(67, 227, 127, 0.05) 0%,
       transparent 55%
     );
   background-attachment: fixed;
@@ -49,12 +49,12 @@ body {
 .sidebar,
 .main-sidebar {
   background: rgba(4, 10, 12, 0.98) !important;
-  border-right: 1px solid rgba(197, 255, 43, 0.1) !important;
+  border-right: 1px solid rgba(67, 227, 127, 0.1) !important;
   box-shadow: 4px 0 28px rgba(0, 0, 0, 0.55) !important;
 }
 
 .sidebar .sidebar-brand {
-  border-bottom: 1px solid rgba(197, 255, 43, 0.1) !important;
+  border-bottom: 1px solid rgba(67, 227, 127, 0.1) !important;
   padding-bottom: 0.5rem;
 }
 
@@ -78,7 +78,7 @@ body {
 }
 
 .sidebar .menu .list a.menu-top:hover {
-  background: rgba(197, 255, 43, 0.07) !important;
+  background: rgba(67, 227, 127, 0.07) !important;
   color: #ffffff !important;
 }
 
@@ -90,15 +90,15 @@ body {
 // Active items
 .sidebar .list li.active .menu-top,
 .sidebar .list li.active-top .menu-top {
-  background: rgba(197, 255, 43, 0.09) !important;
-  color: #c5ff2b !important;
-  border-left: 2px solid #c5ff2b;
+  background: rgba(67, 227, 127, 0.09) !important;
+  color: #43e37f !important;
+  border-left: 2px solid #43e37f;
 }
 
 .sidebar .list li.active .menu-top .sidebarIcon,
 .sidebar .list li.active-top .menu-top .sidebarIcon {
-  color: #c5ff2b !important;
-  stroke: #c5ff2b !important;
+  color: #43e37f !important;
+  stroke: #43e37f !important;
 }
 
 // Submenu items
@@ -111,13 +111,13 @@ body {
 .sidebar .ml-menu a:hover,
 .sidebar .ml-menu-2 a:hover,
 .sidebar .ml-menu-3 a:hover {
-  color: #c5ff2b !important;
+  color: #43e37f !important;
 }
 
 .sidebar .ml-menu li a::before,
 .sidebar .ml-menu-2 li a::before,
 .sidebar .ml-menu-3 li a::before {
-  color: rgba(197, 255, 43, 0.35) !important;
+  color: rgba(67, 227, 127, 0.35) !important;
 }
 
 .sidebar .list li.active .ml-menu a {
@@ -126,15 +126,15 @@ body {
 
 // Group titles
 .sidebar .list .header {
-  color: rgba(197, 255, 43, 0.5) !important;
+  color: rgba(67, 227, 127, 0.5) !important;
   letter-spacing: 0.1em;
 }
 
 // Status badge in user panel
 .sidebar .btn.badge-outline.col-green {
-  color: #c5ff2b !important;
-  border-color: rgba(197, 255, 43, 0.4) !important;
-  background: rgba(197, 255, 43, 0.06) !important;
+  color: #43e37f !important;
+  border-color: rgba(67, 227, 127, 0.4) !important;
+  background: rgba(67, 227, 127, 0.06) !important;
 }
 
 .sidebar .btn.badge-outline.col-red {
@@ -149,7 +149,7 @@ body {
   background: transparent;
 }
 .sidebar .menu::-webkit-scrollbar-thumb {
-  background: rgba(197, 255, 43, 0.18);
+  background: rgba(67, 227, 127, 0.18);
   border-radius: 2px;
 }
 
@@ -158,7 +158,7 @@ nav.navbar.main-navbar {
   background: rgba(4, 10, 12, 0.96) !important;
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid rgba(197, 255, 43, 0.1) !important;
+  border-bottom: 1px solid rgba(67, 227, 127, 0.1) !important;
   box-shadow: 0 2px 24px rgba(0, 0, 0, 0.45) !important;
 }
 
@@ -169,14 +169,14 @@ nav.navbar.main-navbar {
 
 .navbar .nav-link:hover,
 .navbar a.nav-link:hover {
-  color: #c5ff2b !important;
+  color: #43e37f !important;
 }
 
 // Navbar dropdowns
 .navbar .dropdown-menu,
 .header-dropdown {
   background: rgba(4, 20, 24, 0.97) !important;
-  border: 1px solid rgba(197, 255, 43, 0.15) !important;
+  border: 1px solid rgba(67, 227, 127, 0.15) !important;
   box-shadow: 0 8px 36px rgba(0, 0, 0, 0.55) !important;
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
@@ -191,8 +191,8 @@ nav.navbar.main-navbar {
 .navbar .dropdown-item:focus,
 .header-dropdown .dropdown-item:hover,
 .header-dropdown .dropdown-item:focus {
-  background: rgba(197, 255, 43, 0.08) !important;
-  color: #c5ff2b !important;
+  background: rgba(67, 227, 127, 0.08) !important;
+  color: #43e37f !important;
 }
 
 .header-dropdown .dropdown-item.text-danger {
@@ -201,20 +201,20 @@ nav.navbar.main-navbar {
 
 .header-dropdown .dropdown-header,
 .header-dropdown .dropdown-title {
-  color: rgba(197, 255, 43, 0.7) !important;
-  border-bottom: 1px solid rgba(197, 255, 43, 0.1) !important;
+  color: rgba(67, 227, 127, 0.7) !important;
+  border-bottom: 1px solid rgba(67, 227, 127, 0.1) !important;
   font-weight: 700;
   letter-spacing: 0.04em;
 }
 
 .header-dropdown .dropdown-divider {
-  border-color: rgba(197, 255, 43, 0.1) !important;
+  border-color: rgba(67, 227, 127, 0.1) !important;
 }
 
 // ── Cards ─────────────────────────────────────────────────────
 .card {
   background: rgba(255, 255, 255, 0.04) !important;
-  border: 1px solid rgba(197, 255, 43, 0.12) !important;
+  border: 1px solid rgba(67, 227, 127, 0.12) !important;
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.35) !important;
@@ -226,7 +226,7 @@ nav.navbar.main-navbar {
 }
 
 .card:hover {
-  border-color: rgba(197, 255, 43, 0.25) !important;
+  border-color: rgba(67, 227, 127, 0.25) !important;
   box-shadow: 0 8px 36px rgba(0, 0, 0, 0.45) !important;
 }
 
@@ -237,7 +237,7 @@ nav.navbar.main-navbar {
 }
 
 .card-header {
-  border-bottom: 1px solid rgba(197, 255, 43, 0.08) !important;
+  border-bottom: 1px solid rgba(67, 227, 127, 0.08) !important;
 }
 
 .card-header h4,
@@ -251,35 +251,51 @@ nav.navbar.main-navbar {
 }
 
 .card-footer {
-  border-top: 1px solid rgba(197, 255, 43, 0.08) !important;
+  border-top: 1px solid rgba(67, 227, 127, 0.08) !important;
 }
 
 // ── Tables ────────────────────────────────────────────────────
 .table {
+  --bs-table-bg: transparent !important;
+  --bs-table-striped-bg: transparent !important;
+  --bs-table-active-bg: transparent !important;
+  --bs-table-hover-bg: rgba(67, 227, 127, 0.04) !important;
   color: rgba(255, 255, 255, 0.75) !important;
+}
+
+.table > :not(caption) > * > * {
+  background-color: transparent !important;
+  color: inherit;
+}
+
+.table tbody,
+.table tbody tr,
+.table tbody td,
+.table tbody th {
+  background-color: transparent !important;
 }
 
 .table td,
 .table th {
-  border-color: rgba(197, 255, 43, 0.08) !important;
+  border-color: rgba(67, 227, 127, 0.08) !important;
   color: rgba(255, 255, 255, 0.75) !important;
 }
 
 .table thead th {
-  color: rgba(197, 255, 43, 0.82) !important;
+  color: rgba(67, 227, 127, 0.82) !important;
   font-weight: 600;
-  border-bottom-color: rgba(197, 255, 43, 0.18) !important;
+  border-bottom-color: rgba(67, 227, 127, 0.18) !important;
 }
 
 .table.table-hover tbody tr:hover,
 .table.table-hover tbody tr:hover td {
-  background: rgba(197, 255, 43, 0.04) !important;
+  background: rgba(67, 227, 127, 0.04) !important;
   color: #ffffff !important;
 }
 
 .table-row-border td,
 .table-row-border th {
-  border-color: rgba(197, 255, 43, 0.08) !important;
+  border-color: rgba(67, 227, 127, 0.08) !important;
 }
 
 // ── Breadcrumbs ───────────────────────────────────────────────
@@ -294,11 +310,11 @@ nav.navbar.main-navbar {
 }
 
 .breadcrumb-item a {
-  color: rgba(197, 255, 43, 0.7) !important;
+  color: rgba(67, 227, 127, 0.7) !important;
 }
 
 .breadcrumb-item a:hover {
-  color: #c5ff2b !important;
+  color: #43e37f !important;
 }
 
 .breadcrumb-item.active {
@@ -311,64 +327,185 @@ nav.navbar.main-navbar {
 
 // ── Buttons ───────────────────────────────────────────────────
 .btn-primary {
-  background: linear-gradient(135deg, #c5ff2b 0%, #9fd400 100%) !important;
+  background: linear-gradient(135deg, #43e37f 0%, #2db865 100%) !important;
   border-color: transparent !important;
   color: #03230a !important;
   font-weight: 600;
-  box-shadow: 0 4px 14px rgba(197, 255, 43, 0.2) !important;
+  box-shadow: 0 4px 14px rgba(67, 227, 127, 0.2) !important;
 }
 
 .btn-primary:hover,
 .btn-primary:focus {
-  background: linear-gradient(135deg, #d8ff55 0%, #c5ff2b 100%) !important;
-  box-shadow: 0 6px 22px rgba(197, 255, 43, 0.4) !important;
+  background: linear-gradient(135deg, #6ef0a0 0%, #43e37f 100%) !important;
+  box-shadow: 0 6px 22px rgba(67, 227, 127, 0.4) !important;
   border-color: transparent !important;
   color: #03230a !important;
 }
 
 .btn-outline-primary {
-  color: #c5ff2b !important;
-  border-color: rgba(197, 255, 43, 0.45) !important;
+  color: #43e37f !important;
+  border-color: rgba(67, 227, 127, 0.45) !important;
   background: transparent !important;
 }
 
 .btn-outline-primary:hover {
-  background: rgba(197, 255, 43, 0.1) !important;
-  border-color: #c5ff2b !important;
-  color: #c5ff2b !important;
+  background: rgba(67, 227, 127, 0.1) !important;
+  border-color: #43e37f !important;
+  color: #43e37f !important;
 }
 
 // ── Badges ────────────────────────────────────────────────────
 .badge-outline.col-green {
-  color: #c5ff2b !important;
-  border-color: rgba(197, 255, 43, 0.4) !important;
-  background: rgba(197, 255, 43, 0.06) !important;
+  color: #43e37f !important;
+  border-color: rgba(67, 227, 127, 0.4) !important;
+  background: rgba(67, 227, 127, 0.06) !important;
 }
 
-.col-green {
-  color: #c5ff2b !important;
+.col-green,
+td.col-green,
+th.col-green,
+.table td.col-green,
+.table th.col-green {
+  color: #43e37f !important;
 }
-.col-blue {
+.col-blue,
+td.col-blue,
+th.col-blue,
+.table td.col-blue,
+.table th.col-blue {
   color: #3abaf4 !important;
 }
-.col-emerald {
+.col-emerald,
+td.col-emerald,
+th.col-emerald,
+.table td.col-emerald,
+.table th.col-emerald {
   color: #00d4aa !important;
 }
 
 // ── Footer ────────────────────────────────────────────────────
 .main-footer {
   background: rgba(4, 10, 12, 0.98) !important;
-  border-top: 1px solid rgba(197, 255, 43, 0.1) !important;
+  border-top: 1px solid rgba(67, 227, 127, 0.1) !important;
   color: rgba(255, 255, 255, 0.3) !important;
 }
 
 // ── Links ─────────────────────────────────────────────────────
 a {
-  color: rgba(197, 255, 43, 0.8);
+  color: rgba(67, 227, 127, 0.8);
 }
 
 a:hover {
-  color: #c5ff2b;
+  color: #43e37f;
+}
+
+// ── ngx-datatable dark theme ──────────────────────────────────
+.ngx-datatable {
+  background: transparent !important;
+  color: rgba(255, 255, 255, 0.82) !important;
+  box-shadow: none !important;
+
+  // Header
+  .datatable-header {
+    background: rgba(67, 227, 127, 0.06) !important;
+    border-bottom: 1px solid rgba(67, 227, 127, 0.15) !important;
+
+    .datatable-header-cell {
+      background: transparent !important;
+      color: rgba(67, 227, 127, 0.85) !important;
+      font-weight: 600;
+      border-right-color: rgba(67, 227, 127, 0.08) !important;
+    }
+  }
+
+  // Body rows
+  .datatable-body {
+    background: transparent !important;
+
+    .datatable-body-row {
+      background: transparent !important;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+      transition: background 0.2s;
+
+      &:hover,
+      &.active {
+        background: rgba(67, 227, 127, 0.05) !important;
+      }
+
+      .datatable-body-cell {
+        background: transparent !important;
+        color: rgba(255, 255, 255, 0.8) !important;
+        border-right-color: rgba(255, 255, 255, 0.04) !important;
+      }
+    }
+
+    // Empty / loading row
+    .empty-row,
+    .loading-row {
+      background: transparent !important;
+      color: rgba(255, 255, 255, 0.4) !important;
+    }
+  }
+
+  // Footer
+  .datatable-footer {
+    background: rgba(4, 12, 14, 0.8) !important;
+    color: rgba(255, 255, 255, 0.55) !important;
+    border-top: 1px solid rgba(67, 227, 127, 0.1) !important;
+
+    .datatable-pager {
+      li a {
+        color: rgba(255, 255, 255, 0.6) !important;
+
+        &:hover {
+          background: rgba(67, 227, 127, 0.1) !important;
+          color: #43e37f !important;
+        }
+      }
+
+      li.active a {
+        background: rgba(67, 227, 127, 0.15) !important;
+        color: #43e37f !important;
+      }
+
+      li.disabled a {
+        color: rgba(255, 255, 255, 0.2) !important;
+      }
+    }
+  }
+
+  // Summary row
+  .datatable-summary-row .datatable-body-row {
+    background: rgba(67, 227, 127, 0.04) !important;
+  }
+
+  // Sort / resize handle
+  .sort-btn {
+    color: rgba(67, 227, 127, 0.6) !important;
+  }
+}
+
+// ── Input de búsqueda dentro del datatable ────────────────────
+.table-search-area input.form-control,
+.reusable-datatable-container input.form-control {
+  background-color: rgba(4, 20, 24, 0.8) !important;
+  border-color: rgba(67, 227, 127, 0.2) !important;
+  color: #ffffff !important;
+
+  &::placeholder {
+    color: rgba(255, 255, 255, 0.4) !important;
+  }
+
+  &:focus {
+    border-color: rgba(67, 227, 127, 0.5) !important;
+    box-shadow: 0 0 0 3px rgba(67, 227, 127, 0.08) !important;
+  }
+}
+
+.input-group-text {
+  background-color: rgba(4, 20, 24, 0.8) !important;
+  border-color: rgba(67, 227, 127, 0.2) !important;
+  color: rgba(255, 255, 255, 0.5) !important;
 }
 
 // ── Global scrollbar ──────────────────────────────────────────
@@ -380,9 +517,9 @@ a:hover {
   background: rgba(255, 255, 255, 0.03);
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(197, 255, 43, 0.2);
+  background: rgba(67, 227, 127, 0.2);
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(197, 255, 43, 0.4);
+  background: rgba(67, 227, 127, 0.4);
 }

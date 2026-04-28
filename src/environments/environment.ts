@@ -1,6 +1,6 @@
 import { FirebaseOptions } from '@firebase/app-types';
 
-const gatewayBaseUrl = 'https://api.ecosystemfx.net';
+const gatewayBaseUrl = '';
 
 export const environment = {
   production: true,

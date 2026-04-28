@@ -4,12 +4,12 @@
 
 // ── CSS Variables ─────────────────────────────────────────────
 :host {
-  --c-green:      #c5ff2b;
+  --c-green:      #43e37f;
   --c-teal:       #00d4aa;
   --c-bg:         #040c0e;
   --c-surface:    rgba(4, 28, 32, 0.82);
-  --c-border:     rgba(197, 255, 43, 0.14);
-  --c-border-hov: rgba(197, 255, 43, 0.4);
+  --c-border:     rgba(67, 227, 127, 0.14);
+  --c-border-hov: rgba(67, 227, 127, 0.4);
   --c-text:       #ffffff;
   --c-muted:      rgba(255, 255, 255, 0.5);
   --c-error:      #ff5f7e;
@@ -52,7 +52,7 @@
   background-color: var(--c-bg);
   background-image:
     radial-gradient(ellipse 70% 55% at 20% 30%, rgba(0, 54, 55, 0.45) 0%, transparent 65%),
-    radial-gradient(ellipse 50% 40% at 85% 80%, rgba(197, 255, 43, 0.06) 0%, transparent 60%);
+    radial-gradient(ellipse 50% 40% at 85% 80%, rgba(67, 227, 127, 0.06) 0%, transparent 60%);
   color: var(--c-text);
   display: flex;
   align-items: center;
@@ -67,8 +67,8 @@
   position: fixed;
   inset: 0;
   background-image:
-    linear-gradient(rgba(197, 255, 43, 0.022) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(197, 255, 43, 0.022) 1px, transparent 1px);
+    linear-gradient(rgba(67, 227, 127, 0.022) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(67, 227, 127, 0.022) 1px, transparent 1px);
   background-size: 64px 64px;
   pointer-events: none;
   z-index: 0;
@@ -93,7 +93,7 @@
     height: 500px;
     bottom: -120px;
     right: -120px;
-    background: radial-gradient(circle, rgba(197, 255, 43, 0.09) 0%, transparent 68%);
+    background: radial-gradient(circle, rgba(67, 227, 127, 0.09) 0%, transparent 68%);
     animation-delay: -3s;
   }
 }
@@ -110,7 +110,7 @@
     position: absolute;
     left: 0; right: 0;
     height: 2px;
-    background: linear-gradient(90deg, transparent 0%, rgba(197, 255, 43, 0.04) 50%, transparent 100%);
+    background: linear-gradient(90deg, transparent 0%, rgba(67, 227, 127, 0.04) 50%, transparent 100%);
     animation: scanline 10s linear infinite;
   }
 }
@@ -138,7 +138,7 @@
 .loading-spinner {
   width: 48px;
   height: 48px;
-  border: 3px solid rgba(197, 255, 43, 0.15);
+  border: 3px solid rgba(67, 227, 127, 0.15);
   border-top-color: var(--c-green);
   border-radius: 50%;
   animation: spin 0.9s linear infinite;
@@ -226,7 +226,7 @@
   object-fit: contain;
   display: block;
   margin: 0 auto;
-  filter: drop-shadow(0 0 10px rgba(197, 255, 43, 0.35));
+  filter: drop-shadow(0 0 10px rgba(67, 227, 127, 0.35));
 }
 
 // ── Heading ───────────────────────────────────────────────────
@@ -277,13 +277,13 @@
   display: flex;
   align-items: center;
   background: rgba(255, 255, 255, 0.045);
-  border: 1px solid rgba(197, 255, 43, 0.16);
+  border: 1px solid rgba(67, 227, 127, 0.16);
   border-radius: var(--r);
   transition: border-color 0.2s, box-shadow 0.2s;
 
   &:focus-within {
-    border-color: rgba(197, 255, 43, 0.45);
-    box-shadow: 0 0 0 3px rgba(197, 255, 43, 0.1);
+    border-color: rgba(67, 227, 127, 0.45);
+    box-shadow: 0 0 0 3px rgba(67, 227, 127, 0.1);
     background: rgba(255, 255, 255, 0.06);
   }
 }
@@ -348,19 +348,19 @@
   padding: 0.875rem 1.5rem;
   border: none;
   border-radius: var(--r-pill);
-  background: linear-gradient(135deg, var(--c-green) 0%, #9fd400 100%);
+  background: linear-gradient(135deg, var(--c-green) 0%, #2db865 100%);
   color: #03230a;
   font-size: 0.9rem;
   font-weight: 700;
   letter-spacing: 0.04em;
   cursor: pointer;
   font-family: inherit;
-  box-shadow: 0 4px 20px rgba(197, 255, 43, 0.25);
+  box-shadow: 0 4px 20px rgba(67, 227, 127, 0.25);
   transition: all 0.25s;
   margin-top: 0.25rem;
 
   &:hover:not(:disabled) {
-    box-shadow: 0 6px 32px rgba(197, 255, 43, 0.5);
+    box-shadow: 0 6px 32px rgba(67, 227, 127, 0.5);
     transform: translateY(-1px);
   }
 
