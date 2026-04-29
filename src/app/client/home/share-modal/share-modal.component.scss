@@ -1,0 +1,147 @@
+// ============================================================
+// Share Modal — Futuristic Theme
+// ============================================================
+:host {
+  --c-green: #43e37f;
+  --c-teal: #00d4aa;
+  --c-bg: #040c0e;
+  --c-border: rgba(67, 227, 127, 0.22);
+  --c-border-hov: rgba(67, 227, 127, 0.5);
+  --c-text: #ffffff;
+  --c-muted: rgba(255, 255, 255, 0.65);
+  --c-danger: #ff5d6c;
+  --glow-sm: 0 0 14px rgba(67, 227, 127, 0.35);
+  --r: 0.75rem;
+  --r-lg: 1.25rem;
+}
+
+// ── Outer modal container (ng-bootstrap renders to body) ──
+::ng-deep .modal-content:has(.modern-share-modal) {
+  background: var(--c-bg) !important;
+  background-image: linear-gradient(
+    160deg,
+    rgba(0, 54, 55, 0.55) 0%,
+    rgba(4, 12, 16, 0.95) 60%,
+    rgba(4, 12, 16, 1) 100%
+  ) !important;
+  border: 1px solid var(--c-border) !important;
+  border-radius: var(--r-lg) !important;
+  color: var(--c-text) !important;
+  box-shadow:
+    0 24px 60px rgba(0, 0, 0, 0.6),
+    0 0 50px rgba(67, 227, 127, 0.12) !important;
+  overflow: hidden;
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 10%;
+    right: 10%;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      var(--c-green) 50%,
+      transparent 100%
+    );
+    opacity: 0.7;
+    pointer-events: none;
+    z-index: 5;
+  }
+}
+
+// ── Header ─────────────────────────────────────────────────
+::ng-deep .modal-header.modern-share-modal {
+  background: transparent !important;
+  border-bottom: 1px solid var(--c-border) !important;
+  padding: 1.25rem 1.5rem !important;
+
+  .modal-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+
+    .fw-bold {
+      background: linear-gradient(
+        130deg,
+        var(--c-green) 0%,
+        var(--c-teal) 100%
+      );
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-size: 1.15rem !important;
+      letter-spacing: 0.01em;
+    }
+  }
+
+  .close {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--c-border);
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    padding: 0;
+    opacity: 1;
+
+    i {
+      color: var(--c-muted);
+      font-size: 18px;
+      transition: color 0.2s ease;
+    }
+
+    &:hover {
+      background: rgba(255, 93, 108, 0.12);
+      border-color: rgba(255, 93, 108, 0.55);
+      box-shadow: 0 0 14px rgba(255, 93, 108, 0.35);
+      transform: rotate(90deg);
+
+      i {
+        color: var(--c-danger);
+      }
+    }
+  }
+}
+
+// ── Body / share buttons ───────────────────────────────────
+::ng-deep .modal-body.modern-share-modal {
+  background: transparent !important;
+  padding: 1.5rem !important;
+  color: var(--c-text);
+
+  // ShareThis container
+  .st-inline-share-buttons,
+  st-inline-share-buttons {
+    background: transparent !important;
+    display: block;
+
+    .st-btn {
+      border-radius: var(--r) !important;
+      border: 1px solid var(--c-border) !important;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35) !important;
+      transition: all 0.22s ease !important;
+      overflow: hidden;
+      position: relative;
+
+      &:hover {
+        transform: translateY(-3px) !important;
+        border-color: var(--c-border-hov) !important;
+        box-shadow:
+          0 10px 22px rgba(0, 0, 0, 0.5),
+          var(--glow-sm) !important;
+      }
+
+      // Share count label
+      > span {
+        background: rgba(4, 12, 16, 0.6) !important;
+        color: var(--c-text) !important;
+        font-weight: 600 !important;
+      }
+    }
+  }
+}

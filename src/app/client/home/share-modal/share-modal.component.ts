@@ -1,22 +1,24 @@
 import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import {InlineShareButtonsConfig, SharethisAngularModule} from 'sharethis-angular';
+import {
+  InlineShareButtonsConfig,
+  SharethisAngularModule,
+} from 'sharethis-angular';
 import { CommonModule } from '@angular/common';
 
 @Component({
-    selector: 'app-share-modal',
-    templateUrl: './share-modal.component.html',
-    standalone: true,
-  imports: [CommonModule, SharethisAngularModule]
+  selector: 'app-share-modal',
+  templateUrl: './share-modal.component.html',
+  styleUrls: ['./share-modal.component.scss'],
+  standalone: true,
+  imports: [CommonModule, SharethisAngularModule],
 })
 export class ShareModalComponent {
   inlineShareButtonsConfig: InlineShareButtonsConfig;
-  @ViewChild('shareModal', { static: true }) private modalContent: TemplateRef<any>;
+  @ViewChild('shareModal', { static: true })
+  private modalContent: TemplateRef<any>;
 
-
-  constructor(private modalService: NgbModal,) {
-
-  }
+  constructor(private modalService: NgbModal) {}
 
   openShareModal(url: string) {
     navigator.clipboard.writeText(url);
@@ -47,14 +49,13 @@ export class ShareModalComponent {
         'reddit',
         'tumblr',
         'vk',
-        'email'
+        'email',
       ],
       padding: 5,
       radius: 4,
       show_total: true,
       size: 80,
-      url: url
+      url: url,
     };
   }
-
 }

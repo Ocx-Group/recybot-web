@@ -31,8 +31,9 @@
                           </button>
                         </div>
                         <div class="col-12 col-md-12 col-lg-12">
-                          <div class="card-body media-list position-relative scrollable-container"
-                            style="overflow-y: auto;">
+                          <div #panBox class="card-body media-list position-relative scrollable-container"
+                            (mousedown)="startPan($event, panBox)" (mousemove)="onPan($event, panBox)"
+                            (mouseup)="endPan(panBox)" (mouseleave)="endPan(panBox)">
                             <div *ngIf="showDiv">
                               <app-client-unilevel-tree-component [nodeTemplate]="nodeTemplate" [data]="tree"
                                 (loadFamilyTree)="onloadFamilyTree($event)">
@@ -63,57 +64,7 @@
                 </ng-template>
               </li>
 
-              <!-- Available matrices -->
-              <li *ngFor="let config of matrixConfigurations; let i = index" [ngbNavItem]="i + 3">
-                <a ngbNavLink>{{ config.matrixName }}</a>
-                <ng-template ngbNavContent>
-                  <div class="card-body">
-                    <div class="row mt-2">
-                      <div class="col-4">
-                        <div class="d-flex">
-                          <button type="button" (click)="onloadFamilyTree(userId)" class="btn btn-primary me-1">
-                            <i class="bi bi-backspace"></i>
-                            {{ 'MY-NETWORK-PAGE.BACK.TEXT' | translate }}
-                          </button>
-                          <button *ngIf="!isReachedWithdrawalLimit" class="btn btn-primary"
-                            (click)="activatedMatrixWithBalance(config.matrixType)">
-                            Activar {{ config.matrixName }}
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="row">
-                      <div class="col-12 col-md-12 col-lg-12">
-                        <div class="card-body media-list position-relative scrollable-container"
-                          style="overflow-y: auto;">
-                          <div *ngIf="showDiv">
-                            <app-client-unilevel-tree-component [nodeTemplate]="nodeTemplate" [data]="tree"
-                              (loadFamilyTree)="onloadFamilyTree($event)">
-                            </app-client-unilevel-tree-component>
-                            <ng-template #nodeTemplate let-node>
-                              <div class="chart-node">
-                                <img alt="node" title="user image" [src]="node.image || 'assets/images/user.png'"
-                                  class="node-image" />
-                                <div class="name">
-                                  <span class="user-name">
-                                    {{ node.userName || node.user_name }}
-                                  </span>
-                                </div>
-                                <div *ngIf="node.children && node.children.length"
-                                  (click)="node.hideChildren = !node.hideChildren"
-                                  (keypress)="node.hideChildren = !node.hideChildren" class="tree-fold-btn">
-                                  {{ node.hideChildren ? '+' : '-' }}
-                                </div>
-                              </div>
-                            </ng-template>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </ng-template>
-              </li>
+              <!-- Available matrices: hidden, only Unimax tab is shown -->
             </ul>
             <div [ngbNavOutlet]="nav" class="mt-2"></div>
           </div>

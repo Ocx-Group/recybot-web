@@ -1519,7 +1519,10 @@
       "BIOMETRIC_SECURITY": "Biometric Security",
       "ECOLOGICAL_CRYPTO": "Ecological Crypto",
       "REAL_TIME_ANALYSIS": "Real-time Analysis",
-      "SECURE_TRANSACTIONS": "Secure Transactions"
+      "RECYCLABLE_IMPACT": "Recyclable Impact",
+      "SECURE_OPERATIONS": "Secure Operations",
+      "SECURE_TRANSACTIONS": "Secure Transactions",
+      "SUSTAINABLE_TRADING": "Sustainable Trading"
     },
     "MAIN_TITLE": {
       "LINE1": "RecyBot : Smart Wealth",
@@ -2255,13 +2258,13 @@
       "TEXT": "Home"
     },
     "BRAND-TITLE-1": {
-      "TEXT": "Crypto ecosystem"
+      "TEXT": "Sustainable trading"
     },
     "BRAND-TITLE-2": {
-      "TEXT": "of the future"
+      "TEXT": "for a greener future"
     },
     "BRAND-SUBTITLE": {
-      "TEXT": "The eco-sustainable Web3 platform that transforms recycling into digital value."
+      "TEXT": "The eco-sustainable platform that turns recycling into real trading value."
     },
     "BRAND-STAT-ECO": {
       "TEXT": "Ecological"

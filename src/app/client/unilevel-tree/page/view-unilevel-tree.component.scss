@@ -10,6 +10,18 @@
   border-radius: 12px;
   padding: 30px 20px;
   min-height: 500px;
+  overflow: auto;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+
+  &.is-panning {
+    cursor: grabbing;
+  }
+
+  &.is-panning * {
+    pointer-events: none;
+  }
 }
 
 // Zoom button styles
@@ -54,11 +66,11 @@
     width: 35px;
     height: 35px;
     object-fit: cover;
-    border: 3px solid #5c53d9;
-    box-shadow: 0 2px 8px rgba(92, 83, 217, 0.3);
+    border: 3px solid #43e37f;
+    box-shadow: 0 2px 8px rgba(67, 227, 127, 0.35);
     image-rendering: -webkit-optimize-contrast;
     image-rendering: crisp-edges;
-    background-color: rgba(92, 83, 217, 0.1);
+    background-color: rgba(67, 227, 127, 0.1);
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
   }
@@ -99,21 +111,21 @@
     line-height: 12px;
     top: 1px;
     right: 1px;
-    background-color: #5c53d9;
+    background-color: #43e37f;
     border-radius: 50%;
     padding: 0;
     text-align: center;
     font-weight: bold;
     font-size: 10px;
-    color: white;
+    color: #04221a;
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 
     &:hover {
       transform: scale(1.1);
-      box-shadow: 0 3px 10px rgba(92, 83, 217, 0.4);
-      background-color: #667eea;
+      box-shadow: 0 3px 10px rgba(67, 227, 127, 0.5);
+      background-color: #00d4aa;
     }
 
     &:active {
@@ -142,10 +154,10 @@
 @keyframes pulse {
   0%,
   100% {
-    box-shadow: 0 4px 15px rgba(92, 83, 217, 0.3);
+    box-shadow: 0 4px 15px rgba(67, 227, 127, 0.3);
   }
   50% {
-    box-shadow: 0 4px 25px rgba(92, 83, 217, 0.5);
+    box-shadow: 0 4px 25px rgba(67, 227, 127, 0.5);
   }
 }
 
@@ -155,16 +167,55 @@
 
 // Mejoras para el popover
 ::ng-deep .popover {
-  border: 2px solid #5c53d9;
-  border-radius: 8px;
-  box-shadow: 0 8px 20px rgba(92, 83, 217, 0.3);
+  background: #040c0e !important;
+  background-image: linear-gradient(
+    160deg,
+    rgba(0, 54, 55, 0.6) 0%,
+    rgba(4, 12, 16, 0.98) 100%
+  ) !important;
+  border: 1px solid rgba(67, 227, 127, 0.45) !important;
+  border-radius: 10px !important;
+  box-shadow:
+    0 12px 28px rgba(0, 0, 0, 0.55),
+    0 0 18px rgba(67, 227, 127, 0.25) !important;
+  color: #ffffff !important;
+  backdrop-filter: blur(12px);
 
-  .popover-header {
-    border-bottom: 1px solid #5c53d9;
-    font-weight: 600;
+  .popover-header,
+  .popover-body {
+    background: transparent !important;
+    color: #ffffff !important;
+
+    b,
+    strong {
+      color: #43e37f !important;
+    }
   }
 
-  .arrow::before {
-    border-top-color: #5c53d9;
+  .popover-header {
+    border-bottom: 1px solid rgba(67, 227, 127, 0.35) !important;
+    font-weight: 600;
+    padding: 0.5rem 0.75rem;
+  }
+
+  .popover-body {
+    font-size: 0.85rem;
+    padding: 0.5rem 0.75rem;
+  }
+
+  .arrow::before,
+  .popover-arrow::before {
+    border-top-color: rgba(67, 227, 127, 0.45) !important;
+    border-bottom-color: rgba(67, 227, 127, 0.45) !important;
+    border-left-color: rgba(67, 227, 127, 0.45) !important;
+    border-right-color: rgba(67, 227, 127, 0.45) !important;
+  }
+
+  .arrow::after,
+  .popover-arrow::after {
+    border-top-color: #040c0e !important;
+    border-bottom-color: #040c0e !important;
+    border-left-color: #040c0e !important;
+    border-right-color: #040c0e !important;
   }
 }

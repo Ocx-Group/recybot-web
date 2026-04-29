@@ -1,15 +1,15 @@
 $connectorHeight: 1.2em;
 $boxColor: #1a1d2e;
-$connectorColor: #5c53d9;
-$hoverColor: #667eea;
+$connectorColor: #43e37f;
+$hoverColor: #00d4aa;
 
 $minBoxSize: 50px;
 $maxBoxSize: 60px;
 
 // Variable CSS para el fondo que cambia según el tema
 :root {
-  --node-bg-light: rgba(92, 83, 217, 0.05);
-  --node-bg-dark: rgba(92, 83, 217, 0.15);
+  --node-bg-light: rgba(67, 227, 127, 0.05);
+  --node-bg-dark: rgba(67, 227, 127, 0.15);
 }
 
 app-client-unilevel-tree-component {
@@ -71,9 +71,11 @@ app-client-unilevel-tree-component {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  border: 2px solid #5c53d9;
+  border: 2px solid #43e37f;
   border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(92, 83, 217, 0.3), 0 0 20px rgba(92, 83, 217, 0.1);
+  box-shadow:
+    0 4px 15px rgba(67, 227, 127, 0.3),
+    0 0 20px rgba(67, 227, 127, 0.1);
   max-width: $maxBoxSize;
   max-height: $maxBoxSize;
   min-width: $minBoxSize;
@@ -87,8 +89,9 @@ app-client-unilevel-tree-component {
 
   &:hover {
     transform: translateY(-3px);
-    box-shadow: 0 6px 25px rgba(92, 83, 217, 0.5),
-      0 0 30px rgba(92, 83, 217, 0.2);
+    box-shadow:
+      0 6px 25px rgba(67, 227, 127, 0.5),
+      0 0 30px rgba(0, 212, 170, 0.25);
     border-color: $hoverColor;
   }
 
@@ -137,7 +140,9 @@ app-client-unilevel-tree-component {
     .tree-fold-btn {
       opacity: 0;
       visibility: hidden;
-      transition: opacity 200ms, visibility 200ms;
+      transition:
+        opacity 200ms,
+        visibility 200ms;
     }
   }
 
