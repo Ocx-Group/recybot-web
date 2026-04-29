@@ -1,9 +1,9 @@
-import { Injectable } from "@angular/core";
-import Swal, { SweetAlertResult } from "sweetalert2";
-import { NavigationEnd, Router } from "@angular/router";
+import { Injectable } from '@angular/core';
+import Swal, { SweetAlertResult } from 'sweetalert2';
+import { NavigationEnd, Router } from '@angular/router';
 
-import { AuthService } from "../authentication-service/auth.service";
-import { filter } from "rxjs";
+import { AuthService } from '../authentication-service/auth.service';
+import { filter } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -11,19 +11,20 @@ import { filter } from "rxjs";
 export class DocumentCheckService {
   private checkInterval: any;
 
-
-  constructor(private authService: AuthService, private router: Router) {
-    this.router.events.pipe(
-      filter(event => event instanceof NavigationEnd)
-    ).subscribe((event: NavigationEnd) => {
-      if (event.urlAfterRedirects === '/signin') {
-        if (this.checkInterval) {
-          clearInterval(this.checkInterval);
-          this.checkInterval = null;
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+  ) {
+    this.router.events
+      .pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe((event: NavigationEnd) => {
+        if (event.urlAfterRedirects === '/signin') {
+          if (this.checkInterval) {
+            clearInterval(this.checkInterval);
+            this.checkInterval = null;
+          }
         }
-      }
-    });
-
+      });
 
     this.authService.currentUserAffiliate.subscribe(user => {
       if (user && !user.card_id_authorization && !this.isOnSignInRoute()) {
@@ -65,7 +66,7 @@ export class DocumentCheckService {
     });
 
     if (result.isConfirmed) {
-      this.router.navigateByUrl('/app/edit-user');
+      this.router.navigateByUrl('/app/my-profile');
     }
 
     return result;

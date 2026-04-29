@@ -103,12 +103,6 @@ export const CLIENT_ROUTES: Routes = [
     canActivate: [AuthGuard, MaintenanceGuard],
   },
   {
-    path: 'edit-user',
-    loadComponent: () =>
-      import('./edit-user/edit-user.component').then(m => m.EditUserComponent),
-    canActivate: [AuthGuard, MaintenanceGuard],
-  },
-  {
     path: 'tickets',
     loadComponent: () =>
       import('./tickets/tickets.component').then(m => m.TicketsComponent),
