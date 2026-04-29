@@ -1,4 +1,3 @@
-import { RightSidebarService } from 'src/app/core/service/rightsidebar-service/rightsidebar.service';
 import { AuthService } from 'src/app/core/service/authentication-service/auth.service';
 import { DOCUMENT, CommonModule } from '@angular/common';
 import {
@@ -50,7 +49,6 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   countryName;
   langStoreValue: string;
   defaultFlag: string;
-  isOpenSidebar: boolean;
   totalItem: number = 0;
   ticketSummaries$: Observable<TicketSummary[]>;
   public unreadCount$: Observable<number>;
@@ -59,7 +57,6 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
     @Inject(DOCUMENT) private readonly document: Document,
     private readonly renderer: Renderer2,
     public elementRef: ElementRef,
-    private readonly rightSidebarService: RightSidebarService,
     private readonly configService: ConfigService,
     private readonly authService: AuthService,
     private readonly router: Router,
@@ -183,15 +180,6 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
         this.renderer.addClass(this.document.body, 'submenu-closed');
       }
     }
-  }
-
-  public toggleRightSidebar(): void {
-    this.rightSidebarService.sidebarState.subscribe(isRunning => {
-      this.isOpenSidebar = isRunning;
-    });
-
-    this.isOpenSidebar = !this.isOpenSidebar;
-    this.rightSidebarService.setRightSidebar(this.isOpenSidebar);
   }
 
   logout() {

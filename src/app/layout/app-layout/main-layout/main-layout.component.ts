@@ -9,25 +9,23 @@ import { ToastrService } from 'ngx-toastr';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from '@app/layout/header/header.component';
 import { SidebarComponent } from '@app/layout/sidebar/sidebar.component';
-import { RightSidebarComponent } from '@app/layout/right-sidebar/right-sidebar.component';
 import { FooterComponent } from '@app/layout/footer/footer.component';
 import { TermsConditionsModalComponent } from '@app/layout/terms-conditions-modal/terms-conditions-modal.component';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 @Component({
-    selector: 'app-main-layout',
-    templateUrl: './main-layout.component.html',
-    styleUrls: [],
-    standalone: true,
-    imports: [
-      RouterOutlet,
-      HeaderComponent,
-      SidebarComponent,
-      RightSidebarComponent,
-      FooterComponent,
-      TermsConditionsModalComponent
-    ],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  selector: 'app-main-layout',
+  templateUrl: './main-layout.component.html',
+  styleUrls: [],
+  standalone: true,
+  imports: [
+    RouterOutlet,
+    HeaderComponent,
+    SidebarComponent,
+    FooterComponent,
+    TermsConditionsModalComponent,
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class MainLayoutComponent implements OnInit {
   user: UserAffiliate = new UserAffiliate();
@@ -39,7 +37,7 @@ export class MainLayoutComponent implements OnInit {
     private affiliateService: AffiliateService,
     private toast: ToastrService,
     private ticketHubService: TicketHubService,
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.user = this.authService.currentUserAffiliateValue;
@@ -68,14 +66,14 @@ export class MainLayoutComponent implements OnInit {
 
   messageReceived() {
     this.affiliateService.updateMessageAlert(this.user.id).subscribe({
-      next: (value) => {
+      next: value => {
         this.showSuccess('Mensaje recibido correctamente');
         this.authService.setUserAffiliateValue(this.user);
       },
-      error: (err) => {
+      error: err => {
         this.showError('Error');
       },
-    })
+    });
   }
 
   // showAlert() {
@@ -96,7 +94,6 @@ export class MainLayoutComponent implements OnInit {
   //     }
   //   });
   // }
-
 
   showSuccess(message: string) {
     this.toast.success(message);
