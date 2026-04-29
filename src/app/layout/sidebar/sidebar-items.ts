@@ -101,15 +101,4 @@ export const ROUTES: RouteInfo[] = [
       },
     ],
   },
-  {
-    path: '/app/academy',
-    title: 'EDUCATIONAL-COURSES.ACADEMY-TRADING.TEXT',
-    iconType: 'feather',
-    icon: 'book-open',
-    class: '',
-    groupTitle: false,
-    badge: '',
-    badgeClass: '',
-    submenu: [],
-  },
 ];

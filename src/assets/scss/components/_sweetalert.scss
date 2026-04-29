@@ -25,3 +25,350 @@
   line-height: 24px;
   font-weight: 500;
 }
+
+// ============================================================
+// SweetAlert2 — Futuristic theme (global)
+// ============================================================
+$swal-green: #43e37f;
+$swal-teal: #00d4aa;
+$swal-bg: #040c0e;
+$swal-bg-soft: #0a1518;
+$swal-border: rgba(67, 227, 127, 0.22);
+$swal-border-hov: rgba(67, 227, 127, 0.5);
+$swal-danger: #ff5d6c;
+$swal-warning: #ffb547;
+$swal-text: #ffffff;
+$swal-muted: rgba(255, 255, 255, 0.65);
+
+// Backdrop
+.swal2-container {
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+
+  &.swal2-backdrop-show {
+    background: rgba(2, 6, 8, 0.72) !important;
+  }
+}
+
+// Popup card
+.swal2-popup {
+  background: $swal-bg !important;
+  background-image: linear-gradient(
+    160deg,
+    rgba(0, 54, 55, 0.55) 0%,
+    rgba(4, 12, 16, 0.95) 50%,
+    rgba(4, 12, 16, 1) 100%
+  ) !important;
+  border: 1px solid $swal-border !important;
+  border-radius: 20px !important;
+  color: $swal-text !important;
+  box-shadow:
+    0 24px 60px rgba(0, 0, 0, 0.65),
+    0 0 0 1px rgba(67, 227, 127, 0.05),
+    0 0 60px rgba(67, 227, 127, 0.1) !important;
+  position: relative;
+  overflow: hidden;
+  padding: 1.75rem 1.5rem 1.5rem !important;
+
+  // Subtle grid background
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(67, 227, 127, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(67, 227, 127, 0.04) 1px, transparent 1px);
+    background-size:
+      32px 32px,
+      32px 32px;
+    pointer-events: none;
+    opacity: 0.6;
+    z-index: 0;
+  }
+
+  // Top glow line
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 10%;
+    right: 10%;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      $swal-green 50%,
+      transparent 100%
+    );
+    opacity: 0.7;
+    pointer-events: none;
+  }
+
+  // Lift inner content above grid
+  > * {
+    position: relative;
+    z-index: 1;
+  }
+}
+
+// Title with gradient text
+.swal2-title {
+  color: $swal-text !important;
+  font-weight: 700 !important;
+  font-size: 1.5rem !important;
+  background: linear-gradient(130deg, $swal-green 0%, $swal-teal 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 0.01em;
+  padding: 0.5rem 0 0.75rem !important;
+}
+
+// Body text
+.swal2-html-container,
+.swal2-content {
+  color: $swal-muted !important;
+  font-size: 0.95rem !important;
+  line-height: 1.55;
+}
+
+// Close button
+.swal2-close {
+  color: $swal-muted !important;
+  width: 36px !important;
+  height: 36px !important;
+  border-radius: 50% !important;
+  background: rgba(255, 255, 255, 0.04) !important;
+  border: 1px solid $swal-border !important;
+  font-size: 1.4rem !important;
+  line-height: 1 !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  margin: 8px !important;
+  transition: all 0.2s ease;
+
+  &:hover,
+  &:focus {
+    color: $swal-danger !important;
+    border-color: rgba(255, 93, 108, 0.55) !important;
+    background: rgba(255, 93, 108, 0.12) !important;
+    box-shadow: 0 0 14px rgba(255, 93, 108, 0.35) !important;
+    transform: rotate(90deg);
+  }
+}
+
+// ── Icons (success / error / warning / info / question) ────
+.swal2-icon {
+  margin: 1.25rem auto 0.75rem !important;
+  border-width: 3px !important;
+
+  &.swal2-success {
+    border-color: rgba(67, 227, 127, 0.55) !important;
+    box-shadow:
+      0 0 30px rgba(67, 227, 127, 0.35),
+      inset 0 0 20px rgba(67, 227, 127, 0.15);
+
+    [class^='swal2-success-line'],
+    [class*=' swal2-success-line'] {
+      background-color: $swal-green !important;
+      box-shadow: 0 0 8px rgba(67, 227, 127, 0.7);
+    }
+
+    .swal2-success-ring {
+      border-color: rgba(67, 227, 127, 0.4) !important;
+    }
+
+    [class^='swal2-success-circular-line'],
+    [class*=' swal2-success-circular-line'],
+    .swal2-success-fix {
+      background: transparent !important;
+    }
+  }
+
+  &.swal2-error {
+    border-color: rgba(255, 93, 108, 0.55) !important;
+    color: $swal-danger !important;
+    box-shadow:
+      0 0 30px rgba(255, 93, 108, 0.35),
+      inset 0 0 20px rgba(255, 93, 108, 0.15);
+
+    [class^='swal2-x-mark-line'],
+    [class*=' swal2-x-mark-line'] {
+      background-color: $swal-danger !important;
+      box-shadow: 0 0 8px rgba(255, 93, 108, 0.7);
+    }
+  }
+
+  &.swal2-warning {
+    border-color: rgba(255, 181, 71, 0.6) !important;
+    color: $swal-warning !important;
+    box-shadow:
+      0 0 30px rgba(255, 181, 71, 0.3),
+      inset 0 0 20px rgba(255, 181, 71, 0.12);
+  }
+
+  &.swal2-info,
+  &.swal2-question {
+    border-color: rgba(0, 212, 170, 0.6) !important;
+    color: $swal-teal !important;
+    box-shadow:
+      0 0 30px rgba(0, 212, 170, 0.3),
+      inset 0 0 20px rgba(0, 212, 170, 0.12);
+  }
+}
+
+// ── Buttons ───────────────────────────────────────────────
+.swal2-actions {
+  gap: 10px;
+  margin-top: 1.25rem !important;
+}
+
+.swal2-styled {
+  border-radius: 100px !important;
+  padding: 0.65rem 1.6rem !important;
+  font-weight: 600 !important;
+  font-size: 0.9rem !important;
+  letter-spacing: 0.02em;
+  border: 1px solid transparent !important;
+  box-shadow: none !important;
+  transition: all 0.22s ease !important;
+
+  &:focus {
+    box-shadow: 0 0 0 3px rgba(67, 227, 127, 0.25) !important;
+  }
+
+  &.swal2-confirm {
+    background: linear-gradient(
+      135deg,
+      $swal-green 0%,
+      $swal-teal 100%
+    ) !important;
+    color: #04221a !important;
+    border-color: rgba(67, 227, 127, 0.6) !important;
+    box-shadow:
+      0 6px 20px rgba(67, 227, 127, 0.35),
+      0 0 18px rgba(67, 227, 127, 0.25) !important;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow:
+        0 10px 28px rgba(67, 227, 127, 0.45),
+        0 0 26px rgba(67, 227, 127, 0.35) !important;
+    }
+  }
+
+  &.swal2-deny {
+    background: linear-gradient(
+      135deg,
+      $swal-danger 0%,
+      #ff2e6c 100%
+    ) !important;
+    color: #fff !important;
+    border-color: rgba(255, 93, 108, 0.6) !important;
+    box-shadow: 0 6px 20px rgba(255, 93, 108, 0.3) !important;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 28px rgba(255, 93, 108, 0.45) !important;
+    }
+  }
+
+  &.swal2-cancel {
+    background: rgba(255, 255, 255, 0.05) !important;
+    color: $swal-text !important;
+    border-color: $swal-border !important;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.08) !important;
+      border-color: $swal-border-hov !important;
+      transform: translateY(-2px);
+    }
+  }
+}
+
+// ── Inputs ────────────────────────────────────────────────
+.swal2-input,
+.swal2-textarea,
+.swal2-select,
+.swal2-file {
+  background: rgba(255, 255, 255, 0.04) !important;
+  border: 1px solid $swal-border !important;
+  border-radius: 10px !important;
+  color: $swal-text !important;
+  padding: 0.7rem 0.9rem !important;
+  font-size: 0.92rem !important;
+  box-shadow: none !important;
+  transition: all 0.2s ease;
+
+  &::placeholder {
+    color: rgba(255, 255, 255, 0.35) !important;
+  }
+
+  &:focus {
+    border-color: $swal-border-hov !important;
+    background: rgba(67, 227, 127, 0.06) !important;
+    box-shadow: 0 0 0 3px rgba(67, 227, 127, 0.18) !important;
+    outline: none !important;
+  }
+}
+
+.swal2-select {
+  option {
+    background: $swal-bg !important;
+    color: $swal-text !important;
+  }
+}
+
+.swal2-validation-message {
+  background: rgba(255, 93, 108, 0.12) !important;
+  color: $swal-danger !important;
+  border-radius: 10px !important;
+  border: 1px solid rgba(255, 93, 108, 0.3);
+  font-size: 0.82rem !important;
+
+  &::before {
+    background: $swal-danger !important;
+  }
+}
+
+// ── Footer / progress / loader ────────────────────────────
+.swal2-footer {
+  border-top: 1px solid $swal-border !important;
+  color: $swal-muted !important;
+  padding-top: 1rem !important;
+  margin-top: 1rem !important;
+}
+
+.swal2-timer-progress-bar {
+  background: linear-gradient(90deg, $swal-green, $swal-teal) !important;
+  height: 3px !important;
+  box-shadow: 0 0 10px rgba(67, 227, 127, 0.5);
+}
+
+.swal2-loader {
+  border-color: $swal-green transparent $swal-teal transparent !important;
+}
+
+// ── Toasts (Swal.fire({ toast:true })) ────────────────────
+.swal2-toast {
+  background: rgba(4, 12, 16, 0.95) !important;
+  border: 1px solid $swal-border !important;
+  border-radius: 14px !important;
+  box-shadow:
+    0 12px 32px rgba(0, 0, 0, 0.55),
+    0 0 20px rgba(67, 227, 127, 0.12) !important;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+
+  .swal2-title {
+    color: $swal-text !important;
+    -webkit-text-fill-color: $swal-text !important;
+    background: none !important;
+    font-size: 0.95rem !important;
+  }
+
+  .swal2-html-container {
+    color: $swal-muted !important;
+  }
+}

@@ -1,0 +1,156 @@
+// ============================================================
+// ngx-toastr — Futuristic theme override (global)
+// Restyles success / error / warning / info toasts
+// ============================================================
+
+$toastr-green: #43e37f;
+$toastr-teal: #00d4aa;
+$toastr-bg: rgba(4, 12, 16, 0.95);
+$toastr-border: rgba(67, 227, 127, 0.25);
+$toastr-text: #ffffff;
+$toastr-muted: rgba(255, 255, 255, 0.75);
+$toastr-danger: #ff5d6c;
+$toastr-warning: #ffb547;
+$toastr-info: #00d4aa;
+
+// ── Container ─────────────────────────────────────────────
+#toast-container {
+  > div {
+    background: $toastr-bg !important;
+    background-image: linear-gradient(
+      135deg,
+      rgba(0, 54, 55, 0.4) 0%,
+      rgba(4, 12, 16, 0.95) 100%
+    ) !important;
+    color: $toastr-text !important;
+    border: 1px solid $toastr-border !important;
+    border-radius: 14px !important;
+    padding: 16px 18px 16px 56px !important;
+    width: 320px !important;
+    box-shadow:
+      0 12px 32px rgba(0, 0, 0, 0.55),
+      0 0 24px rgba(67, 227, 127, 0.18) !important;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    background-position: 16px center !important;
+    background-size: 24px !important;
+    background-repeat: no-repeat !important;
+    opacity: 1 !important;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.25s ease;
+
+    // Top neon glow line
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(
+        90deg,
+        transparent 0%,
+        currentColor 50%,
+        transparent 100%
+      );
+      opacity: 0.9;
+    }
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow:
+        0 16px 40px rgba(0, 0, 0, 0.65),
+        0 0 32px rgba(67, 227, 127, 0.3) !important;
+    }
+  }
+
+  .toast-title {
+    color: inherit !important;
+    font-weight: 700 !important;
+    font-size: 0.95rem !important;
+    letter-spacing: 0.01em;
+    margin-bottom: 2px;
+  }
+
+  .toast-message {
+    color: $toastr-muted !important;
+    font-size: 0.85rem !important;
+    line-height: 1.45;
+    word-wrap: break-word;
+  }
+
+  // Close button
+  .toast-close-button {
+    color: $toastr-muted !important;
+    text-shadow: none !important;
+    opacity: 0.7;
+    font-size: 18px !important;
+    font-weight: 400 !important;
+    transition: all 0.2s ease;
+    position: absolute;
+    top: 6px;
+    right: 8px;
+
+    &:hover,
+    &:focus {
+      opacity: 1;
+      color: $toastr-danger !important;
+      transform: rotate(90deg);
+    }
+  }
+
+  // Progress bar
+  .toast-progress {
+    height: 3px !important;
+    background: linear-gradient(
+      90deg,
+      currentColor 0%,
+      rgba(255, 255, 255, 0.3) 100%
+    ) !important;
+    opacity: 0.8;
+    box-shadow: 0 0 8px currentColor;
+  }
+}
+
+// ── Variants (drives `currentColor` via color override) ───
+#toast-container .toast-success {
+  color: $toastr-green !important;
+  border-color: rgba(67, 227, 127, 0.45) !important;
+  box-shadow:
+    0 12px 32px rgba(0, 0, 0, 0.55),
+    0 0 28px rgba(67, 227, 127, 0.3) !important;
+
+  // ngx-toastr inline svg icon → swap with our SVG (green check)
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2343e37f' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M22 11.08V12a10 10 0 1 1-5.93-9.14'/%3E%3Cpolyline points='22 4 12 14.01 9 11.01'/%3E%3C/svg%3E") !important;
+}
+
+#toast-container .toast-error {
+  color: $toastr-danger !important;
+  border-color: rgba(255, 93, 108, 0.45) !important;
+  box-shadow:
+    0 12px 32px rgba(0, 0, 0, 0.55),
+    0 0 28px rgba(255, 93, 108, 0.3) !important;
+
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ff5d6c' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cline x1='15' y1='9' x2='9' y2='15'/%3E%3Cline x1='9' y1='9' x2='15' y2='15'/%3E%3C/svg%3E") !important;
+}
+
+#toast-container .toast-warning {
+  color: $toastr-warning !important;
+  border-color: rgba(255, 181, 71, 0.45) !important;
+  box-shadow:
+    0 12px 32px rgba(0, 0, 0, 0.55),
+    0 0 28px rgba(255, 181, 71, 0.3) !important;
+
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffb547' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z'/%3E%3Cline x1='12' y1='9' x2='12' y2='13'/%3E%3Cline x1='12' y1='17' x2='12.01' y2='17'/%3E%3C/svg%3E") !important;
+}
+
+#toast-container .toast-info {
+  color: $toastr-info !important;
+  border-color: rgba(0, 212, 170, 0.45) !important;
+  box-shadow:
+    0 12px 32px rgba(0, 0, 0, 0.55),
+    0 0 28px rgba(0, 212, 170, 0.3) !important;
+
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2300d4aa' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cline x1='12' y1='16' x2='12' y2='12'/%3E%3Cline x1='12' y1='8' x2='12.01' y2='8'/%3E%3C/svg%3E") !important;
+}
