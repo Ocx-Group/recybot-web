@@ -1,25 +1,47 @@
-<div class="products-section">
-  <div class="pp-grid">
-    <ng-container *ngFor="let item of productList">
-      <div class="product-card" *ngIf="!item.productType" (mouseenter)="item.showButton = true"
-        (mouseleave)="item.showButton = false">
-        <div class="product-card__image-wrap" (click)="addtocart(item)">
-          <img [src]="item.image" [alt]="item.name" class="product-card__img">
-          <div class="product-card__overlay" [class.show]="item.showButton" aria-hidden="true">
-            <button class="product-card__cta-btn">
-              <i class="bi bi-plus-circle-fill me-2"></i>
-              Añadir al carrito
-            </button>
+<ng-container *ngIf="showPageShell; else productsGrid">
+  <section class="main-content products-page">
+    <ul class="breadcrumb breadcrumb-style">
+      <li class="breadcrumb-item">
+        <h5 class="page-title m-b-0">{{ 'CART-PAGE.BUY.TEXT' | translate }}</h5>
+      </li>
+      <li class="breadcrumb-item bcrumb-1">
+        <a routerLink="/app/home">
+          <i class="fas fa-home font-17"></i>
+        </a>
+      </li>
+      <li class="breadcrumb-item">
+        {{ 'MENUITEMS.BUY-RECYBOT.TEXT' | translate }}
+      </li>
+    </ul>
+    <div class="section-body">
+      <ng-container *ngTemplateOutlet="productsGrid"></ng-container>
+    </div>
+  </section>
+</ng-container>
+
+<ng-template #productsGrid>
+  <div class="products-section">
+    <div class="pp-grid">
+      <ng-container *ngFor="let item of productList">
+        <div class="product-card" *ngIf="!item.productType">
+          <div class="product-card__image-wrap">
+            <img [src]="item.image" [alt]="item.name" class="product-card__img">
+            <div class="product-card__overlay">
+              <button type="button" class="product-card__cta-btn" (click)="addtocart(item)">
+                <i class="bi bi-plus-circle-fill me-2"></i>
+                Añadir al carrito
+              </button>
+            </div>
+          </div>
+          <div class="product-card__footer">
+            <img src="assets/images/logos/Logo-recybot.png" class="product-card__brand" alt="RecyBot">
+            <div class="product-card__info">
+              <span class="product-card__name">{{ item.name }}</span>
+              <span class="product-card__price">${{ item.baseAmount }}</span>
+            </div>
           </div>
         </div>
-        <div class="product-card__footer">
-          <img src="assets/images/logos/Logo-recybot.png" class="product-card__brand" alt="RecyBot">
-          <div class="product-card__info">
-            <span class="product-card__name">{{ item.name }}</span>
-            <span class="product-card__price">${{ item.baseAmount }}</span>
-          </div>
-        </div>
-      </div>
-    </ng-container>
+      </ng-container>
+    </div>
   </div>
-</div>
+</ng-template>

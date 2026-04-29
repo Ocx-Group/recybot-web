@@ -1,26 +1,28 @@
-import {UpdatePassword} from '@app/core/models/user-model/update.password.model';
-import {ToastrService} from 'ngx-toastr';
-import {Component, Input, ViewChild, OnInit} from '@angular/core';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import { UpdatePassword } from '@app/core/models/user-model/update.password.model';
+import { ToastrService } from 'ngx-toastr';
+import { Component, Input, ViewChild, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {
   AbstractControl,
   FormBuilder,
   FormControl,
-  FormGroup, ReactiveFormsModule,
+  FormGroup,
+  ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
 
-import {AffiliateService} from '@app/core/service/affiliate-service/affiliate.service';
-import {UserAffiliate} from '@app/core/models/user-affiliate-model/user.affiliate.model';
-import {CommonModule} from '@angular/common';
-import {TranslatePipe} from "@ngx-translate/core";
+import { AffiliateService } from '@app/core/service/affiliate-service/affiliate.service';
+import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
+import { CommonModule } from '@angular/common';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-my-profile-edit-password-modal',
   templateUrl: './my-profile-edit-password-modal.component.html',
+  styleUrls: ['./my-profile-edit-password-modal.component.scss'],
   providers: [ToastrService],
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, TranslatePipe]
+  imports: [CommonModule, ReactiveFormsModule, TranslatePipe],
 })
 export class MyProfileEditPasswordModalComponent implements OnInit {
   @Input() getCurrentUser: any = [];
@@ -33,9 +35,8 @@ export class MyProfileEditPasswordModalComponent implements OnInit {
     private modalService: NgbModal,
     private affiliateService: AffiliateService,
     private formBuilder: FormBuilder,
-    private toastr: ToastrService
-  ) {
-  }
+    private toastr: ToastrService,
+  ) {}
 
   @ViewChild('changePasswordModal') changePasswordModal: NgbModal;
 
@@ -61,14 +62,33 @@ export class MyProfileEditPasswordModalComponent implements OnInit {
     this.updatePasswordForm = this.formBuilder.group(
       {
         current_password: ['', [Validators.required]],
-        confirm_password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(15),
-          Validators.pattern(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*#?&^_-]).{8,}/)]],
-        new_password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(15),
-          Validators.pattern(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*#?&^_-]).{8,}/)]],
+        confirm_password: [
+          '',
+          [
+            Validators.required,
+            Validators.minLength(8),
+            Validators.maxLength(15),
+            Validators.pattern(
+              /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*#?&^_-]).{8,}/,
+            ),
+          ],
+        ],
+        new_password: [
+          '',
+          [
+            Validators.required,
+            Validators.minLength(8),
+            Validators.maxLength(15),
+            Validators.pattern(
+              /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*#?&^_-]).{8,}/,
+            ),
+          ],
+        ],
       },
       {
-        validator: passwordMatchValidator
-      });
+        validator: passwordMatchValidator,
+      },
+    );
   }
 
   closeModals() {
@@ -95,17 +115,20 @@ export class MyProfileEditPasswordModalComponent implements OnInit {
 
     this.credentials.password = this.updatePasswordForm.value.current_password;
     this.credentials.new_password = this.updatePasswordForm.value.new_password;
-    this.credentials.confirm_password = this.updatePasswordForm.value.confirm_password;
+    this.credentials.confirm_password =
+      this.updatePasswordForm.value.confirm_password;
     this.credentials.id = this.userId;
 
-    this.affiliateService.updatePassword(this.credentials).subscribe((response) => {
-      if (response.success) {
-        this.showSuccess('The password has been successfully updated!');
-        this.closeModals();
-      } else {
-        this.showError('The current password is not correct!');
-      }
-    });
+    this.affiliateService
+      .updatePassword(this.credentials)
+      .subscribe(response => {
+        if (response.success) {
+          this.showSuccess('The password has been successfully updated!');
+          this.closeModals();
+        } else {
+          this.showError('The current password is not correct!');
+        }
+      });
   }
 
   get Pwd(): FormControl {
@@ -120,5 +143,5 @@ export class MyProfileEditPasswordModalComponent implements OnInit {
 export function passwordMatchValidator(formGroup: FormGroup) {
   const password = formGroup.get('new_password').value;
   const confirmPassword = formGroup.get('confirm_password').value;
-  return password === confirmPassword ? null : {passwordMismatch: true};
+  return password === confirmPassword ? null : { passwordMismatch: true };
 }

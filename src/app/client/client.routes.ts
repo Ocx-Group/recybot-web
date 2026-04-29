@@ -222,12 +222,4 @@ export const CLIENT_ROUTES: Routes = [
     ],
     canActivate: [AuthGuard],
   },
-  {
-    path: 'activate-matrix',
-    loadComponent: () =>
-      import('./cart/activate-matrix/activate-matrix.component').then(
-        m => m.ActivateMatrixComponent,
-      ),
-    canActivate: [AuthGuard, MaintenanceGuard],
-  },
 ];

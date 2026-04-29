@@ -79,20 +79,22 @@
                     </thead>
                     <tbody>
                       <tr *ngFor="let item of products; let i = index">
-                        <td>{{ i + 1 }}</td>
-                        <td>{{ item.name }}</td>
-                        <td>
+                        <td data-label="#">{{ i + 1 }}</td>
+                        <td data-label="{{ 'CART-PAGE.COL-NAME.TEXT' | translate }}">{{ item.name }}</td>
+                        <td data-label="{{ 'CART-PAGE.COL-IMG.TEXT' | translate }}">
                           <img class="custom-img-size" src="{{ item.image }}" alt="" />
                         </td>
-                        <td>{{ item.description }}</td>
-                        <td>{{ item.valuePoints }}</td>
-                        <td>{{ item.binaryPoints }}</td>
-                        <td>{{ item.commissionableValue }}</td>
-                        <td>${{ item.baseAmount }}</td>
-                        <td>$0</td>
-                        <td>{{ item.quantity }}</td>
-                        <td>${{ item.baseAmount * item.quantity }}</td>
-                        <td>
+                        <td data-label="{{ 'CART-PAGE.COL-DESCRIPTION.TEXT' | translate }}">{{ item.description }}</td>
+                        <td data-label="{{ 'CART-PAGE.POINTS-CALIF.TEXT' | translate }}">{{ item.valuePoints }}</td>
+                        <td data-label="{{ 'CART-PAGE.POINTS-BINARY.TEXT' | translate }}">{{ item.binaryPoints }}</td>
+                        <td data-label="{{ 'CART-PAGE.COMMISSIONABLE.TEXT' | translate }}">{{ item.commissionableValue
+                          }}</td>
+                        <td data-label="{{ 'CART-PAGE.COL-PRICE.TEXT' | translate }}">${{ item.baseAmount }}</td>
+                        <td data-label="{{ 'CART-PAGE.DISCOUNT.TEXT' | translate }}">$0</td>
+                        <td data-label="{{ 'CART-PAGE.COL-QUANTITY.TEXT' | translate }}">{{ item.quantity }}</td>
+                        <td data-label="{{ 'CART-PAGE.COL-TOTAL.TEXT' | translate }}">${{ item.baseAmount *
+                          item.quantity }}</td>
+                        <td data-label="{{ 'CART-PAGE.COL-ACTION.TEXT' | translate }}">
                           <button class="btn-danger" (click)="removeItem(item)"
                             title="{{ 'CART-PAGE.REMOVE-ITEM.TEXT' | translate }}">
                             <i class="fas fa-times"></i>

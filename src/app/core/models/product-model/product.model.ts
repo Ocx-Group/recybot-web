@@ -10,6 +10,7 @@ export class Product {
   tax: number;
   inventory: boolean;
   paymentGroup: number;
+  paymentGroupId?: number;
   acumCompMin: boolean;
   weight: number;
   offer: boolean;

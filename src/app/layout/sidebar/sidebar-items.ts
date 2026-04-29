@@ -32,17 +32,6 @@ export const ROUTES: RouteInfo[] = [
         badgeClass: '',
         submenu: [],
       },
-      {
-        path: '/app/activate-matrix',
-        title: 'CART-PAGE.ACTIVATE-MATRIX.TEXT',
-        iconType: 'feather',
-        icon: 'grid',
-        class: '',
-        groupTitle: false,
-        badge: '',
-        badgeClass: '',
-        submenu: [],
-      },
     ],
   },
   {

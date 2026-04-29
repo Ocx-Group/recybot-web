@@ -1,29 +1,185 @@
-// Modern Profile Card Styles
+// ============================================================
+// RECYBOT MY PROFILE — Futuristic Redesign
+// Sigue la paleta del landing, login, dashboard y carrito
+// ============================================================
 
-.profile-card-modern {
-  background: var(--card-bg, #ffffff);
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  border-radius: 14px;
+:host {
+  --c-green: #43e37f;
+  --c-teal: #00d4aa;
+  --c-dark: #003637;
+  --c-bg: #040c0e;
+  --c-surface: rgba(255, 255, 255, 0.04);
+  --c-surface-hov: rgba(255, 255, 255, 0.08);
+  --c-border: rgba(67, 227, 127, 0.18);
+  --c-border-hov: rgba(67, 227, 127, 0.45);
+  --c-text: #ffffff;
+  --c-muted: rgba(255, 255, 255, 0.6);
+  --c-danger: #ff5d6c;
+  --c-warning: #ffb547;
+  --c-info: #00d4aa;
+  --glow-sm: 0 0 14px rgba(67, 227, 127, 0.4);
+  --glow-md:
+    0 0 30px rgba(67, 227, 127, 0.25), 0 0 70px rgba(67, 227, 127, 0.1);
+  --r: 0.75rem;
+  --r-lg: 1.25rem;
+  --r-pill: 100px;
+
+  display: block;
+  color: var(--c-text);
+  font-family:
+    'Segoe UI',
+    system-ui,
+    -apple-system,
+    sans-serif;
+}
+
+// ── Section wrapper (no sobrescribe paddings del layout) ─────
+.main-content {
   position: relative;
-  overflow: hidden;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  color: var(--c-text);
+  background-color: var(--c-bg);
+  background-image:
+    radial-gradient(
+      ellipse 70% 50% at 12% 25%,
+      rgba(0, 54, 55, 0.55) 0%,
+      transparent 65%
+    ),
+    radial-gradient(
+      ellipse 55% 40% at 88% 80%,
+      rgba(67, 227, 127, 0.08) 0%,
+      transparent 60%
+    );
+  padding-bottom: 3rem;
 
-  // Dark theme support
-  :host-context(.dark) & {
-    background: #16192a;
-    border-color: rgba(151, 157, 166, 0.2);
-    box-shadow: none;
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(67, 227, 127, 0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(67, 227, 127, 0.025) 1px, transparent 1px);
+    background-size: 64px 64px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  > * {
+    position: relative;
+    z-index: 1;
   }
 }
 
-// Gradient Header
-.profile-header-gradient {
-  background: linear-gradient(to right, #00bd86, #00a073);
-  height: 110px;
-  position: relative;
+// ── Breadcrumb ───────────────────────────────────────────────
+.breadcrumb,
+.breadcrumb-style {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  background: transparent !important;
+  padding: 0.5rem 0 1.25rem;
+  margin: 0 0 1rem;
+  list-style: none;
+  border-bottom: 1px solid var(--c-border);
 
-  :host-context(.dark) & {
-    background: linear-gradient(to right, #dcff8c, #c8e876);
+  .breadcrumb-item {
+    color: var(--c-muted);
+    font-size: 0.875rem;
+
+    a {
+      color: var(--c-green);
+      text-decoration: none;
+      transition:
+        color 0.2s,
+        text-shadow 0.2s;
+
+      &:hover {
+        color: #6ef0a0;
+        text-shadow: var(--glow-sm);
+      }
+    }
+
+    .page-title {
+      color: var(--c-text);
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      margin: 0;
+      background: linear-gradient(
+        130deg,
+        var(--c-green) 0%,
+        var(--c-teal) 100%
+      );
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+  }
+}
+
+// ── Profile Card (glass) ─────────────────────────────────────
+.profile-card-modern {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.05) 0%,
+    rgba(255, 255, 255, 0.02) 100%
+  );
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-lg);
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  box-shadow:
+    0 10px 40px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  transition:
+    border-color 0.3s,
+    box-shadow 0.3s;
+
+  &:hover {
+    border-color: var(--c-border-hov);
+  }
+}
+
+// ── Gradient Header ──────────────────────────────────────────
+.profile-header-gradient {
+  background:
+    radial-gradient(
+      ellipse 80% 100% at 50% 100%,
+      rgba(67, 227, 127, 0.35) 0%,
+      transparent 65%
+    ),
+    linear-gradient(120deg, var(--c-dark) 0%, #001f20 60%, #040c0e 100%);
+  height: 130px;
+  position: relative;
+  border-bottom: 1px solid var(--c-border);
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(67, 227, 127, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(67, 227, 127, 0.05) 1px, transparent 1px);
+    background-size: 32px 32px;
+    opacity: 0.6;
+    pointer-events: none;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      var(--c-green) 50%,
+      transparent 100%
+    );
+    box-shadow: 0 0 16px rgba(67, 227, 127, 0.5);
   }
 }
 
@@ -31,22 +187,26 @@
   position: absolute;
   top: 16px;
   right: 16px;
+  z-index: 2;
 
   .btn-icon-options {
-    width: 36px;
-    height: 36px;
-    border-radius: 8px;
-    background: rgba(255, 255, 255, 0.9);
-    border: none;
-    color: #007a56;
+    width: 38px;
+    height: 38px;
+    border-radius: var(--r);
+    background: rgba(4, 12, 16, 0.7);
+    border: 1px solid var(--c-border);
+    color: var(--c-green);
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: background 0.2s;
+    backdrop-filter: blur(8px);
+    transition: all 0.2s;
 
     &:hover {
-      background: rgba(255, 255, 255, 1);
+      background: rgba(67, 227, 127, 0.15);
+      border-color: var(--c-border-hov);
+      box-shadow: var(--glow-sm);
     }
 
     i {
@@ -55,13 +215,51 @@
   }
 }
 
-// Card Content
-.profile-card-content {
-  padding: 24px;
-  padding-top: 50px;
+// NgbDropdown se renderiza en body (container="body").
+// Usamos ::ng-deep para alcanzar ese menú con la nueva paleta.
+::ng-deep .dropdown-menu {
+  background: rgba(4, 12, 16, 0.96) !important;
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(67, 227, 127, 0.18) !important;
+  border-radius: 0.75rem !important;
+  padding: 0.4rem !important;
+  box-shadow:
+    0 10px 40px rgba(0, 0, 0, 0.5),
+    0 0 30px rgba(67, 227, 127, 0.08);
+
+  .dropdown-item {
+    color: rgba(255, 255, 255, 0.85) !important;
+    border-radius: 0.5rem !important;
+    padding: 0.55rem 0.85rem !important;
+    font-size: 0.875rem !important;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+
+    i {
+      color: #43e37f;
+      width: 16px;
+      text-align: center;
+    }
+
+    &:hover,
+    &:focus {
+      background: rgba(67, 227, 127, 0.12) !important;
+      color: #43e37f !important;
+    }
+  }
 }
 
-// Profile User Section
+// ── Card Content ─────────────────────────────────────────────
+.profile-card-content {
+  padding: 24px 28px 28px;
+  padding-top: 50px;
+  position: relative;
+}
+
+// ── Profile User Section ─────────────────────────────────────
 .profile-user-section {
   display: flex;
   gap: 24px;
@@ -72,7 +270,9 @@
 
 .profile-picture-wrapper {
   flex-shrink: 0;
-  margin-top: -85px;
+  margin-top: -95px;
+  position: relative;
+  z-index: 2;
 }
 
 .profile-picture-btn {
@@ -81,133 +281,148 @@
   padding: 0;
   cursor: pointer;
   display: block;
+  border-radius: 50%;
 
   &:focus {
-    outline: 2px solid #155dfc;
-    outline-offset: 2px;
-    border-radius: 50%;
+    outline: 2px solid var(--c-green);
+    outline-offset: 4px;
   }
 }
 
 .profile-picture-modern {
-  width: 128px;
-  height: 128px;
+  width: 132px;
+  height: 132px;
   border-radius: 50%;
-  border: 4px solid white;
+  border: 3px solid var(--c-green);
+  background: var(--c-bg);
   object-fit: cover;
   cursor: pointer;
-  transition: transform 0.2s;
   display: block;
+  box-shadow:
+    0 0 0 4px rgba(4, 12, 16, 0.9),
+    0 0 24px rgba(67, 227, 127, 0.4),
+    0 8px 24px rgba(0, 0, 0, 0.5);
+  transition:
+    transform 0.25s,
+    box-shadow 0.25s;
 
   &:hover {
     transform: scale(1.05);
+    box-shadow:
+      0 0 0 4px rgba(4, 12, 16, 0.9),
+      0 0 36px rgba(67, 227, 127, 0.7),
+      0 12px 32px rgba(0, 0, 0, 0.6);
   }
 }
+
 .profile-user-info {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  padding-top: 38px;
+  padding-top: 8px;
   flex: 1;
+  min-width: 0;
 }
 
 .profile-user-name {
-  font-size: 16px;
-  font-weight: 400;
-  color: #0f172b;
+  font-size: 1.5rem;
+  font-weight: 800;
   margin: 0;
-  line-height: 24px;
-
-  :host-context(.dark) & {
-    color: #96a2b4;
-  }
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  background: linear-gradient(130deg, var(--c-green) 0%, var(--c-teal) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  word-break: break-word;
 }
 
 .profile-username {
   display: flex;
   align-items: center;
   gap: 8px;
-  color: #45556c;
-  font-size: 16px;
-  line-height: 24px;
-
-  :host-context(.dark) & {
-    color: #7c8698;
-  }
+  color: var(--c-muted);
+  font-size: 0.9rem;
+  line-height: 1.4;
 
   i {
-    font-size: 16px;
+    font-size: 1rem;
+    color: var(--c-green);
   }
-} // Badges
+}
+
+// ── Badges ───────────────────────────────────────────────────
 .profile-badges {
   display: flex;
   align-items: center;
   gap: 8px;
   flex-wrap: wrap;
+  margin-top: 4px;
 }
 
 .badge-modern {
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  padding: 3px 9px;
-  border-radius: 8px;
-  font-size: 12px;
-  line-height: 16px;
+  padding: 4px 10px;
+  border-radius: var(--r-pill);
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  line-height: 1;
   border: 1px solid transparent;
+  backdrop-filter: blur(6px);
 
   i {
-    font-size: 12px;
+    font-size: 0.75rem;
   }
 
-  &.badge-success {
-    background: #00a63e;
-    color: #ffffff;
-    border-color: transparent;
+  &.badge-success,
+  &.badge-active {
+    background: rgba(67, 227, 127, 0.15);
+    color: var(--c-green);
+    border-color: rgba(67, 227, 127, 0.4);
+    box-shadow: 0 0 12px rgba(67, 227, 127, 0.2);
   }
 
   &.badge-danger {
-    background: #dc3545;
-    color: #ffffff;
-    border-color: transparent;
-  }
-
-  &.badge-active {
-    background: #155dfc;
-    color: #ffffff;
-    border-color: transparent;
+    background: rgba(255, 93, 108, 0.15);
+    color: var(--c-danger);
+    border-color: rgba(255, 93, 108, 0.4);
   }
 
   &.badge-inactive {
-    background: #6c757d;
-    color: #ffffff;
-    border-color: transparent;
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--c-muted);
+    border-color: rgba(255, 255, 255, 0.15);
   }
 
   &.badge-warning {
-    background: transparent;
-    color: #bb4d00;
-    border-color: #fe9a00;
+    background: rgba(255, 181, 71, 0.12);
+    color: var(--c-warning);
+    border-color: rgba(255, 181, 71, 0.4);
   }
 }
 
-// Divider
+// ── Divider ──────────────────────────────────────────────────
 .profile-divider {
   height: 1px;
-  background: rgba(0, 0, 0, 0.1);
-  margin-bottom: 24px;
-
-  :host-context(.dark) & {
-    background: rgba(151, 157, 166, 0.2);
-  }
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--c-border-hov) 50%,
+    transparent 100%
+  );
+  margin-bottom: 28px;
 }
 
-// Information Grid
+// ── Information Grid ─────────────────────────────────────────
 .profile-info-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 24px;
-  margin-bottom: 24px;
+  margin-bottom: 28px;
 
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
@@ -217,28 +432,46 @@
 .profile-info-column {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 12px;
 }
 
 .profile-section-title {
-  font-size: 16px;
-  font-weight: 400;
-  color: #314158;
-  margin: 0;
-  line-height: 24px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--c-green);
+  margin: 0 0 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
 
-  :host-context(.dark) & {
-    color: #96a2b4;
+  &::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--c-green);
+    box-shadow: var(--glow-sm);
   }
 }
 
 .profile-info-item {
   display: flex;
-  gap: 12px;
+  gap: 14px;
   align-items: flex-start;
-  padding: 12px;
-  border-radius: 10px;
+  padding: 14px 16px;
+  border-radius: var(--r);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--c-border);
   min-height: 72px;
+  transition: all 0.25s;
+
+  &:hover {
+    background: rgba(67, 227, 127, 0.05);
+    border-color: var(--c-border-hov);
+    transform: translateX(4px);
+  }
 
   &.profile-info-item-tall {
     min-height: 96px;
@@ -246,77 +479,70 @@
 }
 
 .profile-info-icon {
-  width: 20px;
-  height: 20px;
+  width: 40px;
+  height: 40px;
   flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #155dfc;
-  margin-top: 14px;
-
-  :host-context(.dark) & {
-    color: #4a90e2;
-  }
+  background: rgba(67, 227, 127, 0.1);
+  border: 1px solid rgba(67, 227, 127, 0.25);
+  border-radius: 0.6rem;
+  color: var(--c-green);
+  margin-top: 2px;
+  transition: all 0.25s;
 
   i {
-    font-size: 20px;
+    font-size: 1.05rem;
   }
+}
+
+.profile-info-item:hover .profile-info-icon {
+  background: rgba(67, 227, 127, 0.18);
+  box-shadow: var(--glow-sm);
 }
 
 .profile-info-content {
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 0;
-  padding-top: 12px;
+  gap: 2px;
+  padding-top: 0;
+  min-width: 0;
 }
 
 .profile-info-label {
-  font-size: 16px;
-  color: #62748e;
-  line-height: 24px;
-  margin-bottom: 0;
-
-  :host-context(.dark) & {
-    color: #7c8698;
-  }
+  font-size: 0.7rem;
+  color: var(--c-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 600;
+  margin-bottom: 2px;
 }
 
 .profile-info-value {
-  font-size: 16px;
-  color: #0f172b;
-  line-height: 24px;
-  font-weight: 400;
+  font-size: 0.95rem;
+  color: var(--c-text);
+  line-height: 1.4;
+  font-weight: 500;
   word-break: break-word;
-
-  :host-context(.dark) & {
-    color: #96a2b4;
-  }
 }
 
 .profile-info-time {
-  font-size: 16px;
-  color: #90a1b9;
-  line-height: 24px;
-
-  :host-context(.dark) & {
-    color: #6c7685;
-  }
+  font-size: 0.78rem;
+  color: var(--c-muted);
+  line-height: 1.4;
+  margin-top: 2px;
 }
 
-// Action Buttons
+// ── Action Buttons ───────────────────────────────────────────
 .profile-actions {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding-top: 25px;
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  padding-top: 24px;
+  border-top: 1px solid var(--c-border);
   flex-wrap: wrap;
-
-  :host-context(.dark) & {
-    border-top-color: rgba(151, 157, 166, 0.2);
-  }
 }
 
 .btn-action {
@@ -324,67 +550,66 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 8px 16px;
-  border-radius: 8px;
-  font-size: 14px;
-  line-height: 20px;
-  border: 1px solid transparent;
+  padding: 0.7rem 1.5rem;
+  border-radius: var(--r-pill);
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.025em;
+  border: none;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.25s ease;
   white-space: nowrap;
 
   &.btn-action-primary {
-    background: #030213;
-    color: #ffffff;
-    border-color: transparent;
+    background: linear-gradient(135deg, var(--c-green) 0%, #2db865 100%);
+    color: #03230a;
+    box-shadow: 0 4px 24px rgba(67, 227, 127, 0.28);
 
     &:hover {
-      background: #1a1a2e;
+      background: linear-gradient(135deg, #6ef0a0 0%, var(--c-green) 100%);
+      box-shadow: 0 6px 36px rgba(67, 227, 127, 0.5);
+      transform: translateY(-2px);
     }
 
-    :host-context(.dark) & {
-      background: #155dfc;
-      color: #ffffff;
-
-      &:hover {
-        background: #1447e6;
-      }
+    &:active {
+      transform: translateY(0);
     }
   }
 
   &.btn-action-secondary {
-    background: #ffffff !important;
-    color: #000000 !important;
-    border-color: rgba(0, 0, 0, 0.2) !important;
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--c-text);
+    border: 1px solid rgba(255, 255, 255, 0.15);
 
     &:hover {
-      background: #f0f0f0 !important;
-      color: #000000 !important;
-    }
-
-    :host-context(.dark) & {
-      background: transparent !important;
-      color: #96a2b4 !important;
-      border-color: rgba(151, 157, 166, 0.3) !important;
-
-      &:hover {
-        background: rgba(151, 157, 166, 0.1) !important;
-      }
+      background: rgba(255, 255, 255, 0.1);
+      border-color: var(--c-border-hov);
+      transform: translateY(-2px);
     }
   }
 }
 
-// Responsive adjustments
+// ── Responsive ───────────────────────────────────────────────
 @media (max-width: 768px) {
+  .profile-card-content {
+    padding: 24px 18px 18px;
+    padding-top: 40px;
+  }
+
   .profile-user-section {
     flex-direction: column;
     align-items: center;
     text-align: center;
+    gap: 16px;
   }
 
   .profile-user-info {
     align-items: center;
     padding-top: 0;
+  }
+
+  .profile-user-name {
+    font-size: 1.25rem;
   }
 
   .profile-badges {
@@ -399,20 +624,36 @@
       width: 100%;
     }
   }
+
+  .profile-info-item:hover {
+    transform: none;
+  }
 }
 
 @media (max-width: 576px) {
+  .profile-header-gradient {
+    height: 110px;
+  }
+
   .profile-picture-modern {
-    width: 100px;
-    height: 100px;
+    width: 108px;
+    height: 108px;
+  }
+
+  .profile-picture-wrapper {
+    margin-top: -78px;
   }
 
   .profile-card-content {
-    padding: 16px;
-    padding-top: 40px;
+    padding: 16px 14px;
+    padding-top: 36px;
   }
 
   .profile-info-grid {
-    gap: 16px;
+    gap: 14px;
+  }
+
+  .profile-info-item {
+    padding: 12px;
   }
 }

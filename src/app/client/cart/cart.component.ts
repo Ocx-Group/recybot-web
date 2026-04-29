@@ -12,7 +12,7 @@ import { CreateChannelResponse } from '@app/core/models/coinpay-model/create-cha
 import { CreatePagaditoTransactionRequest } from '@app/core/models/pagadito-model/create-pagadito-transaction-request.model';
 import { ToastrService } from 'ngx-toastr';
 import QRCode from 'qrcode';
-import { CartService } from 'src/app/core/service/cart.service/cart.service';
+import { CartService } from '@app/core/service/cart.service/cart.service';
 import Swal from 'sweetalert2';
 
 import { CreateTransactionResponse } from '@app/core/models/coinpay-model/create-transaction-response.model';
@@ -37,7 +37,6 @@ import { WalletService } from '@app/core/service/wallet-service/wallet.service';
 import { PagaditoTransactionDetailRequest } from '@app/core/models/pagadito-model/pagadito-transaction-detail-request.model';
 import { AffiliateService } from '@app/core/service/affiliate-service/affiliate.service';
 import { PagaditoService } from '@app/core/service/pagadito-service/pagadito.service';
-import { PdfViewerService } from '@app/core/service/pdf-viewer-service/pdf-viewer.service';
 import { WalletModel1AService } from '@app/core/service/wallet-model-1a-service/wallet-model-1a.service';
 import { WalletModel1BService } from '@app/core/service/wallet-model-1b-service/wallet-model-1b.service';
 import { Subscription, switchMap, timer } from 'rxjs';
@@ -82,43 +81,38 @@ export class CartComponent implements OnInit, OnDestroy {
   coinPayTransactionResponse = new CreateTransactionResponse();
   withdrawalConfiguration = new WalletWithdrawalsConfiguration();
   balancePaymentNotAvailable: boolean = false;
-  reverseBalanceNotAvailable: boolean = false;
-  excludedPaymentGroups = [2, 3, 7, 8, 9, 10];
-  reverseBalanceExcludedPaymentGroups = [2, 7, 8];
-  serviceBalanceExcludedPaymentGroups = [7, 8];
   serviceBalanceNotAvailable: boolean = false;
   model: string = '';
   pagaditoRequest = new CreatePagaditoTransactionRequest();
   referenceTransaction: string = '';
   private pollingSubscription: Subscription;
-  private pollingInterval = 5000;
+  readonly;
+  private readonly pollingInterval = 5000;
   private routerSubscription: Subscription;
   private swalInstance: any;
   @ViewChild('coinpayPaymentModal') coinpayPaymentModal: TemplateRef<any>;
   isReachedWithdrawalLimit: boolean = false;
 
   constructor(
-    private cartService: CartService,
-    private router: Router,
-    private auth: AuthService,
-    private toastr: ToastrService,
-    private conpaymentService: CoinpaymentService,
-    private walletService: WalletService,
-    private coinpayService: CoinpayService,
-    private configurationService: ConfigurationService,
-    private walletModel1AService: WalletModel1AService,
-    private walletModel1BService: WalletModel1BService,
-    private affiliateService: AffiliateService,
-    private pagaditoService: PagaditoService,
-    private pdfViewerService: PdfViewerService,
-    private matrixQualificationService: MatrixQualificationService,
+    private readonly cartService: CartService,
+    private readonly router: Router,
+    private readonly auth: AuthService,
+    private readonly toastr: ToastrService,
+    private readonly conpaymentService: CoinpaymentService,
+    private readonly walletService: WalletService,
+    private readonly coinpayService: CoinpayService,
+    private readonly configurationService: ConfigurationService,
+    private readonly walletModel1AService: WalletModel1AService,
+    private readonly walletModel1BService: WalletModel1BService,
+    private readonly affiliateService: AffiliateService,
+    private readonly pagaditoService: PagaditoService,
+    private readonly matrixQualificationService: MatrixQualificationService,
   ) {}
 
   ngOnInit(): void {
     this.user = this.auth.currentUserAffiliateValue;
     this.hasReachedWithdrawalLimit(this.user.id);
     this.today = new Date();
-    this.today.getTime();
     this.cartService.getProducts().subscribe(res => {
       this.products = res;
       this.setValuesToPaid();
@@ -202,29 +196,18 @@ export class CartComponent implements OnInit, OnDestroy {
         case 11:
           this.model = 'recycoin';
           break;
+        case 15:
+          this.model = 'recybot';
+          break;
         default:
           break;
       }
     }
 
     this.products.forEach(item => {
-      if (!this.excludedPaymentGroups.includes(item.paymentGroup)) {
-        this.balancePaymentNotAvailable = true;
-      }
-
-      if (
-        this.reverseBalanceExcludedPaymentGroups.includes(item.paymentGroup)
-      ) {
-        this.reverseBalanceNotAvailable = true;
-      }
-
-      this.serviceBalanceNotAvailable = !this.products.some(item =>
-        this.serviceBalanceExcludedPaymentGroups.includes(item.paymentGroup),
-      );
-
       grandTotal += item.quantity * item.baseAmount;
-      totalTax += parseFloat(item.tax.toFixed(0));
-      subTotal += parseFloat(item.total.toFixed(2));
+      totalTax += Number.parseFloat(item.tax.toFixed(0));
+      subTotal += Number.parseFloat(item.total.toFixed(2));
     });
 
     this.totalTax = totalTax;
@@ -377,7 +360,7 @@ export class CartComponent implements OnInit, OnDestroy {
     return new Promise(resolve => {
       this.cartService.getPurchaseFromThirdParty().subscribe(user => {
         this.userReceivesPurchase = user;
-        if (this.userReceivesPurchase && this.userReceivesPurchase.id) {
+        if (this.userReceivesPurchase?.id) {
           this.showReversePaymentOnly = true;
           resolve(true);
         } else {

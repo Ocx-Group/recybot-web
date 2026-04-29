@@ -9,7 +9,7 @@ import { environment } from '@environments/environment';
 import { Response } from '@app/core/models/response-model/response.model';
 import { ToastrService } from 'ngx-toastr';
 
-import { CartService } from '../cart.service/cart.service';
+import { CartService } from '@app/core/service/cart.service/cart.service';
 
 const httpOptions = {
   headers: new HttpHeaders({

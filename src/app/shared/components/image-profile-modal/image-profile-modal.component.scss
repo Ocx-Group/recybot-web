@@ -1,0 +1,395 @@
+// ============================================================
+// IMAGE PROFILE MODAL — Futuristic Redesign
+// ============================================================
+
+:host {
+  --c-green: #43e37f;
+  --c-teal: #00d4aa;
+  --c-bg: #040c0e;
+  --c-border: rgba(67, 227, 127, 0.18);
+  --c-border-hov: rgba(67, 227, 127, 0.45);
+  --c-text: #ffffff;
+  --c-muted: rgba(255, 255, 255, 0.6);
+  --c-danger: #ff5d6c;
+  --glow-sm: 0 0 14px rgba(67, 227, 127, 0.4);
+  --r: 0.75rem;
+  --r-lg: 1.25rem;
+  --r-pill: 100px;
+}
+
+.modern-image-modal {
+  display: flex;
+  flex-direction: column;
+  color: var(--c-text);
+  background-color: var(--c-bg);
+  background-image:
+    radial-gradient(
+      ellipse 70% 50% at 12% 0%,
+      rgba(0, 54, 55, 0.55) 0%,
+      transparent 65%
+    ),
+    radial-gradient(
+      ellipse 55% 40% at 88% 100%,
+      rgba(67, 227, 127, 0.08) 0%,
+      transparent 60%
+    );
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(67, 227, 127, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(67, 227, 127, 0.03) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  // ── Header ───────────────────────────────────────────────
+  .modal-modern-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 26px 28px 6px;
+    gap: 16px;
+    border-bottom: 1px solid var(--c-border);
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 28px;
+      right: 28px;
+      height: 2px;
+      background: linear-gradient(
+        90deg,
+        transparent 0%,
+        var(--c-green) 50%,
+        transparent 100%
+      );
+      box-shadow: 0 0 14px rgba(67, 227, 127, 0.4);
+    }
+
+    .header-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding-bottom: 16px;
+    }
+
+    .modal-modern-title {
+      font-size: 1.4rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin: 0;
+      background: linear-gradient(
+        130deg,
+        var(--c-green) 0%,
+        var(--c-teal) 100%
+      );
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .modal-modern-subtitle {
+      font-size: 0.85rem;
+      color: var(--c-muted);
+      margin: 0;
+      line-height: 1.4;
+    }
+
+    .modal-close-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: var(--r);
+      background: rgba(4, 12, 16, 0.7);
+      border: 1px solid var(--c-border);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--c-green);
+      transition: all 0.2s;
+      backdrop-filter: blur(8px);
+
+      &:hover {
+        background: rgba(67, 227, 127, 0.15);
+        border-color: var(--c-border-hov);
+        box-shadow: var(--glow-sm);
+      }
+
+      i {
+        font-size: 18px;
+      }
+    }
+  }
+
+  // ── Body ─────────────────────────────────────────────────
+  .modal-body {
+    padding: 28px;
+    background: transparent !important;
+
+    .row,
+    [class^='col-'] {
+      background: transparent !important;
+    }
+  }
+
+  // ── Image Preview ────────────────────────────────────────
+  .image-preview-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    background: transparent !important;
+    animation: fadeIn 0.3s ease;
+  }
+
+  .image-wrapper {
+    position: relative;
+    display: inline-block;
+    max-width: 100%;
+    padding: 8px;
+    border-radius: var(--r-lg);
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.05) 0%,
+      rgba(255, 255, 255, 0.02) 100%
+    );
+    border: 1px solid var(--c-border);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    box-shadow:
+      0 10px 40px rgba(0, 0, 0, 0.4),
+      0 0 30px rgba(67, 227, 127, 0.08);
+  }
+
+  .profile-image-preview {
+    max-width: 100%;
+    max-height: 380px;
+    border-radius: 1rem;
+    object-fit: contain;
+    display: block;
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: scale(1.02);
+    }
+  }
+
+  // ── Buttons ──────────────────────────────────────────────
+  .btn-modern {
+    height: 42px;
+    padding: 0 22px;
+    border-radius: var(--r-pill);
+    border: none;
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: 0.025em;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    white-space: nowrap;
+
+    i {
+      font-size: 1rem;
+    }
+
+    &.btn-cancel {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: var(--c-text);
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.1);
+        border-color: var(--c-border-hov);
+        transform: translateY(-2px);
+      }
+    }
+
+    &.btn-remove-image {
+      background: rgba(255, 93, 108, 0.12);
+      border: 1px solid rgba(255, 93, 108, 0.4);
+      color: var(--c-danger);
+
+      &:hover {
+        background: rgba(255, 93, 108, 0.2);
+        box-shadow: 0 4px 18px rgba(255, 93, 108, 0.35);
+        transform: translateY(-2px);
+      }
+    }
+  }
+
+  // ── Footer ───────────────────────────────────────────────
+  .modern-modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 12px 28px 24px;
+    gap: 12px;
+    border: none;
+    background: transparent;
+
+    .footer-actions {
+      display: flex;
+      gap: 12px;
+
+      @media (max-width: 576px) {
+        width: 100%;
+
+        .btn-modern {
+          flex: 1;
+        }
+      }
+    }
+  }
+}
+
+// ── Dropzone (penetrar encapsulación) ────────────────────────
+::ng-deep .modern-image-modal {
+  ngx-dropzone {
+    width: 100% !important;
+    border: 2px dashed rgba(67, 227, 127, 0.45) !important;
+    background: linear-gradient(
+      135deg,
+      rgba(67, 227, 127, 0.06) 0%,
+      rgba(0, 212, 170, 0.03) 100%
+    ) !important;
+    border-radius: 1.25rem !important;
+    min-height: 300px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    position: relative !important;
+    overflow: hidden !important;
+    color: #ffffff !important;
+
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(67, 227, 127, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(67, 227, 127, 0.04) 1px, transparent 1px);
+      background-size: 24px 24px;
+      pointer-events: none;
+    }
+
+    &:hover,
+    &.ngx-dz-hovered {
+      border-color: #43e37f !important;
+      background: linear-gradient(
+        135deg,
+        rgba(67, 227, 127, 0.1) 0%,
+        rgba(0, 212, 170, 0.06) 100%
+      ) !important;
+      box-shadow:
+        0 0 0 4px rgba(67, 227, 127, 0.08),
+        0 8px 32px rgba(67, 227, 127, 0.18) !important;
+      transform: scale(1.01) !important;
+    }
+  }
+
+  ngx-dropzone-label {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 12px !important;
+    padding: 24px !important;
+    text-align: center !important;
+    position: relative;
+    z-index: 1;
+
+    .dz-icon {
+      width: 72px;
+      height: 72px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: rgba(67, 227, 127, 0.12);
+      border: 1px solid rgba(67, 227, 127, 0.35);
+      color: #43e37f;
+      font-size: 32px;
+      box-shadow: 0 0 24px rgba(67, 227, 127, 0.25);
+      animation: float 3s ease-in-out infinite;
+    }
+
+    .dz-title {
+      font-size: 1rem !important;
+      font-weight: 600 !important;
+      color: #ffffff !important;
+      letter-spacing: -0.01em;
+    }
+
+    .dz-hint {
+      font-size: 0.78rem !important;
+      font-weight: 500 !important;
+      color: rgba(255, 255, 255, 0.55) !important;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+  }
+}
+
+// ── Animations ───────────────────────────────────────────────
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+// ── Modal container override (NgbModal renders to body) ──────
+::ng-deep {
+  .modal-content:has(.modern-image-modal) {
+    border: 1px solid rgba(67, 227, 127, 0.18) !important;
+    border-radius: 1.25rem !important;
+    background: #040c0e !important;
+    box-shadow:
+      0 25px 80px rgba(0, 0, 0, 0.65),
+      0 0 60px rgba(67, 227, 127, 0.12) !important;
+    overflow: hidden;
+  }
+
+  .modal-content:has(.modern-image-modal) .modal-header,
+  .modal-content:has(.modern-image-modal) .modal-footer {
+    border: none;
+    padding: 0;
+    background: transparent;
+  }
+
+  .modal-content:has(.modern-image-modal) .modal-body {
+    padding: 0;
+  }
+}

@@ -1,101 +1,163 @@
-import { Injectable } from '@angular/core';
+import { Injectable, computed, signal } from '@angular/core';
 import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
 import { ToastrService } from 'ngx-toastr';
-import { BehaviorSubject, map } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CartService {
-  public cartItemList: any = [];
-  public productList = new BehaviorSubject<any>([]);
+  // -------------------------------------------------------------------------
+  // Signals (modern API — single source of truth for the cart contents).
+  // -------------------------------------------------------------------------
+  private readonly _cartItems = signal<any[]>([]);
+
+  readonly cartItems = this._cartItems.asReadonly();
+
+  readonly consolidatedProducts = computed(() => {
+    const products = this._cartItems();
+    const productMap: Record<string | number, any> = {};
+    const result: any[] = [];
+
+    for (const product of products) {
+      const key = product?.id;
+      if (key === undefined || key === null) {
+        result.push({ ...product });
+        continue;
+      }
+      if (productMap[key]) {
+        productMap[key].quantity += product.quantity ?? 1;
+        productMap[key].total =
+          productMap[key].salePrice * productMap[key].quantity;
+      } else {
+        productMap[key] = { ...product };
+        result.push(productMap[key]);
+      }
+    }
+    return result;
+  });
+
+  readonly totalPriceSignal = computed(() =>
+    this._cartItems().reduce(
+      (acc, item) => acc + (item.quantity ?? 1) * (item.salePrice ?? 0),
+      0,
+    ),
+  );
+
+  // -------------------------------------------------------------------------
+  // Backward-compatible BehaviorSubjects (existing subscribers keep working).
+  // -------------------------------------------------------------------------
+  public productList = new BehaviorSubject<any[]>([]);
   public search = new BehaviorSubject<string>('');
   public totalPrice = new BehaviorSubject<number>(0);
-  public userReceivesPurchase: BehaviorSubject<UserAffiliate> = new BehaviorSubject<UserAffiliate>(new UserAffiliate());
-  public normalUser: BehaviorSubject<UserAffiliate> = new BehaviorSubject<UserAffiliate>(new UserAffiliate());
+  public userReceivesPurchase = new BehaviorSubject<UserAffiliate>(
+    new UserAffiliate(),
+  );
+  public normalUser = new BehaviorSubject<UserAffiliate>(new UserAffiliate());
 
-  constructor(private toast: ToastrService) { }
+  /** @deprecated Use the `cartItems` signal. Do NOT mutate this array. */
+  public get cartItemList(): any[] {
+    return this._cartItems();
+  }
 
+  constructor(private readonly toast: ToastrService) {}
 
   showError(message: string) {
     this.toast.error(message);
   }
 
+  /** Backward compatible: emits the consolidated product list. */
   getProducts() {
-    return this.productList.asObservable().pipe(
-      map((products: any[]) => {
-        let consolidatedProducts: any[] = [];
-        let productMap = {};
-
-        products.forEach(product => {
-          if (productMap[product.id]) {
-            productMap[product.id].quantity += product.quantity;
-            productMap[product.id].total = productMap[product.id].salePrice * productMap[product.id].quantity;
-          } else {
-            productMap[product.id] = { ...product };
-            consolidatedProducts.push(productMap[product.id]);
-          }
-        });
-
-        return consolidatedProducts;
-      })
-    );
+    return this.productList.asObservable();
   }
 
   setProduct(product: any) {
-    this.cartItemList.push(...product);
-    this.productList.next(this.cartItemList);
+    const incoming = Array.isArray(product) ? product : [product];
+    this._cartItems.update(items => [...items, ...incoming]);
+    this.syncSubjects();
   }
 
-  addtoCart(product: any) {
-    const modelTwo = product.paymentGroup === 2;
-    const modelOneA = product.paymentGroup === 7;
-    const modelOneB = product.paymentGroup === 8;
+  private getPaymentGroup(product: any): number {
+    return product?.paymentGroup ?? product?.paymentGroupId ?? 0;
+  }
+
+  addtoCart(product: any): boolean {
+    const paymentGroup = this.getPaymentGroup(product);
+    const modelTwo = paymentGroup === 2;
+    const modelOneA = paymentGroup === 7;
+    const modelOneB = paymentGroup === 8;
     const otherModels = !(modelTwo || modelOneA || modelOneB);
 
-    if (this.cartItemList.length > 0) {
-      const cartContainsModelTwo = this.cartItemList.some(item => item.paymentGroup === 2);
-      const cartContainsModelOneA = this.cartItemList.some(item => item.paymentGroup === 7);
-      const cartContainsModelOneB = this.cartItemList.some(item => item.paymentGroup === 8);
-      const cartContainsOtherModels = this.cartItemList.some(item => !(item.paymentGroup === 2 || item.paymentGroup === 7 || item.paymentGroup === 8));
+    const currentItems = this._cartItems();
 
-      if ((modelTwo && (cartContainsModelOneA || cartContainsModelOneB || cartContainsOtherModels)) ||
-        (modelOneA && (cartContainsModelTwo || cartContainsModelOneB || cartContainsOtherModels)) ||
-        (modelOneB && (cartContainsModelOneA || cartContainsModelTwo || cartContainsOtherModels)) ||
-        (otherModels && (cartContainsModelOneA || cartContainsModelTwo || cartContainsModelOneB))) {
-        this.showError('No puedes mezclar servicios de diferentes modelos en el carrito.');
-        return;
+    if (currentItems.length > 0) {
+      const cartContainsModelTwo = currentItems.some(
+        item => this.getPaymentGroup(item) === 2,
+      );
+      const cartContainsModelOneA = currentItems.some(
+        item => this.getPaymentGroup(item) === 7,
+      );
+      const cartContainsModelOneB = currentItems.some(
+        item => this.getPaymentGroup(item) === 8,
+      );
+      const cartContainsOtherModels = currentItems.some(item => {
+        const itemPaymentGroup = this.getPaymentGroup(item);
+        return !(
+          itemPaymentGroup === 2 ||
+          itemPaymentGroup === 7 ||
+          itemPaymentGroup === 8
+        );
+      });
+
+      if (
+        (modelTwo &&
+          (cartContainsModelOneA ||
+            cartContainsModelOneB ||
+            cartContainsOtherModels)) ||
+        (modelOneA &&
+          (cartContainsModelTwo ||
+            cartContainsModelOneB ||
+            cartContainsOtherModels)) ||
+        (modelOneB &&
+          (cartContainsModelOneA ||
+            cartContainsModelTwo ||
+            cartContainsOtherModels)) ||
+        (otherModels &&
+          (cartContainsModelOneA ||
+            cartContainsModelTwo ||
+            cartContainsModelOneB))
+      ) {
+        this.showError(
+          'No puedes mezclar servicios de diferentes modelos en el carrito.',
+        );
+        return false;
       }
     }
 
-    this.cartItemList.push({ ...product, quantity: 1 });
-
-    let grandTotal = this.getTotalPrice();
-    this.productList.next(this.cartItemList);
-    this.totalPrice.next(grandTotal);
+    const newItem = { ...product, paymentGroup, quantity: 1 };
+    this._cartItems.update(items => [...items, newItem]);
+    this.syncSubjects();
+    return true;
   }
 
   getTotalPrice(): number {
-    let grandTotal = 0;
-    this.cartItemList.map((a: any) => {
-      grandTotal += a.quantity * a.salePrice;
-    });
-    return grandTotal;
+    return this.totalPriceSignal();
   }
 
   removeCartItem(product: any) {
-    const index = this.cartItemList.findIndex(
-      (item: any) => item.id === product.id
-    );
+    const items = this._cartItems();
+    const index = items.findIndex((item: any) => item.id === product.id);
     if (index !== -1) {
-      this.cartItemList.splice(index, 1);
-      this.productList.next(this.cartItemList);
+      const next = [...items];
+      next.splice(index, 1);
+      this._cartItems.set(next);
+      this.syncSubjects();
     }
   }
 
   removeAllCart() {
-    this.cartItemList = [];
-    this.productList.next(this.cartItemList);
+    this._cartItems.set([]);
+    this.syncSubjects();
   }
 
   setPurchaseFromThirdParty(user: UserAffiliate) {
@@ -108,5 +170,14 @@ export class CartService {
 
   clearPurchaseFromThirdParty() {
     this.userReceivesPurchase.next(new UserAffiliate());
+  }
+
+  // -------------------------------------------------------------------------
+  private syncSubjects() {
+    // Emit the consolidated/aggregated view so existing subscribers
+    // (header counter, cart page) keep working.
+    const consolidated = this.consolidatedProducts();
+    this.productList.next(consolidated);
+    this.totalPrice.next(this.totalPriceSignal());
   }
 }

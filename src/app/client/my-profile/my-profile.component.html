@@ -29,13 +29,6 @@
                       | translate
                       }}</span>
                   </a>
-                  <a ngbDropdownItem id="btn-edit-question" (click)="openSecretQuestionModal()">
-                    <i class="bi bi-question-diamond-fill"></i>
-                    <span style="margin-left: 5px">{{
-                      'ADMIN-MY-PROFILE.LBL-CHANGE-SECRET-QUESTION.TEXT'
-                      | translate
-                      }}</span>
-                  </a>
                   <a ngbDropdownItem id="btn-edit-personal-info" (click)="openEditPersonalInfoModal()">
                     <i class="fas fa-edit"></i>
                     <span style="margin-left: 5px">{{
@@ -45,10 +38,11 @@
                   </a>
 
                   <a ngbDropdownItem id="btn-change-image-profile" (click)="openImageProfileModal()">
-                    <i class="fas fa-edit"></i>
-                    <span style="margin-left: 5px">
-                      Cambiar la foto de perfil
-                    </span>
+                    <i class="fas fa-image"></i>
+                    <span style="margin-left: 5px">{{
+                      'ADMIN-MY-PROFILE.LBL-CHANGE-PROFILE-IMAGE.TEXT'
+                      | translate
+                      }}</span>
                   </a>
                 </div>
               </div>

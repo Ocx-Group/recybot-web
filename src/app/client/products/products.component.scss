@@ -3,22 +3,28 @@
 // ============================================================
 
 :host {
-  --c-green:        #43e37f;
-  --c-teal:         #00d4aa;
-  --c-bg:           #040c0e;
-  --c-surface:      rgba(255, 255, 255, 0.04);
-  --c-surface-hov:  rgba(255, 255, 255, 0.08);
-  --c-border:       rgba(67, 227, 127, 0.12);
-  --c-border-hov:   rgba(67, 227, 127, 0.35);
-  --c-text:         #ffffff;
-  --c-muted:        rgba(255, 255, 255, 0.55);
-  --r-lg:           1.25rem;
+  --c-green: #43e37f;
+  --c-teal: #00d4aa;
+  --c-bg: #040c0e;
+  --c-surface: rgba(255, 255, 255, 0.04);
+  --c-surface-hov: rgba(255, 255, 255, 0.08);
+  --c-border: rgba(67, 227, 127, 0.12);
+  --c-border-hov: rgba(67, 227, 127, 0.35);
+  --c-text: #ffffff;
+  --c-muted: rgba(255, 255, 255, 0.55);
+  --r-lg: 1.25rem;
   display: block;
 }
 
 @keyframes fade-up {
-  from { opacity: 0; transform: translateY(20px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 // ── Container ─────────────────────────────────────────────────
@@ -73,7 +79,7 @@
     transform: scale(1.06);
   }
 
-  // ── Hover overlay
+  // ── Hover overlay (pure CSS — no Angular state needed)
   &__overlay {
     position: absolute;
     inset: 0;
@@ -82,13 +88,14 @@
     align-items: center;
     justify-content: center;
     opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s, visibility 0.3s;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+  }
 
-    &.show {
-      opacity: 1;
-      visibility: visible;
-    }
+  &:hover &__overlay,
+  &:focus-within &__overlay {
+    opacity: 1;
+    pointer-events: auto;
   }
 
   &__cta-btn {
@@ -108,10 +115,14 @@
     transition: all 0.3s ease;
     box-shadow: 0 4px 16px rgba(67, 227, 127, 0.3);
 
-    i { font-size: 1.1rem; }
+    i {
+      font-size: 1.1rem;
+    }
   }
 
-  &__overlay.show &__cta-btn {
+  &__overlay.show &__cta-btn,
+  &:hover &__cta-btn,
+  &:focus-within &__cta-btn {
     transform: translateY(0);
   }
 

@@ -18,26 +18,14 @@ const httpOptions = {
   providedIn: 'root',
 })
 export class ProductService {
-  private urlApi: string;
-  private readonly paymentGroups = {
-    ecoPools: 2,
-    services: 3,
-    fundingAccounts: 5,
-    tradingAcademy: 14,
-    savingsPlans: 7,
-    savingsPlansOneB: 8,
-    alternativeHealth: 9,
-    alternativeHealthForEurope: 10,
-    recyCoin: 11,
-  };
+  private readonly urlApi: string;
 
-  constructor(private router: Router, private http: HttpClient) {
+  constructor(private readonly router: Router, private readonly http: HttpClient) {
     this.urlApi = environment.apis.inventoryService;
   }
 
   getProductsByBrand(filters: {
     productIds?: number[];
-    paymentGroupIds?: number[];
     productType?: boolean;
     state?: boolean;
     visible?: boolean;
@@ -50,10 +38,6 @@ export class ProductService {
       params = params.append('productIds', id.toString());
     });
 
-    filters.paymentGroupIds?.forEach(id => {
-      params = params.append('paymentGroupIds', id.toString());
-    });
-
     if (filters.productType !== undefined) params = params.set('productType', String(filters.productType));
     if (filters.state !== undefined) params = params.set('state', String(filters.state));
     if (filters.visible !== undefined) params = params.set('visible', String(filters.visible));
@@ -64,7 +48,7 @@ export class ProductService {
       map((response) => {
         if (response.success) return response.data;
         else {
-          console.error('ERROR: ' + response);
+          console.error('ERROR: ', response);
           return null;
         }
       })
@@ -72,11 +56,11 @@ export class ProductService {
   }
 
   getAllEcoPooles() {
-    return this.getProductsByBrand({ paymentGroupIds: [this.paymentGroups.ecoPools] });
+    return this.getProductsByBrand();
   }
 
   getAllServices() {
-    return this.getProductsByBrand({ paymentGroupIds: [this.paymentGroups.services] });
+    return this.getProductsByBrand();
   }
 
   getAllProductsAdmin() {
@@ -122,30 +106,30 @@ export class ProductService {
   }
 
   getAllFundingAccounts() {
-    return this.getProductsByBrand({ paymentGroupIds: [this.paymentGroups.fundingAccounts] });
+    return this.getProductsByBrand();
   }
 
   getAllTradingAcademy() {
-    return this.getProductsByBrand({ paymentGroupIds: [this.paymentGroups.tradingAcademy] });
+    return this.getProductsByBrand();
   }
 
   getAllSavingsPlans() {
-    return this.getProductsByBrand({ paymentGroupIds: [this.paymentGroups.savingsPlans] });
+    return this.getProductsByBrand();
   }
 
   getAllSavingsPlansOneB() {
-    return this.getProductsByBrand({ paymentGroupIds: [this.paymentGroups.savingsPlansOneB] });
+    return this.getProductsByBrand();
   }
 
   getAllAlternativeHealth() {
-    return this.getProductsByBrand({ paymentGroupIds: [this.paymentGroups.alternativeHealth] });
+    return this.getProductsByBrand();
   }
 
   getAllAlternativeHealthForEurope() {
-    return this.getProductsByBrand({ paymentGroupIds: [this.paymentGroups.alternativeHealthForEurope] });
+    return this.getProductsByBrand();
   }
 
   getAllRecyCoin() {
-    return this.getProductsByBrand({ paymentGroupIds: [this.paymentGroups.recyCoin] });
+    return this.getProductsByBrand();
   }
 }
