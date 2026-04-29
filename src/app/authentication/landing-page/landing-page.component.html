@@ -16,8 +16,8 @@
 
       <div *ngIf="user" class="user-chip">
         <div class="user-chip__avatar">
-          <img [src]="user?.image_profile_url ? user?.image_profile_url : 'assets/images/user.png'"
-            alt="User Profile" />
+          <img [src]="user?.image_profile_url ? user?.image_profile_url : 'assets/images/user.svg'"
+            (error)="$any($event.target).src='assets/images/user.svg'" alt="User Profile" />
         </div>
         <div class="user-chip__info">
           <span class="user-chip__name">{{this.user.name}} {{this.user.last_name}}</span>

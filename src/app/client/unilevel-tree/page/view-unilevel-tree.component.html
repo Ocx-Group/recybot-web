@@ -40,8 +40,8 @@
                               </app-client-unilevel-tree-component>
                               <ng-template #nodeTemplate let-node>
                                 <div class="chart-node">
-                                  <img title="user image" alt="node" [src]="node.image || 'assets/images/user.png'"
-                                    class="node-image" />
+                                  <img title="user image" alt="node" [src]="node.image || 'assets/images/user.svg'"
+                                    (error)="$any($event.target).src='assets/images/user.svg'" class="node-image" />
                                   <div class="name">
                                     <span class="user-name">
                                       {{ node.userName || node.user_name }}
