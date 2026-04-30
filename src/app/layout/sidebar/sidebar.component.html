@@ -93,4 +93,4 @@
 </aside>
 <!-- #END# Left Sidebar -->
 
-<app-image-profile-modal #profileImgComponent></app-image-profile-modal>
+<app-image-profile-modal (getInfo)="refreshUserInfoData(user.id)" #profileImgComponent></app-image-profile-modal>
