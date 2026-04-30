@@ -392,21 +392,6 @@
                 transition: all 0.2s ease;
               }
             }
-
-            // a {
-            //   &:before {
-            //     content: '\f068';
-            //     font-family: 'Font Awesome 5 Free';
-            //     font-size: 11px;
-            //     display: block;
-            //     width: 7px;
-            //     height: 7px;
-            //     position: absolute;
-            //     left: 10%;
-            //     font-weight: 900;
-            //     top: calc(50% - 15px);
-            //   }
-            // }
             .ml-menu-2 {
               display: block;
             }
@@ -784,13 +769,6 @@
       float: left;
       font-size: 20px;
     }
-
-    // .menu-toggle::after{
-    //     content: "\2304";
-    //     position: absolute;
-    //     top: 15px;
-    //     right: 0;
-    // }
   }
 
   .slimScrollDiv {
@@ -876,18 +854,6 @@
       font-size: 12px;
     }
   }
-
-  // .menu .list .ml-menu .active a::before {
-  //   content: '\f068';
-  //   font-family: 'Font Awesome 5 Free';
-  //   font-size: 11px;
-  //   display: block;
-  //   width: 7px;
-  //   height: 7px;
-  //   position: absolute;
-  //   left: 10%;
-  //   font-weight: 900;
-  // }
 }
 .sidebar-userpic-name {
   margin-top: 7px;
@@ -960,7 +926,6 @@
 .sidebar-userpic-btn {
   display: flex;
   place-content: space-around;
-  margin: auto;
   line-height: 2rem;
   padding: 9px 9px 9px 9px;
   margin: 8px 13px 0px 13px;
@@ -973,14 +938,11 @@
 
     &:hover {
       cursor: pointer;
+      background-color: transparent !important;
     }
 
     .mat-button-wrapper {
       margin-left: 0px !important;
-    }
-
-    &:hover {
-      background-color: transparent !important;
     }
   }
 }
@@ -992,7 +954,6 @@
 
 .side-closed {
   .sidebar {
-    /*margin-left: -300px;*/
     width: 60px;
     .menu {
       .list {
@@ -1007,9 +968,6 @@
             display: none;
           }
           a {
-            // &:before {
-            //   top: calc(50% - 15px);
-            // }
             &:after {
               top: calc(50% - 8px);
             }
