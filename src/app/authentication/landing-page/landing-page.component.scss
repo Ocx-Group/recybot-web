@@ -303,15 +303,16 @@
 
 // ── User Chip ─────────────────────────────────────────────────
 .user-chip {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 0.625rem;
+  gap: 0.75rem;
   background: rgba(0, 54, 55, 0.45);
   border: 1px solid var(--c-border);
-  border-radius: var(--r-pill);
-  padding: 0.25rem 1rem 0.25rem 0.25rem;
+  border-radius: var(--r-lg);
+  padding: 0.4rem 1rem 0.4rem 0.4rem;
   cursor: pointer;
   transition: all 0.25s;
+  min-height: 56px;
 
   &:hover {
     border-color: var(--c-border-hov);
@@ -319,12 +320,16 @@
   }
 
   &__avatar {
-    width: 34px;
-    height: 34px;
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
     overflow: hidden;
-    border: 1.5px solid rgba(67, 227, 127, 0.5);
+    border: 2px solid rgba(67, 227, 127, 0.55);
+    box-shadow:
+      0 0 0 2px rgba(0, 0, 0, 0.35),
+      0 0 14px rgba(67, 227, 127, 0.35);
     flex-shrink: 0;
+    background: #040c0e;
 
     img {
       width: 100%;
@@ -338,17 +343,26 @@
     display: flex;
     flex-direction: column;
     line-height: 1.25;
+    min-width: 0;
   }
 
   &__name {
-    font-size: 0.8rem;
+    font-size: 0.85rem;
     font-weight: 600;
     color: var(--c-text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 180px;
   }
 
   &__username {
-    font-size: 0.7rem;
+    font-size: 0.72rem;
     color: var(--c-green);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 180px;
   }
 }
 
