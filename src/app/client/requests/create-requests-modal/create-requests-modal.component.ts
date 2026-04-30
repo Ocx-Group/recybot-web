@@ -1,31 +1,43 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild,} from '@angular/core';
-import {AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators,} from '@angular/forms';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import Swal from 'sweetalert2';
-import {DateTime} from 'luxon';
-
-import {WalletRequestService} from '@app/core/service/wallet-request/wallet-request.service';
-import {ToastrService} from 'ngx-toastr';
-import {WalletRequestRequest} from '@app/core/models/wallet-request-request-model/wallet-request-request.model';
-import {AffiliateService} from '@app/core/service/affiliate-service/affiliate.service';
-import {UserAffiliate} from '@app/core/models/user-affiliate-model/user.affiliate.model';
-import {BalanceInformation} from '@app/core/models/wallet-model/balance-information.model';
 import {
-  WalletWithdrawalsConfiguration
-} from '@app/core/models/wallet-withdrawals-configuration-model/wallet-withdrawals-configuration.model';
-import {AffiliateBtcService} from '@app/core/service/affiliate-btc-service/affiliate-btc.service';
-import {CommonModule} from '@angular/common';
-import {AffiliateBtc} from '@app/core/models/affiliate-btc-model/affiliate-btc.model';
-import {Response} from '@app/core/models/response-model/response.model';
-import {HttpErrorResponse} from '@angular/common/http';
-import {TranslatePipe} from "@ngx-translate/core";
-import {off} from "@angular/fire/database";
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
+import {
+  AbstractControl,
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import Swal from 'sweetalert2';
+import { DateTime } from 'luxon';
+
+import { WalletRequestService } from '@app/core/service/wallet-request/wallet-request.service';
+import { ToastrService } from 'ngx-toastr';
+import { WalletRequestRequest } from '@app/core/models/wallet-request-request-model/wallet-request-request.model';
+import { AffiliateService } from '@app/core/service/affiliate-service/affiliate.service';
+import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
+import { BalanceInformation } from '@app/core/models/wallet-model/balance-information.model';
+import { WalletWithdrawalsConfiguration } from '@app/core/models/wallet-withdrawals-configuration-model/wallet-withdrawals-configuration.model';
+import { AffiliateBtcService } from '@app/core/service/affiliate-btc-service/affiliate-btc.service';
+import { CommonModule } from '@angular/common';
+import { AffiliateBtc } from '@app/core/models/affiliate-btc-model/affiliate-btc.model';
+import { Response } from '@app/core/models/response-model/response.model';
+import { HttpErrorResponse } from '@angular/common/http';
+import { TranslatePipe } from '@ngx-translate/core';
+import { off } from '@angular/fire/database';
 
 @Component({
   selector: 'app-create-requests-modal',
   templateUrl: './create-requests-modal.component.html',
+  styleUrls: ['./create-requests-modal.component.scss'],
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, TranslatePipe]
+  imports: [CommonModule, ReactiveFormsModule, TranslatePipe],
 })
 export class CreateRequestsModalComponent implements OnInit {
   walletRequest: WalletRequestRequest = new WalletRequestRequest();
@@ -51,8 +63,7 @@ export class CreateRequestsModalComponent implements OnInit {
     private toastr: ToastrService,
     private affiliateService: AffiliateService,
     private affiliateBtcService: AffiliateBtcService,
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     this.getUtcToday();
@@ -211,7 +222,7 @@ export class CreateRequestsModalComponent implements OnInit {
                 }
                 return acc;
               },
-              {trc20Address: ''},
+              { trc20Address: '' },
             );
 
             this.affiliateBtc.trc20Address = address.trc20Address || '';

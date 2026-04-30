@@ -6,7 +6,10 @@ import {
   ViewChild,
 } from '@angular/core';
 import { BalanceInformation } from '@app/core/models/wallet-model/balance-information.model';
-import { DatatableComponent } from '@swimlane/ngx-datatable';
+import {
+  DatatableComponent,
+  NgxDatatableModule,
+} from '@swimlane/ngx-datatable';
 
 import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
 import { WalletWithdrawalsConfiguration } from '@app/core/models/wallet-withdrawals-configuration-model/wallet-withdrawals-configuration.model';
@@ -17,7 +20,6 @@ import { WalletService } from '@app/core/service/wallet-service/wallet.service';
 import { ToastrService } from 'ngx-toastr';
 import { MatrixQualificationService } from '@app/core/service/matrix-qualification-service/matrix-qualification.service';
 import { CommonModule } from '@angular/common';
-import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { TranslateModule } from '@ngx-translate/core';
 import { TruncateDecimalsPipe } from '@app/shared/pipes/truncate-decimals.pipe';
 import { IconsModule } from '@app/shared';
@@ -28,6 +30,7 @@ import { RouterLink } from '@angular/router';
 @Component({
   selector: 'app-requests',
   templateUrl: './requests.component.html',
+  styleUrls: ['./requests.component.scss'],
   standalone: true,
   imports: [
     CommonModule,

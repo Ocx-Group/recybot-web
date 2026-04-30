@@ -1,0 +1,113 @@
+// ============================================================
+// RECYBOT REQUESTS — Futuristic Redesign (alerts contrast fix)
+// Sigue la paleta del landing, login y dashboard cliente
+// ============================================================
+
+:host {
+  --c-green: #43e37f;
+  --c-teal: #00d4aa;
+  --c-dark: #003637;
+  --c-bg: #040c0e;
+  --c-surface: rgba(255, 255, 255, 0.04);
+  --c-border: rgba(67, 227, 127, 0.18);
+  --c-border-hov: rgba(67, 227, 127, 0.45);
+  --c-text: #ffffff;
+  --c-muted: rgba(255, 255, 255, 0.65);
+  --glow-sm: 0 0 14px rgba(67, 227, 127, 0.4);
+  --glow-md:
+    0 0 30px rgba(67, 227, 127, 0.25), 0 0 70px rgba(67, 227, 127, 0.1);
+  --r: 0.75rem;
+  --r-lg: 1.25rem;
+
+  display: block;
+  color: var(--c-text);
+}
+
+// ── Alertas (Information / Available Balance) ────────────────
+// Reemplaza el fondo claro por una superficie de cristal oscura
+// con borde verde para que contraste con el dashboard.
+::ng-deep .main-content ngb-alert.alert {
+  position: relative;
+  color: var(--c-text);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.05) 0%,
+    rgba(255, 255, 255, 0.02) 100%
+  ) !important;
+  border: 1px solid var(--c-border) !important;
+  border-radius: var(--r-lg) !important;
+  padding: 1.25rem 1.5rem !important;
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  transition:
+    border-color 0.3s,
+    box-shadow 0.3s;
+
+  &:hover {
+    border-color: var(--c-border-hov);
+    box-shadow: var(--glow-md);
+  }
+
+  // Acento lateral verde
+  &::before {
+    content: '';
+    position: absolute;
+    top: 1rem;
+    bottom: 1rem;
+    left: 0;
+    width: 3px;
+    border-radius: 0 3px 3px 0;
+    background: linear-gradient(180deg, var(--c-green) 0%, var(--c-teal) 100%);
+    box-shadow: var(--glow-sm);
+  }
+
+  .alert-title {
+    color: var(--c-text);
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    margin-bottom: 0.4rem;
+  }
+
+  .alert-icon {
+    color: var(--c-green);
+    text-shadow: var(--glow-sm);
+
+    .ion,
+    .fas,
+    .far,
+    .fab,
+    .fal {
+      font-size: 22px;
+    }
+  }
+
+  .alert-body {
+    color: var(--c-muted);
+
+    ul {
+      margin: 0;
+      padding-left: 1.1rem;
+
+      li {
+        color: var(--c-muted);
+        line-height: 1.6;
+      }
+    }
+  }
+
+  // Monto del balance disponible — gradiente neón verde/teal
+  h4 {
+    margin: 0.25rem 0 0;
+    font-size: 1.85rem;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    background: linear-gradient(130deg, var(--c-green) 0%, var(--c-teal) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 22px rgba(67, 227, 127, 0.18);
+  }
+}

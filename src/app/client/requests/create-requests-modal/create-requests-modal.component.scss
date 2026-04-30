@@ -1,0 +1,337 @@
+// ============================================================
+// CREATE REQUESTS MODAL — Futuristic Redesign
+// Sigue la paleta del landing, login y dashboard cliente
+// ============================================================
+
+:host {
+  --c-green: #43e37f;
+  --c-teal: #00d4aa;
+  --c-dark: #003637;
+  --c-bg: #040c0e;
+  --c-surface: rgba(255, 255, 255, 0.04);
+  --c-surface-hov: rgba(255, 255, 255, 0.08);
+  --c-border: rgba(67, 227, 127, 0.18);
+  --c-border-hov: rgba(67, 227, 127, 0.45);
+  --c-text: #ffffff;
+  --c-muted: rgba(255, 255, 255, 0.65);
+  --c-danger: #ff5d6c;
+  --glow-sm: 0 0 14px rgba(67, 227, 127, 0.4);
+  --glow-md:
+    0 0 30px rgba(67, 227, 127, 0.25), 0 0 70px rgba(67, 227, 127, 0.1);
+  --r: 0.75rem;
+  --r-lg: 1.25rem;
+}
+
+// ── Modal container override (NgbModal renders to body) ──────
+::ng-deep .modal-content:has(.createRequestModal) {
+  border: 1px solid var(--c-border, rgba(67, 227, 127, 0.18)) !important;
+  border-radius: 1.25rem !important;
+  background: #040c0e !important;
+  color: #ffffff !important;
+  box-shadow:
+    0 25px 80px rgba(0, 0, 0, 0.65),
+    0 0 60px rgba(67, 227, 127, 0.12) !important;
+  overflow: hidden;
+
+  // Patrón sutil de cuadrícula
+  background-image:
+    radial-gradient(
+      ellipse 70% 50% at 12% 25%,
+      rgba(0, 54, 55, 0.55) 0%,
+      transparent 65%
+    ),
+    radial-gradient(
+      ellipse 55% 40% at 88% 80%,
+      rgba(67, 227, 127, 0.08) 0%,
+      transparent 60%
+    ),
+    linear-gradient(rgba(67, 227, 127, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(67, 227, 127, 0.025) 1px, transparent 1px);
+  background-size:
+    auto,
+    auto,
+    64px 64px,
+    64px 64px;
+
+  // ── Header ─────────────────────────────────────────────────
+  .modal-header.createRequestModal {
+    border: none !important;
+    padding: 1.5rem 1.75rem 1rem !important;
+    background: transparent !important;
+    align-items: center;
+
+    .modal-title {
+      width: 100%;
+
+      .table-modal-header .modal-about .fw-bold {
+        color: #ffffff;
+        font-weight: 800;
+        letter-spacing: -0.01em;
+        background: linear-gradient(130deg, #43e37f 0%, #00d4aa 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-size: 1.25rem !important;
+      }
+    }
+
+    .close {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255, 255, 255, 0.85);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      opacity: 1;
+
+      .material-icons {
+        font-size: 18px;
+      }
+
+      &:hover {
+        background: rgba(67, 227, 127, 0.12);
+        border-color: rgba(67, 227, 127, 0.45);
+        color: #43e37f;
+        box-shadow: 0 0 14px rgba(67, 227, 127, 0.4);
+      }
+    }
+  }
+
+  // ── Body ───────────────────────────────────────────────────
+  .modal-body {
+    padding: 0.5rem 1.75rem 1.5rem !important;
+    color: rgba(255, 255, 255, 0.85);
+
+    label {
+      color: rgba(255, 255, 255, 0.75);
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      margin-bottom: 0.4rem;
+
+      .text-danger {
+        color: #ff5d6c !important;
+      }
+    }
+
+    // Inputs / textareas
+    .form-control {
+      background: rgba(255, 255, 255, 0.04) !important;
+      border: 1px solid rgba(67, 227, 127, 0.18) !important;
+      color: #ffffff !important;
+      border-radius: 0.75rem !important;
+      padding: 0.65rem 0.9rem !important;
+      transition:
+        border-color 0.2s,
+        box-shadow 0.2s,
+        background 0.2s;
+
+      &::placeholder {
+        color: rgba(255, 255, 255, 0.4);
+      }
+
+      &:focus {
+        background: rgba(255, 255, 255, 0.06) !important;
+        border-color: rgba(67, 227, 127, 0.55) !important;
+        box-shadow:
+          0 0 0 3px rgba(67, 227, 127, 0.15),
+          0 0 14px rgba(67, 227, 127, 0.25) !important;
+        outline: none;
+      }
+
+      &.is-invalid {
+        border-color: rgba(255, 93, 108, 0.6) !important;
+        background-image: none !important;
+
+        &:focus {
+          box-shadow: 0 0 0 3px rgba(255, 93, 108, 0.18) !important;
+        }
+      }
+    }
+
+    textarea.form-control {
+      min-height: 96px;
+      resize: vertical;
+    }
+
+    .invalid-feedback {
+      color: #ff8a96 !important;
+      font-size: 0.8rem;
+      margin-top: 0.3rem;
+    }
+
+    // Input-group (password / generate code)
+    .input-group {
+      .form-control {
+        border-right: none !important;
+      }
+
+      .btn-outline-secondary {
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(67, 227, 127, 0.18);
+        border-left: none;
+        color: rgba(255, 255, 255, 0.75);
+        border-radius: 0 0.75rem 0.75rem 0 !important;
+        transition: all 0.2s ease;
+
+        .material-icons {
+          font-size: 18px;
+        }
+
+        &:hover {
+          background: rgba(67, 227, 127, 0.1);
+          color: #43e37f;
+          border-color: rgba(67, 227, 127, 0.45);
+        }
+      }
+
+      .input-group-text.btn-primary {
+        background: linear-gradient(
+          130deg,
+          #43e37f 0%,
+          #00d4aa 100%
+        ) !important;
+        border: none !important;
+        color: #003637 !important;
+        font-weight: 700;
+        border-radius: 0.75rem !important;
+        padding: 0.55rem 1rem;
+        cursor: pointer;
+        transition:
+          transform 0.15s ease,
+          box-shadow 0.2s ease;
+        box-shadow: 0 6px 18px rgba(67, 227, 127, 0.25);
+
+        &:hover {
+          transform: translateY(-1px);
+          box-shadow:
+            0 10px 26px rgba(67, 227, 127, 0.35),
+            0 0 18px rgba(67, 227, 127, 0.35);
+        }
+      }
+    }
+  }
+
+  // ── Footer (botones de acción) ─────────────────────────────
+  .modal-footer {
+    border: none !important;
+    padding: 1rem 0 0 !important;
+    margin-top: 1rem;
+    border-top: 1px solid rgba(67, 227, 127, 0.18) !important;
+    gap: 0.75rem;
+    background: transparent !important;
+
+    .btn {
+      border-radius: 0.75rem !important;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      padding: 0.6rem 1.4rem !important;
+      transition:
+        transform 0.15s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease,
+        color 0.2s ease;
+    }
+
+    .btn-primary {
+      background: linear-gradient(130deg, #43e37f 0%, #00d4aa 100%) !important;
+      border: none !important;
+      color: #003637 !important;
+      box-shadow: 0 8px 22px rgba(67, 227, 127, 0.28);
+
+      &:hover {
+        transform: translateY(-1px);
+        box-shadow:
+          0 12px 30px rgba(67, 227, 127, 0.38),
+          0 0 22px rgba(67, 227, 127, 0.4);
+      }
+    }
+
+    .btn-light {
+      background: rgba(255, 255, 255, 0.06) !important;
+      border: 1px solid rgba(255, 255, 255, 0.1) !important;
+      color: rgba(255, 255, 255, 0.85) !important;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.1) !important;
+        border-color: rgba(67, 227, 127, 0.35) !important;
+        color: #43e37f !important;
+      }
+    }
+  }
+}
+
+// Backdrop más oscuro para que la modal resalte
+::ng-deep .modal-backdrop.show {
+  opacity: 0.78;
+}
+
+// ── Fallback global (independiente de :has()) ────────────────
+// Apunta al form ".register-form" del modal (renderizado en body
+// por NgbModal). Garantiza que los inputs no se pinten en blanco
+// aunque el navegador no soporte :has() o el autofill de Chrome
+// intente sobreescribir el fondo.
+::ng-deep form.register-form {
+  .form-control,
+  textarea.form-control,
+  input.form-control {
+    background: rgba(255, 255, 255, 0.04) !important;
+    background-color: rgba(255, 255, 255, 0.04) !important;
+    border: 1px solid rgba(67, 227, 127, 0.18) !important;
+    color: #ffffff !important;
+    border-radius: 0.75rem !important;
+    -webkit-text-fill-color: #ffffff !important;
+    caret-color: #43e37f;
+
+    &::placeholder {
+      color: rgba(255, 255, 255, 0.4) !important;
+      -webkit-text-fill-color: rgba(255, 255, 255, 0.4) !important;
+    }
+
+    &:focus {
+      background: rgba(255, 255, 255, 0.06) !important;
+      background-color: rgba(255, 255, 255, 0.06) !important;
+      border-color: rgba(67, 227, 127, 0.55) !important;
+      box-shadow:
+        0 0 0 3px rgba(67, 227, 127, 0.15),
+        0 0 14px rgba(67, 227, 127, 0.25) !important;
+      outline: none !important;
+    }
+  }
+
+  // Anular autofill de Chrome/Edge/Safari (que repinta blanco/amarillo)
+  .form-control:-webkit-autofill,
+  .form-control:-webkit-autofill:hover,
+  .form-control:-webkit-autofill:focus,
+  .form-control:-webkit-autofill:active {
+    -webkit-text-fill-color: #ffffff !important;
+    -webkit-box-shadow: 0 0 0 1000px rgba(8, 18, 20, 0.98) inset !important;
+    box-shadow: 0 0 0 1000px rgba(8, 18, 20, 0.98) inset !important;
+    caret-color: #43e37f !important;
+    border: 1px solid rgba(67, 227, 127, 0.18) !important;
+    transition: background-color 9999s ease-out 0s;
+  }
+
+  // Quitar las flechitas (spin) del input number para una apariencia limpia
+  input[type='number']::-webkit-outer-spin-button,
+  input[type='number']::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  input[type='number'] {
+    -moz-appearance: textfield;
+  }
+
+  label {
+    color: rgba(255, 255, 255, 0.78) !important;
+  }
+
+  .invalid-feedback {
+    color: #ff8a96 !important;
+  }
+}
