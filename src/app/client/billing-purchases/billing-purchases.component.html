@@ -43,9 +43,10 @@
 
             <!-- Template personalizado para columna de N° Factura (clickeable) -->
             <ng-template #noBillTemplate let-row="row">
-              <div class="col-blue cursor-pointer" (click)="onPrintInvoice(row)">
+              <button type="button" class="col-blue cursor-pointer" (click)="onPrintInvoice(row)"
+                (keydown.enter)="onPrintInvoice(row)">
                 {{ row.id }}
-              </div>
+              </button>
             </ng-template>
 
             <!-- Template personalizado para Estado de Factura -->
@@ -91,13 +92,8 @@
               </div>
             </ng-template>
 
-            <app-reusable-datatable
-              [rows]="rows"
-              [columns]="tableColumns"
-              [actions]="tableActions"
-              [config]="tableConfig"
-              [loadingIndicator]="loadingIndicator"
-              [customButtons]="customButtons">
+            <app-reusable-datatable [rows]="rows" [columns]="tableColumns" [actions]="tableActions"
+              [config]="tableConfig" [loadingIndicator]="loadingIndicator" [customButtons]="customButtons">
             </app-reusable-datatable>
           </div>
         </div>

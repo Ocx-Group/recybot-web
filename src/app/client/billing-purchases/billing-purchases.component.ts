@@ -46,7 +46,7 @@ import {
 })
 export class BillingPurchasesComponent implements OnInit, AfterViewInit {
   private user: UserAffiliate = new UserAffiliate();
-  private walletRequestRevertTransaction: WalletRequestRevertTransaction =
+  private readonly walletRequestRevertTransaction: WalletRequestRevertTransaction =
     new WalletRequestRevertTransaction();
   withdrawalConfiguration = new WalletWithdrawalsConfiguration();
   rows = [];
@@ -196,12 +196,16 @@ export class BillingPurchasesComponent implements OnInit, AfterViewInit {
   loadBillingPurchases() {
     this.invoiceService.getAllInvoicesUser(this.user.id).subscribe({
       next: (invoices: Invoice[]) => {
-        this.temp = [...invoices];
-        this.rows = invoices;
+        const safeInvoices = Array.isArray(invoices) ? invoices : [];
+        this.temp = [...safeInvoices];
+        this.rows = safeInvoices;
         this.loadingIndicator = false;
         console.log(this.rows);
       },
       error: err => {
+        this.loadingIndicator = false;
+        this.rows = [];
+        this.temp = [];
         this.showError('Error');
       },
     });
@@ -371,6 +375,6 @@ export class BillingPurchasesComponent implements OnInit, AfterViewInit {
       console.error('Error: ', err);
     }
 
-    document.body.removeChild(textArea);
+    textArea.remove();
   }
 }
