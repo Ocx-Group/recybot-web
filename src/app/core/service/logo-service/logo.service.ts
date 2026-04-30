@@ -5,7 +5,7 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root',
 })
 export class LogoService {
-  private isDarkTheme = new BehaviorSubject<boolean>(false);
+  private readonly isDarkTheme = new BehaviorSubject<boolean>(false);
   isDarkTheme$ = this.isDarkTheme.asObservable();
 
   constructor() {
@@ -19,6 +19,6 @@ export class LogoService {
   }
 
   getLogoSrc(): string {
-    return 'assets/images/logos/Logo-recybot.png';
+    return 'assets/images/logos/single-logo.png';
   }
 }

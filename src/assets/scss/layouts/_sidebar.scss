@@ -919,6 +919,13 @@
   width: 100%;
   color: #ccc;
   padding: 25px 0px 10px 0;
+  // Reset default <button> styles when used on a button element
+  background: transparent;
+  border: 0;
+  outline: none;
+  font: inherit;
+  text-align: inherit;
+  cursor: pointer;
   .image {
     width: 35%;
     max-width: 75px;
