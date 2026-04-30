@@ -188,6 +188,10 @@ export class BillingPurchasesComponent implements OnInit, AfterViewInit {
           value.activate_invoice_cancellation;
       },
       error: err => {
+        console.error(
+          '[BillingPurchases] loadWithdrawalConfiguration error:',
+          err,
+        );
         this.showError('Error');
       },
     });
@@ -262,11 +266,15 @@ export class BillingPurchasesComponent implements OnInit, AfterViewInit {
         }
       })
       .catch(error => {
+        console.error(
+          '[BillingPurchases] showConfirmationRequest error:',
+          error,
+        );
         Swal.fire({
           icon: 'error',
           title: 'Error',
-          text: error.message,
-        }).then();
+          text: error?.message ?? 'Ocurrió un error inesperado',
+        });
       });
   }
 
@@ -310,6 +318,10 @@ export class BillingPurchasesComponent implements OnInit, AfterViewInit {
           this.showSuccess('La solicitud fue creada correctamente');
         },
         error: err => {
+          console.error(
+            '[BillingPurchases] createRequestRevertDebitTransaction error:',
+            err,
+          );
           this.showError('Error');
         },
       });
@@ -318,24 +330,37 @@ export class BillingPurchasesComponent implements OnInit, AfterViewInit {
   downloadPDF() {
     const DATA = document.getElementById('htmlTable');
 
-    html2canvas(DATA).then(canvas => {
-      let pdf = new jsPDF('l', 'mm', 'a4');
+    if (!DATA) {
+      console.warn(
+        '[BillingPurchases] downloadPDF: #htmlTable not found in DOM',
+      );
+      this.showError('No se encontró la tabla para exportar');
+      return;
+    }
 
-      const pageWidth = 297;
-      const imgWidth = pageWidth - 40;
+    html2canvas(DATA)
+      .then(canvas => {
+        let pdf = new jsPDF('l', 'mm', 'a4');
 
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+        const pageWidth = 297;
+        const imgWidth = pageWidth - 40;
 
-      const posX = 20;
-      const posY = 30;
+        const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
-      pdf.setFontSize(18);
-      pdf.text('Lista de compras', pageWidth / 2, 20, { align: 'center' });
+        const posX = 20;
+        const posY = 30;
 
-      const contentDataURL = canvas.toDataURL('image/png');
-      pdf.addImage(contentDataURL, 'PNG', posX, posY, imgWidth, imgHeight);
-      pdf.save('documento.pdf');
-    });
+        pdf.setFontSize(18);
+        pdf.text('Lista de compras', pageWidth / 2, 20, { align: 'center' });
+
+        const contentDataURL = canvas.toDataURL('image/png');
+        pdf.addImage(contentDataURL, 'PNG', posX, posY, imgWidth, imgHeight);
+        pdf.save('documento.pdf');
+      })
+      .catch(err => {
+        console.error('[BillingPurchases] downloadPDF error:', err);
+        this.showError('Error al generar el PDF');
+      });
   }
 
   copyTableData() {

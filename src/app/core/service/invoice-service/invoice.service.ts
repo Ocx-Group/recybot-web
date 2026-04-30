@@ -1,4 +1,9 @@
-import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpHeaders,
+  HttpParams,
+  HttpResponse,
+} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { catchError, map } from 'rxjs/operators';
@@ -21,29 +26,35 @@ const httpOptions = {
 
 @Injectable({ providedIn: 'root' })
 export class InvoiceService {
-  private urlApi: string;
+  private readonly urlApi: string;
 
-  constructor(private router: Router, private http: HttpClient) {
+  constructor(
+    private readonly router: Router,
+    private readonly http: HttpClient,
+  ) {
     this.urlApi = environment.apis.walletService;
   }
 
   getAllInvoicesUser(id: number): Observable<Invoice[]> {
     return this.http
-      .get<Invoice[]>(
-        this.urlApi.concat(
-          '/invoice/GetAllInvoicesByUserId?id=',
-          id.toString(),
-        ),
-        httpOptions,
-      )
+      .get<
+        Invoice[] | Response<Invoice[]>
+      >(this.urlApi.concat('/invoice/GetAllInvoicesByUserId?id=', id.toString()), httpOptions)
       .pipe(
         map(response => {
+          // Caso 1: la API devuelve directamente el array
           if (Array.isArray(response)) {
             return response;
-          } else {
-            console.error('ERROR: ' + response);
-            return null;
           }
+          // Caso 2: la API devuelve { success, code, data: Invoice[] }
+          if (response && Array.isArray((response as any).data)) {
+            return (response as any).data as Invoice[];
+          }
+          console.error(
+            '[InvoiceService] getAllInvoicesUser: respuesta inesperada:',
+            response,
+          );
+          return [];
         }),
       );
   }
@@ -63,10 +74,9 @@ export class InvoiceService {
     });
 
     return this.http
-      .get<Response<PagedResult<Invoice>>>(
-        `${this.urlApi}/invoice/GetAllInvoices`,
-        { ...httpOptions, params },
-      )
+      .get<
+        Response<PagedResult<Invoice>>
+      >(`${this.urlApi}/invoice/GetAllInvoices`, { ...httpOptions, params })
       .pipe(
         map(response => response || null),
         catchError(error => {
@@ -166,7 +176,7 @@ export class InvoiceService {
           const brandId = brandIdHeader ? parseInt(brandIdHeader, 10) : null;
           console.log('Brand ID:', brandId);
           return {
-            blob: response.body as Blob,
+            blob: response.body,
             brandId: brandId,
           };
         }),
