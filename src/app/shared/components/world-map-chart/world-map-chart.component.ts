@@ -11,10 +11,10 @@ import * as echarts from 'echarts';
 import { EChartsOption } from 'echarts';
 
 export interface CountryData {
-  Title: string;
-  Value: number;
-  Lat: number;
-  Lng: number;
+  title: string;
+  value: number;
+  lat: number;
+  lng: number;
 }
 
 @Component({
@@ -66,8 +66,8 @@ export class WorldMapChartComponent implements OnInit, OnChanges {
     }
 
     const scatterData = this.countries.map(item => ({
-      name: item.Title,
-      value: [item.Lng, item.Lat, item.Value],
+      name: item.title,
+      value: [item.lng, item.lat, item.value],
       itemStyle: {
         color: '#43e37f',
       },
