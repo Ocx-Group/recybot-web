@@ -429,13 +429,37 @@ a:hover {
 
       &:hover,
       &.active {
-        background: rgba(67, 227, 127, 0.05) !important;
+        background: rgba(67, 227, 127, 0.08) !important;
+
+        .datatable-row-group {
+          background: rgba(67, 227, 127, 0.08) !important;
+        }
+      }
+
+      .datatable-row-group {
+        background: transparent !important;
       }
 
       .datatable-body-cell {
         background: transparent !important;
         color: rgba(255, 255, 255, 0.8) !important;
         border-right-color: rgba(255, 255, 255, 0.04) !important;
+
+        // Botones embebidos en celdas (ej: N° Factura clickeable)
+        button {
+          background: transparent !important;
+          border: none !important;
+          padding: 0 !important;
+          font: inherit;
+          cursor: pointer;
+
+          &:hover,
+          &:focus {
+            background: transparent !important;
+            outline: none;
+            text-decoration: underline;
+          }
+        }
       }
     }
 
