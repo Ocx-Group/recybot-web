@@ -874,6 +874,14 @@
     display: flex;
   }
 
+  // En móvil el chip del usuario en la barra superior empuja el toggle
+  // y aumenta la altura del navbar haciendo que el menú se vea cortado.
+  // Lo movemos al dropdown (donde se muestra de forma compacta) y lo
+  // ocultamos del navbar-left.
+  .navbar-left .user-chip {
+    display: none;
+  }
+
   .navbar {
     margin: 0;
     border-radius: 0;

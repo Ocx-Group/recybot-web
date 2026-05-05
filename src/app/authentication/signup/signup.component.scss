@@ -1,179 +1,500 @@
-body {
-  font-family: 'Arial', sans-serif;
-  color: #ffffff;
-  margin: 0;
-  padding: 0;
+:host {
+  --c-green: #43e37f;
+  --c-teal: #00d4aa;
+  --c-dark: #003637;
+  --c-bg: #040c0e;
+  --c-surface: rgba(255, 255, 255, 0.04);
+  --c-surface-hov: rgba(255, 255, 255, 0.07);
+  --c-border: rgba(67, 227, 127, 0.18);
+  --c-border-hov: rgba(67, 227, 127, 0.45);
+  --c-text: #ffffff;
+  --c-muted: rgba(255, 255, 255, 0.65);
+  --c-input-bg: rgba(0, 20, 22, 0.65);
+  --c-danger: #ff6b6b;
+  --glow-sm: 0 0 14px rgba(67, 227, 127, 0.4);
+  --glow-md:
+    0 0 30px rgba(67, 227, 127, 0.25), 0 0 70px rgba(67, 227, 127, 0.1);
+  --r: 0.75rem;
+  --r-lg: 1.25rem;
+  --r-pill: 100px;
+
+  display: block;
+  color: var(--c-text);
+  font-family:
+    'Segoe UI',
+    system-ui,
+    -apple-system,
+    sans-serif;
 }
 
+// ── Keyframes ───────────────────────────────────────────────
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes glow-pulse {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 0.65;
+  }
+}
+
+// ── Wrapper ─────────────────────────────────────────────────
 .recycoin-preview-wrapper {
+  position: relative;
   min-height: 100vh;
-  background-image: url('/assets/images/signup.png');
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 40px 20px;
-  position: relative;
+  padding: 3rem 1.25rem;
   overflow: hidden;
+  background: var(--c-bg);
+  background-image:
+    radial-gradient(
+      ellipse 70% 50% at 12% 25%,
+      rgba(0, 54, 55, 0.55) 0%,
+      transparent 65%
+    ),
+    radial-gradient(
+      ellipse 55% 45% at 88% 80%,
+      rgba(67, 227, 127, 0.1) 0%,
+      transparent 60%
+    );
+
+  // Grid pattern de fondo
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(67, 227, 127, 0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(67, 227, 127, 0.025) 1px, transparent 1px);
+    background-size: 56px 56px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  // Orbe luminoso superior
+  &::after {
+    content: '';
+    position: absolute;
+    top: -180px;
+    left: -160px;
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(
+      circle,
+      rgba(0, 212, 170, 0.12) 0%,
+      transparent 70%
+    );
+    pointer-events: none;
+    z-index: 0;
+    animation: glow-pulse 6s ease-in-out infinite;
+  }
 }
 
-.recycoin-preview-wrapper::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: radial-gradient(circle, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.8) 100%);
-}
-
+// ── Glass card ──────────────────────────────────────────────
 .recycoin-preview {
-  background-color: rgba(17, 75, 95, 0.6);
-  border-radius: 20px;
-  padding: 40px;
-  box-shadow: 0 0 50px rgba(136, 212, 152, 0.3);
-  width: 100%;
-  max-width: 800px;
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(136, 212, 152, 0.3);
   position: relative;
   z-index: 1;
+  width: 100%;
+  max-width: 880px;
+  padding: 3rem 3rem 2.5rem;
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-lg);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.04) 0%,
+    rgba(255, 255, 255, 0.02) 100%
+  );
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+  box-shadow:
+    0 25px 80px rgba(0, 0, 0, 0.55),
+    0 0 60px rgba(67, 227, 127, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  animation: fade-up 0.6s ease both;
+  transition:
+    border-color 0.3s,
+    box-shadow 0.3s;
+
+  &:hover {
+    border-color: var(--c-border-hov);
+  }
+
+  @media (max-width: 768px) {
+    padding: 2rem 1.5rem;
+  }
 }
 
+// ── Brand logo ──────────────────────────────────────────────
+.brand-wrapper {
+  text-align: center;
+  margin-bottom: 1.25rem;
+}
+
+.logo {
+  max-width: 130px;
+  height: auto;
+  filter: drop-shadow(0 0 16px rgba(67, 227, 127, 0.5));
+  animation: float 5s ease-in-out infinite;
+}
+
+// ── Title / sponsor ─────────────────────────────────────────
+.title {
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  text-align: center;
+  margin: 0 0 0.5rem;
+  background: linear-gradient(130deg, var(--c-green) 0%, var(--c-teal) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: none;
+}
+
+.text-center > div > strong {
+  display: inline-block;
+  margin: 0.25rem 0.4rem 1.25rem 0;
+  color: var(--c-muted);
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.text-center > div > span {
+  color: var(--c-green);
+  font-weight: 600;
+  text-shadow: 0 0 10px rgba(67, 227, 127, 0.45);
+}
+
+// ── Form layout ─────────────────────────────────────────────
 .register-form {
   width: 100%;
-}
-
-.title {
-  font-size: 2.2em;
-  text-align: center;
-  margin-bottom: 30px;
-  letter-spacing: 2px;
+  margin-top: 1.5rem;
 }
 
 .input-grid {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 20px;
-}
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.1rem 1.4rem;
 
-.brand-wrapper {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.logo {
-  max-width: 150px;
-  height: auto;
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
+  }
 }
 
 .form-group {
   width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
+label {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--c-muted);
+  margin-bottom: 0.45rem;
+
+  // Anular el "neon-text" del HTML para mantener jerarquía limpia
+  &.neon-text {
+    color: var(--c-muted);
+    text-shadow: none;
+  }
+}
+
+// ── Inputs / selects ────────────────────────────────────────
 .form-control {
   width: 100%;
-  padding: 10px 15px;
-  border: none;
-  border-radius: 5px;
-  background-color: rgba(255, 255, 255, 0.1);
-  color: #ffffff;
-  font-size: 16px;
-}
-.form-control::placeholder {
-  color: rgba(255, 255, 255, 0.5);
+  padding: 0.72rem 0.95rem;
+  background: var(--c-input-bg);
+  background-color: var(--c-input-bg);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r);
+  color: var(--c-text);
+  font-size: 0.92rem;
+  line-height: 1.4;
+  caret-color: var(--c-green);
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s,
+    background 0.2s;
+
+  &::placeholder {
+    color: rgba(255, 255, 255, 0.38);
+  }
+
+  &:hover:not(:focus) {
+    border-color: rgba(67, 227, 127, 0.32);
+  }
+
+  &:focus {
+    outline: none;
+    background: rgba(0, 20, 22, 0.85);
+    border-color: rgba(67, 227, 127, 0.55);
+    box-shadow:
+      0 0 0 3px rgba(67, 227, 127, 0.15),
+      0 0 14px rgba(67, 227, 127, 0.22);
+  }
+
+  &.is-invalid {
+    border-color: rgba(255, 107, 107, 0.55);
+
+    &:focus {
+      box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.18);
+    }
+  }
 }
 
-.form-control:focus {
-  outline: none;
-  box-shadow: 0 0 0 2px rgba(136, 212, 152, 0.5);
-}
-
-.neon-text {
-  color: #ffffff;
-  text-shadow: 0 0 5px #88d498, 0 0 10px #88d498, 0 0 15px #88d498;
-}
-
-.buy-button {
-  background: rgba(136, 212, 152, 0.3);
-  border: 2px solid #88d498;
-  padding: 12px 25px;
-  border-radius: 30px;
-  font-size: 1.2em;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.buy-button:hover {
-  background: rgba(136, 212, 152, 0.6);
-  box-shadow: 0 0 20px rgba(136, 212, 152, 0.8);
-}
-
-.invalid-feedback {
-  color: #ff6b6b;
-  font-size: 0.9em;
-  margin-top: 5px;
-}
-
-.social-icon {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-}
-
-.social-icon a {
-  color: #ffffff;
-  font-size: 24px;
-  transition: all 0.3s ease;
-}
-
-.social-icon a:hover {
-  color: #88d498;
-  transform: scale(1.1);
-}
-
+// Select dropdown — chevron verde y opciones oscuras
 select.form-control {
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23ffffff' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%2343e37f' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
-  background-position: right 10px center;
-  padding-right: 30px;
+  background-position: right 12px center;
+  padding-right: 2.25rem;
+  cursor: pointer;
+
+  option {
+    background-color: #04181a;
+    color: var(--c-text);
+  }
+
+  option:first-child {
+    color: rgba(255, 255, 255, 0.4);
+  }
 }
 
-select.form-control option {
-  background-color: #114b5f;
-  color: #ffffff;
+// Eliminar las flechitas del input number
+input[type='number']::-webkit-outer-spin-button,
+input[type='number']::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type='number'] {
+  appearance: textfield;
+  -moz-appearance: textfield;
 }
 
-select.form-control option:first-child {
-  color: rgba(255, 255, 255, 0.5);
+// ── Anular autofill de WebKit/Chrome ────────────────────────
+.form-control:-webkit-autofill,
+.form-control:-webkit-autofill:hover,
+.form-control:-webkit-autofill:focus,
+.form-control:-webkit-autofill:active {
+  -webkit-text-fill-color: var(--c-text) !important;
+  -webkit-box-shadow: 0 0 0 1000px rgba(0, 20, 22, 0.95) inset !important;
+  caret-color: var(--c-green) !important;
+  border: 1px solid var(--c-border) !important;
+  transition: background-color 9999s ease-out 0s;
 }
 
-select.form-control option:hover,
-select.form-control option:focus,
-select.form-control option:active {
-  background-color: rgba(136, 212, 152, 0.3);
+// ── Validación ──────────────────────────────────────────────
+.invalid-feedback {
+  display: block;
+  color: var(--c-danger);
+  font-size: 0.78rem;
+  margin-top: 0.35rem;
+  letter-spacing: 0.01em;
 }
 
-.form-control::placeholder {
-  color: rgba(255, 255, 255, 0.5);
+// ── Términos y condiciones ──────────────────────────────────
+.form-group a.neon-text {
+  color: var(--c-green);
+  text-shadow: 0 0 10px rgba(67, 227, 127, 0.4);
+  font-weight: 600;
+  font-size: 0.82rem;
+  text-decoration: none;
+  display: inline-block;
+  margin-bottom: 0.25rem;
+
+  &:hover {
+    color: #6ef0a0;
+    text-shadow: 0 0 14px rgba(67, 227, 127, 0.6);
+  }
 }
 
-.form-control:focus {
-  outline: none;
-  box-shadow: 0 0 0 2px rgba(136, 212, 152, 0.5);
+.form-check {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0;
+  margin-top: 0.4rem;
+
+  .form-check-input {
+    width: 1.05rem;
+    height: 1.05rem;
+    margin: 0;
+    background-color: var(--c-input-bg);
+    border: 1px solid rgba(67, 227, 127, 0.35);
+    border-radius: 0.25rem;
+    cursor: pointer;
+    transition: all 0.2s;
+
+    &:checked {
+      background-color: var(--c-green);
+      border-color: var(--c-green);
+      box-shadow: 0 0 12px rgba(67, 227, 127, 0.5);
+    }
+
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(67, 227, 127, 0.25);
+    }
+
+    &.is-invalid {
+      border-color: rgba(255, 107, 107, 0.6);
+    }
+  }
+
+  .form-check-label {
+    color: var(--c-text);
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    margin: 0;
+    text-transform: none;
+    letter-spacing: 0;
+    text-shadow: none;
+  }
 }
 
+// ── Alert global de error ───────────────────────────────────
+.alert.alert-danger {
+  background: rgba(255, 107, 107, 0.08);
+  border: 1px solid rgba(255, 107, 107, 0.35);
+  color: #ffb3b3;
+  border-radius: var(--r);
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+}
+
+// ── Botón principal (Submit) ────────────────────────────────
+.buy-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  padding: 0.85rem 2.5rem;
+  border: none;
+  border-radius: var(--r-pill);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  color: var(--c-dark);
+  background: linear-gradient(130deg, var(--c-green) 0%, var(--c-teal) 100%);
+  box-shadow: 0 8px 24px rgba(67, 227, 127, 0.32);
+  text-shadow: none !important;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.25s ease,
+    filter 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.05);
+    box-shadow:
+      0 14px 32px rgba(67, 227, 127, 0.42),
+      0 0 24px rgba(67, 227, 127, 0.4);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  &:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+// ── Footer link "Already have an account" ───────────────────
+.text-center {
+  p.neon-text {
+    color: var(--c-muted);
+    text-shadow: none;
+    font-size: 0.875rem;
+
+    small {
+      color: var(--c-muted);
+      margin-right: 0.35rem;
+    }
+
+    a {
+      color: var(--c-green);
+      text-decoration: none;
+      font-weight: 700;
+      text-shadow: 0 0 10px rgba(67, 227, 127, 0.4);
+      transition:
+        color 0.2s,
+        text-shadow 0.2s;
+
+      &:hover {
+        color: #6ef0a0;
+        text-shadow: 0 0 14px rgba(67, 227, 127, 0.6);
+      }
+    }
+  }
+}
+
+// ── "neon-text" general — atenuado para no saturar ──────────
+.neon-text {
+  &.title {
+    text-shadow: none;
+  }
+}
+
+// ── Responsive ──────────────────────────────────────────────
 @media (max-width: 768px) {
-  .recycoin-preview {
-    padding: 30px;
+  .recycoin-preview-wrapper {
+    padding: 2rem 1rem;
   }
 
   .title {
-    font-size: 2em;
+    font-size: 1.75rem;
+  }
+
+  .logo {
+    max-width: 110px;
+  }
+}
+
+@media (max-width: 480px) {
+  .recycoin-preview {
+    padding: 1.5rem 1.1rem;
+  }
+
+  .buy-button {
+    width: 100%;
   }
 }
