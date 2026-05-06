@@ -14,6 +14,10 @@ export const environment = {
     notificationService: `${gatewayBaseUrl}/api/v1`,
     coinPayment: 'https://www.coinpayments.net/index.php',
   },
+  brand: {
+    id: 5,
+    name: 'Recybotia',
+  },
   openAI: {
     apiKey: '',
   },

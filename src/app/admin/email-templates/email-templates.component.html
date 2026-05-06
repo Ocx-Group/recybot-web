@@ -16,14 +16,10 @@
       <div class="col-12">
         <div class="card">
           <div class="card-header d-flex flex-wrap align-items-center gap-2">
-            <h4 class="mb-0 me-auto">Templates</h4>
-
-            <select class="form-select form-select-sm w-auto"
-                    [(ngModel)]="filterBrandId"
-                    (ngModelChange)="loadTemplates()">
-              <option [ngValue]="null">Todas las marcas</option>
-              <option *ngFor="let b of brands" [ngValue]="b.brandId">{{ b.name }}</option>
-            </select>
+            <h4 class="mb-0 me-auto">
+              Templates
+              <small class="text-muted ms-2">{{ brandName }}</small>
+            </h4>
 
             <button class="btn btn-primary btn-sm" (click)="startCreate()">
               <i class="fas fa-plus me-1"></i> Nuevo template
@@ -44,7 +40,6 @@
                 <thead>
                   <tr>
                     <th>Template Key</th>
-                    <th>Marca</th>
                     <th>Subject</th>
                     <th class="text-center">Activo</th>
                     <th class="text-center">Versión</th>
@@ -55,8 +50,7 @@
                 <tbody>
                   <tr *ngFor="let t of templates; trackBy: trackById">
                     <td><code>{{ t.templateKey }}</code></td>
-                    <td>{{ brandName(t.brandId) }}</td>
-                    <td class="text-truncate" style="max-width: 320px;">{{ t.subject }}</td>
+                    <td class="text-truncate" style="max-width: 360px;">{{ t.subject }}</td>
                     <td class="text-center">
                       <span class="badge"
                             [ngClass]="t.isActive ? 'bg-success' : 'bg-secondary'">
@@ -89,6 +83,7 @@
           <div class="card-header d-flex align-items-center gap-2">
             <h4 class="mb-0 me-auto">
               {{ editing ? 'Editar template' : 'Nuevo template' }}
+              <small class="text-muted ms-2">{{ brandName }}</small>
               <small class="text-muted ms-2" *ngIf="editing">v{{ editing.version }}</small>
             </h4>
             <button class="btn btn-sm btn-outline-secondary" (click)="cancelEdit()">
@@ -106,7 +101,7 @@
                 <!-- Left: form -->
                 <div class="col-12 col-lg-6">
                   <div class="row g-2">
-                    <div class="col-12 col-md-6">
+                    <div class="col-12">
                       <label class="form-label">Template key</label>
                       <input class="form-control" formControlName="templateKey"
                              placeholder="password_recovery">
@@ -114,13 +109,6 @@
                            *ngIf="form.get('templateKey')?.touched && form.get('templateKey')?.invalid">
                         Requerido
                       </div>
-                    </div>
-                    <div class="col-12 col-md-6">
-                      <label class="form-label">Marca</label>
-                      <select class="form-select" formControlName="brandId">
-                        <option [ngValue]="null" disabled>Selecciona...</option>
-                        <option *ngFor="let b of brands" [ngValue]="b.brandId">{{ b.name }}</option>
-                      </select>
                     </div>
                     <div class="col-12">
                       <label class="form-label">Subject</label>

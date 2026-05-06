@@ -11,6 +11,7 @@ import { RouterLink } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import Swal from 'sweetalert2';
 
+import { environment } from '@environments/environment';
 import { EmailSenderConfig } from '@app/core/models/notification-models/email-sender-config.model';
 import {
   CreateEmailTemplate,
@@ -30,13 +31,16 @@ type Mode = 'list' | 'edit';
 export class EmailTemplatesComponent implements OnInit {
   @ViewChild('htmlBodyArea') htmlBodyArea?: ElementRef<HTMLTextAreaElement>;
 
+  // Brand is fixed per deployment — recybot serves recybotia (brand 5).
+  readonly brandId = environment.brand.id;
+  readonly brandName = environment.brand.name;
+
   mode: Mode = 'list';
   loading = false;
   saving = false;
 
-  brands: EmailSenderConfig[] = [];
+  brand: EmailSenderConfig | null = null;
   templates: EmailTemplate[] = [];
-  filterBrandId: number | null = null;
 
   editing: EmailTemplate | null = null;
   form: FormGroup;
@@ -46,10 +50,10 @@ export class EmailTemplatesComponent implements OnInit {
   previewValues: Record<string, string> = {
     userName: 'Andres',
     verificationCode: '2718b880-1468-40ea-84e0-d07ef106581b',
-    brandName: 'Recybotia',
-    clientUrl: 'https://recybotia.com',
-    supportEmail: 'support@recybotia.com',
-    senderName: 'Recybotia',
+    brandName: this.brandName,
+    clientUrl: '',
+    supportEmail: '',
+    senderName: this.brandName,
   };
 
   // Standard placeholders the consumer always injects.
@@ -69,7 +73,6 @@ export class EmailTemplatesComponent implements OnInit {
   ) {
     this.form = this.fb.group({
       templateKey: ['', [Validators.required, Validators.maxLength(100)]],
-      brandId: [null, Validators.required],
       subject: ['', [Validators.required, Validators.maxLength(255)]],
       htmlBody: ['', Validators.required],
       placeholders: [[] as string[]],
@@ -78,24 +81,36 @@ export class EmailTemplatesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadBrands();
+    this.loadBrand();
     this.loadTemplates();
   }
 
   // ---------- Data ----------
 
-  loadBrands(): void {
+  loadBrand(): void {
+    // Fetch sender configs to seed preview defaults (clientUrl, supportEmail) for our brand.
     this.templateService.getAllSenderConfigs().subscribe({
-      next: brands => (this.brands = brands ?? []),
-      error: () => this.toastr.error('No se pudieron cargar las marcas'),
+      next: list => {
+        this.brand = list?.find(b => b.brandId === this.brandId) ?? null;
+        if (this.brand) {
+          this.previewValues.clientUrl    = this.brand.clientUrl    ?? '';
+          this.previewValues.supportEmail = this.brand.supportEmail ?? '';
+          this.previewValues.senderName   = this.brand.senderName;
+          this.previewValues.brandName    = this.brand.name;
+        }
+      },
+      error: () => {
+        // Non-fatal: preview defaults stay empty.
+      },
     });
   }
 
   loadTemplates(): void {
     this.loading = true;
-    this.templateService.getAll(this.filterBrandId ?? undefined).subscribe({
+    this.templateService.getAll(this.brandId).subscribe({
       next: list => {
-        this.templates = list ?? [];
+        // Defense in depth: ignore anything that isn't ours, in case the API returns extras.
+        this.templates = (list ?? []).filter(t => t.brandId === this.brandId);
         this.loading = false;
       },
       error: () => {
@@ -105,17 +120,12 @@ export class EmailTemplatesComponent implements OnInit {
     });
   }
 
-  brandName(brandId: number): string {
-    return this.brands.find(b => b.brandId === brandId)?.name ?? `Brand ${brandId}`;
-  }
-
   // ---------- Mode ----------
 
   startCreate(): void {
     this.editing = null;
     this.form.reset({
       templateKey: '',
-      brandId: this.filterBrandId ?? this.brands[0]?.brandId ?? null,
       subject: '',
       htmlBody: this.starterHtml(),
       placeholders: [...this.defaultPlaceholders],
@@ -128,7 +138,6 @@ export class EmailTemplatesComponent implements OnInit {
     this.editing = t;
     this.form.reset({
       templateKey: t.templateKey,
-      brandId: t.brandId,
       subject: t.subject,
       htmlBody: t.htmlBody,
       placeholders: [...(t.placeholders ?? [])],
@@ -159,7 +168,7 @@ export class EmailTemplatesComponent implements OnInit {
         .update({
           id: this.editing.id,
           templateKey: value.templateKey,
-          brandId: value.brandId,
+          brandId: this.brandId,
           subject: value.subject,
           htmlBody: value.htmlBody,
           placeholders: value.placeholders,
@@ -177,7 +186,7 @@ export class EmailTemplatesComponent implements OnInit {
     } else {
       const payload: CreateEmailTemplate = {
         templateKey: value.templateKey,
-        brandId: value.brandId,
+        brandId: this.brandId,
         subject: value.subject,
         htmlBody: value.htmlBody,
         placeholders: value.placeholders,
@@ -204,7 +213,7 @@ export class EmailTemplatesComponent implements OnInit {
   delete(t: EmailTemplate): void {
     Swal.fire({
       title: '¿Eliminar template?',
-      text: `Se eliminará "${t.templateKey}" para ${this.brandName(t.brandId)}.`,
+      text: `Se eliminará "${t.templateKey}".`,
       icon: 'warning',
       showCancelButton: true,
       confirmButtonText: 'Eliminar',
