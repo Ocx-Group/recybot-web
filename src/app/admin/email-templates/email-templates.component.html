@@ -1,0 +1,211 @@
+<section class="main-content">
+  <ul class="breadcrumb breadcrumb-style">
+    <li class="breadcrumb-item">
+      <h5 class="page-title m-b-0">Templates de email</h5>
+    </li>
+    <li class="breadcrumb-item bcrumb-1">
+      <a routerLink="/dashboard/main"><i class="fas fa-home font-17"></i></a>
+    </li>
+    <li class="breadcrumb-item">Admin</li>
+    <li class="breadcrumb-item">Templates de email</li>
+  </ul>
+
+  <div class="section-body">
+    <!-- ============== LIST ============== -->
+    <div class="row" *ngIf="mode === 'list'">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header d-flex flex-wrap align-items-center gap-2">
+            <h4 class="mb-0 me-auto">Templates</h4>
+
+            <select class="form-select form-select-sm w-auto"
+                    [(ngModel)]="filterBrandId"
+                    (ngModelChange)="loadTemplates()">
+              <option [ngValue]="null">Todas las marcas</option>
+              <option *ngFor="let b of brands" [ngValue]="b.brandId">{{ b.name }}</option>
+            </select>
+
+            <button class="btn btn-primary btn-sm" (click)="startCreate()">
+              <i class="fas fa-plus me-1"></i> Nuevo template
+            </button>
+          </div>
+
+          <div class="card-body">
+            <div *ngIf="loading" class="text-center py-4">
+              <div class="spinner-border text-primary" role="status"></div>
+            </div>
+
+            <div *ngIf="!loading && templates.length === 0" class="text-center py-4 text-muted">
+              No hay templates para mostrar.
+            </div>
+
+            <div class="table-responsive" *ngIf="!loading && templates.length > 0">
+              <table class="table table-hover align-middle">
+                <thead>
+                  <tr>
+                    <th>Template Key</th>
+                    <th>Marca</th>
+                    <th>Subject</th>
+                    <th class="text-center">Activo</th>
+                    <th class="text-center">Versión</th>
+                    <th>Actualizado</th>
+                    <th class="text-end">Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let t of templates; trackBy: trackById">
+                    <td><code>{{ t.templateKey }}</code></td>
+                    <td>{{ brandName(t.brandId) }}</td>
+                    <td class="text-truncate" style="max-width: 320px;">{{ t.subject }}</td>
+                    <td class="text-center">
+                      <span class="badge"
+                            [ngClass]="t.isActive ? 'bg-success' : 'bg-secondary'">
+                        {{ t.isActive ? 'Sí' : 'No' }}
+                      </span>
+                    </td>
+                    <td class="text-center">v{{ t.version }}</td>
+                    <td>{{ (t.updatedAt || t.createdAt) | date:'short' }}</td>
+                    <td class="text-end">
+                      <button class="btn btn-sm btn-outline-primary me-1" (click)="startEdit(t)">
+                        <i class="fas fa-edit"></i>
+                      </button>
+                      <button class="btn btn-sm btn-outline-danger" (click)="delete(t)">
+                        <i class="fas fa-trash"></i>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============== EDIT ============== -->
+    <div class="row" *ngIf="mode === 'edit'">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header d-flex align-items-center gap-2">
+            <h4 class="mb-0 me-auto">
+              {{ editing ? 'Editar template' : 'Nuevo template' }}
+              <small class="text-muted ms-2" *ngIf="editing">v{{ editing.version }}</small>
+            </h4>
+            <button class="btn btn-sm btn-outline-secondary" (click)="cancelEdit()">
+              <i class="fas fa-arrow-left me-1"></i> Volver
+            </button>
+            <button class="btn btn-sm btn-primary" (click)="save()" [disabled]="saving">
+              <i class="fas fa-save me-1"></i>
+              {{ saving ? 'Guardando...' : 'Guardar' }}
+            </button>
+          </div>
+
+          <div class="card-body">
+            <form [formGroup]="form">
+              <div class="row g-3">
+                <!-- Left: form -->
+                <div class="col-12 col-lg-6">
+                  <div class="row g-2">
+                    <div class="col-12 col-md-6">
+                      <label class="form-label">Template key</label>
+                      <input class="form-control" formControlName="templateKey"
+                             placeholder="password_recovery">
+                      <div class="invalid-feedback d-block"
+                           *ngIf="form.get('templateKey')?.touched && form.get('templateKey')?.invalid">
+                        Requerido
+                      </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                      <label class="form-label">Marca</label>
+                      <select class="form-select" formControlName="brandId">
+                        <option [ngValue]="null" disabled>Selecciona...</option>
+                        <option *ngFor="let b of brands" [ngValue]="b.brandId">{{ b.name }}</option>
+                      </select>
+                    </div>
+                    <div class="col-12">
+                      <label class="form-label">Subject</label>
+                      <input class="form-control" formControlName="subject"
+                             placeholder="Recuperación de contraseña - {brandName}">
+                    </div>
+                    <div class="col-12">
+                      <label class="form-label d-flex align-items-center gap-2">
+                        HTML body
+                        <span class="text-muted small ms-auto">
+                          Insertar placeholder:
+                        </span>
+                        <button type="button" class="btn btn-outline-secondary btn-sm"
+                                *ngFor="let ph of defaultPlaceholders"
+                                (click)="insertPlaceholder(ph)">
+                          {{ '{' + ph + '}' }}
+                        </button>
+                      </label>
+                      <textarea #htmlBodyArea
+                                class="form-control html-body"
+                                rows="20"
+                                formControlName="htmlBody"
+                                spellcheck="false"></textarea>
+                    </div>
+                    <div class="col-12">
+                      <label class="form-label">Placeholders declarados</label>
+                      <div class="d-flex flex-wrap align-items-center gap-2">
+                        <span class="badge bg-info text-dark"
+                              *ngFor="let p of form.value.placeholders">
+                          {{ p }}
+                          <i class="fas fa-times ms-1 cursor-pointer"
+                             (click)="removePlaceholder(p)"></i>
+                        </span>
+                        <div class="input-group input-group-sm" style="width: 220px;">
+                          <input class="form-control" type="text"
+                                 [(ngModel)]="placeholderInput"
+                                 [ngModelOptions]="{ standalone: true }"
+                                 placeholder="nombrePlaceholder"
+                                 (keyup.enter)="addPlaceholder()">
+                          <button class="btn btn-outline-secondary" type="button"
+                                  (click)="addPlaceholder()">+</button>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="isActive"
+                               formControlName="isActive">
+                        <label class="form-check-label" for="isActive">Activo</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Right: live preview -->
+                <div class="col-12 col-lg-6">
+                  <div class="preview-pane">
+                    <div class="preview-header d-flex flex-wrap align-items-center gap-2">
+                      <strong class="me-auto">Preview en vivo</strong>
+                      <span class="text-muted small">
+                        Subject: <em>{{ previewSubject }}</em>
+                      </span>
+                    </div>
+                    <iframe class="preview-frame" [attr.srcdoc]="renderedHtml"></iframe>
+
+                    <div class="mt-3">
+                      <label class="form-label small">Valores de muestra (sólo preview):</label>
+                      <div class="row g-2">
+                        <div class="col-6" *ngFor="let key of defaultPlaceholders">
+                          <div class="input-group input-group-sm">
+                            <span class="input-group-text">{{ key }}</span>
+                            <input class="form-control"
+                                   [(ngModel)]="previewValues[key]"
+                                   [ngModelOptions]="{ standalone: true }">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

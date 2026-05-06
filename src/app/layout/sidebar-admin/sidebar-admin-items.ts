@@ -570,6 +570,17 @@ export const ROUTESADMIN: RouteInfo[] = [
         badgeClass: '',
         submenu: [],
       },
+      {
+        path: '/admin/email-templates',
+        title: 'Templates de email',
+        iconType: '',
+        icon: '',
+        class: 'ml-menu',
+        groupTitle: false,
+        badge: '',
+        badgeClass: '',
+        submenu: [],
+      },
     ],
   },
 ];

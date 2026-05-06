@@ -11,6 +11,7 @@ export const environment = {
     systemConfigurationService: `${gatewayBaseUrl}/api/v1`,
     inventoryService: `${gatewayBaseUrl}/api/v1`,
     walletService: `${gatewayBaseUrl}/api/v1`,
+    notificationService: `${gatewayBaseUrl}/api/v1`,
     coinPayment: 'https://www.coinpayments.net/index.php',
   },
   openAI: {

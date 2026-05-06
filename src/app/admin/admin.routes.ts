@@ -258,5 +258,10 @@ export const ADMIN_ROUTES: Routes = [
     loadComponent: () => import('./matrix-configuration/matrix-list/matrix-list.component').then(m => m.MatrixListComponent),
     canActivate: [AuthGuardAdmin, MaintenanceGuard],
   },
+  {
+    path: 'email-templates',
+    loadComponent: () => import('./email-templates/email-templates.component').then(m => m.EmailTemplatesComponent),
+    canActivate: [AuthGuardAdmin, MaintenanceGuard],
+  },
 ];
 
