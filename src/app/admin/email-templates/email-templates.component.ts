@@ -5,8 +5,8 @@ import {
   FormGroup,
   ReactiveFormsModule,
   Validators,
+  FormsModule,
 } from '@angular/forms';
-import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import Swal from 'sweetalert2';
@@ -18,6 +18,7 @@ import {
   EmailTemplate,
 } from '@app/core/models/notification-models/email-template.model';
 import { TemplateService } from '@app/core/service/notification-service/template.service';
+import { EmailPreviewModalComponent } from './preview-modal/email-preview-modal.component';
 
 type Mode = 'list' | 'edit';
 
@@ -26,18 +27,23 @@ type Mode = 'list' | 'edit';
   templateUrl: './email-templates.component.html',
   styleUrls: ['./email-templates.component.scss'],
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule, RouterLink],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    FormsModule,
+    RouterLink,
+    EmailPreviewModalComponent,
+  ],
 })
 export class EmailTemplatesComponent implements OnInit {
   @ViewChild('htmlBodyArea') htmlBodyArea?: ElementRef<HTMLTextAreaElement>;
-
-  // Brand is fixed per deployment — recybot serves recybotia (brand 5).
   readonly brandId = environment.brand.id;
   readonly brandName = environment.brand.name;
 
   mode: Mode = 'list';
   loading = false;
   saving = false;
+  showPreview = false;
 
   brand: EmailSenderConfig | null = null;
   templates: EmailTemplate[] = [];
@@ -93,10 +99,10 @@ export class EmailTemplatesComponent implements OnInit {
       next: list => {
         this.brand = list?.find(b => b.brandId === this.brandId) ?? null;
         if (this.brand) {
-          this.previewValues.clientUrl    = this.brand.clientUrl    ?? '';
+          this.previewValues.clientUrl = this.brand.clientUrl ?? '';
           this.previewValues.supportEmail = this.brand.supportEmail ?? '';
-          this.previewValues.senderName   = this.brand.senderName;
-          this.previewValues.brandName    = this.brand.name;
+          this.previewValues.senderName = this.brand.senderName;
+          this.previewValues.brandName = this.brand.name;
         }
       },
       error: () => {
@@ -264,14 +270,23 @@ export class EmailTemplatesComponent implements OnInit {
   // ---------- Preview ----------
 
   get renderedHtml(): string {
-    return this.renderTemplate(this.form.value.htmlBody ?? '', this.previewValues);
+    return this.renderTemplate(
+      this.form.value.htmlBody ?? '',
+      this.previewValues,
+    );
   }
 
   get previewSubject(): string {
-    return this.renderTemplate(this.form.value.subject ?? '', this.previewValues);
+    return this.renderTemplate(
+      this.form.value.subject ?? '',
+      this.previewValues,
+    );
   }
 
-  private renderTemplate(source: string, values: Record<string, string>): string {
+  private renderTemplate(
+    source: string,
+    values: Record<string, string>,
+  ): string {
     let out = source;
     for (const [k, v] of Object.entries(values)) {
       out = out.split(`{${k}}`).join(v ?? '');

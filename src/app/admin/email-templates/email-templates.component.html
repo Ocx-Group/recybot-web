@@ -28,7 +28,7 @@
 
           <div class="card-body">
             <div *ngIf="loading" class="text-center py-4">
-              <div class="spinner-border text-primary" role="status"></div>
+              <div class="spinner-border text-primary"><span class="visually-hidden">Cargando...</span></div>
             </div>
 
             <div *ngIf="!loading && templates.length === 0" class="text-center py-4 text-muted">
@@ -52,8 +52,7 @@
                     <td><code>{{ t.templateKey }}</code></td>
                     <td class="text-truncate" style="max-width: 360px;">{{ t.subject }}</td>
                     <td class="text-center">
-                      <span class="badge"
-                            [ngClass]="t.isActive ? 'bg-success' : 'bg-secondary'">
+                      <span class="badge" [ngClass]="t.isActive ? 'bg-success' : 'bg-secondary'">
                         {{ t.isActive ? 'Sí' : 'No' }}
                       </span>
                     </td>
@@ -80,16 +79,19 @@
     <div class="row" *ngIf="mode === 'edit'">
       <div class="col-12">
         <div class="card">
-          <div class="card-header d-flex align-items-center gap-2">
+          <div class="card-header d-flex align-items-center gap-2 flex-wrap">
             <h4 class="mb-0 me-auto">
               {{ editing ? 'Editar template' : 'Nuevo template' }}
               <small class="text-muted ms-2">{{ brandName }}</small>
-              <small class="text-muted ms-2" *ngIf="editing">v{{ editing.version }}</small>
+              <span class="badge bg-secondary ms-2" *ngIf="editing">v{{ editing.version }}</span>
             </h4>
-            <button class="btn btn-sm btn-outline-secondary" (click)="cancelEdit()">
+            <button class="btn btn-sm btn-outline-info" type="button" (click)="showPreview = true">
+              <i class="fas fa-eye me-1"></i> Vista previa
+            </button>
+            <button class="btn btn-sm btn-outline-secondary" type="button" (click)="cancelEdit()">
               <i class="fas fa-arrow-left me-1"></i> Volver
             </button>
-            <button class="btn btn-sm btn-primary" (click)="save()" [disabled]="saving">
+            <button class="btn btn-sm btn-primary" type="button" (click)="save()" [disabled]="saving">
               <i class="fas fa-save me-1"></i>
               {{ saving ? 'Guardando...' : 'Guardar' }}
             </button>
@@ -97,103 +99,81 @@
 
           <div class="card-body">
             <form [formGroup]="form">
-              <div class="row g-3">
-                <!-- Left: form -->
-                <div class="col-12 col-lg-6">
-                  <div class="row g-2">
-                    <div class="col-12">
-                      <label class="form-label">Template key</label>
-                      <input class="form-control" formControlName="templateKey"
-                             placeholder="password_recovery">
-                      <div class="invalid-feedback d-block"
-                           *ngIf="form.get('templateKey')?.touched && form.get('templateKey')?.invalid">
-                        Requerido
-                      </div>
-                    </div>
-                    <div class="col-12">
-                      <label class="form-label">Subject</label>
-                      <input class="form-control" formControlName="subject"
-                             placeholder="Recuperación de contraseña - {brandName}">
-                    </div>
-                    <div class="col-12">
-                      <label class="form-label d-flex align-items-center gap-2">
-                        HTML body
-                        <span class="text-muted small ms-auto">
-                          Insertar placeholder:
-                        </span>
-                        <button type="button" class="btn btn-outline-secondary btn-sm"
-                                *ngFor="let ph of defaultPlaceholders"
-                                (click)="insertPlaceholder(ph)">
-                          {{ '{' + ph + '}' }}
-                        </button>
-                      </label>
-                      <textarea #htmlBodyArea
-                                class="form-control html-body"
-                                rows="20"
-                                formControlName="htmlBody"
-                                spellcheck="false"></textarea>
-                    </div>
-                    <div class="col-12">
-                      <label class="form-label">Placeholders declarados</label>
-                      <div class="d-flex flex-wrap align-items-center gap-2">
-                        <span class="badge bg-info text-dark"
-                              *ngFor="let p of form.value.placeholders">
-                          {{ p }}
-                          <i class="fas fa-times ms-1 cursor-pointer"
-                             (click)="removePlaceholder(p)"></i>
-                        </span>
-                        <div class="input-group input-group-sm" style="width: 220px;">
-                          <input class="form-control" type="text"
-                                 [(ngModel)]="placeholderInput"
-                                 [ngModelOptions]="{ standalone: true }"
-                                 placeholder="nombrePlaceholder"
-                                 (keyup.enter)="addPlaceholder()">
-                          <button class="btn btn-outline-secondary" type="button"
-                                  (click)="addPlaceholder()">+</button>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-12">
-                      <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" id="isActive"
-                               formControlName="isActive">
-                        <label class="form-check-label" for="isActive">Activo</label>
-                      </div>
+
+              <!-- ── Sección 1: Identificación ── -->
+              <div class="form-section">
+                <p class="form-section-label">Identificación</p>
+                <div class="row g-3 align-items-end">
+                  <div class="col-12 col-md-4">
+                    <label for="templateKey" class="form-label">
+                      Template key <span class="text-danger">*</span>
+                    </label>
+                    <input id="templateKey" class="form-control" formControlName="templateKey"
+                      placeholder="ej. password_recovery">
+                    <div class="invalid-feedback d-block"
+                      *ngIf="form.get('templateKey')?.touched && form.get('templateKey')?.invalid">
+                      Requerido (máx. 100 caracteres)
                     </div>
                   </div>
-                </div>
-
-                <!-- Right: live preview -->
-                <div class="col-12 col-lg-6">
-                  <div class="preview-pane">
-                    <div class="preview-header d-flex flex-wrap align-items-center gap-2">
-                      <strong class="me-auto">Preview en vivo</strong>
-                      <span class="text-muted small">
-                        Subject: <em>{{ previewSubject }}</em>
-                      </span>
+                  <div class="col-12 col-md-6">
+                    <label for="subject" class="form-label">
+                      Asunto <span class="text-danger">*</span>
+                    </label>
+                    <input id="subject" class="form-control" formControlName="subject"
+                      placeholder="ej. Recuperación de contraseña – {brandName}">
+                    <div class="invalid-feedback d-block"
+                      *ngIf="form.get('subject')?.touched && form.get('subject')?.invalid">
+                      Requerido
                     </div>
-                    <iframe class="preview-frame" [attr.srcdoc]="renderedHtml"></iframe>
-
-                    <div class="mt-3">
-                      <label class="form-label small">Valores de muestra (sólo preview):</label>
-                      <div class="row g-2">
-                        <div class="col-6" *ngFor="let key of defaultPlaceholders">
-                          <div class="input-group input-group-sm">
-                            <span class="input-group-text">{{ key }}</span>
-                            <input class="form-control"
-                                   [(ngModel)]="previewValues[key]"
-                                   [ngModelOptions]="{ standalone: true }">
-                          </div>
-                        </div>
-                      </div>
+                  </div>
+                  <div class="col-12 col-md-2 d-flex align-items-center" style="padding-bottom: 4px;">
+                    <div class="form-check form-switch mb-0">
+                      <input class="form-check-input" type="checkbox" id="isActive" formControlName="isActive">
+                      <label class="form-check-label" for="isActive">Activo</label>
                     </div>
                   </div>
                 </div>
               </div>
+
+              <!-- ── Sección 2: HTML body ── -->
+              <div class="form-section">
+                <div class="d-flex align-items-center gap-2 flex-wrap mb-2">
+                  <p class="form-section-label mb-0 me-auto">HTML body</p>
+                  <span class="text-muted small">Insertar:</span>
+                  <button type="button" class="btn btn-outline-secondary btn-xs" *ngFor="let ph of defaultPlaceholders"
+                    (click)="insertPlaceholder(ph)">{{ '{' + ph + '}' }}</button>
+                </div>
+                <textarea id="htmlBody" #htmlBodyArea class="form-control html-body" formControlName="htmlBody"
+                  spellcheck="false"></textarea>
+              </div>
+
+              <!-- ── Sección 3: Placeholders ── -->
+              <div class="form-section">
+                <p class="form-section-label">Placeholders declarados</p>
+                <div class="d-flex flex-wrap align-items-center gap-2">
+                  <span class="badge bg-info text-dark" *ngFor="let p of form.value.placeholders">
+                    {{ p }}
+                    <button type="button" class="placeholder-remove-btn" [attr.aria-label]="'Eliminar ' + p"
+                      (click)="removePlaceholder(p)"><i class="fas fa-times"></i></button>
+                  </span>
+                  <div class="input-group input-group-sm" style="width: 240px;">
+                    <input id="placeholderInput" class="form-control" type="text" [(ngModel)]="placeholderInput"
+                      [ngModelOptions]="{ standalone: true }" placeholder="nuevoPlaceholder"
+                      (keyup.enter)="addPlaceholder()">
+                    <button class="btn btn-outline-secondary" type="button" (click)="addPlaceholder()">+</button>
+                  </div>
+                </div>
+              </div>
+
             </form>
           </div>
         </div>
       </div>
     </div>
   </div>
+
+  <!-- ============== PREVIEW MODAL ============== -->
+  <app-email-preview-modal [(visible)]="showPreview" [htmlBody]="form.value.htmlBody ?? ''"
+    [subject]="form.value.subject ?? ''" [previewValues]="previewValues"
+    [placeholders]="defaultPlaceholders"></app-email-preview-modal>
 </section>
