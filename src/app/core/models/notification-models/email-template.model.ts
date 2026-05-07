@@ -13,7 +13,6 @@ export interface EmailTemplate {
 
 export interface CreateEmailTemplate {
   templateKey: string;
-  brandId: number;
   subject: string;
   htmlBody: string;
   placeholders: string[];
@@ -22,7 +21,6 @@ export interface CreateEmailTemplate {
 export interface UpdateEmailTemplate {
   id: number;
   templateKey?: string | null;
-  brandId?: number | null;
   subject?: string | null;
   htmlBody?: string | null;
   placeholders?: string[] | null;

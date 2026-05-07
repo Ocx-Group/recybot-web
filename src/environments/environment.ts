@@ -31,6 +31,8 @@ export const environment = {
       'eco-keyLd5DU5faBWLfLrE1ATUK0c1qpvSci1x5TvFkDVw3FEM7JO30Jm!zXyB4w',
     walletService:
       'eco-keypFvQnUOko=r4/G!chia5Fe2-6OU?2YNYqAPWlaiN!uYrZIdwoUNv9P4d7',
+    notificationService:
+      'eco-keyN9tFmRsQpL=v2/H!nbWk7Jq3-1MK?6XCRySGnTm@uPqVDnvLBb1Y8e7Z5',
     clientID: 'eco-Rt9YpQzWm2=f7/X#kcJw8Hv4-5NB?3MDLgTVFcxtR@bZqUPLnasMKw1E6d9',
   },
   coinPaymentConfiguration: {

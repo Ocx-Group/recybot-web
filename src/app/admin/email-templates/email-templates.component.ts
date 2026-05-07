@@ -107,10 +107,9 @@ export class EmailTemplatesComponent implements OnInit {
 
   loadTemplates(): void {
     this.loading = true;
-    this.templateService.getAll(this.brandId).subscribe({
+    this.templateService.getAll().subscribe({
       next: list => {
-        // Defense in depth: ignore anything that isn't ours, in case the API returns extras.
-        this.templates = (list ?? []).filter(t => t.brandId === this.brandId);
+        this.templates = list ?? [];
         this.loading = false;
       },
       error: () => {
@@ -168,7 +167,6 @@ export class EmailTemplatesComponent implements OnInit {
         .update({
           id: this.editing.id,
           templateKey: value.templateKey,
-          brandId: this.brandId,
           subject: value.subject,
           htmlBody: value.htmlBody,
           placeholders: value.placeholders,
@@ -186,7 +184,6 @@ export class EmailTemplatesComponent implements OnInit {
     } else {
       const payload: CreateEmailTemplate = {
         templateKey: value.templateKey,
-        brandId: this.brandId,
         subject: value.subject,
         htmlBody: value.htmlBody,
         placeholders: value.placeholders,

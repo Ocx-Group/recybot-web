@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 
@@ -12,7 +12,11 @@ import {
 import { EmailSenderConfig } from '@app/core/models/notification-models/email-sender-config.model';
 
 const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+  headers: new HttpHeaders({
+    'Content-Type': 'application/json',
+    Authorization: environment.tokens.notificationService.toString(),
+    'X-Client-ID': environment.tokens.clientID.toString(),
+  }),
 };
 
 @Injectable({ providedIn: 'root' })
@@ -24,18 +28,17 @@ export class TemplateService {
   }
 
   // ---------- Templates ----------
+  // BrandId is resolved server-side from the X-Client-ID header — no need to send it.
 
-  getAll(brandId?: number): Observable<EmailTemplate[]> {
-    let params = new HttpParams();
-    if (brandId != null) params = params.set('brandId', String(brandId));
+  getAll(): Observable<EmailTemplate[]> {
     return this.http
-      .get<Response>(`${this.base}/template`, { ...httpOptions, params })
+      .get<Response>(`${this.base}/template`, httpOptions)
       .pipe(map(r => (r.success ? (r.data as EmailTemplate[]) : [])));
   }
 
-  getByKey(templateKey: string, brandId: number): Observable<EmailTemplate | null> {
+  getByKey(templateKey: string): Observable<EmailTemplate | null> {
     return this.http
-      .get<Response>(`${this.base}/template/${templateKey}/brand/${brandId}`, httpOptions)
+      .get<Response>(`${this.base}/template/${templateKey}`, httpOptions)
       .pipe(map(r => (r.success ? (r.data as EmailTemplate) : null)));
   }
 
@@ -58,7 +61,7 @@ export class TemplateService {
       .pipe(map(r => !!r.success));
   }
 
-  // ---------- Sender configs (per brand) ----------
+  // ---------- Sender configs (current tenant only) ----------
 
   getAllSenderConfigs(): Observable<EmailSenderConfig[]> {
     return this.http
