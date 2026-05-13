@@ -20,7 +20,7 @@ import { ToastrService } from 'ngx-toastr';
   imports: [CommonModule, ReactiveFormsModule, RouterLink],
 })
 export class ForgotComponent implements OnInit {
-  forgotPassword: FormGroup;
+  forgotPassword!: FormGroup;
   submitted = false;
   constructor(
     private readonly affiliateService: AffiliateService,
@@ -46,27 +46,26 @@ export class ForgotComponent implements OnInit {
 
     if (this.forgotPassword.invalid) return;
 
-    let email = this.forgotPassword.value.email;
+    const email = this.forgotPassword.value.email.trim().toLowerCase();
 
     this.affiliateService.sendPasswordRecovery(email).subscribe({
       next: value => {
-        if (value.success) {
+        if (value?.success) {
           this.emailConfirmation();
-        } else {
-          this.toastr.error(
-            'El usuario no se encuentra registrado en el sistema',
-          );
+          return;
         }
+
+        this.emailNotFound(value?.message);
       },
       error: () => {
-        this.toastr.error('Error');
+        this.emailRecoveryError();
       },
     });
   }
 
   validateEmail() {
     const emailControl = this.forgotPassword.get('email');
-    if (emailControl.errors) {
+    if (!emailControl || emailControl.errors) {
       return;
     }
 
@@ -80,6 +79,25 @@ export class ForgotComponent implements OnInit {
       title: 'Restablecimiento de contraseña',
       text: 'Se ha enviado un correo electrónico con un enlace para restablecer su contraseña. Por favor, revisa la bandeja de entrada o carpeta de spam.',
       icon: 'success',
+      confirmButtonText: 'Entendido',
+    });
+  }
+
+  emailNotFound(message?: string) {
+    Swal.fire({
+      title: 'No se pudo enviar el correo',
+      text:
+        message || 'El correo no se encuentra registrado para esta plataforma.',
+      icon: 'error',
+      confirmButtonText: 'Entendido',
+    });
+  }
+
+  emailRecoveryError() {
+    Swal.fire({
+      title: 'No se pudo enviar el correo',
+      text: 'Ocurrió un error al solicitar el restablecimiento de contraseña. Inténtalo nuevamente.',
+      icon: 'error',
       confirmButtonText: 'Entendido',
     });
   }
