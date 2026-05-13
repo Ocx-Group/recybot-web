@@ -810,7 +810,7 @@
       "TEXT": "Billed To"
     },
     "BUY": {
-      "TEXT": "Buy RecyBot "
+      "TEXT": "Increase RecyBot "
     },
     "BUY-MORE": {
       "TEXT": "Buy More"
@@ -1395,7 +1395,7 @@
       "TEXT": "Affiliates Registered"
     },
     "TITTLE-SECOND-CHART": {
-      "TEXT": "Purchases Made in My Network"
+      "TEXT": "Purchases Made"
     },
     "TOTAL-ACQUISITIONS": {
       "TEXT": "My RecyBot s"
@@ -1664,13 +1664,13 @@
       "TEXT": "Indirect customers"
     },
     "NETWORK-ALL-CUSTOMERS": {
-      "TEXT": "Network All Customers"
+      "TEXT": "All Customers"
     },
     "NETWORK-REFERRAL": {
       "TEXT": "Network referrals"
     },
     "NETWORK-TITLE": {
-      "TEXT": "My Network"
+      "TEXT": "My Customers"
     },
     "PDF": {
       "TEXT": "PDF"

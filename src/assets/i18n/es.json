@@ -807,7 +807,7 @@
       "TEXT": "Facturado a"
     },
     "BUY": {
-      "TEXT": "Comprar RecyBot "
+      "TEXT": "Aumentar RecyBot"
     },
     "BUY-MORE": {
       "TEXT": "Comprar Más"
@@ -1395,7 +1395,7 @@
       "TEXT": "Afiliados registrados"
     },
     "TITTLE-SECOND-CHART": {
-      "TEXT": "Compras realizadas en mi red"
+      "TEXT": "Compras realizadas"
     },
     "TOTAL-ACQUISITIONS": {
       "TEXT": "Mis RecyBot s"
@@ -1664,13 +1664,13 @@
       "TEXT": "Clientes indirectos"
     },
     "NETWORK-ALL-CUSTOMERS": {
-      "TEXT": "Red de Todos los Clientes"
+      "TEXT": "Todos los Clientes"
     },
     "NETWORK-REFERRAL": {
       "TEXT": "Referidos de la red"
     },
     "NETWORK-TITLE": {
-      "TEXT": "Mi Red"
+      "TEXT": "Mis Clientes"
     },
     "PDF": {
       "TEXT": "PDF"

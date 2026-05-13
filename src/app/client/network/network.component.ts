@@ -1,8 +1,17 @@
 import { ThirdPartyPurchaseComponent } from './third-party-purchase/third-party-purchase.component';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import Swal from 'sweetalert2';
-import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
-import { DatatableComponent } from '@swimlane/ngx-datatable';
+import {
+  Component,
+  HostListener,
+  OnInit,
+  ViewChild,
+  CUSTOM_ELEMENTS_SCHEMA,
+} from '@angular/core';
+import {
+  DatatableComponent,
+  NgxDatatableModule,
+} from '@swimlane/ngx-datatable';
 import { Observable } from 'rxjs';
 import { Router, RouterLink } from '@angular/router';
 import html2canvas from 'html2canvas';
@@ -28,10 +37,8 @@ import { ProductService } from '@app/core/service/product-service/product.servic
 import { StatisticsInformation } from '@app/core/models/wallet-model/statisticsInformation';
 import { MatrixQualificationService } from '@app/core/service/matrix-qualification-service/matrix-qualification.service';
 import { CommonModule } from '@angular/common';
-import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { IconsModule } from '@app/shared';
 
 @Component({
@@ -57,15 +64,15 @@ export class NetworkComponent implements OnInit {
   rows: NetworkAffiliate[] = [];
   gradings: Grading[] = [];
   transferBalance: TransferBalance = new TransferBalance();
-  temp = [];
-  userBalance: number;
+  temp: NetworkAffiliate[] = [];
+  userBalance!: number;
   loadingIndicator = true;
   loadingIndicatorGlobal = true;
   reorderable = true;
   scrollBarHorizontal = window.innerWidth < 1200;
-  rowsGlobal = [];
-  tempGlobal = [];
-  userName: string;
+  rowsGlobal: any[] = [];
+  tempGlobal: any = {};
+  userName!: string;
   withdrawalConfiguration = new WalletWithdrawalsConfiguration();
   isNewUser: boolean = false;
   pagaditoRequest = new CreatePagaditoTransactionRequest();
@@ -73,9 +80,9 @@ export class NetworkComponent implements OnInit {
   information: StatisticsInformation = new StatisticsInformation();
   @ViewChild('purchaseModal', { static: false })
   purchaseModal!: ThirdPartyPurchaseComponent;
-  @ViewChild('tableRef') table: DatatableComponent;
-  @ViewChild('tableRefGlobal') tableRefGlobal: DatatableComponent;
-  recycoins$: Observable<Product[]>;
+  @ViewChild('tableRef') table!: DatatableComponent;
+  @ViewChild('tableRefGlobal') tableRefGlobal!: DatatableComponent;
+  recycoins$!: Observable<Product[]>;
   isReachedWithdrawalLimit: boolean = false;
 
   constructor(
@@ -98,8 +105,9 @@ export class NetworkComponent implements OnInit {
     this.loadAllMemberships();
 
     // Usar signal para obtener el usuario afiliado
-    this.user = this.authService.userAffiliate();
-    if (this.user?.id) {
+    const userAffiliate = this.authService.userAffiliate();
+    if (userAffiliate?.id) {
+      this.user = userAffiliate;
       this.affiliateService.changeId(this.user.id);
 
       this.gradingService.getAll().subscribe((gradings: Grading[]) => {
@@ -177,12 +185,12 @@ export class NetworkComponent implements OnInit {
     const val = event.target.value.toLowerCase();
 
     this.rows = this.temp.filter(function (d) {
-      return d.userName.toLowerCase().indexOf(val) !== -1 || !val;
+      return d.userName.toLowerCase().includes(val) || !val;
     });
     this.table.offset = 0;
   }
 
-  TransferBalanceForMembership(user) {
+  TransferBalanceForMembership(user: any) {
     this.transferBalance.fromAffiliateId = this.user.id;
     this.transferBalance.fromUserName = this.user.user_name;
     this.transferBalance.toUserName = user.userName || user.user_name;
@@ -203,7 +211,7 @@ export class NetworkComponent implements OnInit {
       });
   }
 
-  showConfirmationTransferBalanceForMembership(row) {
+  showConfirmationTransferBalanceForMembership(row: any) {
     this.generateVerificationCode();
     Swal.fire({
       title:
@@ -213,7 +221,9 @@ export class NetworkComponent implements OnInit {
       confirmButtonText: 'Ok',
       cancelButtonText: 'Cancelar',
       preConfirm: () => {
-        const codeElement = Swal.getPopup().querySelector(
+        const popup = Swal.getPopup();
+        if (!popup) return;
+        const codeElement = popup.querySelector(
           '#swal-input-code',
         ) as HTMLInputElement;
         if (!codeElement) return;
@@ -236,7 +246,7 @@ export class NetworkComponent implements OnInit {
     });
   }
 
-  showConfirmationTransferBalance(row) {
+  showConfirmationTransferBalance(row: any) {
     this.generateVerificationCode();
 
     let formattedBalance = Math.floor(this.userBalance * 100) / 100;
@@ -266,20 +276,23 @@ export class NetworkComponent implements OnInit {
   }
 
   swalPreConfirm() {
-    const amountElement = Swal.getPopup().querySelector(
+    const popup = Swal.getPopup();
+    if (!popup) return;
+
+    const amountElement = popup.querySelector(
       '#swal-input-amount',
     ) as HTMLInputElement;
-    const codeElement = Swal.getPopup().querySelector(
+    const codeElement = popup.querySelector(
       '#swal-input-code',
     ) as HTMLInputElement;
 
     if (!amountElement || !codeElement) return;
 
-    const amount = parseFloat(amountElement.value);
+    const amount = Number.parseFloat(amountElement.value);
     const code = codeElement.value;
     this.transferBalance.securityCode = code;
 
-    if (isNaN(amount) || amount <= 0) {
+    if (Number.isNaN(amount) || amount <= 0) {
       Swal.showValidationMessage('Por favor ingrese un monto válido');
     }
     if (!code.trim()) {
@@ -294,7 +307,7 @@ export class NetworkComponent implements OnInit {
     return amount;
   }
 
-  handleAmountEntry(result, user) {
+  handleAmountEntry(result: any, user: any) {
     if (result && result > 0) {
       const amount = Number(result);
       if (amount > this.userBalance) {
@@ -307,7 +320,7 @@ export class NetworkComponent implements OnInit {
     }
   }
 
-  showTransferConfirmation(amount, row) {
+  showTransferConfirmation(amount: number, row: any) {
     Swal.fire({
       title: '¿Está seguro que desea transferir saldo?',
       text: 'Esta acción no se puede deshacer.',
@@ -327,7 +340,7 @@ export class NetworkComponent implements OnInit {
       });
   }
 
-  TransferBalance(user) {
+  TransferBalance(user: any) {
     this.transferBalance.fromAffiliateId = this.user.id;
     this.transferBalance.fromUserName = this.user.user_name;
     this.transferBalance.toUserName = user.userName;
@@ -373,18 +386,14 @@ export class NetworkComponent implements OnInit {
     });
   }
 
-  /*
-    redirectToPurchases(row) {
-      this.cartService.setPurchaseFromThirdParty(row);
-      this.route.navigate(['app/billing-purchase']);
-    }*/
-
   redirectToUnilevelTree() {
     this.route.navigate(['app/trees']).then();
   }
 
   downloadPDF() {
     const DATA = document.getElementById('htmlTable');
+
+    if (!DATA) return;
 
     html2canvas(DATA).then(canvas => {
       let pdf = new JSPDF('l', 'mm', 'a4');
@@ -433,20 +442,14 @@ export class NetworkComponent implements OnInit {
   }
 
   copyTextToClipboard(text: string) {
-    const textArea = document.createElement('textarea');
-    textArea.value = text;
-    document.body.appendChild(textArea);
-    textArea.focus();
-    textArea.select();
-
-    try {
-      document.execCommand('copy');
-      this.toastr.success('Se ha copiado al portapapeles');
-    } catch (err) {
-      console.error('Error: ', err);
-    }
-
-    document.body.removeChild(textArea);
+    navigator.clipboard.writeText(text).then(
+      () => {
+        this.toastr.success('Se ha copiado al portapapeles');
+      },
+      err => {
+        console.error('Error: ', err);
+      },
+    );
   }
 
   loadWithdrawalConfiguration() {
@@ -473,7 +476,7 @@ export class NetworkComponent implements OnInit {
 
             this.toastr.success(
               'Se ha generado un código de seguridad, por favor revisa el correo electronico.',
-              null,
+              undefined,
               toastConfig,
             );
           }

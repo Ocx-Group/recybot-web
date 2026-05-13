@@ -113,18 +113,22 @@
           <div class="card-body">
             <div class="py-2">
               <p class="clearfix mb-3">
-                <span role="button" class="float-start" (click)="openNewWindow(registerUrl)">
+                <button class="float-start"
+                  style="background: none; border: none; padding: 0; cursor: pointer; text-decoration: underline; color: inherit;"
+                  (click)="openNewWindow(registerUrl)">
                   {{ 'HOME-PAGE-CLIENT.REGISTER.TEXT' | translate }}
-                </span>
+                </button>
                 <button class="btn btn-primary float-end" (click)="shareModalComponent.openShareModal(registerUrl)">
                   <i class="bi bi-share-fill ms-2"></i>
                   {{ 'HOME-PAGE-CLIENT.SHARE-LINK.TEXT' | translate }}
                 </button>
               </p>
               <p class="clearfix mb-3">
-                <span role="button" class="float-start" (click)="openNewWindow(registerUrl)">
+                <button class="float-start"
+                  style="background: none; border: none; padding: 0; cursor: pointer; text-decoration: underline; color: inherit;"
+                  (click)="openNewWindow(registerUrl)">
                   {{ 'HOME-PAGE-CLIENT.PUBLIC-STORE.TEXT' | translate }}
-                </span>
+                </button>
                 <button class="btn btn-primary float-end" (click)="shareModalComponent.openShareModal(registerUrl)">
                   <i class="bi bi-share-fill ms-2"></i>
                   {{ 'HOME-PAGE-CLIENT.SHARE-LINK.TEXT' | translate }}
@@ -133,7 +137,7 @@
               <p class="clearfix mb-0">
                 <span class="float-start">{{ 'HOME-PAGE-CLIENT.WEBSITE.TEXT' | translate }}</span>
                 <span class="float-end text-muted">
-                  <a rel="noopener" href="https://recybot.com" target="_blank">recybot.com</a>
+                  <a rel="noopener" href="https://recybotia.com" target="_blank">recybotia.com</a>
                 </span>
               </p>
             </div>

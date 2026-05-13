@@ -36,14 +36,14 @@ export const CLIENT_ROUTES: Routes = [
       ),
     canActivate: [AuthGuard, MaintenanceGuard],
   },
-  {
-    path: 'billing-purchases',
-    loadComponent: () =>
-      import('./billing-purchases/billing-purchases.component').then(
-        m => m.BillingPurchasesComponent,
-      ),
-    canActivate: [AuthGuard, MaintenanceGuard],
-  },
+  // {
+  //   path: 'billing-purchases',
+  //   loadComponent: () =>
+  //     import('./billing-purchases/billing-purchases.component').then(
+  //       m => m.BillingPurchasesComponent,
+  //     ),
+  //   canActivate: [AuthGuard, MaintenanceGuard],
+  // },
   {
     path: 'commissions',
     loadComponent: () =>
