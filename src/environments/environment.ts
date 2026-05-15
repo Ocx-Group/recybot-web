@@ -14,6 +14,10 @@ export const environment = {
     notificationService: `${gatewayBaseUrl}/api/v1`,
     coinPayment: 'https://www.coinpayments.net/index.php',
   },
+  googleAuth: {
+    clientId:
+      '378354244505-86veruf9kchr221e953erkp8jbrq8883.apps.googleusercontent.com',
+  },
   brand: {
     id: 5,
     name: 'Recybotia',

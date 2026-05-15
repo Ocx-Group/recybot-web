@@ -135,6 +135,11 @@
             {{ signin }}&nbsp;<i class="bi bi-arrow-right-circle-fill"></i>
           </span>
         </button>
+        <button class="btn-login mt-2" type="button" [disabled]="loading" (click)="googleLoginSubmitted()">
+          <span>
+            Google&nbsp;<i class="bi bi-google"></i>
+          </span>
+        </button>
 
         <!-- Error -->
         <div class="form-alert" *ngIf="error !== ''">
