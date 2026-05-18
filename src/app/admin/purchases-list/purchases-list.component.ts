@@ -1,16 +1,28 @@
-import {Component, ElementRef, HostListener, OnInit, ViewChild,} from '@angular/core';
-import {DataTableColumnCellDirective, DataTableColumnDirective, DatatableComponent} from '@swimlane/ngx-datatable';
-import {ClipboardService} from 'ngx-clipboard';
-import {ToastrService} from 'ngx-toastr';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {PrintService} from "../../core/service/print-service/print.service";
-import {InvoiceService} from "../../core/service/invoice-service/invoice.service";
-import {PaginationRequest} from "../../core/interfaces/pagination-request";
-import {TranslatePipe} from "@ngx-translate/core";
-import {RouterLink} from "@angular/router";
-import {IconsModule} from "../../shared";
-import {FormsModule} from "@angular/forms";
-import {CurrencyPipe, DatePipe, NgClass} from "@angular/common";
+import {
+  Component,
+  ElementRef,
+  HostListener,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
+import {
+  DataTableColumnCellDirective,
+  DataTableColumnDirective,
+  DatatableComponent,
+} from '@swimlane/ngx-datatable';
+import { ClipboardService } from 'ngx-clipboard';
+import { ToastrService } from 'ngx-toastr';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { PrintService } from '../../core/service/print-service/print.service';
+import { InvoiceService } from '../../core/service/invoice-service/invoice.service';
+import { Invoice } from '../../core/models/invoice-model/invoice.model';
+import { InvoiceDetail } from '../../core/models/invoice-detail-model/invoice-detail.model';
+import { PaginationRequest } from '../../core/interfaces/pagination-request';
+import { TranslatePipe } from '@ngx-translate/core';
+import { RouterLink } from '@angular/router';
+import { IconsModule } from '../../shared';
+import { FormsModule } from '@angular/forms';
+import { CurrencyPipe, DatePipe, NgClass } from '@angular/common';
 
 const header = [
   'Afiliado',
@@ -26,45 +38,55 @@ const header = [
   templateUrl: './purchases-list.component.html',
   providers: [ToastrService],
   standalone: true,
-  imports: [DatatableComponent, TranslatePipe, RouterLink, IconsModule, FormsModule, NgClass, DataTableColumnDirective, DataTableColumnCellDirective, DatePipe, CurrencyPipe]
+  imports: [
+    DatatableComponent,
+    TranslatePipe,
+    RouterLink,
+    IconsModule,
+    FormsModule,
+    NgClass,
+    DataTableColumnDirective,
+    DataTableColumnCellDirective,
+    DatePipe,
+    CurrencyPipe,
+  ],
 })
 export class PurchasesListComponent implements OnInit {
-  rows = [];
-  temp = [];
+  rows: Invoice[] = [];
+  temp: Invoice[] = [];
   loadingIndicator = true;
   reorderable = true;
   scrollBarHorizontal = window.innerWidth < 1200;
-  startDate: string = null;
-  endDate: string = null;
-  selectedInvoice: any = null;
+  startDate: string | null = null;
+  endDate: string | null = null;
+  selectedInvoice!: any;
   modal: any;
-  @ViewChild('detailsModal') detailsModal: ElementRef;
-  @ViewChild('table') table: DatatableComponent;
+  @ViewChild('detailsModal') detailsModal!: ElementRef;
+  @ViewChild('table') table!: DatatableComponent;
   totalElements: number = 0;
   pageSize: number = 10;
   currentPage: number = 1;
 
   constructor(
-    private toastr: ToastrService,
-    private clipboardService: ClipboardService,
-    private printService: PrintService,
-    private invoiceService: InvoiceService,
-    private modalService: NgbModal,
-  ) {
-  }
+    private readonly toastr: ToastrService,
+    private readonly clipboardService: ClipboardService,
+    private readonly printService: PrintService,
+    private readonly modalService: NgbModal,
+    private readonly invoiceService: InvoiceService,
+  ) {}
 
   ngOnInit(): void {
     this.loadData();
   }
 
   @HostListener('window:resize', ['$event'])
-  onResize(event) {
+  onResize(event: Event): void {
     this.scrollBarHorizontal = window.innerWidth < 1200;
     this.table.recalculate();
     this.table.recalculateColumns();
   }
 
-  getRowHeight(row) {
+  getRowHeight(row: any): number {
     return row.height;
   }
 
@@ -72,8 +94,8 @@ export class PurchasesListComponent implements OnInit {
     const request: PaginationRequest = {
       pageSize: this.pageSize,
       pageNumber: this.currentPage,
-      startDate: this.startDate ? new Date(this.startDate) : null,
-      endDate: this.endDate ? new Date(this.endDate) : null,
+      startDate: this.startDate ? new Date(this.startDate) : undefined,
+      endDate: this.endDate ? new Date(this.endDate) : undefined,
     };
 
     this.loadingIndicator = true;
@@ -121,10 +143,10 @@ export class PurchasesListComponent implements OnInit {
     this.loadData();
   }
 
-  updateFilter(event) {
-    const val = event.target.value.toLowerCase();
+  updateFilter(event: Event) {
+    const val = (event.target as HTMLInputElement).value.toLowerCase();
 
-    this.rows = this.temp.filter(function (d) {
+    this.rows = this.temp.filter(function (d: any) {
       return (
         d.name?.toLowerCase().indexOf(val) !== -1 ||
         d.lastName?.toLowerCase().indexOf(val) !== -1 ||
@@ -178,12 +200,14 @@ export class PurchasesListComponent implements OnInit {
 
     const header = ['Producto', 'Cantidad', 'Precio', 'Total'];
 
-    const body = this.selectedInvoice.invoicesDetails.map(detail => [
-      detail.productName,
-      detail.productQuantity,
-      detail.productPrice,
-      detail.baseAmount,
-    ]);
+    const body = this.selectedInvoice.invoicesDetails.map(
+      (detail: InvoiceDetail) => [
+        detail.productName,
+        detail.productQuantity,
+        detail.productPrice,
+        detail.baseAmount,
+      ],
+    );
 
     this.printService.print(
       header,
@@ -196,8 +220,8 @@ export class PurchasesListComponent implements OnInit {
   async exportToExcel() {
     try {
       this.loadingIndicator = true;
-      const startDate = this.startDate ? new Date(this.startDate) : null;
-      const endDate = this.endDate ? new Date(this.endDate) : null;
+      const startDate = this.startDate ? new Date(this.startDate) : undefined;
+      const endDate = this.endDate ? new Date(this.endDate) : undefined;
 
       this.invoiceService.exportToExcel(startDate, endDate).subscribe({
         next: (blob: Blob) => {

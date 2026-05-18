@@ -157,7 +157,7 @@ export class InvoiceService {
 
   createInvoiceByReference(
     reference: string,
-  ): Observable<{ blob: Blob; brandId: number | null }> {
+  ): Observable<{ blob: Blob | null; brandId: number | null }> {
     const options = {
       responseType: 'blob' as 'json',
       params: new HttpParams().set('reference', reference.toString()),
@@ -169,11 +169,11 @@ export class InvoiceService {
     };
 
     return this.http
-      .get(`${this.urlApi}/invoice/create_invoice_by_reference`, options)
+      .get<Blob>(`${this.urlApi}/invoice/create_invoice_by_reference`, options)
       .pipe(
         map((response: HttpResponse<Blob>) => {
           const brandIdHeader = response.headers.get('X-Brand-Id');
-          const brandId = brandIdHeader ? parseInt(brandIdHeader, 10) : null;
+          const brandId = brandIdHeader ? Number.parseInt(brandIdHeader, 10) : null;
           console.log('Brand ID:', brandId);
           return {
             blob: response.body,

@@ -37,7 +37,11 @@ export class WorldMapChartComponent implements OnInit, OnChanges {
   public mapChartOption: EChartsOption = {};
   private mapLoaded = false;
 
-  async ngOnInit() {
+  ngOnInit(): void {
+    void this.initChart();
+  }
+
+  private async initChart(): Promise<void> {
     await this.loadWorldMap();
     this.updateChart();
   }
