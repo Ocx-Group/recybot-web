@@ -1,9 +1,9 @@
-import {AuthService} from '@app/core/service/authentication-service/auth.service';
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {EChartsOption} from 'echarts';
-import {WalletService} from '@app/core/service/wallet-service/wallet.service';
-import {AffiliateService} from '@app/core/service/affiliate-service/affiliate.service';
-import {ToastrService} from 'ngx-toastr';
+import { AuthService } from '@app/core/service/authentication-service/auth.service';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { EChartsOption } from 'echarts';
+import { WalletService } from '@app/core/service/wallet-service/wallet.service';
+import { AffiliateService } from '@app/core/service/affiliate-service/affiliate.service';
+import { ToastrService } from 'ngx-toastr';
 import {
   ApexNonAxisChartSeries,
   ApexChart,
@@ -13,13 +13,16 @@ import {
   ApexPlotOptions,
   ChartComponent,
 } from 'ng-apexcharts';
-import {UserAffiliate} from '@app/core/models/user-affiliate-model/user.affiliate.model';
-import {TruncateDecimalsPipe} from '@app/shared/pipes/truncate-decimals.pipe';
-import {CommonModule} from '@angular/common';
-import {TranslatePipe} from "@ngx-translate/core";
-import {NgxEchartsModule, provideEchartsCore} from 'ngx-echarts';
-import {RouterLink} from '@angular/router';
-import {WorldMapChartComponent, CountryData} from "@app/shared/components/world-map-chart/world-map-chart.component";
+import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
+import { TruncateDecimalsPipe } from '@app/shared/pipes/truncate-decimals.pipe';
+import { CommonModule } from '@angular/common';
+import { TranslatePipe } from '@ngx-translate/core';
+import { NgxEchartsModule, provideEchartsCore } from 'ngx-echarts';
+import { RouterLink } from '@angular/router';
+import {
+  WorldMapChartComponent,
+  CountryData,
+} from '@app/shared/components/world-map-chart/world-map-chart.component';
 
 export interface ChartOptions {
   series?: ApexNonAxisChartSeries;
@@ -37,32 +40,40 @@ export interface ChartOptions {
   templateUrl: './home-admin.component.html',
   styleUrls: ['./home-admin.component.scss'],
   standalone: true,
-  imports: [CommonModule, TruncateDecimalsPipe, TranslatePipe, ChartComponent, NgxEchartsModule, RouterLink, WorldMapChartComponent],
+  imports: [
+    CommonModule,
+    TruncateDecimalsPipe,
+    TranslatePipe,
+    ChartComponent,
+    NgxEchartsModule,
+    RouterLink,
+    WorldMapChartComponent,
+  ],
   providers: [
     provideEchartsCore({
-      echarts: () => import('echarts')
-    })
-  ]
+      echarts: () => import('echarts'),
+    }),
+  ],
 })
 export class HomeAdminComponent implements OnInit {
   public pieChartOptions: Partial<ChartOptions>;
   public avgLecChartOptions: any;
-  totalMembers: number;
-  commissionsPaid: number;
-  walletProfit: number;
-  calculatedCommissions: number;
-  totalReverseBalance: number;
-  adminCommissions: number;
+  totalMembers!: number;
+  commissionsPaid!: number;
+  walletProfit!: number;
+  calculatedCommissions!: number;
+  totalReverseBalance!: number;
+  adminCommissions!: number;
   maps: CountryData[] = [];
   user: any;
-  @ViewChild('chart') chart1: ChartComponent;
+  @ViewChild('chart') chart1!: ChartComponent;
   lastRegisteredUsers: UserAffiliate[] = [];
 
   constructor(
-    private walletService: WalletService,
-    private affiliateService: AffiliateService,
-    private toastr: ToastrService,
-    private authService: AuthService,
+    private readonly walletService: WalletService,
+    private readonly affiliateService: AffiliateService,
+    private readonly toastr: ToastrService,
+    private readonly authService: AuthService,
   ) {
     this.pieChartOptions = {
       series: [],
@@ -96,13 +107,13 @@ export class HomeAdminComponent implements OnInit {
 
   loadLocations() {
     this.affiliateService.getTotalAffiliatesByCountries().subscribe({
-      next: (value) => {
-        this.maps = value.data;
+      next: value => {
+        this.maps = value?.data ?? [];
       },
-      error: (err) => {
+      error: err => {
         console.error('Error fetching locations:', err);
       },
-    })
+    });
   }
 
   private initChartReport3() {
@@ -349,7 +360,6 @@ export class HomeAdminComponent implements OnInit {
       },
     });
   }
-
 
   getLastRegisteredUsers() {
     this.affiliateService.getLastRegisteredAffiliates().subscribe({
