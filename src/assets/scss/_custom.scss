@@ -70,14 +70,16 @@ body {
 }
 
 // Nav links
-.sidebar .menu .list a.menu-top {
-  color: rgba(255, 255, 255, 0.65) !important;
+.sidebar .menu .list a.menu-top,
+.sidebar .menu .list a.menu-top span {
+  color: #ffffff !important;
   transition:
     background 0.2s,
     color 0.2s;
 }
 
-.sidebar .menu .list a.menu-top:hover {
+.sidebar .menu .list a.menu-top:hover,
+.sidebar .menu .list a.menu-top:hover span {
   background: rgba(67, 227, 127, 0.07) !important;
   color: #ffffff !important;
 }
@@ -105,7 +107,7 @@ body {
 .sidebar .ml-menu a,
 .sidebar .ml-menu-2 a,
 .sidebar .ml-menu-3 a {
-  color: rgba(255, 255, 255, 0.55) !important;
+  color: #ffffff !important;
 }
 
 .sidebar .ml-menu a:hover,
