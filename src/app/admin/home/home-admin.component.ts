@@ -148,7 +148,7 @@ export class HomeAdminComponent implements OnInit {
         'Comisiones para el admin',
         'Beneficio en billetera',
         'Total comisiones pagadas',
-        'Total recycoins vendidos',
+        'Total recybots vendidos',
         'Afiliados activos',
         'Saldo balance 2',
       ],
