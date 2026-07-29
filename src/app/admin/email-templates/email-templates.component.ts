@@ -11,7 +11,6 @@ import { RouterLink } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import Swal from 'sweetalert2';
 
-import { environment } from '@environments/environment';
 import { EmailSenderConfig } from '@app/core/models/notification-models/email-sender-config.model';
 import {
   CreateEmailTemplate,
@@ -19,6 +18,7 @@ import {
 } from '@app/core/models/notification-models/email-template.model';
 import { TemplateService } from '@app/core/service/notification-service/template.service';
 import { EmailPreviewModalComponent } from './preview-modal/email-preview-modal.component';
+import { BrandingService } from '@app/core/service/branding-service/branding.service';
 
 type Mode = 'list' | 'edit';
 
@@ -37,8 +37,8 @@ type Mode = 'list' | 'edit';
 })
 export class EmailTemplatesComponent implements OnInit {
   @ViewChild('htmlBodyArea') htmlBodyArea?: ElementRef<HTMLTextAreaElement>;
-  readonly brandId = environment.brand.id;
-  readonly brandName = environment.brand.name;
+  readonly brandId: number;
+  readonly brandName: string;
 
   mode: Mode = 'list';
   loading = false;
@@ -53,14 +53,7 @@ export class EmailTemplatesComponent implements OnInit {
   placeholderInput = '';
 
   // Sample values used for the live preview render.
-  previewValues: Record<string, string> = {
-    userName: 'Andres',
-    verificationCode: '2718b880-1468-40ea-84e0-d07ef106581b',
-    brandName: this.brandName,
-    clientUrl: '',
-    supportEmail: '',
-    senderName: this.brandName,
-  };
+  previewValues: Record<string, string>;
 
   // Standard placeholders the consumer always injects.
   readonly defaultPlaceholders = [
@@ -76,7 +69,24 @@ export class EmailTemplatesComponent implements OnInit {
     private readonly templateService: TemplateService,
     private readonly fb: FormBuilder,
     private readonly toastr: ToastrService,
+    brandingService: BrandingService,
   ) {
+    const branding = brandingService.current;
+    if (!branding) {
+      throw new Error('Branding must be loaded before managing email templates.');
+    }
+
+    this.brandId = branding.brandId;
+    this.brandName = branding.name;
+    this.previewValues = {
+      userName: 'Andres',
+      verificationCode: '2718b880-1468-40ea-84e0-d07ef106581b',
+      brandName: this.brandName,
+      clientUrl: branding.clientUrl,
+      supportEmail: branding.supportEmail,
+      senderName: this.brandName,
+    };
+
     this.form = this.fb.group({
       templateKey: ['', [Validators.required, Validators.maxLength(100)]],
       subject: ['', [Validators.required, Validators.maxLength(255)]],

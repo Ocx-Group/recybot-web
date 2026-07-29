@@ -17,7 +17,7 @@
     </a>
 
     <div class="brand-logo">
-      <img src="assets/images/logos/Logo-recybot.png" alt="RecyBot">
+      <img [src]="logoUrl || 'assets/images/logos/Logo-recybot.png'" alt="Logo">
     </div>
 
     <!-- Orbit visual -->
@@ -33,7 +33,7 @@
         <div class="orbit-dot orbit-dot--6"><img src="assets/images/crypto/trc20.png" alt="TRON"></div>
       </div>
       <div class="orbit-center">
-        <img src="assets/images/logos/Logo-recybot.png" alt="RecyBot">
+        <img [src]="logoUrl || 'assets/images/logos/Logo-recybot.png'" alt="Logo">
       </div>
     </div>
 
@@ -68,7 +68,7 @@
 
     <!-- Mobile-only logo -->
     <div class="mobile-logo">
-      <img src="assets/images/logos/Logo-recybot.png" alt="RecyBot">
+      <img [src]="logoUrl || 'assets/images/logos/Logo-recybot.png'" alt="Logo">
     </div>
 
     <div class="form-box">

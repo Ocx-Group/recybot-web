@@ -13,6 +13,7 @@ import { AuthService } from 'src/app/core/service/authentication-service/auth.se
 import { CommonModule } from '@angular/common';
 import { Signin } from '@app/core/models/signin-model/signin.model';
 import { DeviceDetectorService } from 'ngx-device-detector';
+import { LogoService } from '@app/core/service/logo-service/logo.service';
 
 @Component({
   selector: 'app-signin',
@@ -39,6 +40,7 @@ export class SigninComponent implements OnInit, OnDestroy {
   ];
   currentImageIndex = 0;
   showPassword = false;
+  logoUrl = '';
   private intervalId: ReturnType<typeof setInterval> | null = null;
 
   authLogin = new FormGroup({
@@ -56,7 +58,10 @@ export class SigninComponent implements OnInit, OnDestroy {
     private readonly toastr: ToastrService,
     private readonly translate: TranslateService,
     private readonly deviceService: DeviceDetectorService,
-  ) {}
+    private readonly logoService: LogoService,
+  ) {
+    this.logoUrl = this.logoService.getLogoSrc();
+  }
 
   ngOnInit() {
     if (this.authService.isLoggedIn()) {

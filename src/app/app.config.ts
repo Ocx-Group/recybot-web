@@ -5,7 +5,7 @@ import {
   inject,
 } from '@angular/core';
 import { provideRouter, withComponentInputBinding } from '@angular/router';
-import { provideHttpClient, HttpClient } from '@angular/common/http';
+import { provideHttpClient, HttpClient, withInterceptors } from '@angular/common/http';
 import { LocationStrategy, PathLocationStrategy } from '@angular/common';
 
 // Firebase
@@ -28,6 +28,8 @@ import { provideToastr } from 'ngx-toastr';
 
 // Routes
 import { routes } from './app.routes';
+import { BrandingService } from './core/service/branding-service/branding.service';
+import { runtimeTenantInterceptor } from './core/interceptor/runtime-tenant.interceptor';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -38,7 +40,8 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes, withComponentInputBinding()),
     // Note: Animations are now handled through animate.enter/animate.leave APIs in components
     // No global provider needed in Angular 20+
-    provideHttpClient(),
+    provideHttpClient(withInterceptors([runtimeTenantInterceptor])),
+    provideAppInitializer(() => inject(BrandingService).load()),
     provideToastr({
       timeOut: 3000,
       positionClass: 'toast-top-right',
