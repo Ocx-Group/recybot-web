@@ -119,6 +119,10 @@ export class CoinpayModalComponent implements OnInit {
       ariaLabelledBy: 'modal-basic-title',
       size: 'lg',
       centered: true,
+      // NgbModal renderiza fuera del host: estas clases permiten aplicar la
+      // paleta del app al contenedor (.modal-content) y al backdrop.
+      windowClass: 'coinpay-modal-window',
+      backdropClass: 'coinpay-modal-backdrop',
     });
   }
 
@@ -172,7 +176,13 @@ export class CoinpayModalComponent implements OnInit {
           console.log(response);
 
           try {
-            this.qrCodeDataUrl = await QRCode.toDataURL(this.walletAddress);
+            // Tinta de la paleta sobre fondo blanco: mantiene el contraste
+            // que necesitan los lectores QR y encaja con el marco del modal.
+            this.qrCodeDataUrl = await QRCode.toDataURL(this.walletAddress, {
+              margin: 1,
+              width: 320,
+              color: { dark: '#040c0e', light: '#ffffff' },
+            });
             this.isLoading = false;
 
             this.cdr.detectChanges();
