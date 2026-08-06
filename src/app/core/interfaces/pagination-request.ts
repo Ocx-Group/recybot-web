@@ -3,4 +3,5 @@ export interface PaginationRequest {
   pageNumber: number;
   startDate?: Date;
   endDate?: Date;
+  search?: string;
 }
