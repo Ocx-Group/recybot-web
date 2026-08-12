@@ -1,0 +1,216 @@
+// La vista se apoyaba en las clases por defecto de Bootstrap (fondos claros y
+// grises de bajo contraste) sobre el tema oscuro global de `_custom.scss`, por
+// lo que los textos de ayuda y los botones secundarios quedaban ilegibles.
+// Aquí se reescriben esas piezas con los tokens de la paleta Recybot.
+
+$green: #43e37f;
+$surface: rgba(4, 20, 24, 0.8);
+$surface-soft: rgba(255, 255, 255, 0.03);
+$line: rgba(67, 227, 127, 0.18);
+$line-soft: rgba(67, 227, 127, 0.1);
+$text: #ffffff;
+$text-soft: rgba(255, 255, 255, 0.72);
+$text-muted: rgba(255, 255, 255, 0.55);
+$danger: #ff6b6b;
+
+:host {
+  display: block;
+}
+
+// ── Estado de carga ───────────────────────────────────────────
+.spinner-border.text-primary {
+  color: $green !important;
+}
+
+// ── Aviso superior ────────────────────────────────────────────
+// Reemplaza al `alert alert-light`, que pintaba un bloque claro sobre el fondo
+// oscuro del dashboard.
+.config-notice {
+  background: rgba(67, 227, 127, 0.06);
+  border: 1px solid $line;
+  border-radius: 0.75rem;
+  padding: 0.875rem 1.125rem;
+  color: $text-soft;
+  font-size: 0.9rem;
+
+  small {
+    color: rgba(67, 227, 127, 0.85);
+    font-weight: 600;
+    white-space: nowrap;
+  }
+}
+
+// ── Tarjetas internas ─────────────────────────────────────────
+// `.card` global lleva `!important`, así que las anidadas necesitan la misma
+// fuerza para diferenciarse de la tarjeta contenedora.
+.inner-card {
+  background: $surface-soft !important;
+  border: 1px solid $line-soft !important;
+  box-shadow: none !important;
+  border-radius: 0.75rem !important;
+
+  &:hover {
+    border-color: $line !important;
+    box-shadow: none !important;
+  }
+
+  > .card-header {
+    border-bottom: 1px solid $line-soft !important;
+    padding: 0.875rem 1.25rem;
+
+    h6 {
+      color: $text !important;
+      font-weight: 600;
+    }
+  }
+
+  > .card-body {
+    padding: 1.25rem;
+  }
+}
+
+// ── Textos ────────────────────────────────────────────────────
+h6 {
+  color: $text;
+}
+
+// `.text-muted` de Bootstrap es `#6c757d !important`: sobre el fondo oscuro
+// baja de 4.5:1 de contraste.
+.text-muted {
+  color: $text-muted !important;
+}
+
+.text-danger {
+  color: $danger !important;
+}
+
+.form-label,
+.form-check-label {
+  color: $text-soft;
+}
+
+.form-check-label.fw-bold {
+  color: $text;
+}
+
+// ── Interruptores ─────────────────────────────────────────────
+.form-check-input {
+  background-color: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.25);
+
+  &:checked {
+    background-color: $green;
+    border-color: $green;
+  }
+
+  &:focus {
+    border-color: rgba(67, 227, 127, 0.5);
+    box-shadow: 0 0 0 3px rgba(67, 227, 127, 0.15);
+  }
+
+  // El "pulgar" del switch se dibuja con un SVG incrustado que por defecto es
+  // gris en reposo y blanco al activarse; se fuerza blanco en ambos estados
+  // para que se vea sobre el fondo oscuro.
+  &[type='checkbox'].form-check-input {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23ffffff'/%3e%3c/svg%3e");
+  }
+}
+
+// ── Campos de porcentaje ──────────────────────────────────────
+.form-control {
+  background-color: $surface;
+  border-color: rgba(67, 227, 127, 0.2);
+  color: $text;
+
+  &::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+  }
+
+  &:focus {
+    background-color: $surface;
+    color: $text;
+    border-color: rgba(67, 227, 127, 0.5);
+    box-shadow: 0 0 0 3px rgba(67, 227, 127, 0.08);
+  }
+
+  &.ng-invalid.ng-touched {
+    border-color: rgba(255, 107, 107, 0.55);
+  }
+}
+
+.input-group-text {
+  background-color: rgba(67, 227, 127, 0.08);
+  border-color: rgba(67, 227, 127, 0.2);
+  color: rgba(67, 227, 127, 0.9);
+}
+
+// ── Botones ───────────────────────────────────────────────────
+// El gris de `btn-outline-secondary` (#6c757d en texto y borde) es casi
+// invisible sobre el fondo del dashboard.
+.btn-outline-secondary {
+  color: $text-soft;
+  border-color: rgba(255, 255, 255, 0.25);
+  background: transparent;
+
+  &:hover,
+  &:focus {
+    color: $text;
+    border-color: rgba(255, 255, 255, 0.45);
+    background: rgba(255, 255, 255, 0.06);
+  }
+}
+
+.btn-outline-danger {
+  color: $danger;
+  border-color: rgba(255, 107, 107, 0.4);
+
+  &:hover,
+  &:focus {
+    color: #ffffff;
+    background: rgba(255, 107, 107, 0.85);
+    border-color: rgba(255, 107, 107, 0.85);
+  }
+}
+
+.btn:disabled,
+.btn.disabled {
+  opacity: 0.45;
+}
+
+// ── Resumen ───────────────────────────────────────────────────
+.summary-list li {
+  border-bottom: 1px solid $line-soft !important;
+  color: $text-soft;
+
+  strong {
+    color: $green;
+  }
+
+  &:last-child {
+    border-bottom: none !important;
+  }
+}
+
+.summary-total {
+  border-top: 1px solid $line;
+  margin-top: 0.5rem;
+  padding-top: 0.75rem;
+
+  span {
+    color: $text;
+  }
+
+  strong {
+    color: $green;
+    font-size: 1.05rem;
+
+    &.text-danger {
+      color: $danger !important;
+    }
+  }
+}
+
+// ── Pie del formulario ────────────────────────────────────────
+.form-footer small {
+  color: $text-muted;
+}

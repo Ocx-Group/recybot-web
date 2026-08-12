@@ -23,7 +23,7 @@
             </div>
 
             <form *ngIf="!loading" [formGroup]="commissionsForm" (ngSubmit)="save()">
-              <div class="alert alert-light border d-flex justify-content-between flex-wrap gap-2">
+              <div class="config-notice d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
                 <span>{{ 'COMMISSIONS-CONFIGURATION-PAGE.NOTICE.TEXT' | translate }}</span>
                 <small *ngIf="currentBrandId">
                   {{ 'COMMISSIONS-CONFIGURATION-PAGE.BRAND-ID.TEXT' | translate }} #{{ currentBrandId }}
@@ -32,7 +32,7 @@
 
               <div class="row">
                 <div class="col-lg-7">
-                  <div class="card border">
+                  <div class="card inner-card">
                     <div class="card-body">
                       <div class="form-check form-switch mb-3">
                         <input class="form-check-input" type="checkbox" id="commissionEnabled"
@@ -58,7 +58,7 @@
                     </div>
                   </div>
 
-                  <div class="card border mt-3">
+                  <div class="card inner-card mt-3">
                     <div class="card-header d-flex justify-content-between align-items-center">
                       <h6 class="mb-0">{{ 'COMMISSIONS-CONFIGURATION-PAGE.LEVELS.TEXT' | translate }}</h6>
                       <button type="button" class="btn btn-sm btn-outline-primary" (click)="addLevel()"
@@ -110,7 +110,7 @@
                 </div>
 
                 <div class="col-lg-5">
-                  <div class="card border">
+                  <div class="card inner-card">
                     <div class="card-body">
                       <h6 class="mb-3">{{ 'COMMISSIONS-CONFIGURATION-PAGE.SUMMARY.TEXT' | translate }}</h6>
 
@@ -118,7 +118,7 @@
                         {{ 'COMMISSIONS-CONFIGURATION-PAGE.SUMMARY-DISABLED.TEXT' | translate }}
                       </p>
 
-                      <ul *ngIf="isEnabled" class="list-unstyled mb-3">
+                      <ul *ngIf="isEnabled" class="list-unstyled summary-list mb-3">
                         <li *ngFor="let level of levels.controls; let i = index"
                           class="d-flex justify-content-between border-bottom py-1">
                           <span>{{ 'COMMISSIONS-CONFIGURATION-PAGE.LEVEL.TEXT' | translate }} {{ i + 1 }}</span>
@@ -126,7 +126,7 @@
                         </li>
                       </ul>
 
-                      <div class="d-flex justify-content-between">
+                      <div class="summary-total d-flex justify-content-between">
                         <span class="fw-bold">{{ 'COMMISSIONS-CONFIGURATION-PAGE.TOTAL.TEXT' | translate }}</span>
                         <strong [class.text-danger]="totalPercentage > maxTotal">{{ totalPercentage }}%</strong>
                       </div>
@@ -139,7 +139,7 @@
                 </div>
               </div>
 
-              <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mt-3">
+              <div class="form-footer d-flex justify-content-between align-items-center flex-wrap gap-2 mt-3">
                 <small *ngIf="updatedAt">
                   {{ 'COMMISSIONS-CONFIGURATION-PAGE.UPDATED-AT.TEXT' | translate }} {{ updatedAt | date:'medium' }}
                 </small>

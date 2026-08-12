@@ -26,6 +26,7 @@ import { CommissionSettingsService } from '@app/core/service/commission-settings
 @Component({
   selector: 'app-commissions-configuration',
   templateUrl: './commissions-configuration.component.html',
+  styleUrls: ['./commissions-configuration.component.scss'],
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, RouterLink, TranslatePipe],
 })
@@ -100,8 +101,8 @@ export class CommissionsConfigurationComponent implements OnInit {
       title: this.translate.instant('COMMISSIONS-CONFIGURATION-PAGE.CONFIRM-REMOVE.TEXT'),
       text: this.translate.instant('COMMISSIONS-CONFIGURATION-PAGE.CONFIRM-REMOVE-DETAIL.TEXT'),
       showCancelButton: true,
-      confirmButtonColor: '#8963ff',
-      cancelButtonColor: '#fb7823',
+      confirmButtonColor: '#43e37f',
+      cancelButtonColor: '#6c757d',
       confirmButtonText: this.translate.instant('COMMISSIONS-CONFIGURATION-PAGE.CONFIRM-YES.TEXT'),
     }).then(result => {
       if (!result.value) return;
