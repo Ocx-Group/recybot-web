@@ -22,7 +22,7 @@ export const ADMIN_ROUTES: Routes = [
   {
     path: 'calculate-commissions',
     loadComponent: () => import('./calculate-commissions/calculate-commissions.component').then(m => m.CalculateCommissionsComponent),
-    canActivate: [AuthGuardAdmin, MaintenanceGuard],
+    canActivate: [AuthGuardAdmin, BrandAdministratorGuard, MaintenanceGuard],
   },
   {
     path: 'compensations-plans-configuration',

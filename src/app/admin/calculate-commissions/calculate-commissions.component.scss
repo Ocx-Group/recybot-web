@@ -1,0 +1,266 @@
+// La vista heredaba los estilos base de la plantilla (`override/_form.scss`,
+// `override/_alert.scss`, `override/_button.scss`), pensados para un fondo
+// claro. Sobre el tema oscuro global de `_custom.scss` eso dejaba varios textos
+// por debajo del contraste legible:
+//
+//   - `.form-group > label` sale en `#34395e` (azul marino) → ~1.7:1.
+//   - `.text-muted` sale en `#6c757d` → ~3.5:1.
+//   - `.alert-info` / `.alert-warning` pintan texto blanco sobre `#3abaf4` y
+//     `#ffa426` → ~2:1.
+//   - `.btn-info` / `.btn-success`, lo mismo.
+//
+// Aquí se reescriben con los tokens de la paleta Recybot.
+
+$green: #43e37f;
+$teal: #00d4aa;
+$amber: #ffc266;
+$danger: #ff6b6b;
+
+$surface: rgba(4, 20, 24, 0.8);
+$surface-soft: rgba(255, 255, 255, 0.03);
+$line: rgba(67, 227, 127, 0.18);
+$line-soft: rgba(67, 227, 127, 0.1);
+
+$text: #ffffff;
+$text-soft: rgba(255, 255, 255, 0.72);
+$text-muted: rgba(255, 255, 255, 0.55);
+
+:host {
+  display: block;
+}
+
+// ── Estado de carga ───────────────────────────────────────────
+.spinner-border {
+  color: $green;
+}
+
+// ── Etiquetas y textos de ayuda ───────────────────────────────
+// `.form-group > label` de la plantilla es `color(fontdark)`; hay que igualar su
+// especificidad para reemplazarlo.
+.form-group > label,
+.form-group .control-label,
+label {
+  color: $text-soft;
+}
+
+.form-check-label {
+  color: $text-muted;
+  font-weight: 400;
+  letter-spacing: normal;
+}
+
+.text-muted,
+.form-text.text-muted {
+  color: $text-muted !important;
+}
+
+// ── Aviso de contexto ─────────────────────────────────────────
+// Reemplaza a `alert alert-light`, un bloque gris claro sobre fondo oscuro.
+.config-notice {
+  background: rgba(67, 227, 127, 0.06);
+  border: 1px solid $line;
+  border-radius: 0.75rem;
+  padding: 0.875rem 1.125rem;
+  color: $text-soft;
+  font-size: 0.9rem;
+}
+
+// ── Alertas informativas / de advertencia ─────────────────────
+// `override/_alert.scss` fuerza `color: #fff` sobre fondos claros saturados.
+// Se cambia a fondo translúcido con el color como acento del borde y el texto.
+// `ngb-alert` es el elemento anfitrión y vive en esta plantilla, así que la
+// encapsulación del componente lo alcanza sin `::ng-deep`.
+.alert {
+  border-radius: 0.75rem !important;
+  padding: 0.875rem 1.125rem !important;
+}
+
+.alert-info {
+  background-color: rgba(0, 212, 170, 0.1) !important;
+  border: 1px solid rgba(0, 212, 170, 0.3) !important;
+  color: $text-soft !important;
+
+  .alert-body {
+    color: $text-soft;
+  }
+}
+
+.alert-warning {
+  background-color: rgba(255, 194, 102, 0.1) !important;
+  border: 1px solid rgba(255, 194, 102, 0.35) !important;
+  color: $amber !important;
+
+  .alert-body {
+    color: $amber;
+  }
+}
+
+// ── Campos ────────────────────────────────────────────────────
+.form-control,
+select.form-control {
+  background-color: $surface;
+  border-color: rgba(67, 227, 127, 0.2);
+  color: $text;
+
+  &::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+  }
+
+  &:focus {
+    background-color: $surface;
+    color: $text;
+    border-color: rgba(67, 227, 127, 0.5);
+    box-shadow: 0 0 0 3px rgba(67, 227, 127, 0.08);
+  }
+
+  &[readonly] {
+    background-color: $surface-soft;
+    color: $text-muted;
+  }
+
+  &:disabled {
+    background-color: $surface-soft;
+    color: rgba(255, 255, 255, 0.35);
+  }
+}
+
+// El desplegable nativo se pinta con el color del sistema si no se fija aquí.
+select.form-control option {
+  background-color: #071417;
+  color: $text;
+
+  &:disabled {
+    color: rgba(255, 255, 255, 0.3);
+  }
+}
+
+.input-group-text {
+  background-color: rgba(67, 227, 127, 0.08);
+  border-color: rgba(67, 227, 127, 0.2);
+  color: rgba(67, 227, 127, 0.9);
+  border-radius: 0;
+}
+
+// ── Interruptor ───────────────────────────────────────────────
+.form-check-input {
+  background-color: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.25);
+
+  &:checked {
+    background-color: $green;
+    border-color: $green;
+  }
+
+  &:focus {
+    border-color: rgba(67, 227, 127, 0.5);
+    box-shadow: 0 0 0 3px rgba(67, 227, 127, 0.15);
+  }
+
+  &[type='checkbox'].form-check-input {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23ffffff'/%3e%3c/svg%3e");
+  }
+}
+
+// ── Botón de liquidación ──────────────────────────────────────
+// `btn-info` (#3abaf4) y `btn-success` (#54ca68) llevan texto blanco: ~2:1.
+// La simulación queda en turquesa contorneado y la corrida final en el verde
+// sólido de la marca, para que se distingan sin depender del color del texto.
+.btn-simulate,
+.btn-simulate.disabled {
+  background-color: rgba(0, 212, 170, 0.12) !important;
+  border: 1px solid rgba(0, 212, 170, 0.5) !important;
+  color: $teal !important;
+  box-shadow: none !important;
+  font-weight: 600;
+
+  &:hover,
+  &:focus,
+  &:active {
+    background-color: rgba(0, 212, 170, 0.2) !important;
+    border-color: $teal !important;
+    color: $teal !important;
+  }
+}
+
+.btn-run,
+.btn-run.disabled {
+  background: linear-gradient(135deg, #43e37f 0%, #2db865 100%) !important;
+  border: 1px solid transparent !important;
+  color: #03230a !important;
+  font-weight: 600;
+  box-shadow: 0 4px 14px rgba(67, 227, 127, 0.25) !important;
+
+  &:hover,
+  &:focus,
+  &:active {
+    background: linear-gradient(135deg, #6ef0a0 0%, #43e37f 100%) !important;
+    color: #03230a !important;
+    box-shadow: 0 6px 22px rgba(67, 227, 127, 0.4) !important;
+  }
+}
+
+.btn:disabled,
+.btn.disabled {
+  opacity: 0.45;
+}
+
+// ── Resumen del resultado ─────────────────────────────────────
+.result-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 0.75rem;
+  margin: 0 0 1.25rem;
+  padding: 0;
+  list-style: none;
+
+  li {
+    background: $surface-soft;
+    border: 1px solid $line-soft;
+    border-radius: 0.75rem;
+    padding: 0.75rem 1rem;
+  }
+
+  .result-label {
+    display: block;
+    color: $text-muted;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+    margin-bottom: 0.25rem;
+  }
+
+  .result-value {
+    color: $text;
+    font-size: 0.95rem;
+    font-weight: 600;
+    overflow-wrap: anywhere;
+  }
+
+  li.result-highlight {
+    background: rgba(67, 227, 127, 0.07);
+    border-color: $line;
+
+    .result-value {
+      color: $green;
+      font-size: 1.1rem;
+    }
+  }
+}
+
+// ── Tabla de resultados ───────────────────────────────────────
+.table {
+  th,
+  td {
+    border-color: $line-soft;
+  }
+
+  tbody td {
+    color: $text-soft;
+  }
+
+  .credit-cell {
+    color: $green;
+    font-weight: 600;
+  }
+}
