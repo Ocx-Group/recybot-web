@@ -25,6 +25,7 @@ import {
 } from '@app/shared/components/world-map-chart/world-map-chart.component';
 import { InvoiceService } from '@app/core/service/invoice-service/invoice.service';
 import { MonthlyPurchases } from '@app/core/models/invoice-model/monthly-purchases.model';
+import { MonthlyRegistrations } from '@app/core/models/user-affiliate-model/monthly-registrations.model';
 
 const MONTH_LABELS = [
   'Ene',
@@ -41,14 +42,19 @@ const MONTH_LABELS = [
   'Dic',
 ];
 
-function buildPurchasesChart(
-  labels: string[],
-  values: number[],
-): EChartsOption {
+interface MonthlyChart {
+  name: string;
+  color: string;
+  labels: string[];
+  values: number[];
+  format: (value: number) => string;
+}
+
+function buildMonthlyLineChart(chart: MonthlyChart): EChartsOption {
   return {
     tooltip: {
       trigger: 'axis',
-      valueFormatter: value => `$${Number(value).toFixed(2)}`,
+      valueFormatter: value => chart.format(Number(value)),
     },
     grid: {
       left: 60,
@@ -60,7 +66,7 @@ function buildPurchasesChart(
       {
         type: 'category',
         boundaryGap: !1,
-        data: labels,
+        data: chart.labels,
         axisLabel: {
           fontSize: 10,
           color: '#9aa0ac',
@@ -78,18 +84,38 @@ function buildPurchasesChart(
     ],
     series: [
       {
-        name: 'Compras',
+        name: chart.name,
         type: 'line',
         smooth: !0,
         areaStyle: {},
         emphasis: {
           focus: 'series',
         },
-        data: values,
+        data: chart.values,
       },
     ],
-    color: ['#9f78ff'],
+    color: [chart.color],
   };
+}
+
+function buildPurchasesChart(labels: string[], values: number[]): EChartsOption {
+  return buildMonthlyLineChart({
+    name: 'Compras',
+    color: '#9f78ff',
+    labels,
+    values,
+    format: value => `$${value.toFixed(2)}`,
+  });
+}
+
+function buildAffiliatesChart(labels: string[], values: number[]): EChartsOption {
+  return buildMonthlyLineChart({
+    name: 'Afiliados',
+    color: '#32cafe',
+    labels,
+    values,
+    format: value => `${value}`,
+  });
 }
 
 export interface ChartOptions {
@@ -137,6 +163,7 @@ export class HomeAdminComponent implements OnInit {
   @ViewChild('chart') chart1!: ChartComponent;
   lastRegisteredUsers: UserAffiliate[] = [];
   purchases_chart: EChartsOption = buildPurchasesChart([], []);
+  affiliates_chart: EChartsOption = buildAffiliatesChart([], []);
 
   constructor(
     private readonly walletService: WalletService,
@@ -170,6 +197,7 @@ export class HomeAdminComponent implements OnInit {
     this.user = this.authService.currentUserAdminValue;
     this.getLastRegisteredUsers();
     this.loadPurchasesChart();
+    this.loadAffiliatesChart();
   }
 
   showError(message: string) {
@@ -327,94 +355,6 @@ export class HomeAdminComponent implements OnInit {
     };
   }
 
-  area_line_chart: EChartsOption = {
-    tooltip: {
-      trigger: 'axis',
-    },
-    legend: {
-      data: ['Intent', 'Pre-order', 'Deal'],
-      textStyle: {
-        color: '#9aa0ac',
-        padding: [0, 5, 0, 5],
-      },
-    },
-    toolbox: {
-      show: !0,
-      feature: {
-        magicType: {
-          show: !0,
-          title: {
-            line: 'Line',
-            bar: 'Bar',
-            stack: 'Stack',
-          },
-          type: ['line', 'bar', 'stack'],
-        },
-        restore: {
-          show: !0,
-          title: 'Restore',
-        },
-        saveAsImage: {
-          show: !0,
-          title: 'Save Image',
-        },
-      },
-    },
-    xAxis: [
-      {
-        type: 'category',
-        boundaryGap: !1,
-        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-        axisLabel: {
-          fontSize: 10,
-          color: '#9aa0ac',
-        },
-      },
-    ],
-    yAxis: [
-      {
-        type: 'value',
-        axisLabel: {
-          fontSize: 10,
-          color: '#9aa0ac',
-        },
-      },
-    ],
-    series: [
-      {
-        name: 'Deal',
-        type: 'line',
-        smooth: !0,
-        areaStyle: {},
-        emphasis: {
-          focus: 'series',
-        },
-        data: [10, 12, 21, 54, 260, 830, 710],
-      },
-      {
-        name: 'Pre-order',
-        type: 'line',
-        smooth: !0,
-        areaStyle: {},
-        emphasis: {
-          focus: 'series',
-        },
-        data: [30, 182, 434, 791, 390, 30, 10],
-      },
-      {
-        name: 'Intent',
-        type: 'line',
-        smooth: !0,
-        areaStyle: {},
-        emphasis: {
-          focus: 'series',
-        },
-        data: [1320, 1132, 601, 234, 120, 90, 20],
-      },
-    ],
-    color: ['#9f78ff', '#fa626b', '#32cafe'],
-  };
-
   getBalanceInformationAdmin() {
     this.walletService.getBalanceInformationAdmin().subscribe({
       next: value => {
@@ -445,6 +385,23 @@ export class HomeAdminComponent implements OnInit {
       },
       error: () => {
         this.showError('Error al cargar las compras realizadas');
+      },
+    });
+  }
+
+  loadAffiliatesChart() {
+    this.affiliateService.getMonthlyRegistrationsSummary().subscribe({
+      next: (summary: MonthlyRegistrations[]) => {
+        this.affiliates_chart = buildAffiliatesChart(
+          summary.map(
+            item =>
+              `${MONTH_LABELS[item.month - 1]} ${String(item.year).slice(-2)}`,
+          ),
+          summary.map(item => Number(item.total)),
+        );
+      },
+      error: () => {
+        this.showError('Error al cargar los afiliados ingresados');
       },
     });
   }
