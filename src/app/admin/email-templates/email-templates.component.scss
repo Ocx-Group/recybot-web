@@ -13,9 +13,12 @@
 }
 
 /* ── Form sections ── */
+/* Los grises claros de Bootstrap (#e9ecef, #6c757d, #f1f3f5) venían del tema
+   original y sobre el fondo oscuro del dashboard quedaban ilegibles o
+   invisibles. Se reemplazan por los tokens de la paleta Recybot. */
 .form-section {
   padding: 24px 0;
-  border-top: 1px solid #e9ecef;
+  border-top: 1px solid rgba(67, 227, 127, 0.12);
 
   &:first-child {
     padding-top: 0;
@@ -28,7 +31,7 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.07em;
-  color: #6c757d;
+  color: #43e37f;
   margin-bottom: 12px;
 }
 
@@ -59,9 +62,24 @@
   }
 }
 
+/* En la tabla el texto hereda `rgba(255,255,255,.75)`, así que el fondo claro
+   original dejaba el template key en blanco sobre gris claro. */
 code {
-  background: #f1f3f5;
+  /* Color opaco equivalente al tinte verde sobre la card, para que el
+     contraste sea verificable (8.6:1) y no dependa del fondo heredado. */
+  background: #182e25;
+  color: #43e37f;
   padding: 2px 6px;
   border-radius: 3px;
   font-size: 12px;
+}
+
+/* ── Chips de placeholder ── */
+/* `badge bg-info text-dark` mezclaba clases de utilidad con colores del tema;
+   se unifica con la paleta para que el texto y la X sean legibles. */
+.badge.bg-info {
+  background: #103832 !important;
+  color: #00d4aa !important;
+  border: 1px solid rgba(0, 212, 170, 0.35);
+  font-weight: 600;
 }

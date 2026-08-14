@@ -2,11 +2,20 @@
 // so they don't bleed into the rest of the app.
 
 // ── Design tokens (mirroring _custom.scss) ────────────────────
-$c-green:    #43e37f;
-$c-border:   rgba(67, 227, 127, 0.12);
-$c-text:     #ffffff;
-$c-muted:    rgba(255, 255, 255, 0.52);
-$c-input-bg: rgba(4, 20, 24, 0.8);
+$c-green:      #43e37f;
+$c-green-soft: rgba(67, 227, 127, 0.9);
+$c-border:     rgba(67, 227, 127, 0.12);
+$c-text:       #ffffff;
+// Escalones de texto. Los antiguos `rgba(255,255,255,0.52)` quedaban por
+// debajo de 4.5:1 sobre el fondo del modal, así que se suben los niveles.
+$c-text-soft:  rgba(255, 255, 255, 0.78);
+$c-muted:      rgba(255, 255, 255, 0.62);
+$c-input-bg:   rgba(4, 20, 24, 0.8);
+// Lienzo del preview: los emails se diseñan para clientes de correo con fondo
+// claro, así que el iframe debe renderizarse sobre blanco y no sobre el vidrio
+// oscuro del modal (un iframe sin fondo es transparente y dejaba texto oscuro
+// sobre fondo oscuro).
+$c-canvas:     #ffffff;
 
 // ── Backdrop ──────────────────────────────────────────────────
 .pm-backdrop {
@@ -48,16 +57,19 @@ $c-input-bg: rgba(4, 20, 24, 0.8);
     display: flex;
     flex-direction: column;
 
-    // Force every text-level element inside the shell to be white
+    // Texto de la carcasa en blanco. Se excluyen las clases que tienen su
+    // propio color (apagado o verde) para no aplanar toda la jerarquía.
     p, span, small, em, strong, label, h1, h2, h3, h4, h5, h6, li, td, th, div {
-      color: $c-text !important;
+      &:not(.text-muted):not(.pm-subject):not(.pm-values-label):not(.input-group-text) {
+        color: $c-text !important;
+      }
     }
   }
 
   // ── Header ────────────────────────────────────────────────
   .modal-header {
     background: transparent !important;
-    border-bottom: 1px solid rgba(67, 227, 127, 0.1) !important;
+    border-bottom: 1px solid rgba(67, 227, 127, 0.14) !important;
     padding: 18px 24px 14px !important;
     color: $c-text !important;
 
@@ -72,13 +84,14 @@ $c-input-bg: rgba(4, 20, 24, 0.8);
     button.close {
       background: transparent !important;
       border: none !important;
-      color: $c-muted !important;
+      color: $c-text-soft !important;
       opacity: 1;
       padding: 0;
       line-height: 1;
       transition: color 0.2s;
 
-      &:hover { color: $c-green !important; }
+      &:hover,
+      &:focus-visible { color: $c-green !important; }
 
       i.material-icons {
         font-size: 22px;
@@ -101,9 +114,24 @@ $c-input-bg: rgba(4, 20, 24, 0.8);
   // ── Footer ────────────────────────────────────────────────
   .modal-footer {
     background: transparent !important;
-    border-top: 1px solid rgba(67, 227, 127, 0.08) !important;
+    border-top: 1px solid rgba(67, 227, 127, 0.12) !important;
     padding: 12px 24px !important;
     color: $c-text !important;
+
+    // El gris de Bootstrap (#6c757d) sobre el vidrio oscuro queda por debajo
+    // del mínimo AA; se usa el mismo tratamiento que en el resto del admin.
+    .btn-outline-secondary {
+      color: $c-text-soft !important;
+      border-color: rgba(255, 255, 255, 0.28) !important;
+      background: transparent !important;
+
+      &:hover,
+      &:focus {
+        color: $c-text !important;
+        border-color: rgba(255, 255, 255, 0.5) !important;
+        background: rgba(255, 255, 255, 0.08) !important;
+      }
+    }
   }
 
   // .text-muted override inside the modal
@@ -113,16 +141,21 @@ $c-input-bg: rgba(4, 20, 24, 0.8);
 
   // ── Subject chip ──────────────────────────────────────────
   .pm-subject {
-    font-size: 0.78rem;
+    font-size: 0.82rem;
     color: $c-muted !important;
     max-width: 380px;
 
-    em { color: rgba(255, 255, 255, 0.75) !important; }
+    em {
+      color: $c-text !important;
+      font-style: normal;
+      font-weight: 500;
+    }
   }
 
   // ── Iframe ────────────────────────────────────────────────
   .pm-iframe-wrap {
-    border-bottom: 1px solid rgba(67, 227, 127, 0.08);
+    border-bottom: 1px solid rgba(67, 227, 127, 0.12);
+    background: $c-canvas;
     flex: 1;
   }
 
@@ -131,44 +164,57 @@ $c-input-bg: rgba(4, 20, 24, 0.8);
     width: 100%;
     height: 520px;
     border: none;
+    // Superficie propia: garantiza legibilidad incluso cuando el template es
+    // un fragmento sin `<body>` ni fondo declarado.
+    background: $c-canvas;
+    color-scheme: light;
   }
 
   // ── Sample values panel ───────────────────────────────────
   .pm-values {
     padding: 14px 24px;
-    background: rgba(255, 255, 255, 0.025);
-    border-top: 1px solid rgba(67, 227, 127, 0.07);
+    background: rgba(255, 255, 255, 0.03);
+    border-top: 1px solid rgba(67, 227, 127, 0.12);
     flex-shrink: 0;
 
     .input-group-text {
-      background: $c-input-bg !important;
-      border-color: rgba(67, 227, 127, 0.2) !important;
-      color: $c-muted !important;
-      font-size: 0.72rem;
+      background: rgba(67, 227, 127, 0.1) !important;
+      border-color: rgba(67, 227, 127, 0.28) !important;
+      color: $c-green-soft !important;
+      font-size: 0.75rem;
+      font-weight: 500;
     }
 
     .form-control {
       background: $c-input-bg !important;
-      border-color: rgba(67, 227, 127, 0.2) !important;
+      border-color: rgba(67, 227, 127, 0.28) !important;
       color: $c-text !important;
-      font-size: 0.78rem;
+      font-size: 0.8rem;
 
       &::placeholder { color: $c-muted; }
 
       &:focus {
-        border-color: rgba(67, 227, 127, 0.5) !important;
-        box-shadow: 0 0 0 3px rgba(67, 227, 127, 0.08) !important;
+        border-color: rgba(67, 227, 127, 0.6) !important;
+        box-shadow: 0 0 0 3px rgba(67, 227, 127, 0.12) !important;
       }
     }
   }
 
   .pm-values-label {
-    font-size: 0.66rem;
+    font-size: 0.7rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.07em;
-    color: rgba(67, 227, 127, 0.6) !important;
+    color: $c-green !important;
     margin-bottom: 10px;
+
+    // El paréntesis aclaratorio se mantiene secundario pero legible.
+    .text-muted {
+      font-weight: 500;
+      text-transform: none;
+      letter-spacing: 0;
+      color: $c-muted !important;
+    }
   }
 }
 

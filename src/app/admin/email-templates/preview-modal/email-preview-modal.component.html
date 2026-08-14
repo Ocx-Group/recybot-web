@@ -34,10 +34,10 @@
                         <div class="row g-2">
                             <div class="col-12 col-sm-6 col-md-4 col-xl-3" *ngFor="let key of valueKeys()">
                                 <div class="input-group input-group-sm">
-                                    <span class="input-group-text text-truncate" style="max-width: 110px"
+                                    <span class="input-group-text text-truncate" style="max-width: 150px"
                                         [title]="key">{{ key }}</span>
                                     <input type="text" class="form-control" [(ngModel)]="localValues[key]"
-                                        [name]="'pv_' + key">
+                                        [id]="'pv_' + key" [name]="'pv_' + key" [attr.aria-label]="key">
                                 </div>
                             </div>
                         </div>

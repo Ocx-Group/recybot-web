@@ -151,7 +151,7 @@
               <div class="form-section">
                 <p class="form-section-label">Placeholders declarados</p>
                 <div class="d-flex flex-wrap align-items-center gap-2">
-                  <span class="badge bg-info text-dark" *ngFor="let p of form.value.placeholders">
+                  <span class="badge bg-info" *ngFor="let p of form.value.placeholders">
                     {{ p }}
                     <button type="button" class="placeholder-remove-btn" [attr.aria-label]="'Eliminar ' + p"
                       (click)="removePlaceholder(p)"><i class="fas fa-times"></i></button>
