@@ -130,3 +130,8 @@
 
 /*                 [8. RTL ]                       */
 // @import 'rtl/rtl'; // Remove comment for RTL template
+
+/*                 [9. Overlays ]                       */
+/* Tema oscuro de dropdowns y modales. Va al final a propósito: se monta sobre
+   todo lo anterior sin necesidad de `!important`. */
+@import 'override/_overlays';

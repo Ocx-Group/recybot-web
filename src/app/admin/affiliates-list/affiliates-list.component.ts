@@ -39,6 +39,7 @@ const header = [
 @Component({
     selector: 'app-affiliates-list',
     templateUrl: './affiliates-list.component.html',
+    styleUrls: ['./affiliates-list.component.scss'],
     providers: [ToastrService],
     standalone: true,
   imports: [

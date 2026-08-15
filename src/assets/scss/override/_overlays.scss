@@ -1,0 +1,366 @@
+// ============================================================
+// RECYBOT — Capas flotantes (dropdowns y modales)
+// ============================================================
+// Dropdowns y modales se montan fuera del componente (en `body`), así que
+// necesitan tema global. `_custom.scss` sólo cubría los del navbar y no tocaba
+// los modales, de ahí que el menú "Acciones" del listado de afiliados y el
+// modal de editar usuario siguieran con el blanco por defecto de Bootstrap.
+//
+// Se importa al final de `style.scss` para ganar por orden de cascada sin
+// abusar de `!important`.
+
+// ── Dropdowns (Bootstrap / ngbDropdown) ───────────────────────
+// Los `!important` de este bloque pelean contra `override/_dropdown.scss`, que
+// fija `a.dropdown-item:focus { color: #666 !important }`.
+.dropdown-menu {
+  background: rgba(4, 20, 24, 0.97) !important;
+  border: 1px solid rgba(67, 227, 127, 0.15) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6) !important;
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  padding: 6px !important;
+  color: #ffffff !important;
+  // Los menús largos (el de "Acciones" tiene 15 entradas) desbordaban la
+  // pantalla; con esto hacen scroll dentro del propio menú.
+  max-height: min(70vh, 560px);
+  overflow-y: auto;
+}
+
+.dropdown-menu .dropdown-item,
+.dropdown-menu a.dropdown-item {
+  color: rgba(255, 255, 255, 0.82) !important;
+  background: transparent !important;
+  border-radius: 8px;
+  padding: 9px 14px !important;
+  font-weight: 500;
+  cursor: pointer;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease;
+
+  i,
+  .material-icons {
+    color: rgba(67, 227, 127, 0.75) !important;
+    transition: color 0.15s ease;
+  }
+}
+
+.dropdown-menu .dropdown-item:hover,
+.dropdown-menu .dropdown-item:focus,
+.dropdown-menu .dropdown-item:active,
+.dropdown-menu .dropdown-item.active,
+.dropdown-menu a.dropdown-item:hover,
+.dropdown-menu a.dropdown-item:focus,
+.dropdown-menu a.dropdown-item:active,
+.dropdown-menu a.dropdown-item.active {
+  background: rgba(67, 227, 127, 0.1) !important;
+  color: #43e37f !important;
+
+  i,
+  .material-icons {
+    color: #43e37f !important;
+  }
+}
+
+.dropdown-menu .dropdown-item.disabled,
+.dropdown-menu a.dropdown-item.disabled {
+  color: rgba(255, 255, 255, 0.28) !important;
+}
+
+.dropdown-menu .dropdown-divider {
+  border-top-color: rgba(67, 227, 127, 0.12) !important;
+}
+
+.dropdown-menu .dropdown-header,
+.dropdown-menu .dropdown-title {
+  color: rgba(67, 227, 127, 0.7) !important;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+// ── Modales (Bootstrap / NgbModal) ────────────────────────────
+// Los modales se montan fuera del componente (en `body`), así que necesitan
+// tema global: sin esto quedaban con la carcasa blanca original.
+// Este partial se importa al final de `style.scss`, después de todos los
+// `override/*`, así que en general no necesita `!important`: gana por orden de
+// cascada. Sólo se marca lo que pelea contra utilidades de Bootstrap (que sí
+// llevan `!important`) o contra reglas `!important` de la plantilla. Dejarlo
+// así es importante para que los modales que ya tienen tema propio (visor de
+// PDF, coinpay, etc.) puedan seguir mandando sobre esta base.
+.modal-backdrop,
+.modal-backdrop.show {
+  background-color: #000000;
+  opacity: 0.72;
+}
+
+.modal-content {
+  background: rgba(6, 18, 22, 0.97);
+  border: 1px solid rgba(67, 227, 127, 0.12);
+  border-radius: 14px;
+  box-shadow:
+    0 12px 48px rgba(0, 0, 0, 0.65),
+    0 0 0 1px rgba(67, 227, 127, 0.06) inset;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  color: #ffffff;
+
+  .modal-header {
+    background: transparent;
+    border-bottom: 1px solid rgba(67, 227, 127, 0.12);
+    color: #ffffff;
+  }
+
+  .modal-title,
+  .modal-header h4,
+  .modal-header h5,
+  .modal-header h6 {
+    color: #ffffff;
+  }
+
+  .modal-body {
+    background: transparent;
+    color: rgba(255, 255, 255, 0.82);
+  }
+
+  .modal-footer {
+    background: transparent;
+    border-top: 1px solid rgba(67, 227, 127, 0.12);
+  }
+
+  // Cierre: `.btn-close` es un SVG negro y `button.close` hereda el color del
+  // texto; ambos eran invisibles sobre el fondo oscuro.
+  .btn-close {
+    filter: invert(1) grayscale(100%) brightness(220%);
+    opacity: 0.75;
+
+    &:hover,
+    &:focus {
+      opacity: 1;
+    }
+  }
+
+  button.close {
+    color: rgba(255, 255, 255, 0.7);
+    opacity: 1;
+    text-shadow: none;
+
+    &:hover,
+    &:focus {
+      color: #43e37f;
+    }
+  }
+
+  // Formularios dentro del modal
+  .form-control,
+  .form-select,
+  textarea.form-control {
+    background-color: rgba(4, 20, 24, 0.8);
+    border-color: rgba(67, 227, 127, 0.22);
+    color: #ffffff;
+
+    &::placeholder {
+      color: rgba(255, 255, 255, 0.4);
+    }
+
+    &:focus {
+      border-color: rgba(67, 227, 127, 0.5);
+      box-shadow: 0 0 0 3px rgba(67, 227, 127, 0.1);
+      color: #ffffff;
+    }
+
+    &:disabled,
+    &[readonly] {
+      background-color: #0f1c1f;
+      color: rgba(255, 255, 255, 0.55);
+    }
+  }
+
+  // Las opciones del `select` las pinta el sistema operativo: sin fondo
+  // explícito salían blancas sobre blanco en varios navegadores.
+  .form-select option {
+    background-color: #0a1a1e;
+    color: #ffffff;
+  }
+
+  .form-label,
+  .col-form-label,
+  label {
+    color: rgba(255, 255, 255, 0.85);
+  }
+
+  .form-check-label {
+    color: rgba(255, 255, 255, 0.85);
+  }
+
+  // Switch propio de la plantilla: la descripción usaba grises pensados para
+  // fondo claro (#6e7687 y #495057 al marcar), ilegibles sobre el modal.
+  .custom-switch-description {
+    color: rgba(255, 255, 255, 0.82);
+  }
+
+  .custom-switch-input:checked ~ .custom-switch-description {
+    color: #ffffff;
+  }
+
+  .custom-switch-indicator {
+    background: #1a2529;
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+
+  .custom-switch-input:checked ~ .custom-switch-indicator {
+    background: #43e37f;
+    border-color: #43e37f;
+  }
+
+  .form-check-input:checked {
+    background-color: #43e37f;
+    border-color: #43e37f;
+  }
+
+  .form-check-input:not(:checked) {
+    background-color: #1a2529;
+    border-color: rgba(255, 255, 255, 0.25);
+  }
+
+  // El círculo del switch de Bootstrap es un SVG gris oscuro: sobre el fondo
+  // del modal no se veía en estado apagado. Se fuerza blanco en ambos estados.
+  .form-switch .form-check-input {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23ffffff'/%3e%3c/svg%3e");
+  }
+
+  .form-text,
+  small.text-muted,
+  .text-muted {
+    color: rgba(255, 255, 255, 0.6) !important;
+  }
+
+  // Superficies claras de Bootstrap que rompen el tema oscuro.
+  // Los fondos van en opaco (equivalente al tinte sobre la superficie del
+  // modal) para que el contraste sea comprobable y no dependa de lo que haya
+  // debajo.
+  .bg-light,
+  .bg-white {
+    background-color: #0f1c1f !important;
+    color: rgba(255, 255, 255, 0.82) !important;
+  }
+
+  .border-bottom {
+    border-bottom-color: rgba(67, 227, 127, 0.12) !important;
+  }
+
+  .border-top {
+    border-top-color: rgba(67, 227, 127, 0.12) !important;
+  }
+
+  // Botones neutros: el gris de Bootstrap se pierde sobre el fondo oscuro.
+  .btn-light,
+  .btn-secondary {
+    background: transparent !important;
+    border: 1px solid rgba(255, 255, 255, 0.28) !important;
+    color: rgba(255, 255, 255, 0.82) !important;
+    box-shadow: none !important;
+
+    &:hover,
+    &:focus {
+      background: #1a2529 !important;
+      border-color: rgba(255, 255, 255, 0.5) !important;
+      color: #ffffff !important;
+    }
+  }
+
+  // Listas seleccionables (ej. elección de matriz)
+  .list-group {
+    background: transparent;
+  }
+
+  .list-group-item {
+    background: #0d191d;
+    border-color: rgba(67, 227, 127, 0.12);
+    color: rgba(255, 255, 255, 0.82);
+
+    h6,
+    .h6 {
+      color: #ffffff;
+    }
+
+    small {
+      color: rgba(255, 255, 255, 0.6);
+    }
+  }
+
+  .list-group-item-action:hover,
+  .list-group-item-action:focus {
+    background: #0b231e;
+    color: #ffffff;
+  }
+
+  .list-group-item.active {
+    background: #103327;
+    border-color: rgba(67, 227, 127, 0.5);
+    color: #ffffff;
+
+    h6,
+    small {
+      color: #ffffff;
+    }
+  }
+
+  // Avisos
+  .alert {
+    background: #0f1c1f;
+    border: 1px solid rgba(67, 227, 127, 0.16);
+    color: rgba(255, 255, 255, 0.85);
+  }
+
+  .alert-info {
+    border-color: rgba(0, 212, 170, 0.35);
+    background: #062122;
+  }
+
+  .alert-warning {
+    border-color: rgba(255, 181, 71, 0.35);
+    background: #1a1f1a;
+    color: #ffd8a1;
+  }
+
+  .alert-danger {
+    border-color: rgba(255, 93, 108, 0.35);
+    background: #1a181d;
+    color: #ffc2c8;
+  }
+
+  // Pestañas (ngbNav) — la pestaña activa era una pastilla blanca.
+  .nav-tabs {
+    border-bottom-color: rgba(67, 227, 127, 0.15);
+
+    .nav-link {
+      color: rgba(255, 255, 255, 0.6);
+      background: transparent;
+      border-color: transparent;
+
+      &:hover {
+        color: #ffffff;
+        border-color: transparent;
+      }
+
+      &.active {
+        color: #43e37f;
+        background: #0b231e;
+        border-color: rgba(67, 227, 127, 0.2) rgba(67, 227, 127, 0.2)
+          transparent;
+      }
+    }
+
+    .nav-item .nav-link.active {
+      color: #43e37f;
+    }
+  }
+
+  // Badges neutros dentro de modales
+  .badge.bg-secondary {
+    background: #242e32 !important;
+    color: rgba(255, 255, 255, 0.9) !important;
+  }
+}
+
