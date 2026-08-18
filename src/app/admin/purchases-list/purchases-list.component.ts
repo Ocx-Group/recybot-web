@@ -22,7 +22,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { RouterLink } from '@angular/router';
 import { IconsModule } from '../../shared';
 import { FormsModule } from '@angular/forms';
-import { CurrencyPipe, DatePipe, NgClass } from '@angular/common';
+import { CurrencyPipe, DatePipe, NgClass, CommonModule} from '@angular/common';
 
 const header = [
   'Afiliado',
@@ -39,6 +39,7 @@ const header = [
   providers: [ToastrService],
   standalone: true,
   imports: [
+    CommonModule,
     DatatableComponent,
     TranslatePipe,
     RouterLink,
