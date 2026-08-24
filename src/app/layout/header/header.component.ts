@@ -1,4 +1,4 @@
-import { AuthService } from 'src/app/core/service/authentication-service/auth.service';
+import { AuthService } from '@app/core/service/authentication-service/auth.service';
 import { DOCUMENT, CommonModule } from '@angular/common';
 import {
   Component,
@@ -11,8 +11,8 @@ import {
   CUSTOM_ELEMENTS_SCHEMA,
 } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { ConfigService } from 'src/app/config/config.service';
-import { LanguageService } from 'src/app/core/service/language-service/language.service';
+import { ConfigService } from '@app/config/config.service';
+import { LanguageService } from '@app/core/service/language-service/language.service';
 import { map, Observable, Subscription } from 'rxjs';
 
 import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
