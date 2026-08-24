@@ -7,6 +7,7 @@ import {
   OnInit,
   TemplateRef,
   ViewChild,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import {
   AbstractControl,
@@ -29,6 +30,7 @@ import { ReactiveFormsModule } from '@angular/forms';
   templateUrl: './configure-wallet.component.html',
   styleUrls: ['./configure-wallet.component.scss'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [CommonModule, ReactiveFormsModule],
 })
 export class ConfigureWalletComponent

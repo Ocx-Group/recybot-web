@@ -1,4 +1,4 @@
-import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA, ChangeDetectionStrategy } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -17,7 +17,7 @@ import { PdfViewerService } from '@app/core/service/pdf-viewer-service/pdf-viewe
 import { ToastrService } from 'ngx-toastr';
 import { CreateAffiliate } from '@app/core/models/user-affiliate-model/create-affiliate.model';
 import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { DeviceDetectorService } from 'ngx-device-detector';
 
 @Component({
@@ -25,7 +25,8 @@ import { DeviceDetectorService } from 'ngx-device-detector';
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.scss'],
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink, TranslateModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink, TranslatePipe],
+  changeDetection: ChangeDetectionStrategy.Eager,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class SignupComponent implements OnInit {

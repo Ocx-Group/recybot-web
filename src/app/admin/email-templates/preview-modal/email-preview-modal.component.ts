@@ -8,6 +8,7 @@ import {
   Output,
   SimpleChanges,
   ViewEncapsulation,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
@@ -17,6 +18,7 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./email-preview-modal.component.scss'],
   encapsulation: ViewEncapsulation.None,
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [FormsModule],
 })
 export class EmailPreviewModalComponent implements OnChanges {

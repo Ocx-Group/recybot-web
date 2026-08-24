@@ -4,6 +4,7 @@ import {
   HostListener,
   OnInit,
   ViewChild,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { BalanceInformation } from '@app/core/models/wallet-model/balance-information.model';
 import {
@@ -20,7 +21,7 @@ import { WalletService } from '@app/core/service/wallet-service/wallet.service';
 import { ToastrService } from 'ngx-toastr';
 import { MatrixQualificationService } from '@app/core/service/matrix-qualification-service/matrix-qualification.service';
 
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { TruncateDecimalsPipe } from '@app/shared/pipes/truncate-decimals.pipe';
 import { IconsModule } from '@app/shared';
 import { NgbAlert } from '@ng-bootstrap/ng-bootstrap';
@@ -34,13 +35,14 @@ import { RouterLink } from '@angular/router';
   standalone: true,
   imports: [
     NgxDatatableModule,
-    TranslateModule,
+    TranslatePipe,
     TruncateDecimalsPipe,
     IconsModule,
     NgbAlert,
     CreateRequestsModalComponent,
     RouterLink
 ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class RequestsComponent implements OnInit {
@@ -128,7 +130,7 @@ export class RequestsComponent implements OnInit {
     });
 
     this.rows = temp;
-    this.table.offset = 0;
+    this.table.offset.set(0);
   }
 
   getUserInfo() {

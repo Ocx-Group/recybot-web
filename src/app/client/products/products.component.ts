@@ -4,6 +4,7 @@ import {
   OnChanges,
   OnInit,
   SimpleChanges,
+  ChangeDetectionStrategy
 } from '@angular/core';
 
 import { Product } from '@app/core/models/product-model/product.model';
@@ -13,14 +14,15 @@ import { ProductService } from '@app/core/service/product-service/product.servic
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-products',
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink, TranslateModule],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  imports: [CommonModule, FormsModule, RouterLink, TranslatePipe],
 })
 export class ProductsComponent implements OnInit, OnChanges {
   public productList: any;

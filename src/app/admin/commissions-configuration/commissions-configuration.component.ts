@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import {
   AbstractControl,
   FormArray,
@@ -28,6 +28,7 @@ import { CommissionSettingsService } from '@app/core/service/commission-settings
   templateUrl: './commissions-configuration.component.html',
   styleUrls: ['./commissions-configuration.component.scss'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [CommonModule, ReactiveFormsModule, RouterLink, TranslatePipe],
 })
 export class CommissionsConfigurationComponent implements OnInit {

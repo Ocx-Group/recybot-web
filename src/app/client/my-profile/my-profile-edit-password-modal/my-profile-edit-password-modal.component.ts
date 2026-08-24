@@ -1,6 +1,6 @@
 import { UpdatePassword } from '@app/core/models/user-model/update.password.model';
 import { ToastrService } from 'ngx-toastr';
-import { Component, Input, ViewChild, OnInit } from '@angular/core';
+import { Component, Input, ViewChild, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {
   AbstractControl,
@@ -22,6 +22,7 @@ import { TranslatePipe } from '@ngx-translate/core';
   styleUrls: ['./my-profile-edit-password-modal.component.scss'],
   providers: [ToastrService],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [CommonModule, ReactiveFormsModule, TranslatePipe],
 })
 export class MyProfileEditPasswordModalComponent implements OnInit {

@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
+import { Component, HostListener, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import {DataTableColumnCellDirective, DataTableColumnDirective, DatatableComponent} from '@swimlane/ngx-datatable';
 import { ClipboardService } from 'ngx-clipboard';
 import { ToastrService } from 'ngx-toastr';
@@ -42,6 +42,7 @@ const header = [
     styleUrls: ['./affiliates-list.component.scss'],
     providers: [ToastrService],
     standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     BalanceInformationModalComponent,
     MatrixActivationModalComponent,

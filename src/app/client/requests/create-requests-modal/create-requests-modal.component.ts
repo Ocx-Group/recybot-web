@@ -5,6 +5,7 @@ import {
   OnInit,
   Output,
   ViewChild,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import {
   AbstractControl,
@@ -37,6 +38,7 @@ import { off } from '@angular/fire/database';
   templateUrl: './create-requests-modal.component.html',
   styleUrls: ['./create-requests-modal.component.scss'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [CommonModule, ReactiveFormsModule, TranslatePipe],
 })
 export class CreateRequestsModalComponent implements OnInit {

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -41,6 +41,7 @@ import { PaymentGroupsService } from '@app/core/service/payment-groups-service/p
   templateUrl: './calculate-commissions.component.html',
   styleUrls: ['./calculate-commissions.component.scss'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [CommonModule, ReactiveFormsModule, RouterLink, NgbAlert, TranslatePipe],
 })
 export class CalculateCommissionsComponent implements OnInit {

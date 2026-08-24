@@ -19,7 +19,7 @@ import { ConfigurationService } from '@app/core/service/configuration-service/co
 import { WalletWithdrawalsConfiguration } from '@app/core/models/wallet-withdrawals-configuration-model/wallet-withdrawals-configuration.model';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
-import { TranslateService, TranslateModule } from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { CommonModule } from '@angular/common';
 import { BillingPurchasesDetailModalComponent } from '@app/client/billing-purchases/billing-purchases-detail-modal/billing-purchases-detail-modal.component';
 import { IconsModule } from '@app/shared';
@@ -37,7 +37,7 @@ import {
   standalone: true,
   imports: [
     CommonModule,
-    TranslateModule,
+    TranslatePipe,
     BillingPurchasesDetailModalComponent,
     IconsModule,
     RouterLink,

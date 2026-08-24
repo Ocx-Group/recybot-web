@@ -1,4 +1,4 @@
-import { Component, TemplateRef, ViewChild } from '@angular/core';
+import { Component, TemplateRef, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {
   InlineShareButtonsConfig,
@@ -11,6 +11,7 @@ import {
   templateUrl: './share-modal.component.html',
   styleUrls: ['./share-modal.component.scss'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [SharethisAngularModule],
 })
 export class ShareModalComponent {

@@ -1,5 +1,5 @@
 import { ThirdPartyPurchaseComponent } from './third-party-purchase/third-party-purchase.component';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import Swal from 'sweetalert2';
 import {
   Component,
@@ -7,6 +7,7 @@ import {
   OnInit,
   ViewChild,
   CUSTOM_ELEMENTS_SCHEMA,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import {
   DatatableComponent,
@@ -50,12 +51,13 @@ import { IconsModule } from '@app/shared';
     NgxDatatableModule,
     ReactiveFormsModule,
     FormsModule,
-    TranslateModule,
+    TranslatePipe,
     NgbModule,
     IconsModule,
     RouterLink,
     ThirdPartyPurchaseComponent,
   ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class NetworkComponent implements OnInit {
@@ -187,7 +189,7 @@ export class NetworkComponent implements OnInit {
     this.rows = this.temp.filter(function (d) {
       return d.userName.toLowerCase().includes(val) || !val;
     });
-    this.table.offset = 0;
+    this.table.offset.set(0);
   }
 
   TransferBalanceForMembership(user: any) {
@@ -418,7 +420,7 @@ export class NetworkComponent implements OnInit {
   copyTableData() {
     // tableRefGlobal es la tabla de la red personal: tableRef es el buscador global,
     // que vive dentro de un *ngIf y no siempre esta renderizado.
-    const rows = this.tableRefGlobal?._internalRows ?? [];
+    const rows = this.tableRefGlobal?._internalRows() ?? [];
     if (rows.length) {
       // Las columnas deben seguir el mismo orden que la tabla de la red personal.
       const headers = [

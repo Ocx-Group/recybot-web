@@ -4,6 +4,7 @@ import {
   HostListener,
   OnInit,
   ViewChild,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import {
   DataTableColumnCellDirective,
@@ -38,6 +39,7 @@ const header = [
   templateUrl: './purchases-list.component.html',
   providers: [ToastrService],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     CommonModule,
     DatatableComponent,
@@ -156,7 +158,7 @@ export class PurchasesListComponent implements OnInit {
         !val
       );
     });
-    this.table.offset = 0;
+    this.table.offset.set(0);
   }
 
   clipBoardCopy() {
