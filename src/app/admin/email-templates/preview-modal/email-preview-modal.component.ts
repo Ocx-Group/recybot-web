@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import {
   Component,
   EventEmitter,
@@ -17,7 +17,7 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./email-preview-modal.component.scss'],
   encapsulation: ViewEncapsulation.None,
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [FormsModule],
 })
 export class EmailPreviewModalComponent implements OnChanges {
   @Input() visible = false;

@@ -52,19 +52,25 @@
           <input id="email" class="field__input" type="email" formControlName="email"
             placeholder="usuario@email.com" autocomplete="email" (input)="validateEmail()" />
           <span class="field__status" aria-hidden="true">
-            <i *ngIf="forgotPassword.get('email').valid && forgotPassword.get('email').dirty"
+            @if (forgotPassword.get('email').valid && forgotPassword.get('email').dirty) {
+              <i
               class="bi bi-check-circle-fill field__status--ok"></i>
+            }
           </span>
         </div>
 
-        <span class="field__error-msg"
-          *ngIf="submitted && forgotPassword.get('email').errors?.['required']">
-          Ingresa un correo electrónico.
-        </span>
-        <span class="field__error-msg"
-          *ngIf="submitted && forgotPassword.get('email').errors?.['email']">
-          Ingresa un correo electrónico válido.
-        </span>
+        @if (submitted && forgotPassword.get('email').errors?.['required']) {
+          <span class="field__error-msg"
+            >
+            Ingresa un correo electrónico.
+          </span>
+        }
+        @if (submitted && forgotPassword.get('email').errors?.['email']) {
+          <span class="field__error-msg"
+            >
+            Ingresa un correo electrónico válido.
+          </span>
+        }
       </div>
 
       <!-- Submit -->

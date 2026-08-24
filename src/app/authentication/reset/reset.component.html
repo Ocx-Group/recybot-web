@@ -7,83 +7,91 @@
   <div class="bg-scanline" aria-hidden="true"></div>
 
   <!-- Loading overlay -->
-  <div *ngIf="isLoading" class="loading-overlay">
-    <div class="loading-card">
-      <div class="loading-spinner"></div>
-      <p class="loading-text">Verificando enlace&hellip;</p>
-      <small class="loading-sub">Por favor espera</small>
+  @if (isLoading) {
+    <div class="loading-overlay">
+      <div class="loading-card">
+        <div class="loading-spinner"></div>
+        <p class="loading-text">Verificando enlace&hellip;</p>
+        <small class="loading-sub">Por favor espera</small>
+      </div>
     </div>
-  </div>
+  }
 
   <!-- Reset form -->
-  <form *ngIf="!isLoading && linkValid" [formGroup]="resetPassword" (ngSubmit)="changePassword()" class="reset-card"
-    novalidate>
-    <!-- Vertical energy line -->
-    <div class="energy-line" aria-hidden="true"></div>
-
-    <!-- Status bar -->
-    <div class="status-bar">
-      <span class="status-dot"></span>
-      RECYBOT &middot; SECURE RESET
-    </div>
-
-    <!-- Logo -->
-    <img data-brand-logo src="assets/images/logos/Logo-recybot.png" alt="Logo" class="reset-logo">
-
-    <!-- Heading -->
-    <div class="reset-heading">
-      <h1 class="reset-title">Restablecer contraseña</h1>
-      <p class="reset-subtitle">Ingresa y confirma tu nueva contraseña</p>
-    </div>
-
-    <!-- Password field -->
-    <div class="field-group"
-      [class.field-group--error]="resetPassword.get('password').errors && resetPassword.get('password').touched"
-      [class.field-group--valid]="!resetPassword.get('password').errors && resetPassword.get('password').touched">
-      <label class="field-label" for="password">Nueva contraseña</label>
-      <div class="field-wrap">
-        <i class="bi bi-lock field-icon"></i>
-        <input id="password" [type]="showPassword ? 'text' : 'password'" class="field-input" formControlName="password"
-          placeholder="••••••••" autocomplete="off">
-        <button type="button" class="toggle-visibility" (click)="showPassword = !showPassword" tabindex="-1">
-          <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'"></i>
-        </button>
+  @if (!isLoading && linkValid) {
+    <form [formGroup]="resetPassword" (ngSubmit)="changePassword()" class="reset-card"
+      novalidate>
+      <!-- Vertical energy line -->
+      <div class="energy-line" aria-hidden="true"></div>
+      <!-- Status bar -->
+      <div class="status-bar">
+        <span class="status-dot"></span>
+        RECYBOT &middot; SECURE RESET
       </div>
-      <div *ngIf="resetPassword.get('password').errors && resetPassword.get('password').touched" class="field-error">
-        <span *ngIf="resetPassword.get('password').errors.required">Ingrese una contraseña.</span>
-        <span *ngIf="resetPassword.get('password').errors.pattern">
-          Mínimo 8 caracteres con mayúscula, minúscula, número y carácter especial.
-        </span>
+      <!-- Logo -->
+      <img data-brand-logo src="assets/images/logos/Logo-recybot.png" alt="Logo" class="reset-logo">
+      <!-- Heading -->
+      <div class="reset-heading">
+        <h1 class="reset-title">Restablecer contraseña</h1>
+        <p class="reset-subtitle">Ingresa y confirma tu nueva contraseña</p>
       </div>
-    </div>
+      <!-- Password field -->
+      <div class="field-group"
+        [class.field-group--error]="resetPassword.get('password').errors && resetPassword.get('password').touched"
+        [class.field-group--valid]="!resetPassword.get('password').errors && resetPassword.get('password').touched">
+        <label class="field-label" for="password">Nueva contraseña</label>
+        <div class="field-wrap">
+          <i class="bi bi-lock field-icon"></i>
+          <input id="password" [type]="showPassword ? 'text' : 'password'" class="field-input" formControlName="password"
+            placeholder="••••••••" autocomplete="off">
+            <button type="button" class="toggle-visibility" (click)="showPassword = !showPassword" tabindex="-1">
+              <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'"></i>
+            </button>
+          </div>
+          @if (resetPassword.get('password').errors && resetPassword.get('password').touched) {
+            <div class="field-error">
+              @if (resetPassword.get('password').errors.required) {
+                <span>Ingrese una contraseña.</span>
+              }
+              @if (resetPassword.get('password').errors.pattern) {
+                <span>
+                  Mínimo 8 caracteres con mayúscula, minúscula, número y carácter especial.
+                </span>
+              }
+            </div>
+          }
+        </div>
+        <!-- Confirm password field -->
+        <div class="field-group"
+          [class.field-group--error]="(resetPassword.get('confirm_password').errors || resetPassword.errors?.mismatch) && resetPassword.get('confirm_password').touched"
+          [class.field-group--valid]="!resetPassword.get('confirm_password').errors && !resetPassword.errors?.mismatch && resetPassword.get('confirm_password').touched">
+          <label class="field-label" for="password-confirm">Confirmar contraseña</label>
+          <div class="field-wrap">
+            <i class="bi bi-lock-fill field-icon"></i>
+            <input id="password-confirm" [type]="showConfirm ? 'text' : 'password'" class="field-input"
+              formControlName="confirm_password" placeholder="••••••••" autocomplete="off">
+              <button type="button" class="toggle-visibility" (click)="showConfirm = !showConfirm" tabindex="-1">
+                <i class="bi" [ngClass]="showConfirm ? 'bi-eye-slash' : 'bi-eye'"></i>
+              </button>
+            </div>
+            @if ((resetPassword.get('confirm_password').errors || resetPassword.errors?.mismatch) && resetPassword.get('confirm_password').touched) {
+              <div
+                class="field-error">
+                @if (resetPassword.get('confirm_password').errors?.required) {
+                  <span>Confirme su contraseña.</span>
+                }
+                @if (resetPassword.errors?.mismatch) {
+                  <span>Las contraseñas no coinciden.</span>
+                }
+              </div>
+            }
+          </div>
+          <!-- Submit -->
+          <button type="submit" class="btn-reset" [disabled]="resetPassword.invalid">
+            <i class="bi bi-shield-lock-fill"></i>
+            Restablecer contraseña
+          </button>
+        </form>
+      }
 
-    <!-- Confirm password field -->
-    <div class="field-group"
-      [class.field-group--error]="(resetPassword.get('confirm_password').errors || resetPassword.errors?.mismatch) && resetPassword.get('confirm_password').touched"
-      [class.field-group--valid]="!resetPassword.get('confirm_password').errors && !resetPassword.errors?.mismatch && resetPassword.get('confirm_password').touched">
-      <label class="field-label" for="password-confirm">Confirmar contraseña</label>
-      <div class="field-wrap">
-        <i class="bi bi-lock-fill field-icon"></i>
-        <input id="password-confirm" [type]="showConfirm ? 'text' : 'password'" class="field-input"
-          formControlName="confirm_password" placeholder="••••••••" autocomplete="off">
-        <button type="button" class="toggle-visibility" (click)="showConfirm = !showConfirm" tabindex="-1">
-          <i class="bi" [ngClass]="showConfirm ? 'bi-eye-slash' : 'bi-eye'"></i>
-        </button>
-      </div>
-      <div
-        *ngIf="(resetPassword.get('confirm_password').errors || resetPassword.errors?.mismatch) && resetPassword.get('confirm_password').touched"
-        class="field-error">
-        <span *ngIf="resetPassword.get('confirm_password').errors?.required">Confirme su contraseña.</span>
-        <span *ngIf="resetPassword.errors?.mismatch">Las contraseñas no coinciden.</span>
-      </div>
-    </div>
-
-    <!-- Submit -->
-    <button type="submit" class="btn-reset" [disabled]="resetPassword.invalid">
-      <i class="bi bi-shield-lock-fill"></i>
-      Restablecer contraseña
-    </button>
-
-  </form>
-
-</main>
+    </main>

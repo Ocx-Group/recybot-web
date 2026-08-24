@@ -10,7 +10,7 @@ import { Response } from '@app/core/models/response-model/response.model';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '@app/core/service/authentication-service/auth.service';
-import { CommonModule } from '@angular/common';
+
 import { Signin } from '@app/core/models/signin-model/signin.model';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { LogoService } from '@app/core/service/logo-service/logo.service';
@@ -20,7 +20,7 @@ import { LogoService } from '@app/core/service/logo-service/logo.service';
   templateUrl: './signin.component.html',
   styleUrls: ['./signin.component.scss'],
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink, TranslateModule],
+  imports: [ReactiveFormsModule, RouterLink, TranslateModule],
 })
 export class SigninComponent implements OnInit, OnDestroy {
   error = '';

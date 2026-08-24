@@ -4,14 +4,14 @@ import {
   InlineShareButtonsConfig,
   SharethisAngularModule,
 } from 'sharethis-angular';
-import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-share-modal',
   templateUrl: './share-modal.component.html',
   styleUrls: ['./share-modal.component.scss'],
   standalone: true,
-  imports: [CommonModule, SharethisAngularModule],
+  imports: [SharethisAngularModule],
 })
 export class ShareModalComponent {
   inlineShareButtonsConfig: InlineShareButtonsConfig;

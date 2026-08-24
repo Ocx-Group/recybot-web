@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Product } from '@app/core/models/product-model/product.model';
 import { ProductService } from '@app/core/service/product-service/product.service';
-import { CommonModule } from '@angular/common';
+
 import { RouterLink } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -10,7 +10,7 @@ import { TranslateModule } from '@ngx-translate/core';
   templateUrl: './products-preview.component.html',
   styleUrls: ['./products-preview.component.scss'],
   standalone: true,
-  imports: [CommonModule, RouterLink, TranslateModule],
+  imports: [RouterLink, TranslateModule],
 })
 export class ProductsPreviewComponent implements OnInit {
   public productList: any;

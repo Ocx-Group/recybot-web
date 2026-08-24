@@ -19,7 +19,7 @@ import { WalletRequestService } from '@app/core/service/wallet-request/wallet-re
 import { WalletService } from '@app/core/service/wallet-service/wallet.service';
 import { ToastrService } from 'ngx-toastr';
 import { MatrixQualificationService } from '@app/core/service/matrix-qualification-service/matrix-qualification.service';
-import { CommonModule } from '@angular/common';
+
 import { TranslateModule } from '@ngx-translate/core';
 import { TruncateDecimalsPipe } from '@app/shared/pipes/truncate-decimals.pipe';
 import { IconsModule } from '@app/shared';
@@ -33,15 +33,14 @@ import { RouterLink } from '@angular/router';
   styleUrls: ['./requests.component.scss'],
   standalone: true,
   imports: [
-    CommonModule,
     NgxDatatableModule,
     TranslateModule,
     TruncateDecimalsPipe,
     IconsModule,
     NgbAlert,
     CreateRequestsModalComponent,
-    RouterLink,
-  ],
+    RouterLink
+],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class RequestsComponent implements OnInit {
