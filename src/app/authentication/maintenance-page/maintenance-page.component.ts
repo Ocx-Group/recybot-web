@@ -7,7 +7,7 @@ import { RouterLink } from '@angular/router';
   templateUrl: './maintenance-page.component.html',
   styleUrls: ['./maintenance-page.component.scss'],
   standalone: true,
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [RouterLink],
 })
 export class MaintenancePageComponent {

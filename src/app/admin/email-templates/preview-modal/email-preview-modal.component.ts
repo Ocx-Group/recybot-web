@@ -18,7 +18,7 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./email-preview-modal.component.scss'],
   encapsulation: ViewEncapsulation.None,
   standalone: true,
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [FormsModule],
 })
 export class EmailPreviewModalComponent implements OnChanges {
