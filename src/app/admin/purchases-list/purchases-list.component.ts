@@ -4,7 +4,8 @@ import {
   HostListener,
   OnInit,
   ViewChild,
-  ChangeDetectionStrategy
+  ChangeDetectionStrategy,
+  ChangeDetectorRef
 } from '@angular/core';
 import {
   DataTableColumnCellDirective,
@@ -39,7 +40,7 @@ const header = [
   templateUrl: './purchases-list.component.html',
   providers: [ToastrService],
   standalone: true,
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
     DatatableComponent,
@@ -76,6 +77,7 @@ export class PurchasesListComponent implements OnInit {
     private readonly printService: PrintService,
     private readonly modalService: NgbModal,
     private readonly invoiceService: InvoiceService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -112,10 +114,14 @@ export class PurchasesListComponent implements OnInit {
           this.currentPage = response.data.currentPage;
         }
         this.loadingIndicator = false;
+        // Fuera de todo evento de plantilla: con OnPush hay que marcar.
+        this.cdr.markForCheck();
       },
       error: error => {
         console.error(error);
         this.loadingIndicator = false;
+        // Fuera de todo evento de plantilla: con OnPush hay que marcar.
+        this.cdr.markForCheck();
         this.toastr.error('Error al cargar los datos');
       },
     });
@@ -241,11 +247,15 @@ export class PurchasesListComponent implements OnInit {
           window.URL.revokeObjectURL(url);
 
           this.loadingIndicator = false;
+          // Fuera de todo evento de plantilla: con OnPush hay que marcar.
+          this.cdr.markForCheck();
           this.toastr.success('Excel generado exitosamente');
         },
         error: error => {
           console.error('Error al exportar el excel', error);
           this.loadingIndicator = false;
+          // Fuera de todo evento de plantilla: con OnPush hay que marcar.
+          this.cdr.markForCheck();
           this.toastr.error('Error al generar el excel');
         },
       });
@@ -253,6 +263,8 @@ export class PurchasesListComponent implements OnInit {
       console.error('Error al exportar el excel', error);
       this.toastr.error('Error al generar el excel');
       this.loadingIndicator = false;
+      // Fuera de todo evento de plantilla: con OnPush hay que marcar.
+      this.cdr.markForCheck();
     }
   }
 }

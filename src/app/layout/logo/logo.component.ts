@@ -1,7 +1,6 @@
 import { LogoService } from '@app/core/service/logo-service/logo.service';
-import { Component, Input, OnDestroy, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
-import { Subscription } from 'rxjs';
-
+import { Component, Input, Signal, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-logo',
@@ -9,21 +8,22 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./logo.component.scss'],
   encapsulation: ViewEncapsulation.None,
   standalone: true,
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [],
 })
-export class LogoComponent implements OnDestroy {
-  logoSrc: string;
+export class LogoComponent {
   @Input() logoClass: string = '';
-  private readonly subscription: Subscription;
+
+  /**
+   * El servicio emite en cada cambio de tema y de branding. Como señal, la
+   * lectura desde la plantilla marca el componente y se pinta sin depender de
+   * la deteccion global; ademas la suscripcion se cierra sola.
+   */
+  readonly logoSrc: Signal<string>;
 
   constructor(private readonly logoService: LogoService) {
-    this.subscription = this.logoService.logoSrc$.subscribe(src => {
-      this.logoSrc = src;
+    this.logoSrc = toSignal(this.logoService.logoSrc$, {
+      initialValue: this.logoService.getLogoSrc(),
     });
-  }
-
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
   }
 }
