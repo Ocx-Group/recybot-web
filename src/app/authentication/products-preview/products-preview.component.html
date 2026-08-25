@@ -43,7 +43,7 @@
     <!-- Products (right) -->
     <section class="pp-products">
       <div class="pp-grid">
-        @for (item of productList; track item) {
+        @for (item of productList(); track item) {
           <div class="product-card">
             <a class="product-card__image-wrap" routerLink="/signin">
               <img [src]="item.image" [alt]="item.name" class="product-card__img">

@@ -17,7 +17,7 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './forgot.component.html',
   styleUrls: ['./forgot.component.scss'],
   standalone: true,
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [ReactiveFormsModule, RouterLink],
 })
 export class ForgotComponent implements OnInit {

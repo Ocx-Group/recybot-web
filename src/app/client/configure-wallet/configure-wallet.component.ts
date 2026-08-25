@@ -7,7 +7,8 @@ import {
   OnInit,
   TemplateRef,
   ViewChild,
-  ChangeDetectionStrategy
+  ChangeDetectionStrategy,
+  ChangeDetectorRef
 } from '@angular/core';
 import {
   AbstractControl,
@@ -30,7 +31,7 @@ import { ReactiveFormsModule } from '@angular/forms';
   templateUrl: './configure-wallet.component.html',
   styleUrls: ['./configure-wallet.component.scss'],
   standalone: true,
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule, ReactiveFormsModule],
 })
 export class ConfigureWalletComponent
@@ -50,6 +51,7 @@ export class ConfigureWalletComponent
     private affiliateBtcService: AffiliateBtcService,
     private toastr: ToastrService,
     private affiliateService: AffiliateService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -92,6 +94,8 @@ export class ConfigureWalletComponent
           if (value.success) {
             this.setConfiguration(value.data);
             this.walletForm.markAsPristine();
+          // Escribe en el formulario fuera de todo evento: con OnPush hay que marcar.
+          this.cdr.markForCheck();
           }
         },
         error: () => {
