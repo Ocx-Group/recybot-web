@@ -85,6 +85,10 @@ export class CartComponent implements OnInit, OnDestroy {
   withdrawalConfiguration = new WalletWithdrawalsConfiguration();
   balancePaymentNotAvailable: boolean = false;
   serviceBalanceNotAvailable: boolean = false;
+  reverseBalanceNotAvailable: boolean = false;
+  excludedPaymentGroups = [2, 3, 7, 8, 9, 10];
+  reverseBalanceExcludedPaymentGroups = [2, 7, 8];
+  serviceBalanceExcludedPaymentGroups = [7, 8];
   model: string = '';
   pagaditoRequest = new CreatePagaditoTransactionRequest();
   referenceTransaction: string = '';
@@ -210,6 +214,18 @@ export class CartComponent implements OnInit, OnDestroy {
     }
 
     this.products.forEach(item => {
+      if (!this.excludedPaymentGroups.includes(item.paymentGroup)) {
+        this.balancePaymentNotAvailable = true;
+      }
+
+      if (this.reverseBalanceExcludedPaymentGroups.includes(item.paymentGroup)) {
+        this.reverseBalanceNotAvailable = true;
+      }
+
+      this.serviceBalanceNotAvailable = !this.products.some(producto =>
+        this.serviceBalanceExcludedPaymentGroups.includes(producto.paymentGroup),
+      );
+
       grandTotal += item.quantity * item.baseAmount;
       totalTax += Number.parseFloat(item.tax.toFixed(0));
       subTotal += Number.parseFloat(item.total.toFixed(2));
