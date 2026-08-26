@@ -1,10 +1,11 @@
 import {
+  ChangeDetectorRef,
   Component,
   CUSTOM_ELEMENTS_SCHEMA,
   HostListener,
   OnInit,
   ViewChild,
-  ChangeDetectionStrategy
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { BalanceInformation } from '@app/core/models/wallet-model/balance-information.model';
 import {
@@ -42,7 +43,7 @@ import { RouterLink } from '@angular/router';
     CreateRequestsModalComponent,
     RouterLink
 ],
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class RequestsComponent implements OnInit {
@@ -65,6 +66,7 @@ export class RequestsComponent implements OnInit {
     private readonly configurationService: ConfigurationService,
     private readonly walletService: WalletService,
     private readonly matrixQualificationService: MatrixQualificationService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -84,6 +86,7 @@ export class RequestsComponent implements OnInit {
             this.rows = resp;
           }
           this.loadingIndicator = false;
+          this.cdr.markForCheck();
         },
         error: err => {
           this.showError('Error');
@@ -96,6 +99,7 @@ export class RequestsComponent implements OnInit {
       .getBalanceInformationByAffiliateId(this.user.id)
       .subscribe(balanceInfo => {
         this.balanceInfo = balanceInfo;
+        this.cdr.markForCheck();
       });
   }
 
@@ -104,6 +108,7 @@ export class RequestsComponent implements OnInit {
       next: resp => {
         this.walletWithdrawalsConfig.minimum_amount = resp.minimum_amount;
         this.walletWithdrawalsConfig.maximum_amount = resp.maximum_amount;
+        this.cdr.markForCheck();
       },
       error: _err => {
         this.showError('Error');
@@ -154,6 +159,7 @@ export class RequestsComponent implements OnInit {
             this.isReachedWithdrawalLimit = value.data;
           } else {
             this.isReachedWithdrawalLimit = false;
+            this.cdr.markForCheck();
           }
         },
         error: err => {

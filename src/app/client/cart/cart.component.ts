@@ -1,12 +1,13 @@
 import { MatrixQualificationService } from '@app/core/service/matrix-qualification-service/matrix-qualification.service';
 import {
+  ChangeDetectorRef,
   Component,
   HostListener,
   OnDestroy,
   OnInit,
   TemplateRef,
   ViewChild,
-  ChangeDetectionStrategy
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { NavigationStart, Router } from '@angular/router';
 import { CreateChannelResponse } from '@app/core/models/coinpay-model/create-channel-response.model';
@@ -55,7 +56,7 @@ import { TruncateDecimalsPipe } from '@app/shared/pipes/truncate-decimals.pipe';
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.scss'],
   standalone: true,
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -109,6 +110,7 @@ export class CartComponent implements OnInit, OnDestroy {
     private readonly affiliateService: AffiliateService,
     private readonly pagaditoService: PagaditoService,
     private readonly matrixQualificationService: MatrixQualificationService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -117,6 +119,7 @@ export class CartComponent implements OnInit, OnDestroy {
     this.today = new Date();
     this.cartService.getProducts().subscribe(res => {
       this.products = res;
+      this.cdr.markForCheck();
       this.setValuesToPaid();
     });
 
@@ -706,6 +709,7 @@ export class CartComponent implements OnInit, OnDestroy {
             this.isReachedWithdrawalLimit = value.data;
           } else {
             this.isReachedWithdrawalLimit = false;
+            this.cdr.markForCheck();
           }
         },
         error: err => {

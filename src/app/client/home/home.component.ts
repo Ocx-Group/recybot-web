@@ -56,7 +56,7 @@ import {
       echarts: () => import('echarts'),
     }),
   ],
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class HomeComponent implements OnInit {
@@ -361,6 +361,7 @@ export class HomeComponent implements OnInit {
         next: (value: BalanceInformation) => {
           console.log(value);
           this.balanceInformation = value;
+          this.cdr.markForCheck();
           resolve();
         },
         error: err => {
@@ -415,6 +416,7 @@ export class HomeComponent implements OnInit {
     this.affiliateService.getTotalAffiliatesByCountries().subscribe({
       next: value => {
         this.maps = value.data;
+        this.cdr.markForCheck();
       },
       error: err => {
         console.error('Error fetching locations:', err);

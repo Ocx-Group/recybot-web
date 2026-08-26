@@ -17,7 +17,7 @@ import { TranslatePipe } from '@ngx-translate/core';
     templateUrl: './coinpay-modal.component.html',
     styleUrls: ['./coinpay-modal.component.scss'],
     standalone: true,
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [ReactiveFormsModule, QrcodeModule, TranslatePipe]
 })
 export class CoinpayModalComponent implements OnInit {
@@ -94,6 +94,7 @@ export class CoinpayModalComponent implements OnInit {
         if (response) {
           console.log(response);
           this.networks = response;
+          this.cdr.markForCheck();
         }
       },
       error: (err) => {
@@ -125,6 +126,9 @@ export class CoinpayModalComponent implements OnInit {
       windowClass: 'coinpay-modal-window',
       backdropClass: 'coinpay-modal-backdrop',
     });
+    // Al modal lo abre el padre desde su plantilla: ese click ensucia la
+    // vista del PADRE, no la de este componente.
+    this.cdr.markForCheck();
   }
 
   selectCrypto(crypto: 'BTC' | 'USDT') {
@@ -201,6 +205,7 @@ export class CoinpayModalComponent implements OnInit {
       },
       error: (err) => {
         this.isLoading = false;
+        this.cdr.markForCheck();
         console.error(err);
         this.showError("Error al crear la transacción");
       },
