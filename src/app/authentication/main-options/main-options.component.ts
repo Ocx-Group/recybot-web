@@ -1,10 +1,13 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-main-options',
   templateUrl: './main-options.component.html',
+  // Sin changeDetection explicito Angular 22 ya lo trata como OnPush; se
+  // anota para que las auditorias de estrategia lo vean.
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./main-options.component.scss'],
   standalone: true,
   imports: [CommonModule],
