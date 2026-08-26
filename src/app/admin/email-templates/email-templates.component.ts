@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -27,7 +27,7 @@ type Mode = 'list' | 'edit';
   templateUrl: './email-templates.component.html',
   styleUrls: ['./email-templates.component.scss'],
   standalone: true,
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -71,6 +71,7 @@ export class EmailTemplatesComponent implements OnInit {
     private readonly fb: FormBuilder,
     private readonly toastr: ToastrService,
     brandingService: BrandingService,
+    private cdr: ChangeDetectorRef
   ) {
     const branding = brandingService.current;
     if (!branding) {
@@ -114,6 +115,7 @@ export class EmailTemplatesComponent implements OnInit {
           this.previewValues.supportEmail = this.brand.supportEmail ?? '';
           this.previewValues.senderName = this.brand.senderName;
           this.previewValues.brandName = this.brand.name;
+          this.cdr.markForCheck();
         }
       },
       error: () => {
@@ -132,6 +134,7 @@ export class EmailTemplatesComponent implements OnInit {
       error: () => {
         this.toastr.error('No se pudieron cargar los templates');
         this.loading = false;
+        this.cdr.markForCheck();
       },
     });
   }
@@ -194,6 +197,7 @@ export class EmailTemplatesComponent implements OnInit {
             this.toastr.success('Template actualizado');
             this.saving = false;
             this.mode = 'list';
+            this.cdr.markForCheck();
             this.loadTemplates();
           },
           error: err => this.handleSaveError(err),
@@ -210,6 +214,7 @@ export class EmailTemplatesComponent implements OnInit {
           this.toastr.success('Template creado');
           this.saving = false;
           this.mode = 'list';
+          this.cdr.markForCheck();
           this.loadTemplates();
         },
         error: err => this.handleSaveError(err),

@@ -1,6 +1,7 @@
 import { AuthService } from '@app/core/service/authentication-service/auth.service';
 import { DOCUMENT, CommonModule } from '@angular/common';
 import {
+  ChangeDetectorRef,
   Component,
   Inject,
   ElementRef,
@@ -9,7 +10,7 @@ import {
   AfterViewInit,
   OnDestroy,
   CUSTOM_ELEMENTS_SCHEMA,
-  ChangeDetectionStrategy
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { ConfigService } from '@app/config/config.service';
@@ -39,7 +40,7 @@ import { ConfigureWalletComponent } from '@app/client/configure-wallet/configure
     NgbModule,
     ConfigureWalletComponent,
   ],
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
@@ -66,6 +67,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
     private readonly configureWalletService: ConfigureWalletService,
     private readonly cartService: CartService,
     private readonly ticketHubService: TicketHubService,
+    private cdr: ChangeDetectorRef
   ) {
     this.ticketHubService.connectionEstablished.subscribe(isConnected => {
       if (isConnected) {
@@ -80,6 +82,10 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
           ),
         );
         this.onLoadTickets(this.authService.currentUserAffiliateValue.id);
+        // ticketSummaries$ y unreadCount$ se asignan aqui, despues del primer
+        // pintado. Sin marcar, el async pipe no llega a leerlos y el contador
+        // de tickets se queda a cero para siempre.
+        this.cdr.markForCheck();
       } else {
         console.error('Waiting for connection to be established...');
       }
