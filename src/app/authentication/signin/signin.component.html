@@ -3,7 +3,7 @@
   <!-- Global BG FX -->
   <div class="bg-grid" aria-hidden="true"></div>
   <div class="bg-scanline" aria-hidden="true"></div>
-  <div class="bg-photo" [style.backgroundImage]="'url(' + backgroundImages[currentImageIndex] + ')'"
+  <div class="bg-photo" [style.backgroundImage]="'url(' + backgroundImages[currentImageIndex()] + ')'"
   aria-hidden="true"></div>
 
   <!-- ══ LEFT — Brand Panel ══════════════════════════════════ -->
@@ -136,30 +136,30 @@
         </div>
 
         <!-- Submit -->
-        <button class="btn-login" type="submit" [disabled]="loading">
-          @if (loading) {
+        <button class="btn-login" type="submit" [disabled]="loading()">
+          @if (loading()) {
             <span class="btn-login__spinner" aria-hidden="true"></span>
           }
-          @if (loading) {
+          @if (loading()) {
             <span class="sr-only">{{ 'SIGNIN.LOADING.TEXT' | translate }}</span>
           }
-          @if (!loading) {
+          @if (!loading()) {
             <span>
               {{ signin }}&nbsp;<i class="bi bi-arrow-right-circle-fill"></i>
             </span>
           }
         </button>
-        <button class="btn-login mt-2" type="button" [disabled]="loading" (click)="googleLoginSubmitted()">
+        <button class="btn-login mt-2" type="button" [disabled]="loading()" (click)="googleLoginSubmitted()">
           <span>
             Google&nbsp;<i class="bi bi-google"></i>
           </span>
         </button>
 
         <!-- Error -->
-        @if (error !== '') {
+        @if (error() !== '') {
           <div class="form-alert">
             <i class="bi bi-exclamation-circle-fill"></i>
-            {{ error }}
+            {{ error() }}
           </div>
         }
 

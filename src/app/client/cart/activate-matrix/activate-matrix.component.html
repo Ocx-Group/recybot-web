@@ -13,7 +13,7 @@
 
   <div class="section-body">
     <!-- Loading state más elegante -->
-    <ng-container *ngIf="loading">
+    <ng-container *ngIf="loading()">
       <div class="loading-container">
         <div class="loading-content">
           <div class="spinner-grow text-primary" role="status"></div>
@@ -25,7 +25,7 @@
     </ng-container>
 
     <!-- Matrix configurations -->
-    <ng-container *ngIf="!loading && matrixConfigurations.length > 0">
+    <ng-container *ngIf="!loading() && matrixConfigurations().length > 0">
       <div class="invoice">
         <div class="invoice-print">
           <div class="row">
@@ -60,7 +60,7 @@
               <p class="section-subtitle text-muted mb-3">Selecciona la matriz que deseas activar</p>
 
               <div id="matrix-list" class="matrices-grid mt-3">
-                <div *ngFor="let config of matrixConfigurations; let i = index" class="matrix-item"
+                <div *ngFor="let config of matrixConfigurations(); let i = index" class="matrix-item"
                   [class.selected]="selectedMatrixConfig?.matrixType === config.matrixType"
                   (click)="selectMatrixConfig(config)">
                   <div class="matrix-card">
@@ -163,7 +163,7 @@
     </ng-container>
 
     <!-- Empty state -->
-    <ng-container *ngIf="!loading && matrixConfigurations.length === 0">
+    <ng-container *ngIf="!loading() && matrixConfigurations().length === 0">
       <div class="invoice">
         <div class="invoice-print">
           <div class="empty-state">

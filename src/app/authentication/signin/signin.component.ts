@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnDestroy, OnInit, ChangeDetectionStrategy, signal } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -20,12 +20,15 @@ import { LogoService } from '@app/core/service/logo-service/logo.service';
   templateUrl: './signin.component.html',
   styleUrls: ['./signin.component.scss'],
   standalone: true,
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [ReactiveFormsModule, RouterLink, TranslatePipe],
 })
 export class SigninComponent implements OnInit, OnDestroy {
-  error = '';
-  loading = false;
+  // Los tres unicos campos que la plantilla lee y que se escriben fuera de un
+  // evento: error y loading desde las respuestas de login, currentImageIndex
+  // desde el setInterval del fondo. Como senales no hace falta ChangeDetectorRef.
+  readonly error = signal('');
+  readonly loading = signal(false);
   username = 'Usuario';
   password = 'Contraseña';
   signin = 'Iniciar sesión';
@@ -39,7 +42,7 @@ export class SigninComponent implements OnInit, OnDestroy {
     '/assets/images/login-option-2.png',
     '/assets/images/login-option-3.png',
   ];
-  currentImageIndex = 0;
+  readonly currentImageIndex = signal(0);
   showPassword = false;
   logoUrl = '';
   private intervalId: ReturnType<typeof setInterval> | null = null;
@@ -112,7 +115,7 @@ export class SigninComponent implements OnInit, OnDestroy {
 
   loginSubmitted() {
     const signin = new Signin();
-    this.error = '';
+    this.error.set('');
     signin.userName = this.authLogin.value.email;
     signin.password = this.authLogin.value.pwd;
     signin.browserInfo = this.deviceService.getDeviceInfo().browser;
@@ -123,7 +126,7 @@ export class SigninComponent implements OnInit, OnDestroy {
 
       if (!signin.userName || !signin.password) return;
 
-      this.loading = true;
+      this.loading.set(true);
       this.authService.loginUser(signin).subscribe((response: Response) => {
         if (response.success) {
           if (response.data.is_affiliate) {
@@ -132,17 +135,17 @@ export class SigninComponent implements OnInit, OnDestroy {
             this.router.navigate(['admin/home-admin']).then();
           }
         } else {
-          this.error = response.message;
+          this.error.set(response.message);
           this.toastr.error(response.message, 'Error!');
         }
-        this.loading = false;
+        this.loading.set(false);
       });
     });
   }
 
   googleLoginSubmitted() {
     const deviceInfo = this.deviceService.getDeviceInfo();
-    this.loading = true;
+    this.loading.set(true);
 
     this.authService.fetchIpAddress().subscribe(ip => {
       this.authService
@@ -160,15 +163,15 @@ export class SigninComponent implements OnInit, OnDestroy {
                 this.router.navigate(['admin/home-admin']).then();
               }
             } else {
-              this.error = response.message;
+              this.error.set(response.message);
               this.toastr.error(response.message, 'Error!');
             }
-            this.loading = false;
+            this.loading.set(false);
           },
           error: () => {
-            this.error = 'No fue posible iniciar sesión con Google.';
-            this.toastr.error(this.error, 'Error!');
-            this.loading = false;
+            this.error.set('No fue posible iniciar sesión con Google.');
+            this.toastr.error(this.error(), 'Error!');
+            this.loading.set(false);
           },
         });
     });
@@ -184,8 +187,9 @@ export class SigninComponent implements OnInit, OnDestroy {
 
   private startBackgroundRotation() {
     this.intervalId = setInterval(() => {
-      this.currentImageIndex =
-        (this.currentImageIndex + 1) % this.backgroundImages.length;
+      this.currentImageIndex.set(
+        (this.currentImageIndex() + 1) % this.backgroundImages.length,
+      );
     }, 10000);
   }
 
