@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
+
 import { RouterLink } from '@angular/router';
 
 @Component({
@@ -7,7 +7,8 @@ import { RouterLink } from '@angular/router';
   templateUrl: './maintenance-page.component.html',
   styleUrls: ['./maintenance-page.component.scss'],
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [RouterLink],
 })
 export class MaintenancePageComponent {
   constructor() {}

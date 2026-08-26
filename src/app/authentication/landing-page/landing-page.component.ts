@@ -4,9 +4,10 @@ import {
   OnInit,
   ViewEncapsulation,
   CUSTOM_ELEMENTS_SCHEMA,
+  ChangeDetectionStrategy
 } from '@angular/core';
-import { TranslateService, TranslateModule } from '@ngx-translate/core';
-import { CommonModule } from '@angular/common';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
+
 import { RouterLink, ActivatedRoute } from '@angular/router';
 
 import { UserAffiliate } from '@app/core/models/user-affiliate-model/user.affiliate.model';
@@ -19,7 +20,8 @@ import { AuthService } from '@app/core/service/authentication-service/auth.servi
   styleUrls: ['./landing-page.component.scss'],
   encapsulation: ViewEncapsulation.ShadowDom,
   standalone: true,
-  imports: [CommonModule, RouterLink, TranslateModule],
+  imports: [RouterLink, TranslatePipe],
+  changeDetection: ChangeDetectionStrategy.Eager,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class LandingPageComponent implements OnInit {

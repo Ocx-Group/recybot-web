@@ -14,17 +14,21 @@
         <img data-brand-logo src="../../../assets/images/logos/Logo-recybot.png" alt="Logo" class="navbar-logo">
       </picture>
 
-      <div *ngIf="user" class="user-chip">
-        <div class="user-chip__avatar">
-          <img [src]="user?.image_profile_url ? user?.image_profile_url : 'assets/images/user.svg'"
-            (error)="$any($event.target).src='assets/images/user.svg'" alt="User Profile" />
+      @if (user) {
+        <div class="user-chip">
+          <div class="user-chip__avatar">
+            <img [src]="user?.image_profile_url ? $safeNavigationMigration(user?.image_profile_url) : 'assets/images/user.svg'"
+              (error)="$any($event.target).src='assets/images/user.svg'" alt="User Profile" />
+          </div>
+          <div class="user-chip__info">
+            <span class="user-chip__name">{{this.user.name}} {{this.user.last_name}}</span>
+            <span class="user-chip__username">{{this.user.user_name}}</span>
+            @if (this.user.phone) {
+              <span class="user-chip__username">{{this.user.phone}}</span>
+            }
+          </div>
         </div>
-        <div class="user-chip__info">
-          <span class="user-chip__name">{{this.user.name}} {{this.user.last_name}}</span>
-          <span class="user-chip__username">{{this.user.user_name}}</span>
-          <span *ngIf="this.user.phone" class="user-chip__username">{{this.user.phone}}</span>
-        </div>
-      </div>
+      }
     </div>
 
     <button class="navbar-toggle" (click)="toggleNavbar()">
@@ -35,10 +39,14 @@
     <div class="navbar-nav" [class.show]="isNavbarVisible">
       <div class="language-selector">
         <button title="Change language" type="button" (click)="toggleLanguageDropdown($event)">
-          <img title="Spain flag" src="../../../assets/images/flags/spain.jpg" [alt]="currentLang" class="flag-icon"
-            *ngIf="currentLang === 'es'">
-          <img title="USA flag" src="../../../assets/images/flags/us.jpg" [alt]="currentLang" class="flag-icon"
-            *ngIf="currentLang === 'en'">
+          @if (currentLang === 'es') {
+            <img title="Spain flag" src="../../../assets/images/flags/spain.jpg" [alt]="currentLang" class="flag-icon"
+              >
+          }
+          @if (currentLang === 'en') {
+            <img title="USA flag" src="../../../assets/images/flags/us.jpg" [alt]="currentLang" class="flag-icon"
+              >
+          }
         </button>
         <div class="language-dropdown" [class.show]="isLanguageDropdownOpen">
           <a href="#" (click)="changeLanguage('es'); $event.preventDefault(); $event.stopPropagation()">

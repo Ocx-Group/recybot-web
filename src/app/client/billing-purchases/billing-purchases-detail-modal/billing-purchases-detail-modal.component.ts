@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { Invoice } from '../../../core/models/invoice-model/invoice.model';
 import { UserAffiliate } from '../../../core/models/user-affiliate-model/user.affiliate.model';
 import { AffiliateService } from '../../../core/service/affiliate-service/affiliate.service';
@@ -11,6 +11,8 @@ import { CommonModule } from '@angular/common';
   selector: 'app-billing-purchases-detail-modal',
   templateUrl: './billing-purchases-detail-modal.component.html',
   standalone: true,
+  // Sin changeDetection explicito Angular 22 ya lo trata como OnPush.
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule],
 })
 export class BillingPurchasesDetailModalComponent implements OnInit {
@@ -30,6 +32,7 @@ export class BillingPurchasesDetailModalComponent implements OnInit {
     private readonly auth: AuthService,
     private readonly affiliateService: AffiliateService,
     private readonly toastr: ToastrService,
+    private readonly cdr: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {
@@ -41,6 +44,7 @@ export class BillingPurchasesDetailModalComponent implements OnInit {
     this.affiliateService.getCountries().subscribe({
       next: resp => {
         this.countries = resp;
+        this.cdr.markForCheck();
       },
       error: err => {
         this.toastr.error('Se produjo un error al cargar los países');
@@ -72,5 +76,8 @@ export class BillingPurchasesDetailModalComponent implements OnInit {
       centered: true,
     });
     this.invoice = invoice;
+    // Al modal lo abre el padre desde TypeScript (@ViewChild), no desde un
+    // evento de esta plantilla: la vista propia no queda sucia por si sola.
+    this.cdr.markForCheck();
   }
 }

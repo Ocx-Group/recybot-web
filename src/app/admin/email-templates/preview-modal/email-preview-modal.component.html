@@ -1,58 +1,59 @@
 <!-- Backdrop -->
-<div class="pm-backdrop" *ngIf="visible" (click)="backdropClick($event)" (keydown.escape)="close()">
+@if (visible) {
+  <div class="pm-backdrop" (click)="backdropClick($event)" (keydown.escape)="close()">
     <!-- Dialog shell (Bootstrap modal structure) -->
     <div class="modal d-block pm-modal-wrap" tabindex="-1">
-        <div class="modal-dialog modal-xl modal-dialog-scrollable">
-            <div class="modal-content">
-
-                <!-- Header -->
-                <div class="modal-header editRowModal">
-                    <h5 class="modal-title" id="pm-dialog-title">
-                        <i class="fas fa-eye me-2 text-primary"></i>
-                        Vista previa del template
-                    </h5>
-                    <span class="ms-3 me-auto text-muted small pm-subject text-truncate" *ngIf="previewSubject">
-                        Asunto: <em>{{ previewSubject }}</em>
-                    </span>
-                    <button type="button" class="close" aria-label="Cerrar" (click)="close()">
-                        <span aria-hidden="true"><i class="material-icons">close</i></span>
-                    </button>
-                </div>
-
-                <!-- Body -->
-                <div class="modal-body p-0">
-
-                    <!-- Live iframe -->
-                    <div class="pm-iframe-wrap">
-                        <iframe class="pm-iframe" title="Email preview" [attr.srcdoc]="renderedHtml"></iframe>
-                    </div>
-
-                    <!-- Sample values -->
-                    <div class="pm-values" *ngIf="valueKeys().length > 0">
-                        <p class="pm-values-label">Valores de muestra <span class="text-muted">(solo para
-                                preview)</span></p>
-                        <div class="row g-2">
-                            <div class="col-12 col-sm-6 col-md-4 col-xl-3" *ngFor="let key of valueKeys()">
-                                <div class="input-group input-group-sm">
-                                    <span class="input-group-text text-truncate" style="max-width: 150px"
-                                        [title]="key">{{ key }}</span>
-                                    <input type="text" class="form-control" [(ngModel)]="localValues[key]"
-                                        [id]="'pv_' + key" [name]="'pv_' + key" [attr.aria-label]="key">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-                <!-- Footer -->
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-secondary btn-sm" (click)="close()">
-                        <i class="fas fa-times me-1"></i> Cerrar
-                    </button>
-                </div>
-
+      <div class="modal-dialog modal-xl modal-dialog-scrollable">
+        <div class="modal-content">
+          <!-- Header -->
+          <div class="modal-header editRowModal">
+            <h5 class="modal-title" id="pm-dialog-title">
+              <i class="fas fa-eye me-2 text-primary"></i>
+              Vista previa del template
+            </h5>
+            @if (previewSubject) {
+              <span class="ms-3 me-auto text-muted small pm-subject text-truncate">
+                Asunto: <em>{{ previewSubject }}</em>
+              </span>
+            }
+            <button type="button" class="close" aria-label="Cerrar" (click)="close()">
+              <span aria-hidden="true"><i class="material-icons">close</i></span>
+            </button>
+          </div>
+          <!-- Body -->
+          <div class="modal-body p-0">
+            <!-- Live iframe -->
+            <div class="pm-iframe-wrap">
+              <iframe class="pm-iframe" title="Email preview" [attr.srcdoc]="renderedHtml"></iframe>
             </div>
+            <!-- Sample values -->
+            @if (valueKeys().length > 0) {
+              <div class="pm-values">
+                <p class="pm-values-label">Valores de muestra <span class="text-muted">(solo para
+                preview)</span></p>
+                <div class="row g-2">
+                  @for (key of valueKeys(); track key) {
+                    <div class="col-12 col-sm-6 col-md-4 col-xl-3">
+                      <div class="input-group input-group-sm">
+                        <span class="input-group-text text-truncate" style="max-width: 150px"
+                        [title]="key">{{ key }}</span>
+                        <input type="text" class="form-control" [(ngModel)]="localValues[key]"
+                          [id]="'pv_' + key" [name]="'pv_' + key" [attr.aria-label]="key">
+                        </div>
+                      </div>
+                    }
+                  </div>
+                </div>
+              }
+            </div>
+            <!-- Footer -->
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-secondary btn-sm" (click)="close()">
+                <i class="fas fa-times me-1"></i> Cerrar
+              </button>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
-</div>
+  }

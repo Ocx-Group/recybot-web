@@ -1,11 +1,13 @@
 import { MatrixQualificationService } from '@app/core/service/matrix-qualification-service/matrix-qualification.service';
 import {
+  ChangeDetectorRef,
   Component,
   HostListener,
   OnDestroy,
   OnInit,
   TemplateRef,
   ViewChild,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { NavigationStart, Router } from '@angular/router';
 import { CreateChannelResponse } from '@app/core/models/coinpay-model/create-channel-response.model';
@@ -44,7 +46,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { QrcodeModule } from 'qrcode-angular';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { CoinpayModalComponent } from '@app/client/cart/coinpay-modal/coinpay-modal.component';
 import { PdfViewerComponent } from '@app/shared/components/pdf-viewer/pdf-viewer.component';
 import { TruncateDecimalsPipe } from '@app/shared/pipes/truncate-decimals.pipe';
@@ -54,13 +56,14 @@ import { TruncateDecimalsPipe } from '@app/shared/pipes/truncate-decimals.pipe';
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.scss'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
     QrcodeModule,
     NgbModule,
-    TranslateModule,
+    TranslatePipe,
     CoinpayModalComponent,
     PdfViewerComponent,
     TruncateDecimalsPipe,
@@ -82,6 +85,10 @@ export class CartComponent implements OnInit, OnDestroy {
   withdrawalConfiguration = new WalletWithdrawalsConfiguration();
   balancePaymentNotAvailable: boolean = false;
   serviceBalanceNotAvailable: boolean = false;
+  reverseBalanceNotAvailable: boolean = false;
+  excludedPaymentGroups = [2, 3, 7, 8, 9, 10];
+  reverseBalanceExcludedPaymentGroups = [2, 7, 8];
+  serviceBalanceExcludedPaymentGroups = [7, 8];
   model: string = '';
   pagaditoRequest = new CreatePagaditoTransactionRequest();
   referenceTransaction: string = '';
@@ -107,6 +114,7 @@ export class CartComponent implements OnInit, OnDestroy {
     private readonly affiliateService: AffiliateService,
     private readonly pagaditoService: PagaditoService,
     private readonly matrixQualificationService: MatrixQualificationService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -115,6 +123,7 @@ export class CartComponent implements OnInit, OnDestroy {
     this.today = new Date();
     this.cartService.getProducts().subscribe(res => {
       this.products = res;
+      this.cdr.markForCheck();
       this.setValuesToPaid();
     });
 
@@ -205,6 +214,18 @@ export class CartComponent implements OnInit, OnDestroy {
     }
 
     this.products.forEach(item => {
+      if (!this.excludedPaymentGroups.includes(item.paymentGroup)) {
+        this.balancePaymentNotAvailable = true;
+      }
+
+      if (this.reverseBalanceExcludedPaymentGroups.includes(item.paymentGroup)) {
+        this.reverseBalanceNotAvailable = true;
+      }
+
+      this.serviceBalanceNotAvailable = !this.products.some(producto =>
+        this.serviceBalanceExcludedPaymentGroups.includes(producto.paymentGroup),
+      );
+
       grandTotal += item.quantity * item.baseAmount;
       totalTax += Number.parseFloat(item.tax.toFixed(0));
       subTotal += Number.parseFloat(item.total.toFixed(2));
@@ -704,6 +725,7 @@ export class CartComponent implements OnInit, OnDestroy {
             this.isReachedWithdrawalLimit = value.data;
           } else {
             this.isReachedWithdrawalLimit = false;
+            this.cdr.markForCheck();
           }
         },
         error: err => {

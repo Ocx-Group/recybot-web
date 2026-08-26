@@ -1,4 +1,4 @@
-import { AuthService } from 'src/app/core/service/authentication-service/auth.service';
+import { AuthService } from '@app/core/service/authentication-service/auth.service';
 import { DOCUMENT, CommonModule } from '@angular/common';
 import {
   Component,
@@ -7,16 +7,18 @@ import {
   OnInit,
   Renderer2,
   AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef
 } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { ConfigService } from 'src/app/config/config.service';
-import { LanguageService } from 'src/app/core/service/language-service/language.service';
+import { ConfigService } from '@app/config/config.service';
+import { LanguageService } from '@app/core/service/language-service/language.service';
 import { User } from '@app/core/models/user-model/user.model';
 import { TicketHubService } from '@app/core/service/ticket-service/ticket-hub.service';
 import { map, Observable } from 'rxjs';
 import { TicketSummary } from '@app/core/models/ticket-model/ticket-summary.model';
 import { IconsModule } from '@app/shared';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 const document: any = window.document;
@@ -26,7 +28,8 @@ const document: any = window.document;
   templateUrl: './header-admin.component.html',
   styleUrls: ['../header/header.component.scss'],
   standalone: true,
-  imports: [CommonModule, RouterLink, IconsModule, TranslateModule, NgbModule],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [CommonModule, RouterLink, IconsModule, TranslatePipe, NgbModule],
 })
 export class HeaderAdminComponent implements OnInit, AfterViewInit {
   public user: User = new User();
@@ -48,6 +51,7 @@ export class HeaderAdminComponent implements OnInit, AfterViewInit {
     private router: Router,
     public languageService: LanguageService,
     private ticketHubService: TicketHubService,
+    private cdr: ChangeDetectorRef,
   ) {
     this.ticketHubService.connectionEstablished.subscribe(isConnected => {
       if (isConnected) {
@@ -62,6 +66,9 @@ export class HeaderAdminComponent implements OnInit, AfterViewInit {
           ),
         );
         this.onLoadAllTickets();
+        // ticketSummaries$ y unreadCount$ se asignan aqui, despues del primer
+        // pintado. Sin marcar, con OnPush el async pipe nunca llega a leerlos.
+        this.cdr.markForCheck();
       } else {
         console.error('Waiting for connection to be established...');
       }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ChangeDetectorRef} from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -15,6 +15,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './contact.component.html',
   styleUrls: ['./contact.component.scss'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule, ReactiveFormsModule],
 })
 export class ContactComponent {
@@ -26,6 +27,7 @@ export class ContactComponent {
     private readonly formBuilder: FormBuilder,
     private readonly affiliateService: AffiliateService,
     private readonly toastr: ToastrService,
+    private readonly cdr: ChangeDetectorRef
   ) {
     this.contactForm = this.formBuilder.group({
       fullName: ['', [Validators.required, Validators.minLength(3)]],
@@ -55,6 +57,8 @@ export class ContactComponent {
             this.contactForm.reset();
             this.submitted = false;
             this.toastr.success('Formulario enviado correctamente');
+            // Fuera de todo evento de plantilla: con OnPush hay que marcar.
+            this.cdr.markForCheck();
           } else {
             this.toastr.error(
               response.message || 'Error al enviar el formulario',

@@ -12,168 +12,181 @@
 
   <div class="section-body">
     <!-- ============== LIST ============== -->
-    <div class="row" *ngIf="mode === 'list'">
-      <div class="col-12">
-        <div class="card">
-          <div class="card-header d-flex flex-wrap align-items-center gap-2">
-            <h4 class="mb-0 me-auto">
-              Templates
-              <small class="text-muted ms-2">{{ brandName }}</small>
-            </h4>
-
-            <button class="btn btn-primary btn-sm" (click)="startCreate()">
-              <i class="fas fa-plus me-1"></i> Nuevo template
-            </button>
-          </div>
-
-          <div class="card-body">
-            <div *ngIf="loading" class="text-center py-4">
-              <div class="spinner-border text-primary"><span class="visually-hidden">Cargando...</span></div>
+    @if (mode === 'list') {
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header d-flex flex-wrap align-items-center gap-2">
+              <h4 class="mb-0 me-auto">
+                Templates
+                <small class="text-muted ms-2">{{ brandName }}</small>
+              </h4>
+              <button class="btn btn-primary btn-sm" (click)="startCreate()">
+                <i class="fas fa-plus me-1"></i> Nuevo template
+              </button>
             </div>
-
-            <div *ngIf="!loading && templates.length === 0" class="text-center py-4 text-muted">
-              No hay templates para mostrar.
-            </div>
-
-            <div class="table-responsive" *ngIf="!loading && templates.length > 0">
-              <table class="table table-hover align-middle">
-                <thead>
-                  <tr>
-                    <th>Template Key</th>
-                    <th>Subject</th>
-                    <th class="text-center">Activo</th>
-                    <th class="text-center">Versión</th>
-                    <th>Actualizado</th>
-                    <th class="text-end">Acciones</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let t of templates; trackBy: trackById">
-                    <td><code>{{ t.templateKey }}</code></td>
-                    <td class="text-truncate" style="max-width: 360px;">{{ t.subject }}</td>
-                    <td class="text-center">
-                      <span class="badge" [ngClass]="t.isActive ? 'bg-success' : 'bg-secondary'">
-                        {{ t.isActive ? 'Sí' : 'No' }}
-                      </span>
-                    </td>
-                    <td class="text-center">v{{ t.version }}</td>
-                    <td>{{ (t.updatedAt || t.createdAt) | date:'short' }}</td>
-                    <td class="text-end">
-                      <button class="btn btn-sm btn-outline-primary me-1" (click)="startEdit(t)">
-                        <i class="fas fa-edit"></i>
-                      </button>
-                      <button class="btn btn-sm btn-outline-danger" (click)="delete(t)">
-                        <i class="fas fa-trash"></i>
-                      </button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+            <div class="card-body">
+              @if (loading) {
+                <div class="text-center py-4">
+                  <div class="spinner-border text-primary"><span class="visually-hidden">Cargando...</span></div>
+                </div>
+              }
+              @if (!loading && templates.length === 0) {
+                <div class="text-center py-4 text-muted">
+                  No hay templates para mostrar.
+                </div>
+              }
+              @if (!loading && templates.length > 0) {
+                <div class="table-responsive">
+                  <table class="table table-hover align-middle">
+                    <thead>
+                      <tr>
+                        <th>Template Key</th>
+                        <th>Subject</th>
+                        <th class="text-center">Activo</th>
+                        <th class="text-center">Versión</th>
+                        <th>Actualizado</th>
+                        <th class="text-end">Acciones</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      @for (t of templates; track trackById($index, t)) {
+                        <tr>
+                          <td><code>{{ t.templateKey }}</code></td>
+                          <td class="text-truncate" style="max-width: 360px;">{{ t.subject }}</td>
+                          <td class="text-center">
+                            <span class="badge" [ngClass]="t.isActive ? 'bg-success' : 'bg-secondary'">
+                              {{ t.isActive ? 'Sí' : 'No' }}
+                            </span>
+                          </td>
+                          <td class="text-center">v{{ t.version }}</td>
+                          <td>{{ (t.updatedAt || t.createdAt) | date:'short' }}</td>
+                          <td class="text-end">
+                            <button class="btn btn-sm btn-outline-primary me-1" (click)="startEdit(t)">
+                              <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn btn-sm btn-outline-danger" (click)="delete(t)">
+                              <i class="fas fa-trash"></i>
+                            </button>
+                          </td>
+                        </tr>
+                      }
+                    </tbody>
+                  </table>
+                </div>
+              }
             </div>
           </div>
         </div>
       </div>
-    </div>
+    }
 
     <!-- ============== EDIT ============== -->
-    <div class="row" *ngIf="mode === 'edit'">
-      <div class="col-12">
-        <div class="card">
-          <div class="card-header d-flex align-items-center gap-2 flex-wrap">
-            <h4 class="mb-0 me-auto">
-              {{ editing ? 'Editar template' : 'Nuevo template' }}
-              <small class="text-muted ms-2">{{ brandName }}</small>
-              <span class="badge bg-secondary ms-2" *ngIf="editing">v{{ editing.version }}</span>
-            </h4>
-            <button class="btn btn-sm btn-outline-info" type="button" (click)="showPreview = true">
-              <i class="fas fa-eye me-1"></i> Vista previa
-            </button>
-            <button class="btn btn-sm btn-outline-secondary" type="button" (click)="cancelEdit()">
-              <i class="fas fa-arrow-left me-1"></i> Volver
-            </button>
-            <button class="btn btn-sm btn-primary" type="button" (click)="save()" [disabled]="saving">
-              <i class="fas fa-save me-1"></i>
-              {{ saving ? 'Guardando...' : 'Guardar' }}
-            </button>
-          </div>
-
-          <div class="card-body">
-            <form [formGroup]="form">
-
-              <!-- ── Sección 1: Identificación ── -->
-              <div class="form-section">
-                <p class="form-section-label">Identificación</p>
-                <div class="row g-3 align-items-end">
-                  <div class="col-12 col-md-4">
-                    <label for="templateKey" class="form-label">
-                      Template key <span class="text-danger">*</span>
-                    </label>
-                    <input id="templateKey" class="form-control" formControlName="templateKey"
-                      placeholder="ej. password_recovery">
-                    <div class="invalid-feedback d-block"
-                      *ngIf="form.get('templateKey')?.touched && form.get('templateKey')?.invalid">
-                      Requerido (máx. 100 caracteres)
+    @if (mode === 'edit') {
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header d-flex align-items-center gap-2 flex-wrap">
+              <h4 class="mb-0 me-auto">
+                {{ editing ? 'Editar template' : 'Nuevo template' }}
+                <small class="text-muted ms-2">{{ brandName }}</small>
+                @if (editing) {
+                  <span class="badge bg-secondary ms-2">v{{ editing.version }}</span>
+                }
+              </h4>
+              <button class="btn btn-sm btn-outline-info" type="button" (click)="showPreview = true">
+                <i class="fas fa-eye me-1"></i> Vista previa
+              </button>
+              <button class="btn btn-sm btn-outline-secondary" type="button" (click)="cancelEdit()">
+                <i class="fas fa-arrow-left me-1"></i> Volver
+              </button>
+              <button class="btn btn-sm btn-primary" type="button" (click)="save()" [disabled]="saving">
+                <i class="fas fa-save me-1"></i>
+                {{ saving ? 'Guardando...' : 'Guardar' }}
+              </button>
+            </div>
+            <div class="card-body">
+              <form [formGroup]="form">
+                <!-- ── Sección 1: Identificación ── -->
+                <div class="form-section">
+                  <p class="form-section-label">Identificación</p>
+                  <div class="row g-3 align-items-end">
+                    <div class="col-12 col-md-4">
+                      <label for="templateKey" class="form-label">
+                        Template key <span class="text-danger">*</span>
+                      </label>
+                      <input id="templateKey" class="form-control" formControlName="templateKey"
+                        placeholder="ej. password_recovery">
+                      @if (form.get('templateKey')?.touched && form.get('templateKey')?.invalid) {
+                        <div class="invalid-feedback d-block"
+                          >
+                          Requerido (máx. 100 caracteres)
+                        </div>
+                      }
                     </div>
-                  </div>
-                  <div class="col-12 col-md-6">
-                    <label for="subject" class="form-label">
-                      Asunto <span class="text-danger">*</span>
-                    </label>
-                    <input id="subject" class="form-control" formControlName="subject"
-                      placeholder="ej. Recuperación de contraseña – {brandName}">
-                    <div class="invalid-feedback d-block"
-                      *ngIf="form.get('subject')?.touched && form.get('subject')?.invalid">
-                      Requerido
+                    <div class="col-12 col-md-6">
+                      <label for="subject" class="form-label">
+                        Asunto <span class="text-danger">*</span>
+                      </label>
+                      <input id="subject" class="form-control" formControlName="subject"
+                        placeholder="ej. Recuperación de contraseña – {brandName}">
+                      @if (form.get('subject')?.touched && form.get('subject')?.invalid) {
+                        <div class="invalid-feedback d-block"
+                          >
+                          Requerido
+                        </div>
+                      }
                     </div>
-                  </div>
-                  <div class="col-12 col-md-2 d-flex align-items-center" style="padding-bottom: 4px;">
-                    <div class="form-check form-switch mb-0">
-                      <input class="form-check-input" type="checkbox" id="isActive" formControlName="isActive">
-                      <label class="form-check-label" for="isActive">Activo</label>
+                    <div class="col-12 col-md-2 d-flex align-items-center" style="padding-bottom: 4px;">
+                      <div class="form-check form-switch mb-0">
+                        <input class="form-check-input" type="checkbox" id="isActive" formControlName="isActive">
+                        <label class="form-check-label" for="isActive">Activo</label>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-
-              <!-- ── Sección 2: HTML body ── -->
-              <div class="form-section">
-                <div class="d-flex align-items-center gap-2 flex-wrap mb-2">
-                  <p class="form-section-label mb-0 me-auto">HTML body</p>
-                  <span class="text-muted small">Insertar:</span>
-                  <button type="button" class="btn btn-outline-secondary btn-xs" *ngFor="let ph of defaultPlaceholders"
-                    (click)="insertPlaceholder(ph)">{{ '{' + ph + '}' }}</button>
-                </div>
-                <textarea id="htmlBody" #htmlBodyArea class="form-control html-body" formControlName="htmlBody"
+                <!-- ── Sección 2: HTML body ── -->
+                <div class="form-section">
+                  <div class="d-flex align-items-center gap-2 flex-wrap mb-2">
+                    <p class="form-section-label mb-0 me-auto">HTML body</p>
+                    <span class="text-muted small">Insertar:</span>
+                    @for (ph of defaultPlaceholders; track ph) {
+                      <button type="button" class="btn btn-outline-secondary btn-xs"
+                      (click)="insertPlaceholder(ph)">{{ '{' + ph + '}' }}</button>
+                    }
+                  </div>
+                  <textarea id="htmlBody" #htmlBodyArea class="form-control html-body" formControlName="htmlBody"
                   spellcheck="false"></textarea>
-              </div>
-
-              <!-- ── Sección 3: Placeholders ── -->
-              <div class="form-section">
-                <p class="form-section-label">Placeholders declarados</p>
-                <div class="d-flex flex-wrap align-items-center gap-2">
-                  <span class="badge bg-info" *ngFor="let p of form.value.placeholders">
-                    {{ p }}
-                    <button type="button" class="placeholder-remove-btn" [attr.aria-label]="'Eliminar ' + p"
-                      (click)="removePlaceholder(p)"><i class="fas fa-times"></i></button>
-                  </span>
-                  <div class="input-group input-group-sm" style="width: 240px;">
-                    <input id="placeholderInput" class="form-control" type="text" [(ngModel)]="placeholderInput"
-                      [ngModelOptions]="{ standalone: true }" placeholder="nuevoPlaceholder"
-                      (keyup.enter)="addPlaceholder()">
-                    <button class="btn btn-outline-secondary" type="button" (click)="addPlaceholder()">+</button>
-                  </div>
                 </div>
+                <!-- ── Sección 3: Placeholders ── -->
+                <div class="form-section">
+                  <p class="form-section-label">Placeholders declarados</p>
+                  <div class="d-flex flex-wrap align-items-center gap-2">
+                    @for (p of form.value.placeholders; track p) {
+                      <span class="badge bg-info">
+                        {{ p }}
+                        <button type="button" class="placeholder-remove-btn" [attr.aria-label]="'Eliminar ' + p"
+                          (click)="removePlaceholder(p)"><i class="fas fa-times"></i></button>
+                        </span>
+                      }
+                      <div class="input-group input-group-sm" style="width: 240px;">
+                        <input id="placeholderInput" class="form-control" type="text" [(ngModel)]="placeholderInput"
+                          [ngModelOptions]="{ standalone: true }" placeholder="nuevoPlaceholder"
+                          (keyup.enter)="addPlaceholder()">
+                        <button class="btn btn-outline-secondary" type="button" (click)="addPlaceholder()">+</button>
+                      </div>
+                    </div>
+                  </div>
+                </form>
               </div>
-
-            </form>
+            </div>
           </div>
         </div>
-      </div>
+      }
     </div>
-  </div>
 
-  <!-- ============== PREVIEW MODAL ============== -->
-  <app-email-preview-modal [(visible)]="showPreview" [htmlBody]="form.value.htmlBody ?? ''"
-    [subject]="form.value.subject ?? ''" [previewValues]="previewValues"
+    <!-- ============== PREVIEW MODAL ============== -->
+    <app-email-preview-modal [(visible)]="showPreview" [htmlBody]="form.value.htmlBody ?? ''"
+      [subject]="form.value.subject ?? ''" [previewValues]="previewValues"
     [placeholders]="defaultPlaceholders"></app-email-preview-modal>
-</section>
+  </section>

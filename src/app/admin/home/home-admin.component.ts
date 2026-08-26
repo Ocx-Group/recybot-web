@@ -1,5 +1,5 @@
 import { AuthService } from '@app/core/service/authentication-service/auth.service';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { EChartsOption } from 'echarts';
 import { WalletService } from '@app/core/service/wallet-service/wallet.service';
 import { AffiliateService } from '@app/core/service/affiliate-service/affiliate.service';
@@ -143,6 +143,7 @@ export interface ChartOptions {
     RouterLink,
     WorldMapChartComponent,
   ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   providers: [
     provideEchartsCore({
       echarts: () => import('echarts'),

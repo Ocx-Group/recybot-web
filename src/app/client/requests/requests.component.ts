@@ -1,9 +1,11 @@
 import {
+  ChangeDetectorRef,
   Component,
   CUSTOM_ELEMENTS_SCHEMA,
   HostListener,
   OnInit,
   ViewChild,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { BalanceInformation } from '@app/core/models/wallet-model/balance-information.model';
 import {
@@ -19,8 +21,8 @@ import { WalletRequestService } from '@app/core/service/wallet-request/wallet-re
 import { WalletService } from '@app/core/service/wallet-service/wallet.service';
 import { ToastrService } from 'ngx-toastr';
 import { MatrixQualificationService } from '@app/core/service/matrix-qualification-service/matrix-qualification.service';
-import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+
+import { TranslatePipe } from '@ngx-translate/core';
 import { TruncateDecimalsPipe } from '@app/shared/pipes/truncate-decimals.pipe';
 import { IconsModule } from '@app/shared';
 import { NgbAlert } from '@ng-bootstrap/ng-bootstrap';
@@ -33,15 +35,15 @@ import { RouterLink } from '@angular/router';
   styleUrls: ['./requests.component.scss'],
   standalone: true,
   imports: [
-    CommonModule,
     NgxDatatableModule,
-    TranslateModule,
+    TranslatePipe,
     TruncateDecimalsPipe,
     IconsModule,
     NgbAlert,
     CreateRequestsModalComponent,
-    RouterLink,
-  ],
+    RouterLink
+],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class RequestsComponent implements OnInit {
@@ -64,6 +66,7 @@ export class RequestsComponent implements OnInit {
     private readonly configurationService: ConfigurationService,
     private readonly walletService: WalletService,
     private readonly matrixQualificationService: MatrixQualificationService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -83,6 +86,7 @@ export class RequestsComponent implements OnInit {
             this.rows = resp;
           }
           this.loadingIndicator = false;
+          this.cdr.markForCheck();
         },
         error: err => {
           this.showError('Error');
@@ -95,6 +99,7 @@ export class RequestsComponent implements OnInit {
       .getBalanceInformationByAffiliateId(this.user.id)
       .subscribe(balanceInfo => {
         this.balanceInfo = balanceInfo;
+        this.cdr.markForCheck();
       });
   }
 
@@ -103,6 +108,7 @@ export class RequestsComponent implements OnInit {
       next: resp => {
         this.walletWithdrawalsConfig.minimum_amount = resp.minimum_amount;
         this.walletWithdrawalsConfig.maximum_amount = resp.maximum_amount;
+        this.cdr.markForCheck();
       },
       error: _err => {
         this.showError('Error');
@@ -129,7 +135,7 @@ export class RequestsComponent implements OnInit {
     });
 
     this.rows = temp;
-    this.table.offset = 0;
+    this.table.offset.set(0);
   }
 
   getUserInfo() {
@@ -153,6 +159,7 @@ export class RequestsComponent implements OnInit {
             this.isReachedWithdrawalLimit = value.data;
           } else {
             this.isReachedWithdrawalLimit = false;
+            this.cdr.markForCheck();
           }
         },
         error: err => {

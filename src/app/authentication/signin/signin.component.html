@@ -3,8 +3,8 @@
   <!-- Global BG FX -->
   <div class="bg-grid" aria-hidden="true"></div>
   <div class="bg-scanline" aria-hidden="true"></div>
-  <div class="bg-photo" [style.backgroundImage]="'url(' + backgroundImages[currentImageIndex] + ')'"
-    aria-hidden="true"></div>
+  <div class="bg-photo" [style.backgroundImage]="'url(' + backgroundImages[currentImageIndex()] + ')'"
+  aria-hidden="true"></div>
 
   <!-- ══ LEFT — Brand Panel ══════════════════════════════════ -->
   <aside class="brand-side">
@@ -90,12 +90,16 @@
             <input id="email" class="field__input" type="email" formControlName="email"
               [placeholder]="username" autocomplete="username" />
           </div>
-          <span class="field__error" *ngIf="Email.errors?.['email'] && (Email.dirty || Email.touched)">
-            {{ userNameErrorMessage }}
-          </span>
-          <span class="field__error" *ngIf="Email.errors?.['required'] && (Email.dirty || Email.touched)">
-            {{ userNameIsRequerid }}
-          </span>
+          @if (Email.errors?.['email'] && (Email.dirty || Email.touched)) {
+            <span class="field__error">
+              {{ userNameErrorMessage }}
+            </span>
+          }
+          @if (Email.errors?.['required'] && (Email.dirty || Email.touched)) {
+            <span class="field__error">
+              {{ userNameIsRequerid }}
+            </span>
+          }
         </div>
 
         <!-- Password -->
@@ -111,13 +115,17 @@
               <i [class]="showPassword ? 'bi bi-eye-slash' : 'bi bi-eye'"></i>
             </button>
           </div>
-          <span class="field__error"
-            *ngIf="(Pwd.errors?.['minlength'] || Pwd.errors?.['maxlength']) && (Pwd.dirty || Pwd.touched)">
-            {{ passwordErrorMessage }}
-          </span>
-          <span class="field__error" *ngIf="Pwd.errors?.['required'] && (Pwd.dirty || Pwd.touched)">
-            {{ passwordIsRequerid }}
-          </span>
+          @if ((Pwd.errors?.['minlength'] || Pwd.errors?.['maxlength']) && (Pwd.dirty || Pwd.touched)) {
+            <span class="field__error"
+              >
+              {{ passwordErrorMessage }}
+            </span>
+          }
+          @if (Pwd.errors?.['required'] && (Pwd.dirty || Pwd.touched)) {
+            <span class="field__error">
+              {{ passwordIsRequerid }}
+            </span>
+          }
         </div>
 
         <!-- Forgot -->
@@ -128,24 +136,32 @@
         </div>
 
         <!-- Submit -->
-        <button class="btn-login" type="submit" [disabled]="loading">
-          <span class="btn-login__spinner" *ngIf="loading" aria-hidden="true"></span>
-          <span *ngIf="loading" class="sr-only">{{ 'SIGNIN.LOADING.TEXT' | translate }}</span>
-          <span *ngIf="!loading">
-            {{ signin }}&nbsp;<i class="bi bi-arrow-right-circle-fill"></i>
-          </span>
+        <button class="btn-login" type="submit" [disabled]="loading()">
+          @if (loading()) {
+            <span class="btn-login__spinner" aria-hidden="true"></span>
+          }
+          @if (loading()) {
+            <span class="sr-only">{{ 'SIGNIN.LOADING.TEXT' | translate }}</span>
+          }
+          @if (!loading()) {
+            <span>
+              {{ signin }}&nbsp;<i class="bi bi-arrow-right-circle-fill"></i>
+            </span>
+          }
         </button>
-        <button class="btn-login mt-2" type="button" [disabled]="loading" (click)="googleLoginSubmitted()">
+        <button class="btn-login mt-2" type="button" [disabled]="loading()" (click)="googleLoginSubmitted()">
           <span>
             Google&nbsp;<i class="bi bi-google"></i>
           </span>
         </button>
 
         <!-- Error -->
-        <div class="form-alert" *ngIf="error !== ''">
-          <i class="bi bi-exclamation-circle-fill"></i>
-          {{ error }}
-        </div>
+        @if (error() !== '') {
+          <div class="form-alert">
+            <i class="bi bi-exclamation-circle-fill"></i>
+            {{ error() }}
+          </div>
+        }
 
       </form>
     </div>

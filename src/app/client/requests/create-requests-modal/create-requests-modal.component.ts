@@ -1,10 +1,12 @@
 import {
+  ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
   OnInit,
   Output,
   ViewChild,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import {
   AbstractControl,
@@ -37,6 +39,7 @@ import { off } from '@angular/fire/database';
   templateUrl: './create-requests-modal.component.html',
   styleUrls: ['./create-requests-modal.component.scss'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule, ReactiveFormsModule, TranslatePipe],
 })
 export class CreateRequestsModalComponent implements OnInit {
@@ -63,6 +66,7 @@ export class CreateRequestsModalComponent implements OnInit {
     private toastr: ToastrService,
     private affiliateService: AffiliateService,
     private affiliateBtcService: AffiliateBtcService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -94,6 +98,9 @@ export class CreateRequestsModalComponent implements OnInit {
       size: 'lg',
       centered: true,
     });
+    // Al modal lo abre el padre desde su plantilla: ese click ensucia la
+    // vista del PADRE, no la de este componente.
+    this.cdr.markForCheck();
   }
 
   private loadValidations() {

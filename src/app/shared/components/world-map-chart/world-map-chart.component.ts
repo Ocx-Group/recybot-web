@@ -4,8 +4,10 @@ import {
   OnInit,
   OnChanges,
   SimpleChanges,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { NgxEchartsModule, provideEchartsCore } from 'ngx-echarts';
 import * as echarts from 'echarts';
 import { EChartsOption } from 'echarts';
@@ -22,7 +24,8 @@ export interface CountryData {
   templateUrl: './world-map-chart.component.html',
   styleUrls: ['./world-map-chart.component.scss'],
   standalone: true,
-  imports: [CommonModule, NgxEchartsModule],
+  imports: [NgxEchartsModule],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     provideEchartsCore({
       echarts: () => import('echarts'),
@@ -30,6 +33,8 @@ export interface CountryData {
   ],
 })
 export class WorldMapChartComponent implements OnInit, OnChanges {
+  constructor(private cdr: ChangeDetectorRef) {}
+
   @Input() countries: CountryData[] = [];
   @Input() height: string = '400px';
   @Input() seriesName: string = 'Afiliados por País';
@@ -59,6 +64,8 @@ export class WorldMapChartComponent implements OnInit, OnChanges {
       );
       echarts.registerMap('world', worldJson);
       this.mapLoaded = true;
+      // Llega despues de un await fetch: con OnPush hay que marcar.
+      this.cdr.markForCheck();
     } catch (error) {
       console.error('Error loading world map:', error);
     }

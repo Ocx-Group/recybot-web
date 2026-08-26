@@ -1,5 +1,7 @@
 import { WalletRequestRevertTransaction } from '@app/core/models/wallet-request-request-model/wallet-request-revert-transaction.model';
 import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   OnInit,
   AfterViewInit,
@@ -19,7 +21,7 @@ import { ConfigurationService } from '@app/core/service/configuration-service/co
 import { WalletWithdrawalsConfiguration } from '@app/core/models/wallet-withdrawals-configuration-model/wallet-withdrawals-configuration.model';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
-import { TranslateService, TranslateModule } from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { CommonModule } from '@angular/common';
 import { BillingPurchasesDetailModalComponent } from '@app/client/billing-purchases/billing-purchases-detail-modal/billing-purchases-detail-modal.component';
 import { IconsModule } from '@app/shared';
@@ -35,9 +37,12 @@ import {
   selector: 'app-filter',
   templateUrl: './billing-purchases.component.html',
   standalone: true,
+  // Este fichero se habia quedado sin changeDetection, y en Angular 22 la
+  // ausencia ya significa OnPush. Se deja explicito.
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
-    TranslateModule,
+    TranslatePipe,
     BillingPurchasesDetailModalComponent,
     IconsModule,
     RouterLink,
@@ -87,6 +92,7 @@ export class BillingPurchasesComponent implements OnInit, AfterViewInit {
     private readonly walletRequestService: WalletRequestService,
     private readonly configurationService: ConfigurationService,
     private readonly translateService: TranslateService,
+    private readonly cdr: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {
@@ -152,6 +158,9 @@ export class BillingPurchasesComponent implements OnInit, AfterViewInit {
         cellTemplate: this.totalAmountTemplate,
       },
     ];
+    // Las columnas se arman en ngAfterViewInit, o sea despues de que la vista ya
+    // leyo [columns]. Sin marcar, la tabla se queda sin cabeceras.
+    this.cdr.markForCheck();
   }
 
   setupTableActions(): void {
@@ -186,6 +195,7 @@ export class BillingPurchasesComponent implements OnInit, AfterViewInit {
       next: value => {
         this.withdrawalConfiguration.activate_invoice_cancellation =
           value.activate_invoice_cancellation;
+        this.cdr.markForCheck();
       },
       error: err => {
         console.error(
@@ -205,12 +215,14 @@ export class BillingPurchasesComponent implements OnInit, AfterViewInit {
         this.rows = safeInvoices;
         this.loadingIndicator = false;
         console.log(this.rows);
+        this.cdr.markForCheck();
       },
       error: err => {
         this.loadingIndicator = false;
         this.rows = [];
         this.temp = [];
         this.showError('Error');
+        this.cdr.markForCheck();
       },
     });
   }
