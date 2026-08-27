@@ -1,10 +1,11 @@
 import {
+  ChangeDetectorRef,
   Component,
   HostListener,
   OnInit,
   ViewEncapsulation,
   CUSTOM_ELEMENTS_SCHEMA,
-  ChangeDetectionStrategy
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 
@@ -21,7 +22,7 @@ import { AuthService } from '@app/core/service/authentication-service/auth.servi
   encapsulation: ViewEncapsulation.ShadowDom,
   standalone: true,
   imports: [RouterLink, TranslatePipe],
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class LandingPageComponent implements OnInit {
@@ -35,6 +36,7 @@ export class LandingPageComponent implements OnInit {
     private readonly activatedRoute: ActivatedRoute,
     private readonly affiliateService: AffiliateService,
     private readonly authService: AuthService,
+    private cdr: ChangeDetectorRef
   ) {
     translate.setFallbackLang('en');
     this.currentLang = translate.getCurrentLang() || 'en';
@@ -60,6 +62,7 @@ export class LandingPageComponent implements OnInit {
       .subscribe((user: UserAffiliate) => {
         if (user !== null) {
           this.user = user;
+          this.cdr.markForCheck();
         }
       });
   }

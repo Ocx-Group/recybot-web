@@ -7,7 +7,7 @@ import {
 } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { Response } from '@app/core/models/response-model/response.model';
-import { TranslateService, TranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '@app/core/service/authentication-service/auth.service';
 
@@ -29,14 +29,6 @@ export class SigninComponent implements OnInit, OnDestroy {
   // desde el setInterval del fondo. Como senales no hace falta ChangeDetectorRef.
   readonly error = signal('');
   readonly loading = signal(false);
-  username = 'Usuario';
-  password = 'Contraseña';
-  signin = 'Iniciar sesión';
-  passwordIsRequerid = 'La contraseña es requerida.';
-  userNameIsRequerid = 'El usuario es requerido.';
-  passwordErrorMessage =
-    'La contraseña debe tener al menos 6 y un máximo de 15 caracteres';
-  userNameErrorMessage = 'El nombre de usuario no es válido';
   backgroundImages: string[] = [
     '/assets/images/login-option-1.png',
     '/assets/images/login-option-2.png',
@@ -60,7 +52,6 @@ export class SigninComponent implements OnInit, OnDestroy {
     private readonly router: Router,
     private readonly authService: AuthService,
     private readonly toastr: ToastrService,
-    private readonly translate: TranslateService,
     private readonly deviceService: DeviceDetectorService,
     private readonly logoService: LogoService,
   ) {
@@ -77,39 +68,12 @@ export class SigninComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.setLabels();
-    this.setErrorMessages();
     this.startBackgroundRotation();
   }
 
   ngOnDestroy() {
     if (this.intervalId) {
       clearInterval(this.intervalId);
-    }
-  }
-
-  setLabels() {
-    if (this.translate.getCurrentLang() != undefined) {
-      this.username = this.translate.instant('SIGNIN.USER-NAME.TEXT');
-      this.password = this.translate.instant('SIGNIN.PASSWORD.TEXT');
-      this.signin = this.translate.instant('SIGNIN.TITLE.TEXT');
-    }
-  }
-
-  setErrorMessages() {
-    if (this.translate.getCurrentLang() != undefined) {
-      this.passwordIsRequerid = this.translate.instant(
-        'SIGNIN.PASS-IS-REQUIRED.TEXT',
-      );
-      this.userNameIsRequerid = this.translate.instant(
-        'SIGNIN.USER-NAME-IS-REQUIRED.TEXT',
-      );
-      this.passwordErrorMessage = this.translate.instant(
-        'SIGNIN.PASS-MESSAGE-ERROR.TEXT',
-      );
-      this.userNameErrorMessage = this.translate.instant(
-        'SIGNIN.USER-NAME-MESSAGE-ERROR.TEXT',
-      );
     }
   }
 

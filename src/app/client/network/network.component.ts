@@ -2,12 +2,13 @@ import { ThirdPartyPurchaseComponent } from './third-party-purchase/third-party-
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import Swal from 'sweetalert2';
 import {
+  ChangeDetectorRef,
   Component,
   HostListener,
   OnInit,
   ViewChild,
   CUSTOM_ELEMENTS_SCHEMA,
-  ChangeDetectionStrategy
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import {
   DatatableComponent,
@@ -57,7 +58,7 @@ import { IconsModule } from '@app/shared';
     RouterLink,
     ThirdPartyPurchaseComponent,
   ],
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class NetworkComponent implements OnInit {
@@ -100,6 +101,7 @@ export class NetworkComponent implements OnInit {
     private readonly pagaditoService: PagaditoService,
     private readonly productService: ProductService,
     private readonly matrixQualificationService: MatrixQualificationService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
@@ -114,6 +116,9 @@ export class NetworkComponent implements OnInit {
 
       this.gradingService.getAll().subscribe((gradings: Grading[]) => {
         this.gradings = gradings;
+        // getNameGrading() se interpola por celda: hasta que no esten las
+        // calificaciones, toda la columna dice N/A.
+        this.cdr.markForCheck();
       });
 
       this.hasReachedWithdrawalLimit(this.user.id);
@@ -123,6 +128,7 @@ export class NetworkComponent implements OnInit {
         .subscribe((affiliates: NetworkAffiliate[]) => {
           this.temp = [...affiliates];
           this.rows = affiliates;
+          this.cdr.markForCheck();
         });
     }
     this.loadingIndicator = false;
@@ -379,6 +385,7 @@ export class NetworkComponent implements OnInit {
           this.loadingIndicatorGlobal = false;
         } else {
           this.rowsGlobal = [];
+          this.cdr.markForCheck();
           this.showError('Usuario no existe');
         }
       },
@@ -584,6 +591,7 @@ export class NetworkComponent implements OnInit {
             this.isReachedWithdrawalLimit = value.data;
           } else {
             this.isReachedWithdrawalLimit = false;
+            this.cdr.markForCheck();
           }
         },
         error: err => {

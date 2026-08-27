@@ -1,4 +1,4 @@
-import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA, ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, CUSTOM_ELEMENTS_SCHEMA, ChangeDetectionStrategy } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -26,7 +26,7 @@ import { DeviceDetectorService } from 'ngx-device-detector';
   styleUrls: ['./signup.component.scss'],
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, RouterLink, TranslatePipe],
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class SignupComponent implements OnInit {
@@ -50,6 +50,7 @@ export class SignupComponent implements OnInit {
     private readonly logoService: LogoService,
     private readonly pdfViewerService: PdfViewerService,
     private readonly deviceService: DeviceDetectorService,
+    private cdr: ChangeDetectorRef
   ) {
     this.key = this.activatedRoute.snapshot.params.key || '';
     this.side = this.user.side?.toString() || '';
@@ -65,6 +66,7 @@ export class SignupComponent implements OnInit {
   private fetchCountry() {
     this.affiliateService.getCountries().subscribe(data => {
       this.listcountry = data;
+      this.cdr.markForCheck();
     });
   }
 
@@ -132,6 +134,7 @@ export class SignupComponent implements OnInit {
           this.router.navigate(['/signin']).then();
         } else {
           this.sponsor = user.user_name;
+          this.cdr.markForCheck();
           this.user = user;
         }
       },
