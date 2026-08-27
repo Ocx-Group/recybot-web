@@ -84,31 +84,31 @@
 
         <!-- Email -->
         <div class="field">
-          <label class="field__label" for="email">{{ username }}</label>
+          <label class="field__label" for="email">{{ 'SIGNIN.USER-NAME.TEXT' | translate }}</label>
           <div class="field__control">
             <i class="bi bi-person field__icon"></i>
             <input id="email" class="field__input" type="email" formControlName="email"
-              [placeholder]="username" autocomplete="username" />
+              [placeholder]="'SIGNIN.USER-NAME.TEXT' | translate" autocomplete="username" />
           </div>
           @if (Email.errors?.['email'] && (Email.dirty || Email.touched)) {
             <span class="field__error">
-              {{ userNameErrorMessage }}
+              {{ 'SIGNIN.USER-NAME-MESSAGE-ERROR.TEXT' | translate }}
             </span>
           }
           @if (Email.errors?.['required'] && (Email.dirty || Email.touched)) {
             <span class="field__error">
-              {{ userNameIsRequerid }}
+              {{ 'SIGNIN.USER-NAME-IS-REQUIRED.TEXT' | translate }}
             </span>
           }
         </div>
 
         <!-- Password -->
         <div class="field">
-          <label class="field__label" for="pwd">{{ password }}</label>
+          <label class="field__label" for="pwd">{{ 'SIGNIN.PASSWORD.TEXT' | translate }}</label>
           <div class="field__control">
             <i class="bi bi-key field__icon"></i>
             <input [type]="showPassword ? 'text' : 'password'" id="pwd" class="field__input"
-              formControlName="pwd" [placeholder]="password"
+              formControlName="pwd" [placeholder]="'SIGNIN.PASSWORD.TEXT' | translate"
               [attr.autocomplete]="showPassword ? 'off' : 'current-password'" />
             <button type="button" class="field__toggle" (click)="togglePasswordVisibility()"
               [attr.aria-label]="(showPassword ? 'SIGNIN.TOGGLE-HIDE.TEXT' : 'SIGNIN.TOGGLE-SHOW.TEXT') | translate">
@@ -118,12 +118,12 @@
           @if ((Pwd.errors?.['minlength'] || Pwd.errors?.['maxlength']) && (Pwd.dirty || Pwd.touched)) {
             <span class="field__error"
               >
-              {{ passwordErrorMessage }}
+              {{ 'SIGNIN.PASS-MESSAGE-ERROR.TEXT' | translate }}
             </span>
           }
           @if (Pwd.errors?.['required'] && (Pwd.dirty || Pwd.touched)) {
             <span class="field__error">
-              {{ passwordIsRequerid }}
+              {{ 'SIGNIN.PASS-IS-REQUIRED.TEXT' | translate }}
             </span>
           }
         </div>
@@ -145,7 +145,7 @@
           }
           @if (!loading()) {
             <span>
-              {{ signin }}&nbsp;<i class="bi bi-arrow-right-circle-fill"></i>
+              {{ 'SIGNIN.TITLE.TEXT' | translate }}&nbsp;<i class="bi bi-arrow-right-circle-fill"></i>
             </span>
           }
         </button>
