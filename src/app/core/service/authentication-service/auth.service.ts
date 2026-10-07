@@ -18,6 +18,8 @@ const httpOptions = {
     'X-Client-ID': environment.tokens.clientID.toString(),
   }),
 };
+export const ZOOM_ANNOUNCEMENT_KEY = 'zoomAnnouncementShown';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -300,6 +302,8 @@ export class AuthService {
     this.cartService.removeAllCart();
     localStorage.removeItem('currentUserAdmin');
     localStorage.removeItem('currentUserAffiliate');
+    // Que el comunicado vuelva a salir en el siguiente inicio de sesion.
+    localStorage.removeItem(ZOOM_ANNOUNCEMENT_KEY);
 
     // Actualizar signals
     this.currentUserAffiliate.set(null);
